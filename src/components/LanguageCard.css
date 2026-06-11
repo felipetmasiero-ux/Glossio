@@ -1,0 +1,37 @@
+.language-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: all 0.2s;
+  width: 100%;
+  text-align: center;
+}
+
+.language-card:hover {
+  border-color: var(--teal);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.language-card__flag {
+  font-size: 36px;
+}
+
+.language-card__native {
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--text);
+  margin: 0;
+}
+
+.language-card__name {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin: 2px 0 0;
+}

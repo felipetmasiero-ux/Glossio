@@ -3,24 +3,27 @@ import { Routes, Route } from 'react-router-dom'
 import { useState } from 'react'
 import { LanguageSelection } from './pages/LanguageSelection'
 import { Content } from './pages/Content'
-import { Study } from './pages/Study' 
+import { Study } from './pages/Study'
 import { Flashcards } from './pages/FlashCards'
 import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
+import { Navbar } from './components/Navbar'
 
 function App() {
-
-   const [language, setLanguage] = useState("")
+  const [language, setLanguage] = useState("")
 
   return (
-    <Routes>
-      <Route path="/" element={<LanguageSelection setLanguage={setLanguage} />} />
-      <Route path="/home" element={<Home language={language}/>} />
-      <Route path="/content" element={<Content />} />
-      <Route path="/study" element={<Study />} />
-      <Route path="/flashcards" element={<Flashcards />} />
-      <Route path="/alphabets" element={<Alphabets />} />
-    </Routes>
+    <div className="app-layout">
+      <Navbar language={language} />
+      <Routes>
+        <Route path="/" element={<LanguageSelection setLanguage={setLanguage} />} />
+        <Route path="/home" element={<Home language={language} />} />
+        <Route path="/content" element={<Content />} />
+        <Route path="/study" element={<Study />} />
+        <Route path="/flashcards" element={<Flashcards />} />
+        <Route path="/alphabets" element={<Alphabets />} />
+      </Routes>
+    </div>
   )
 }
 
