@@ -2,13 +2,21 @@ import "./EmptyState.css";
 import { contentData } from "../data/contentData";
 import { Link } from "react-router-dom";
 
-export function Content() {
+export function Content({ language }) {
+  const filteredContent =
+  contentData.filter(
+    item => item.language === language
+  )
+
+  console.log(language);
+console.log(filteredContent);
+
   return (
     <div className="page-container">
       <div className="empty-state">
         <div className="empty-state__icon">📖</div>
         <h2 className="empty-state__title">Content Area</h2>
-        {contentData.map(content => (
+        {filteredContent.map(content => (
           <div key={content.id}>
             <h3>{content.title}</h3>
 

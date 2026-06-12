@@ -2,24 +2,49 @@ export const contentData = [
   {
     id: 1,
     language: "English",
-    level: "A1",
     title: "My First Day",
-    text: "Hello, my name is John. I am a student."
+    level: "A1",
+    words: [
+      { word: "Hello", translation: "Olá" },
+      { word: "my", translation: "meu" },
+      { word: "name", translation: "nome" },
+      { word: "is", translation: "é" },
+      { word: "John", translation: "John" },
+      { word: "I", translation: "eu" },
+      { word: "am", translation: "sou" },
+      { word: "a", translation: "um" },
+      { word: "student", translation: "estudante" }
+    ]
   },
 
   {
     id: 2,
     language: "English",
+    title: "A Walk With Friends",
     level: "A2",
-    title: "Going to School",
-    text: "Every morning I walk to school with my friends."
+    words: [
+      { word: "Every", translation: "Toda" },
+      { word: "morning", translation: "manhã" },
+      { word: "I", translation: "eu" },
+      { word: "walk", translation: "caminho" },
+      { word: "to", translation: "para" },
+      { word: "school", translation: "escola" },
+      { word: "with", translation: "com" },
+      { word: "my", translation: "meus" },
+      { word: "friends", translation: "amigos" }
+    ]
   },
 
   {
     id: 3,
     language: "French",
+    title: "Mon Premier Jour",
     level: "A1",
-    title: "Bonjour",
-    text: "Bonjour, je m'appelle Pierre."
+    words: [
+      { word: "Bonjour", translation: "Olá" },
+      { word: "je", translation: "eu" },
+      { word: "m'appelle", translation: "me chamo" },
+      { word: "Pierre", translation: "Pierre" }
+    ]
   }
-]
+];

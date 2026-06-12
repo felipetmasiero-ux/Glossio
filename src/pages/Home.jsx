@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import { homeFeatures } from "../data/homeFeatures";
+import { useContext } from "react";
+import { LanguageContext } from "../contexts/LanguageContext";
 import "./Home.css";
 
 const flagMap = {
@@ -8,7 +10,10 @@ const flagMap = {
   Portuguese: "🇧🇷",
 };
 
-export function Home({ language }) {
+export function Home() {
+  const { language } =
+    useContext(LanguageContext);
+
   return (
     <div className="page-container">
       <div style={{ marginBottom: 40 }}>

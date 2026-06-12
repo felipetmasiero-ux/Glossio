@@ -9,23 +9,31 @@ import { Flashcards } from './pages/FlashCards'
 import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
 import { Navbar } from './components/Navbar'
+import { LanguageContext } from "./contexts/LanguageContext";
 
 function App() {
   const [language, setLanguage] = useState("")
 
   return (
+    <LanguageContext.Provider
+      value={{
+        language,
+        setLanguage
+      }}
+    >
     <div className="app-layout">
       <Navbar language={language} />
       <Routes>
         <Route path="/" element={<LanguageSelection setLanguage={setLanguage} />} />
-        <Route path="/home" element={<Home language={language} />} />
-        <Route path="/content" element={<Content />} />
+        <Route path="/home" element={<Home />} />
+        <Route path="/content" element={<Content language={language} />} />
         <Route path="/content/:id" element={<ContentReader/>}/>
         <Route path="/study/" element={<Study />} />
         <Route path="/flashcards" element={<Flashcards />} />
         <Route path="/alphabets" element={<Alphabets />} />
       </Routes>
     </div>
+    </LanguageContext.Provider>
   )
 }
 

@@ -1,8 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import { LanguageCard } from "../components/LanguageCard";
+import { LanguageContext } from "../contexts/LanguageContext";
 
-export function LanguageSelection({ setLanguage }) {
+import "./LanguageSelection.css";
+
+export function LanguageSelection() {
   const navigate = useNavigate();
+
+  const { setLanguage } = useContext(LanguageContext);
 
   function handleLanguage(language) {
     setLanguage(language);
@@ -16,40 +22,19 @@ export function LanguageSelection({ setLanguage }) {
   ];
 
   return (
-    <div style={{
-      minHeight: "100svh",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      padding: "40px 24px",
-    }}>
-      <div style={{ textAlign: "center", marginBottom: 40 }}>
-        <div style={{
-          width: 52,
-          height: 52,
-          borderRadius: 14,
-          background: "var(--teal)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontSize: 24,
-          margin: "0 auto 16px",
-        }}>🌐</div>
-        <h1 style={{ marginBottom: 8 }}>Escolha seu idioma</h1>
-        <p style={{ color: "var(--text-muted)", fontSize: 15 }}>
+    <div className="language-selection">
+      <div className="language-selection-header">
+        <div className="language-selection-icon">🌐</div>
+
+        <h1>Escolha seu idioma</h1>
+
+        <p className="language-selection-subtitle">
           Selecione o idioma que você quer aprender
         </p>
       </div>
 
-      <div style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(3, 1fr)",
-        gap: 12,
-        width: "100%",
-        maxWidth: 420,
-      }}>
-        {languages.map(lang => (
+      <div className="language-selection-grid">
+        {languages.map((lang) => (
           <LanguageCard
             key={lang.key}
             language={lang.key}
