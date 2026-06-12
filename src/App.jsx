@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { LanguageSelection } from './pages/LanguageSelection'
 import { Content } from './pages/Content'
 import { Study } from './pages/Study'
+import { ContentReader } from './pages/ContentReader'
 import { Flashcards } from './pages/FlashCards'
 import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
@@ -19,7 +20,8 @@ function App() {
         <Route path="/" element={<LanguageSelection setLanguage={setLanguage} />} />
         <Route path="/home" element={<Home language={language} />} />
         <Route path="/content" element={<Content />} />
-        <Route path="/study" element={<Study />} />
+        <Route path="/content/:id" element={<ContentReader/>}/>
+        <Route path="/study/" element={<Study />} />
         <Route path="/flashcards" element={<Flashcards />} />
         <Route path="/alphabets" element={<Alphabets />} />
       </Routes>
