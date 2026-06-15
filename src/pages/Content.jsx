@@ -1,15 +1,20 @@
 import "./EmptyState.css";
 import { contentData } from "../data/contentData";
 import { Link } from "react-router-dom";
+import { useContext } from "react";
+import { LanguageContext } from "../contexts/LanguageContext";
 
-export function Content({ language }) {
+export function Content() {
+
+  const { language } = useContext(LanguageContext);
+
   const filteredContent =
-  contentData.filter(
-    item => item.language === language
-  )
+    contentData.filter(
+      item => item.language === language
+    )
 
   console.log(language);
-console.log(filteredContent);
+  console.log(filteredContent);
 
   return (
     <div className="page-container">
@@ -29,7 +34,7 @@ console.log(filteredContent);
             </Link>
 
           </div>
-         ))}
+        ))}
       </div>
     </div>
   );

@@ -1,49 +1,78 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
+
 import { LanguageSelection } from './pages/LanguageSelection'
 import { Content } from './pages/Content'
 import { Study } from './pages/Study'
 import { ContentReader } from './pages/ContentReader'
-import { Flashcards } from './pages/FlashCards'
+import { StudyFlashcards } from './pages/StudyFlashcards'
 import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
+
 import { Navbar } from './components/Navbar'
-import { LanguageContext } from "./contexts/LanguageContext";
-import { FlashcardProvider } from './components/FlashcardProvider'
+import { LanguageContext } from './contexts/LanguageContext'
+import { FlashcardProvider } from './contexts/FlashcardProvider'
 
 function App() {
   const [language, setLanguage] = useState(
-    localStorage.getItem("language") || ""
+    localStorage.getItem('language') || ''
   )
 
   useEffect(() => {
-
-    localStorage.setItem(
-      "language",
-      language
-    )
-
+    localStorage.setItem('language', language)
   }, [language])
 
   return (
     <LanguageContext.Provider
       value={{
         language,
-        setLanguage
+        setLanguage,
       }}
     >
       <FlashcardProvider>
         <div className="app-layout">
-          <Navbar language={language} />
+          <Navbar />
+
           <Routes>
-            <Route path="/" element={<LanguageSelection setLanguage={setLanguage} />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/content" element={<Content language={language} />} />
-            <Route path="/content/:id" element={<ContentReader />} />
-            <Route path="/study/" element={<Study />} />
-            <Route path="/flashcards" element={<Flashcards />} />
-            <Route path="/alphabets" element={<Alphabets />} />
+            <Route
+              path="/"
+              element={
+                <LanguageSelection
+                  setLanguage={setLanguage}
+                />
+              }
+            />
+
+            <Route
+              path="/home"
+              element={<Home />}
+            />
+
+            <Route
+              path="/content"
+              element={<Content />}
+            />
+
+            <Route
+              path="/content/:id"
+              element={<ContentReader />}
+            />
+
+            <Route
+              path="/study"
+              element={<Study />}
+            />
+
+            <Route
+              path="/flashcards"
+              element={<StudyFlashcards />}
+            />
+
+            <Route
+              path="/alphabets"
+              element={<Alphabets />}
+            />
           </Routes>
         </div>
       </FlashcardProvider>

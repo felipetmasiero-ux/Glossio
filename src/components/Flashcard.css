@@ -1,0 +1,45 @@
+.flashcard-card {
+  background: rgba(255,255,255,0.05);
+
+  border: 1px solid rgba(255,255,255,0.1);
+
+  border-radius: 18px;
+
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  transition: 0.25s;
+}
+
+.flashcard-card:hover {
+  transform: translateY(-4px);
+}
+
+.flashcard-word {
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.flashcard-translation {
+  opacity: 0.8;
+}
+
+.flashcard-remove-btn {
+  margin-top: auto;
+}
+
+.flashcards-grid {
+  width: 100%;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(250px, 1fr));
+
+  gap: 20px;
+
+  margin-top: 20px;
+}

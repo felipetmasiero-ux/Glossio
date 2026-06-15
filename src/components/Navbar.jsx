@@ -1,7 +1,13 @@
+import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { LanguageContext } from "../contexts/LanguageContext";
+
 import "./Navbar.css";
 
-export function Navbar({ language }) {
+export function Navbar() {
+
+  const { language } = useContext(LanguageContext);
+
   const location = useLocation();
 
   const navLinks = [

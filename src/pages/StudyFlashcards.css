@@ -1,0 +1,131 @@
+.study-page {
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding: 40px 20px;
+}
+
+.study-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.study-card {
+    width: 500px;
+    height: 320px;
+
+    margin: 30px 0 40px;
+    perspective: 1200px;
+}
+
+.study-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+
+  transition: transform .6s;
+  transform-style: preserve-3d;
+}
+
+.study-card.revealed .study-card-inner {
+  transform: rotateY(180deg);
+}
+
+.study-face {
+  position: absolute;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: white;
+
+  box-shadow:
+    0 12px 35px rgba(0,0,0,.12);
+
+  backface-visibility: hidden;
+
+  padding: 30px;
+}
+
+.study-front {
+  transform: rotateY(0deg);
+}
+
+.study-back {
+  transform: rotateY(180deg);
+}
+
+.study-face h2 {
+  font-size: 42px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.reveal-btn{
+    margin-top:30px;
+
+    width:220px;
+    height:55px;
+
+    border:none;
+    border-radius:12px;
+
+    font-size:18px;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.reveal-btn:hover{
+    transform:translateY(-2px);
+}
+
+.answer-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.answer-buttons button {
+    width: 120px;
+    height: 50px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+.progress-container{
+    width:500px;
+    height:10px;
+
+    background:#ddd;
+
+    margin:auto;
+
+    border-radius:10px;
+
+    overflow:hidden;
+}
+
+.progress-bar{
+    height:100%;
+    transition:.3s;
+}
