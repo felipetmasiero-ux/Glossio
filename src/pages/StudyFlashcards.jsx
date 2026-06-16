@@ -1,115 +1,113 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
+
 import { FlashcardContext } from "../contexts/FlashcardContext";
 import { LanguageContext } from "../contexts/LanguageContext";
-import "./StudyFlashcards.css";
 
+import { useStudySession } from "../hooks/flashcards/useStudySession";
+import { useKeyboardShortcuts } from "../hooks/flashcards/useKeyboardShortcuts";
+
+import { StudyCard } from "../components/flashcards/StudyCard";
+import { StudyProgress } from "../components/flashcards/StudyProgress";
+import { RevealButton } from "../components/flashcards/RevealButton";
+import { AnswerButtons } from "../components/flashcards/AnswerButtons";
+import { StudySummary } from "../components/flashcards/StudySummary";
+
+import "./StudyFlashcards.css";
 
 export function StudyFlashcards() {
 
-  const { flashcards, answerFlashcard } = useContext(FlashcardContext);
+  const { flashcards, answerFlashcard } =
+    useContext(FlashcardContext);
 
-  const { language } = useContext(LanguageContext);
+  const { language } =
+    useContext(LanguageContext);
 
-  const [revealed, setRevealed] = useState(false);
+  const {
 
-  const sessionStart = useState(() => Date.now())[0];
+    revealed,
+    setRevealed,
 
-  const [sessionCards, setSessionCards] = useState(() =>
-    flashcards.filter(card =>
-      card.language === language &&
-      card.nextReview <= sessionStart
-    )
+    sessionCards,
+    totalCards,
+
+    currentCard,
+
+    stats,
+
+    handleAnswer,
+    restartSession
+
+  } = useStudySession(
+    flashcards,
+    language,
+    answerFlashcard
   );
 
-  const [totalCards] = useState(sessionCards.length);
+  useKeyboardShortcuts({
 
+    currentCard,
 
-  const currentCard = sessionCards[0];
+    revealed,
+    setRevealed,
 
-  if (sessionCards.length === 0) {
+    handleAnswer
+
+  });
+
+  if (!sessionCards.length) {
+
     return (
-      <div className="study-page">
-        <h1>🎉 Study completed!</h1>
-        <p>No cards to review.</p>
-      </div>
-    );
-  }
 
-  function handleAnswer(quality) {
+      <StudySummary
 
-    answerFlashcard(currentCard.id, quality);
+        stats={stats}
 
-    setSessionCards(previous =>
-      previous.filter(card => card.id !== currentCard.id)
+        totalCards={totalCards}
+
+        onRestart={restartSession}
+
+      />
+
     );
 
-    setRevealed(false);
   }
 
   return (
+
     <div className="study-page">
 
       <h1>Study Mode</h1>
 
-      <div className="progress-container">
+      <StudyProgress
+        totalCards={totalCards}
+        sessionCards={sessionCards}
+      />
 
-        <div
-          className="progress-bar"
-          style={{
-            width: `${((totalCards - sessionCards.length) / totalCards) * 100}%`
-          }}
-        />
+      <StudyCard
+        card={currentCard}
+        revealed={revealed}
+      />
 
-      </div>
+      {
 
-      <p className="study-progress">
-        {totalCards - sessionCards.length} / {totalCards}
-      </p>
+        !revealed
 
-      <div className="study-container"></div>
+          ?
 
-      <p className="study-progress">
-        Card {totalCards - sessionCards.length + 1} of {totalCards}
-      </p>
+          <RevealButton
+            onReveal={() => setRevealed(true)}
+          />
 
-      <div
-        className={`study-card ${revealed ? "revealed" : ""}`}
-      >
-        <div className="study-card-inner">
+          :
 
-          <div className="study-face study-front">
-            <h2>{currentCard.word}</h2>
-          </div>
+          <AnswerButtons
+            onAnswer={handleAnswer}
+          />
 
-          <div className="study-face study-back">
-            <h2>{currentCard.translation}</h2>
-          </div>
+      }
 
-        </div>
-      </div>
-
-      {!revealed ? (
-
-        <button
-          className="reveal-btn"
-          onClick={() => setRevealed(true)}
-        >
-          Reveal
-        </button>
-
-      ) : (
-
-        <div className="answer-buttons">
-
-          <button onClick={() => handleAnswer(1)} className="again-btn" >Again</button>
-          <button onClick={() => handleAnswer(3)} className="good-btn">Good</button>
-          <button onClick={() => handleAnswer(5)} className="easy-btn">Easy</button>
-
-        </div>
-
-      )}
-
-      
     </div>
+
   );
+
 }

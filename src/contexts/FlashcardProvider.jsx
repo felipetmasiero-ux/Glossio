@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { FlashcardContext } from "../contexts/FlashcardContext";
-import { updateCard } from "../utils/spacedRepetition";
+import { updateCard } from "../utils/flashcards/spacedRepetition";
 
 export function FlashcardProvider({ children }) {
 
