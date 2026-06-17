@@ -1,4 +1,7 @@
 .study-page {
+    background: #f5f7fb;
+
+
     min-height: 100vh;
 
     display: flex;
@@ -9,87 +12,137 @@
 }
 
 .study-container {
+
+    width: 420px;
+
+    height: 260px;
+
     display: flex;
-    flex-direction: column;
+
+    justify-content: center;
+
     align-items: center;
+
+    overflow: hidden;
+
 }
 
 .study-card {
-    width: 500px;
-    height: 320px;
 
-    margin: 30px 0 40px;
-    perspective: 1200px;
+    width: 360px;
+    height: 230px;
+
+    margin: 50px 0;
+
+    perspective: 1000px;
+
+    transition:
+        transform .35s ease,
+        opacity .35s ease;
+
+}
+
+.study-card.leaving {
+
+    transform:
+        translateX(-120px) rotate(-8deg);
+
+    opacity: 0;
+
 }
 
 .study-card-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
 
-  transition: transform .6s;
-  transform-style: preserve-3d;
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    transition: transform .6s;
+
+    transform-style: preserve-3d;
+
 }
 
 .study-card.revealed .study-card-inner {
-  transform: rotateY(180deg);
+
+    transform: rotateY(180deg);
+
 }
 
 .study-face {
-  position: absolute;
 
-  width: 100%;
-  height: 100%;
+    position: absolute;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    inset: 0;
 
-  border-radius: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  background: white;
+    padding: 30px;
 
-  box-shadow:
-    0 12px 35px rgba(0,0,0,.12);
+    border-radius: 24px;
 
-  backface-visibility: hidden;
+    border: 2px solid #e5e7eb;
 
-  padding: 30px;
-}
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, .12);
 
-.study-front {
-  transform: rotateY(0deg);
-}
 
-.study-back {
-  transform: rotateY(180deg);
+    background: white;
+
+    backface-visibility: hidden;
+
 }
 
 .study-face h2 {
-  font-size: 42px;
-  font-weight: 600;
-  text-align: center;
+
+    font-size: 42px;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    line-height: 1.4;
+
 }
 
-.reveal-btn{
-    margin-top:30px;
-
-    width:220px;
-    height:55px;
-
-    border:none;
-    border-radius:12px;
-
-    font-size:18px;
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.2s;
+.study-front {
+    transform: rotateY(0deg);
 }
 
-.reveal-btn:hover{
-    transform:translateY(-2px);
+.study-back {
+
+    transform: rotateY(180deg);
+
+}
+
+.study-face h2 {
+    font-size: 42px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.reveal-btn {
+    margin-top: 30px;
+
+    width: 220px;
+    height: 55px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 18px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+.reveal-btn:hover {
+    transform: translateY(-2px);
 }
 
 .answer-buttons {
@@ -112,20 +165,20 @@
 
 
 
-.progress-container{
-    width:500px;
-    height:10px;
+.progress-container {
+    width: 500px;
+    height: 10px;
 
-    background:#ddd;
+    background: #ddd;
 
-    margin:auto;
+    margin: auto;
 
-    border-radius:10px;
+    border-radius: 10px;
 
-    overflow:hidden;
+    overflow: hidden;
 }
 
-.progress-bar{
-    height:100%;
-    transition:.3s;
+.progress-bar {
+    height: 100%;
+    transition: .3s;
 }

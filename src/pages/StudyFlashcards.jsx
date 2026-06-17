@@ -25,16 +25,23 @@ export function StudyFlashcards() {
   const {
 
     revealed,
+
     setRevealed,
 
     sessionCards,
+
     totalCards,
 
     currentCard,
 
     stats,
 
+    completed,
+
+    leaving,
+
     handleAnswer,
+
     restartSession
 
   } = useStudySession(
@@ -42,6 +49,7 @@ export function StudyFlashcards() {
     language,
     answerFlashcard
   );
+
 
   useKeyboardShortcuts({
 
@@ -73,41 +81,35 @@ export function StudyFlashcards() {
   }
 
   return (
-
     <div className="study-page">
-
       <h1>Study Mode</h1>
 
       <StudyProgress
-        totalCards={totalCards}
-        sessionCards={sessionCards}
+        completed={completed}
+        total={totalCards}
       />
 
-      <StudyCard
-        card={currentCard}
-        revealed={revealed}
-      />
+      <div className="study-container">
+        <StudyCard
+          card={currentCard}
+          revealed={revealed}
+          leaving={leaving}
+        />
+      </div>
 
       {
-
         !revealed
-
-          ?
-
-          <RevealButton
-            onReveal={() => setRevealed(true)}
-          />
-
-          :
-
-          <AnswerButtons
-            onAnswer={handleAnswer}
-          />
-
+          ? (
+            <RevealButton
+              onReveal={() => setRevealed(true)}
+            />
+          )
+          : (
+            <AnswerButtons
+              onAnswer={handleAnswer}
+            />
+          )
       }
-
     </div>
-
   );
-
 }

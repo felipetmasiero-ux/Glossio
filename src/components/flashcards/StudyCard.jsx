@@ -1,7 +1,11 @@
-export function StudyCard({ card, revealed }) {
+export function StudyCard({ card, revealed, leaving }) {
   return (
     <div
-      className={`study-card ${revealed ? "revealed" : ""}`}
+      className={`
+        study-card
+        ${revealed ? "revealed" : ""}
+        ${leaving ? "leaving" : ""}
+    `}
     >
       <div className="study-card-inner">
 

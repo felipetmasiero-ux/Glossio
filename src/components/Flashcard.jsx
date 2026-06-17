@@ -1,6 +1,6 @@
 import "./FlashCard.css"
 
-export function Flashcard({ card,removeFlashcard }) {
+export function Flashcard({ card, removeFlashcard }) {
 
   return (
     <div className="flashcard-card">
@@ -11,6 +11,15 @@ export function Flashcard({ card,removeFlashcard }) {
 
       <p className="flashcard-translation">
         {card.translation}
+      </p>
+
+      <p>
+        Interval: {card.interval} days
+      </p>
+
+      <p>
+        Next review:
+        {new Date(card.nextReview).toLocaleString()}
       </p>
 
       <button

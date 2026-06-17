@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 
 export function useStudySession(
   flashcards,
@@ -30,9 +30,13 @@ export function useStudySession(
 
   const currentCard = sessionCards[0];
 
-  function handleAnswer(quality) {
+  const [leaving, setLeaving] = useState(false);
 
-    answerFlashcard(currentCard.id, quality);
+  const handleAnswer = useCallback((quality) => {
+
+    if (!currentCard) return;
+
+    setLeaving(true);
 
     if (quality === 1) {
       setStats(prev => ({
@@ -55,12 +59,20 @@ export function useStudySession(
       }));
     }
 
-    setSessionCards(previous =>
-      previous.filter(card => card.id !== currentCard.id)
-    );
+    setTimeout(() => {
 
-    setRevealed(false);
-  }
+      answerFlashcard(currentCard.id, quality);
+
+      setSessionCards(previous =>
+        previous.filter(card => card.id !== currentCard.id)
+      );
+
+      setLeaving(false);
+      setRevealed(false);
+
+    }, 350);
+
+  }, [answerFlashcard, currentCard]);
 
   function restartSession() {
 
@@ -98,6 +110,7 @@ export function useStudySession(
 
     stats,
     completed,
+    leaving,
 
     handleAnswer,
     restartSession
