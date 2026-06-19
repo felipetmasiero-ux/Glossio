@@ -1,0 +1,40 @@
+.study-summary{
+
+    max-width:600px;
+
+    margin:auto;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:24px;
+
+    text-align:center;
+
+    padding:40px;
+
+}
+
+.summary-stats{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+
+}
+
+.summary-card{
+
+    padding:24px;
+
+    background:white;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 8px 30px rgba(0,0,0,.08);
+
+}

@@ -15,6 +15,7 @@ export function Navbar() {
     { to: "/flashcards", label: "Flashcards" },
     { to: "/study", label: "Estudo" },
     { to: "/alphabets", label: "Alfabetos" },
+    { to: "/my-flashcards", label: "My Flashcards"  }
   ];
 
   if (location.pathname === "/") return null;

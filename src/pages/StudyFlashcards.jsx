@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 import { FlashcardContext } from "../contexts/FlashcardContext";
 import { LanguageContext } from "../contexts/LanguageContext";
@@ -11,10 +11,14 @@ import { StudyProgress } from "../components/flashcards/StudyProgress";
 import { RevealButton } from "../components/flashcards/RevealButton";
 import { AnswerButtons } from "../components/flashcards/AnswerButtons";
 import { StudySummary } from "../components/flashcards/StudySummary";
+import { StudyDashboard } from "../components/flashcards/StudyDashboard";
 
 import "./StudyFlashcards.css";
 
 export function StudyFlashcards() {
+
+  const [started, setStarted] =
+    useState(false);
 
   const { flashcards, answerFlashcard } =
     useContext(FlashcardContext);
@@ -30,13 +34,13 @@ export function StudyFlashcards() {
 
     sessionCards,
 
-    totalCards,
-
     currentCard,
 
     stats,
 
-    completed,
+    completedCards,
+
+    initialSessionSize,
 
     leaving,
 
@@ -62,18 +66,32 @@ export function StudyFlashcards() {
 
   });
 
+  if (!started) {
+
+    return (
+
+      <StudyDashboard
+
+        dueCards={sessionCards.length}
+
+        totalCards={flashcards.length}
+
+        onStart={() => setStarted(true)}
+
+      />
+
+    );
+
+  }
+
   if (!sessionCards.length) {
 
     return (
 
       <StudySummary
-
         stats={stats}
-
-        totalCards={totalCards}
-
+        totalCards={initialSessionSize}
         onRestart={restartSession}
-
       />
 
     );
@@ -85,8 +103,8 @@ export function StudyFlashcards() {
       <h1>Study Mode</h1>
 
       <StudyProgress
-        completed={completed}
-        total={totalCards}
+        completed={completedCards}
+        total={initialSessionSize}
       />
 
       <div className="study-container">

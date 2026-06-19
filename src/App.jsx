@@ -9,6 +9,7 @@ import { ContentReader } from './pages/ContentReader'
 import { StudyFlashcards } from './pages/StudyFlashcards'
 import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
+import { FlashcardsDashboard } from "./pages/FlashcardsDashboard";
 
 import { Navbar } from './components/Navbar'
 import { LanguageContext } from './contexts/LanguageContext'
@@ -72,6 +73,11 @@ function App() {
             <Route
               path="/alphabets"
               element={<Alphabets />}
+            />
+
+            <Route
+              path="/my-flashcards"
+              element={<FlashcardsDashboard />}
             />
           </Routes>
         </div>

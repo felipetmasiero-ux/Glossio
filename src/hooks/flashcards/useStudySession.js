@@ -6,6 +6,13 @@ export function useStudySession(
   answerFlashcard
 ) {
 
+  function getDueCards(now = Date.now()) {
+    return flashcards.filter(card =>
+      card.language === language &&
+      card.nextReview <= now
+    );
+  }
+
   const [stats, setStats] = useState({
     again: 0,
     good: 0,
@@ -15,18 +22,17 @@ export function useStudySession(
   const [revealed, setRevealed] =
     useState(false);
 
-  const [sessionStart] =
-    useState(() => Date.now());
+  const [sessionStart] = useState(() => Date.now());
 
-  const [sessionCards, setSessionCards] =
-    useState(() =>
-      flashcards.filter(card =>
-        card.language === language &&
-        card.nextReview <= sessionStart
-      )
-    );
+  const [sessionCards, setSessionCards] = useState(() =>
+    getDueCards(sessionStart)
+  );
 
-  const [totalCards] = useState(sessionCards.length);
+  const [initialSessionSize, setInitialSessionSize] = useState(
+    () => getDueCards(sessionStart).length
+  );
+
+  const [completedCards, setCompletedCards] = useState(0);
 
   const currentCard = sessionCards[0];
 
@@ -38,34 +44,39 @@ export function useStudySession(
 
     setLeaving(true);
 
-    if (quality === 1) {
-      setStats(prev => ({
-        ...prev,
-        again: prev.again + 1
-      }));
+    if (quality !== 1) {
+      setCompletedCards(prev => prev + 1);
     }
 
-    if (quality === 3) {
-      setStats(prev => ({
-        ...prev,
-        good: prev.good + 1
-      }));
-    }
+    const key =
+      quality === 1
+        ? "again"
+        : quality === 3
+          ? "good"
+          : "easy";
 
-    if (quality === 5) {
-      setStats(prev => ({
-        ...prev,
-        easy: prev.easy + 1
-      }));
-    }
+    setStats(prev => ({
+      ...prev,
+      [key]: prev[key] + 1
+    }));
 
     setTimeout(() => {
 
       answerFlashcard(currentCard.id, quality);
 
-      setSessionCards(previous =>
-        previous.filter(card => card.id !== currentCard.id)
-      );
+      setSessionCards(previous => {
+
+        const remaining = previous.filter(
+          card => card.id !== currentCard.id
+        );
+
+        if (quality === 1) {
+          return [...remaining, currentCard];
+        }
+
+        return remaining;
+
+      });
 
       setLeaving(false);
       setRevealed(false);
@@ -76,14 +87,10 @@ export function useStudySession(
 
   function restartSession() {
 
-    const now = Date.now();
-
-    const cards = flashcards.filter(card =>
-      card.language === language &&
-      card.nextReview <= now
-    );
+    const cards = getDueCards();
 
     setSessionCards(cards);
+    setInitialSessionSize(cards.length);
 
     setStats({
       again: 0,
@@ -91,25 +98,21 @@ export function useStudySession(
       easy: 0
     });
 
+    setCompletedCards(0);
     setRevealed(false);
-
   }
 
-  const completed =
-    stats.again +
-    stats.good +
-    stats.easy;
-
   return {
+
     revealed,
     setRevealed,
 
     sessionCards,
-    totalCards,
+    completedCards,
+    initialSessionSize,
     currentCard,
 
     stats,
-    completed,
     leaving,
 
     handleAnswer,

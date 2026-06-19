@@ -1,184 +1,34 @@
 .study-page {
-    background: #f5f7fb;
-
 
     min-height: 100vh;
+
+    padding: 40px 20px;
+
+    background: #f5f7fb;
 
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    padding: 40px 20px;
 }
 
-.study-container {
+.study-page h1{
 
-    width: 420px;
+    margin-bottom:32px;
 
-    height: 260px;
+    font-size:2.5rem;
 
-    display: flex;
-
-    justify-content: center;
-
-    align-items: center;
-
-    overflow: hidden;
+    font-weight:700;
 
 }
 
-.study-card {
+.study-container{
 
-    width: 360px;
-    height: 230px;
+    width:100%;
 
-    margin: 50px 0;
+    display:flex;
 
-    perspective: 1000px;
+    justify-content:center;
 
-    transition:
-        transform .35s ease,
-        opacity .35s ease;
+    margin:50px 0;
 
-}
-
-.study-card.leaving {
-
-    transform:
-        translateX(-120px) rotate(-8deg);
-
-    opacity: 0;
-
-}
-
-.study-card-inner {
-
-    position: relative;
-
-    width: 100%;
-    height: 100%;
-
-    transition: transform .6s;
-
-    transform-style: preserve-3d;
-
-}
-
-.study-card.revealed .study-card-inner {
-
-    transform: rotateY(180deg);
-
-}
-
-.study-face {
-
-    position: absolute;
-
-    inset: 0;
-
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    padding: 30px;
-
-    border-radius: 24px;
-
-    border: 2px solid #e5e7eb;
-
-    box-shadow:
-        0 15px 45px rgba(0, 0, 0, .12);
-
-
-    background: white;
-
-    backface-visibility: hidden;
-
-}
-
-.study-face h2 {
-
-    font-size: 42px;
-
-    font-weight: 700;
-
-    text-align: center;
-
-    line-height: 1.4;
-
-}
-
-.study-front {
-    transform: rotateY(0deg);
-}
-
-.study-back {
-
-    transform: rotateY(180deg);
-
-}
-
-.study-face h2 {
-    font-size: 42px;
-    font-weight: 600;
-    text-align: center;
-}
-
-.reveal-btn {
-    margin-top: 30px;
-
-    width: 220px;
-    height: 55px;
-
-    border: none;
-    border-radius: 12px;
-
-    font-size: 18px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition: .2s;
-}
-
-.reveal-btn:hover {
-    transform: translateY(-2px);
-}
-
-.answer-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.answer-buttons button {
-    width: 120px;
-    height: 50px;
-
-    border: none;
-    border-radius: 12px;
-
-    font-size: 16px;
-    cursor: pointer;
-}
-
-
-
-.progress-container {
-    width: 500px;
-    height: 10px;
-
-    background: #ddd;
-
-    margin: auto;
-
-    border-radius: 10px;
-
-    overflow: hidden;
-}
-
-.progress-bar {
-    height: 100%;
-    transition: .3s;
 }

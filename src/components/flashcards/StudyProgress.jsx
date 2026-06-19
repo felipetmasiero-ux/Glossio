@@ -1,12 +1,12 @@
 export function StudyProgress({
-  completed,
+  completedCards,
   total
 }) {
 
   const percentage =
     total === 0
       ? 0
-      : (completed / total) * 100;
+      : (completedCards / total) * 100;
 
   return (
     <>
@@ -20,11 +20,11 @@ export function StudyProgress({
       </div>
 
       <p className="study-progress">
-        {completed} / {total}
+        {completedCards} / {total}
       </p>
 
       <p className="study-progress">
-        Card {completed + 1} of {total}
+        Card {completedCards + 1} of {total}
       </p>
     </>
   );

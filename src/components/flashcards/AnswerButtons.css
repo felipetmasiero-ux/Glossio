@@ -1,0 +1,35 @@
+.answer-buttons{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:25px;
+
+}
+
+.answer-buttons button{
+
+    width:120px;
+
+    height:52px;
+
+    border:none;
+
+    border-radius:14px;
+
+    font-size:16px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.answer-buttons button:hover{
+
+    transform:translateY(-2px);
+
+}
