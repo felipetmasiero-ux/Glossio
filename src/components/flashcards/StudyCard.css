@@ -7,6 +7,8 @@
 
     perspective:1200px;
 
+    will-change: transform, opacity;
+
     transition:
         transform .35s ease,
         opacity .35s ease;

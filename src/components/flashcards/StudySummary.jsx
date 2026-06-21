@@ -1,3 +1,5 @@
+import "./StudySummary.css"
+
 export function StudySummary({
 
     stats,

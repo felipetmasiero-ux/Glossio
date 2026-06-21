@@ -13,7 +13,7 @@ export function Navbar() {
   const navLinks = [
     { to: "/content", label: "Conteúdo" },
     { to: "/flashcards", label: "Flashcards" },
-    { to: "/study", label: "Estudo" },
+    { to: "/exercises", label: "Exercícios" },
     { to: "/alphabets", label: "Alfabetos" },
     { to: "/my-flashcards", label: "My Flashcards"  }
   ];

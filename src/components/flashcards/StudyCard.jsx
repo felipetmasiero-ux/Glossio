@@ -1,3 +1,5 @@
+import "./StudyCard.css"
+
 export function StudyCard({ card, revealed, leaving }) {
   return (
     <div

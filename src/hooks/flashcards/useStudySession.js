@@ -1,4 +1,27 @@
-import { useState, useCallback } from "react";
+import {
+  useCallback,
+  useReducer
+} from "react";
+
+import {
+  getDueCards,
+} from "../../utils/study";
+
+import {
+  studyReducer,
+  initialStudyState
+} from "../../reducers/studyReducer";
+
+import {
+  ANSWER,
+  UPDATE_QUEUE,
+  START_SESSION,
+  REVEAL,
+  START_LEAVING,
+  FINISH_LEAVING,
+} from "../../constants/studyActions";
+
+
 
 export function useStudySession(
   flashcards,
@@ -6,117 +29,111 @@ export function useStudySession(
   answerFlashcard
 ) {
 
-  function getDueCards(now = Date.now()) {
-    return flashcards.filter(card =>
-      card.language === language &&
-      card.nextReview <= now
+  const [studyState, dispatch] =
+    useReducer(
+      studyReducer,
+      initialStudyState
     );
-  }
 
-  const [stats, setStats] = useState({
-    again: 0,
-    good: 0,
-    easy: 0
-  });
 
-  const [revealed, setRevealed] =
-    useState(false);
+  const currentCard =
+    studyState.sessionCards[0];
 
-  const [sessionStart] = useState(() => Date.now());
+  const startSession = useCallback(() => {
 
-  const [sessionCards, setSessionCards] = useState(() =>
-    getDueCards(sessionStart)
-  );
+    const cards =
+      getDueCards(
+        flashcards,
+        language
+      );
 
-  const [initialSessionSize, setInitialSessionSize] = useState(
-    () => getDueCards(sessionStart).length
-  );
+    dispatch({
 
-  const [completedCards, setCompletedCards] = useState(0);
+      type: START_SESSION,
 
-  const currentCard = sessionCards[0];
+      cards
 
-  const [leaving, setLeaving] = useState(false);
+    });
+
+  }, [flashcards, language]);
+
+  const revealCard = useCallback(() => {
+
+    dispatch({
+      type: REVEAL
+    });
+
+  }, []);
 
   const handleAnswer = useCallback((quality) => {
 
     if (!currentCard) return;
 
-    setLeaving(true);
+    const card = currentCard;
 
-    if (quality !== 1) {
-      setCompletedCards(prev => prev + 1);
-    }
+    dispatch({
 
-    const key =
-      quality === 1
-        ? "again"
-        : quality === 3
-          ? "good"
-          : "easy";
+      type: START_LEAVING
 
-    setStats(prev => ({
-      ...prev,
-      [key]: prev[key] + 1
-    }));
+    });
+
+    dispatch({
+
+      type: ANSWER,
+
+      quality
+
+    });
 
     setTimeout(() => {
 
-      answerFlashcard(currentCard.id, quality);
+      answerFlashcard(card.id, quality);
 
-      setSessionCards(previous => {
+      dispatch({
 
-        const remaining = previous.filter(
-          card => card.id !== currentCard.id
-        );
+        type: UPDATE_QUEUE,
 
-        if (quality === 1) {
-          return [...remaining, currentCard];
-        }
+        card,
 
-        return remaining;
+        quality
 
       });
 
-      setLeaving(false);
-      setRevealed(false);
+      dispatch({
+
+        type: FINISH_LEAVING
+
+      });
 
     }, 350);
 
   }, [answerFlashcard, currentCard]);
 
-  function restartSession() {
-
-    const cards = getDueCards();
-
-    setSessionCards(cards);
-    setInitialSessionSize(cards.length);
-
-    setStats({
-      again: 0,
-      good: 0,
-      easy: 0
-    });
-
-    setCompletedCards(0);
-    setRevealed(false);
-  }
+  const restartSession = startSession;
 
   return {
 
-    revealed,
-    setRevealed,
+    revealed: studyState.revealed,
 
-    sessionCards,
-    completedCards,
-    initialSessionSize,
+    sessionCards: studyState.sessionCards,
+
+    initialSessionSize: studyState.initialSessionSize,
+
+    completedCards: studyState.completedCards,
+
     currentCard,
 
-    stats,
-    leaving,
+    stats: studyState.stats,
+
+    leaving: studyState.leaving,
 
     handleAnswer,
-    restartSession
-  };
 
+    startSession, 
+
+    restartSession,
+
+    revealCard
+
+  };
 }

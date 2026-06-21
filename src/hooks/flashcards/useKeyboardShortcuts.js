@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export function useKeyboardShortcuts({
   currentCard,
   revealed,
-  setRevealed,
+  revealCard,
   handleAnswer
 }) {
 
@@ -15,7 +15,7 @@ export function useKeyboardShortcuts({
 
       if (!revealed && event.code === "Space") {
         event.preventDefault();
-        setRevealed(true);
+        revealCard();
         return;
       }
 
@@ -57,7 +57,7 @@ export function useKeyboardShortcuts({
     currentCard,
     revealed,
     handleAnswer,
-    setRevealed
+    revealCard
   ]);
 
 }

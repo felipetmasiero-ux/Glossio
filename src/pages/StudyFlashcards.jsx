@@ -12,6 +12,7 @@ import { RevealButton } from "../components/flashcards/RevealButton";
 import { AnswerButtons } from "../components/flashcards/AnswerButtons";
 import { StudySummary } from "../components/flashcards/StudySummary";
 import { StudyDashboard } from "../components/flashcards/StudyDashboard";
+import { getDueCards } from "../utils/study";
 
 import "./StudyFlashcards.css";
 
@@ -30,7 +31,7 @@ export function StudyFlashcards() {
 
     revealed,
 
-    setRevealed,
+    revealCard,
 
     sessionCards,
 
@@ -46,6 +47,8 @@ export function StudyFlashcards() {
 
     handleAnswer,
 
+    startSession,
+
     restartSession
 
   } = useStudySession(
@@ -60,11 +63,16 @@ export function StudyFlashcards() {
     currentCard,
 
     revealed,
-    setRevealed,
+    revealCard,
 
     handleAnswer
 
   });
+
+  const dueCards = getDueCards(
+    flashcards,
+    language
+  ).length;
 
   if (!started) {
 
@@ -72,11 +80,17 @@ export function StudyFlashcards() {
 
       <StudyDashboard
 
-        dueCards={sessionCards.length}
+        dueCards={dueCards}
 
         totalCards={flashcards.length}
 
-        onStart={() => setStarted(true)}
+        onStart={() => {
+
+          startSession();
+
+          setStarted(true);
+
+        }}
 
       />
 
@@ -103,7 +117,7 @@ export function StudyFlashcards() {
       <h1>Study Mode</h1>
 
       <StudyProgress
-        completed={completedCards}
+        completedCards={completedCards}
         total={initialSessionSize}
       />
 
@@ -119,7 +133,7 @@ export function StudyFlashcards() {
         !revealed
           ? (
             <RevealButton
-              onReveal={() => setRevealed(true)}
+              onReveal={revealCard}
             />
           )
           : (

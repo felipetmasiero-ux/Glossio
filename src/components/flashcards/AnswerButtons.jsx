@@ -1,3 +1,5 @@
+import "./AnswerButtons.css"
+
 export function AnswerButtons({ onAnswer }) {
   return (
     <div className="answer-buttons">

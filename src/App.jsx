@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 
 import { LanguageSelection } from './pages/LanguageSelection'
 import { Content } from './pages/Content'
-import { Study } from './pages/Study'
+import { Exercises } from './pages/Exercises'
 import { ContentReader } from './pages/ContentReader'
 import { StudyFlashcards } from './pages/StudyFlashcards'
 import { Alphabets } from './pages/Alphabets'
@@ -61,8 +61,8 @@ function App() {
             />
 
             <Route
-              path="/study"
-              element={<Study />}
+              path="/exercises"
+              element={<Exercises />}
             />
 
             <Route

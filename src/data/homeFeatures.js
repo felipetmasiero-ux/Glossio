@@ -16,9 +16,9 @@ export const homeFeatures = [
     bg: "var(--purple-light)",
   },
   {
-    to: "/study",
+    to: "/exercises",
     icon: "✏️",
-    label: "Estudo",
+    label: "Exercicíos",
     description: "Exercícios interativos",
     accent: "#D85A30",
     bg: "#FAECE7",

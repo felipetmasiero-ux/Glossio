@@ -1,3 +1,5 @@
+import "./StudyProgress.css"
+
 export function StudyProgress({
   completedCards,
   total
@@ -25,6 +27,10 @@ export function StudyProgress({
 
       <p className="study-progress">
         Card {completedCards + 1} of {total}
+      </p>
+
+      <p className="study-progress-text">
+        {completedCards} / {total} ({Math.round((completedCards / total) * 100)}%)
       </p>
     </>
   );

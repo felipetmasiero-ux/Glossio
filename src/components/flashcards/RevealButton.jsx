@@ -1,3 +1,5 @@
+import "./RevealButton.css"
+
 export function RevealButton({ onReveal }) {
   return (
     <button
