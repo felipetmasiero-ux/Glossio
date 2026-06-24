@@ -12,6 +12,8 @@ import {
     GOOD
 } from "../constants/studyQuality";
 
+import { updateSessionQueue } from "../utils/studyUtils";   
+
 export const initialStudyState = {
 
     stats: {
@@ -111,25 +113,19 @@ export function studyReducer(state, action) {
                 initialSessionSize: action.cards.length
 
             };
-        case UPDATE_QUEUE: {
-
-            const remaining =
-                state.sessionCards.filter(
-                    c => c.id !== action.card.id
-                );
+        case UPDATE_QUEUE:
 
             return {
 
                 ...state,
 
-                sessionCards:
-                    action.quality === AGAIN
-                        ? [...remaining, action.card]
-                        : remaining
+                sessionCards: updateSessionQueue(
+                    state.sessionCards,
+                    action.card,
+                    action.quality
+                )
 
             };
-
-        }
 
         default:
 

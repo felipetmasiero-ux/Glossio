@@ -21,6 +21,7 @@ import {
   FINISH_LEAVING,
 } from "../../constants/studyActions";
 
+import { CARD_EXIT_ANIMATION } from "../../constants/studyTiming";
 
 
 export function useStudySession(
@@ -105,7 +106,7 @@ export function useStudySession(
 
       });
 
-    }, 350);
+    }, CARD_EXIT_ANIMATION);
 
   }, [answerFlashcard, currentCard]);
 

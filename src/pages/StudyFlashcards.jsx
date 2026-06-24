@@ -12,7 +12,7 @@ import { RevealButton } from "../components/flashcards/RevealButton";
 import { AnswerButtons } from "../components/flashcards/AnswerButtons";
 import { StudySummary } from "../components/flashcards/StudySummary";
 import { StudyDashboard } from "../components/flashcards/StudyDashboard";
-import { getDueCards } from "../utils/study";
+import { getStudyStats } from "../utils/study";
 
 import "./StudyFlashcards.css";
 
@@ -69,31 +69,23 @@ export function StudyFlashcards() {
 
   });
 
-  const dueCards = getDueCards(
+  const dashboardStats = getStudyStats(
     flashcards,
     language
-  ).length;
+  );
 
   if (!started) {
 
     return (
 
       <StudyDashboard
-
-        dueCards={dueCards}
-
-        totalCards={flashcards.length}
-
+        dueCards={dashboardStats.due}
+        totalCards={dashboardStats.total}
         onStart={() => {
-
           startSession();
-
           setStarted(true);
-
         }}
-
       />
-
     );
 
   }

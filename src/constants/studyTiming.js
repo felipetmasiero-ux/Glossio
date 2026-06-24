@@ -1,0 +1,1 @@
+export const CARD_EXIT_ANIMATION = 350;

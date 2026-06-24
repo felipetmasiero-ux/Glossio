@@ -1,7 +1,7 @@
 import { getDueCards } from "./getDueCards";
 import { updateProgress } from "./updateProgress";
 import { updateQueue } from "./updateQueue";
-import { updateStats } from "./updateStats";
+import { updateStats } from "./updateStats";     
 
 export {
     getDueCards,

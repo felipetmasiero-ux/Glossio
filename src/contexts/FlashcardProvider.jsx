@@ -1,20 +1,18 @@
 import { useState, useEffect } from "react";
 import { FlashcardContext } from "../contexts/FlashcardContext";
-import { updateCard } from "../utils/flashcards/spacedRepetition";
+import { scheduleCard } from "../utils/study/scheduling";
+import {
+    createFlashcard,
+    loadFlashcards,
+    saveFlashcards
+} from "../utils/flashcards";
 
 export function FlashcardProvider({ children }) {
 
-    const [flashcards, setFlashcards] = useState(() => {
-        const saved = localStorage.getItem("flashcards");
-
-        return saved ? JSON.parse(saved) : [];
-    });
+    const [flashcards, setFlashcards] = useState(loadFlashcards);
 
     useEffect(() => {
-        localStorage.setItem(
-            "flashcards",
-            JSON.stringify(flashcards)
-        );
+        saveFlashcards(flashcards);
     }, [flashcards]);
 
     function addFlashcard(word, language) {
@@ -29,17 +27,11 @@ export function FlashcardProvider({ children }) {
 
             return [
                 ...previous,
-                {
-                    id: crypto.randomUUID(),
+                createFlashcard({
                     word: word.word,
                     translation: word.translation,
-                    language,
-
-                    ease: 2.5,
-                    interval: 1,
-                    repetitions: 0,
-                    nextReview: Date.now()
-                }
+                    language
+                })
             ];
         });
     }
@@ -55,7 +47,7 @@ export function FlashcardProvider({ children }) {
             previous.map(card => {
                 if (card.id !== cardId) return card;
 
-                return updateCard(card, quality);
+                return scheduleCard(card, quality);
             })
         );
     }
