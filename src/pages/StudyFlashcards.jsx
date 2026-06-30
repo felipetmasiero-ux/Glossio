@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 
 import { FlashcardContext } from "../contexts/FlashcardContext";
 import { LanguageContext } from "../contexts/LanguageContext";
+import { StudyHistoryContext } from "../contexts/StudyHistoryContext";
 
 import { useStudySession } from "../hooks/flashcards/useStudySession";
 import { useKeyboardShortcuts } from "../hooks/flashcards/useKeyboardShortcuts";
@@ -29,7 +30,7 @@ export function StudyFlashcards() {
     useContext(LanguageContext);
 
   const { studyHistory } =
-    useContext(FlashcardContext);
+    useContext(StudyHistoryContext);
 
   const {
 

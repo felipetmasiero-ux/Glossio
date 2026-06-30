@@ -17,6 +17,13 @@ export function getStreak(history) {
         };
     }
 
+    if (!Array.isArray(history)) {
+        return {
+            current: 0,
+            longest: 0
+        };
+    }
+    
     const studiedDays = [
         ...new Set(
             history.map(record =>

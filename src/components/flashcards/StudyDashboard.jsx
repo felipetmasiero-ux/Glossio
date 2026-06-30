@@ -5,6 +5,7 @@ export function StudyDashboard({
     dashboard,
     onStart
 }) {
+
     return (
         <div className="study-dashboard">
 
@@ -17,12 +18,12 @@ export function StudyDashboard({
             <div className="dashboard-stats">
 
                 <div className="dashboard-card">
-                    <h2>{dashboard.dueCards}</h2>
+                    <h2>{dashboard.due}</h2>
                     <span>Due Today</span>
                 </div>
 
                 <div className="dashboard-card">
-                    <h2>{dashboard.totalCards}</h2>
+                    <h2>{dashboard.total}</h2>
                     <span>Total Cards</span>
                 </div>
 
@@ -40,6 +41,16 @@ export function StudyDashboard({
                         }}
                     />
 
+                </div>
+
+                <div className="dashboard-card">
+                    <h2>🔥 {dashboard.streak.current}</h2>
+                    <span>Current Streak</span>
+                </div>
+
+                <div className="dashboard-card">
+                    <h2>🏆 {dashboard.streak.longest}</h2>
+                    <span>Best Streak</span>
                 </div>
 
             </div>

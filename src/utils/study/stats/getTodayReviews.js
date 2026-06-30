@@ -8,6 +8,14 @@ function getDayTimestamp(timestamp) {
 
 export function getTodayReviews(history) {
 
+    if (!Array.isArray(history)) {
+        return {
+            current: 0,
+            longest: 0
+        };
+    }
+
+
     const today = getDayTimestamp(Date.now());
 
     return history.filter(record =>
