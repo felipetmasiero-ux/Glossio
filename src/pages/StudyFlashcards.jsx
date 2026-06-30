@@ -12,7 +12,8 @@ import { RevealButton } from "../components/flashcards/RevealButton";
 import { AnswerButtons } from "../components/flashcards/AnswerButtons";
 import { StudySummary } from "../components/flashcards/StudySummary";
 import { StudyDashboard } from "../components/flashcards/StudyDashboard";
-import { getStudyStats } from "../utils/study";
+
+import { getDashboardData } from "../utils/study/dashboard";
 
 import "./StudyFlashcards.css";
 
@@ -26,6 +27,9 @@ export function StudyFlashcards() {
 
   const { language } =
     useContext(LanguageContext);
+
+  const { studyHistory } =
+    useContext(FlashcardContext);
 
   const {
 
@@ -57,6 +61,11 @@ export function StudyFlashcards() {
     answerFlashcard
   );
 
+  const dashboard = getDashboardData({
+    flashcards,
+    language,
+    studyHistory
+});
 
   useKeyboardShortcuts({
 
@@ -69,18 +78,16 @@ export function StudyFlashcards() {
 
   });
 
-  const dashboardStats = getStudyStats(
-    flashcards,
-    language
-  );
+
 
   if (!started) {
+
+
 
     return (
 
       <StudyDashboard
-        dueCards={dashboardStats.due}
-        totalCards={dashboardStats.total}
+        dashboard={dashboard}
         onStart={() => {
           startSession();
           setStarted(true);

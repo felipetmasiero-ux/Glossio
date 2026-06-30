@@ -12,7 +12,7 @@ import {
     GOOD
 } from "../constants/studyQuality";
 
-import { updateSessionQueue } from "../utils/studyUtils";   
+import { updateSessionQueue } from "../utils/study/session/updateSessionQueue";   
 
 export const initialStudyState = {
 

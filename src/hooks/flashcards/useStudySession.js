@@ -1,11 +1,12 @@
 import {
   useCallback,
+  useContext,
   useReducer
 } from "react";
 
 import {
   getDueCards,
-} from "../../utils/study";
+} from "../../utils/study/session";
 
 import {
   studyReducer,
@@ -23,6 +24,8 @@ import {
 
 import { CARD_EXIT_ANIMATION } from "../../constants/studyTiming";
 
+import { StudyHistoryContext } from "../../contexts/StudyHistoryContext";
+
 
 export function useStudySession(
   flashcards,
@@ -30,12 +33,14 @@ export function useStudySession(
   answerFlashcard
 ) {
 
+  const { addStudyRecord } =
+    useContext(StudyHistoryContext);
+
   const [studyState, dispatch] =
     useReducer(
       studyReducer,
       initialStudyState
     );
-
 
   const currentCard =
     studyState.sessionCards[0];
@@ -49,11 +54,8 @@ export function useStudySession(
       );
 
     dispatch({
-
       type: START_SESSION,
-
       cards
-
     });
 
   }, [flashcards, language]);
@@ -72,69 +74,41 @@ export function useStudySession(
 
     const card = currentCard;
 
-    dispatch({
+    dispatch({ type: START_LEAVING });
 
-      type: START_LEAVING
-
-    });
-
-    dispatch({
-
-      type: ANSWER,
-
-      quality
-
-    });
+    dispatch({ type: ANSWER, quality });
 
     setTimeout(() => {
 
       answerFlashcard(card.id, quality);
 
-      dispatch({
+      addStudyRecord(card.id, quality);
 
+      dispatch({
         type: UPDATE_QUEUE,
-
         card,
-
         quality
-
       });
 
-      dispatch({
-
-        type: FINISH_LEAVING
-
-      });
+      dispatch({ type: FINISH_LEAVING });
 
     }, CARD_EXIT_ANIMATION);
 
-  }, [answerFlashcard, currentCard]);
+  }, [answerFlashcard, addStudyRecord, currentCard]);
 
   const restartSession = startSession;
 
   return {
-
     revealed: studyState.revealed,
-
     sessionCards: studyState.sessionCards,
-
     initialSessionSize: studyState.initialSessionSize,
-
     completedCards: studyState.completedCards,
-
     currentCard,
-
     stats: studyState.stats,
-
     leaving: studyState.leaving,
-
     handleAnswer,
-
-    startSession, 
-
+    startSession,
     restartSession,
-
     revealCard
-
   };
 }

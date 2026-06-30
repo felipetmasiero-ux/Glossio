@@ -31,6 +31,8 @@ export function normalizeFlashcard(card) {
 
         lastReviewedAt:
             card.lastReviewedAt ??
-            null
+            null,
+
+        favorite: card.favorite ?? false,
     };
 }

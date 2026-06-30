@@ -12,20 +12,22 @@ export function createFlashcard({
     const now = Date.now();
 
     return {
-        id: crypto.randomUUID(),
+    id: crypto.randomUUID(),
 
-        word,
-        translation,
-        language,
+    word,
+    translation,
+    language,
 
-        createdAt: now,
-        updatedAt: now,
+    favorite: false,
 
-        repetitions: DEFAULT_REPETITIONS,
-        interval: DEFAULT_INTERVAL,
-        easeFactor: DEFAULT_EASE_FACTOR,
+    createdAt: now,
+    updatedAt: now,
 
-        nextReview: now,
-        lastReviewedAt: null
-    };
+    repetitions: DEFAULT_REPETITIONS,
+    interval: DEFAULT_INTERVAL,
+    easeFactor: DEFAULT_EASE_FACTOR,
+
+    nextReview: now,
+    lastReviewedAt: null
+};
 }

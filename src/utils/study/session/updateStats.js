@@ -1,7 +1,7 @@
 import {
     AGAIN,
     GOOD
-} from "../../constants/studyQuality";
+} from "../../../constants/studyQuality.js";
 
 export function updateStats(
     quality,

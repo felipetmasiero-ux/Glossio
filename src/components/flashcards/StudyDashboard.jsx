@@ -1,8 +1,8 @@
 import "./StudyDashboard.css"
 
+
 export function StudyDashboard({
-    dueCards,
-    totalCards,
+    dashboard,
     onStart
 }) {
     return (
@@ -17,13 +17,29 @@ export function StudyDashboard({
             <div className="dashboard-stats">
 
                 <div className="dashboard-card">
-                    <h2>{dueCards}</h2>
+                    <h2>{dashboard.dueCards}</h2>
                     <span>Due Today</span>
                 </div>
 
                 <div className="dashboard-card">
-                    <h2>{totalCards}</h2>
+                    <h2>{dashboard.totalCards}</h2>
                     <span>Total Cards</span>
+                </div>
+
+                <div className="dashboard-card">
+                    <h2>{dashboard.dailyGoal.completed}/{dashboard.dailyGoal.goal}</h2>
+                    <span>Today's Goal</span>
+                </div>
+
+                <div className="goal-progress">
+
+                    <div
+                        className="goal-progress-fill"
+                        style={{
+                            width: `${dashboard.dailyGoal.progress}%`
+                        }}
+                    />
+
                 </div>
 
             </div>

@@ -1,4 +1,4 @@
-import { AGAIN } from "../../constants/studyQuality";
+import { AGAIN } from "../../../constants/studyQuality.js";
 
 export function updateProgress(
     quality,

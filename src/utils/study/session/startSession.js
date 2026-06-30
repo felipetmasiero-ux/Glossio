@@ -1,4 +1,4 @@
-import { getDueCards } from "../../utils/study/getDueCards";
+import { getDueCards } from "./getDueCards";
 export function startSession(
     flashcards,
     language

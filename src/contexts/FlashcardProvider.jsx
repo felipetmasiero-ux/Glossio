@@ -4,12 +4,16 @@ import { scheduleCard } from "../utils/study/scheduling";
 import {
     createFlashcard,
     loadFlashcards,
-    saveFlashcards
+    saveFlashcards,
+    toggleFavorite as toggleFavoriteCard
 } from "../utils/flashcards";
+
 
 export function FlashcardProvider({ children }) {
 
     const [flashcards, setFlashcards] = useState(loadFlashcards);
+
+
 
     useEffect(() => {
         saveFlashcards(flashcards);
@@ -52,13 +56,24 @@ export function FlashcardProvider({ children }) {
         );
     }
 
+    function toggleFavorite(cardId) {
+        setFlashcards(previous =>
+            previous.map(card =>
+                card.id === cardId
+                    ? toggleFavoriteCard(card)
+                    : card
+            )
+        );
+    }
+    
     return (
         <FlashcardContext.Provider value={{
             flashcards,
             setFlashcards,
             addFlashcard,
             removeFlashcard,
-            answerFlashcard
+            answerFlashcard,
+            toggleFavorite
         }}>
             {children}
         </FlashcardContext.Provider>
