@@ -2,29 +2,40 @@ import { describe, expect, it } from "vitest";
 
 import { scheduleCard } from "./scheduleCard";
 
+import {
+    AGAIN,
+    GOOD,
+    EASY
+} from "../../../constants/studyQuality";
+
 describe("scheduleCard", () => {
 
-    function createCard() {
+    function createCard(overrides = {}) {
 
-    return {
+        return {
 
-        repetitions: 0,
+            repetitions: 0,
 
-        interval: 0,
+            interval: 0,
 
-        easeFactor: 2.5,
+            easeFactor: 2.5,
 
-        nextReview: Date.now(),
+            nextReview: Date.now(),
 
-        updatedAt: Date.now()
+            updatedAt: Date.now(),
 
-    };
+            ...overrides
 
-}
+        };
+
+    }
 
     it("resets repetitions on AGAIN", () => {
 
-        const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard({ repetitions: 3 }),
+            AGAIN
+        );
 
         expect(updated.repetitions).toBe(0);
 
@@ -32,7 +43,10 @@ describe("scheduleCard", () => {
 
     it("increments repetitions on GOOD", () => {
 
-        const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard(),
+            GOOD
+        );
 
         expect(updated.repetitions).toBe(1);
 
@@ -40,23 +54,32 @@ describe("scheduleCard", () => {
 
     it("increments repetitions on EASY", () => {
 
-        const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard(),
+            EASY
+        );
 
         expect(updated.repetitions).toBe(1);
 
     });
 
-    it("updates ease factor", () => {
+    it("decreases ease factor on AGAIN", () => {
 
-       const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard(),
+            AGAIN
+        );
 
-        expect(updated.easeFactor).not.toBe(createCard().easeFactor);
+        expect(updated.easeFactor).toBeLessThan(2.5);
 
     });
 
     it("updates next review date", () => {
 
-        const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard(),
+            GOOD
+        );
 
         expect(updated.nextReview).toBeGreaterThan(Date.now());
 
@@ -64,7 +87,10 @@ describe("scheduleCard", () => {
 
     it("updates updatedAt", () => {
 
-        const updated = scheduleCard(createCard(), 4);
+        const updated = scheduleCard(
+            createCard(),
+            GOOD
+        );
 
         expect(updated.updatedAt).toBeDefined();
 

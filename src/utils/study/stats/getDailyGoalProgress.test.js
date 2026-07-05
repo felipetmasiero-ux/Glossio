@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { getDailyGoalProgress } from "../../../../utils/study/history";
+import { getDailyGoalProgress } from "./getDailyGoalProgress";
 
 describe("getDailyGoalProgress", () => {
 
