@@ -1,0 +1,38 @@
+.stats-card {
+
+    flex:1;
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:28px;
+
+    text-align:center;
+
+    box-shadow:0 8px 30px rgba(0,0,0,.08);
+
+    transition:.2s;
+}
+
+.stats-card:hover{
+
+    transform:translateY(-4px);
+
+}
+
+.stats-card h2{
+
+    margin:0;
+
+    font-size:3rem;
+
+}
+
+.stats-card span{
+
+    color:#777;
+
+    font-size:.95rem;
+
+}

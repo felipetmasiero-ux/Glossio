@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { LanguageCard } from "../components/LanguageCard";
+import { LanguageCard } from "../components/common/LanguageCard/LanguageCard";
 import { LanguageContext } from "../contexts/LanguageContext";
 
 import "./LanguageSelection.css";

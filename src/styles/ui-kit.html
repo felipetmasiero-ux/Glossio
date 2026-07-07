@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Glossio — UI Kit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --color-primary: #4F46E5; --color-primary-hover: #4338CA; --color-primary-light: #EEF2FF; --color-primary-dark: #3730A3;
+    --color-success: #10B981; --color-success-hover: #059669; --color-success-light: #ECFDF5; --color-success-dark: #047857;
+    --color-warning: #F59E0B; --color-warning-hover: #D97706; --color-warning-light: #FFFBEB; --color-warning-dark: #B45309;
+    --color-danger: #F43F5E; --color-danger-hover: #E11D48; --color-danger-light: #FFF1F2; --color-danger-dark: #BE123C;
+    --color-background: #F8FAFC; --color-surface: #FFFFFF; --color-surface-sunken: #F1F5F9;
+    --color-border: #E2E8F0; --color-border-strong: #CBD5E1;
+    --color-text: #0F172A; --color-text-secondary: #64748B; --color-text-muted: #94A3B8; --color-text-on-primary: #FFFFFF;
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 999px;
+    --shadow-sm: 0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.08);
+    --shadow-md: 0 4px 12px rgba(15,23,42,.08), 0 2px 4px rgba(15,23,42,.06);
+    --shadow-lg: 0 12px 32px rgba(15,23,42,.12), 0 4px 8px rgba(15,23,42,.06);
+    --highlight-bg: var(--color-primary-light); --highlight-text: var(--color-primary-dark);
+    --font-sans: 'Inter', sans-serif;
+    --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;
+    --t-fast:.15s ease;--t-normal:.25s ease;--t-slow:.4s ease;--ease-out:cubic-bezier(.16,1,.3,1);
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--color-background); color:var(--color-text); font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: var(--space-8) var(--space-5) var(--space-9); }
+  header.hero { padding: var(--space-9) var(--space-5) var(--space-7); text-align:center; }
+  .hero .mark { display:inline-flex; align-items:center; gap:var(--space-2); font-weight:700; font-size:1.1rem; padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); background:var(--highlight-bg); color:var(--highlight-text); margin-bottom:var(--space-5); }
+  .hero h1 { font-size:3rem; font-weight:700; letter-spacing:-0.02em; margin:0 0 var(--space-3); }
+  .hero p { color:var(--color-text-secondary); font-size:1.1rem; max-width:520px; margin:0 auto; }
+  section { margin-bottom: var(--space-9); }
+  section > h2 { font-size:1.5rem; font-weight:700; margin:0 0 var(--space-1); }
+  section > .desc { color:var(--color-text-secondary); font-size:.9375rem; margin:0 0 var(--space-6); }
+  .row { display:flex; flex-wrap:wrap; gap: var(--space-4); }
+  .grid-4 { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-4); }
+  .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--space-6); }
+
+  /* --- palette --- */
+  .swatch { border-radius: var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); background:var(--color-surface); }
+  .swatch-fill { height:72px; }
+  .swatch-label { padding:var(--space-3) var(--space-4); }
+  .swatch-label .name { font-weight:600; font-size:.875rem; display:block; }
+  .swatch-label .hex { color:var(--color-text-muted); font-size:.75rem; font-family:monospace; }
+
+  /* --- type --- */
+  .type-row { display:flex; align-items:baseline; gap:var(--space-6); padding:var(--space-4) 0; border-bottom:1px solid var(--color-border); }
+  .type-row:last-child { border-bottom:none; }
+  .type-row .tag { width:110px; flex-shrink:0; color:var(--color-text-muted); font-size:.75rem; font-family:monospace; }
+
+  /* --- spacing --- */
+  .space-row { display:flex; align-items:center; gap:var(--space-4); padding:var(--space-2) 0; }
+  .space-row .bar { background:var(--color-primary); border-radius:2px; height:16px; }
+  .space-row .tag { width:70px; font-family:monospace; font-size:.8125rem; color:var(--color-text-secondary); }
+
+  /* --- card --- */
+  .card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); padding:var(--space-5); transition:transform var(--t-normal), box-shadow var(--t-normal); }
+  .card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+
+  /* --- button --- */
+  .button { padding:var(--space-3) var(--space-5); border:none; border-radius:var(--radius-md); cursor:pointer; font-weight:600; font-size:.9375rem; font-family:var(--font-sans); transition:transform var(--t-fast), background var(--t-fast), box-shadow var(--t-fast); }
+  .button:hover { transform:translateY(-2px); }
+  .button--primary { background:var(--color-primary); color:#fff; }
+  .button--primary:hover { background:var(--color-primary-hover); box-shadow:var(--shadow-sm); }
+  .button--success { background:var(--color-success); color:#fff; }
+  .button--success:hover { background:var(--color-success-hover); }
+  .button--warning { background:var(--color-warning); color:#fff; }
+  .button--warning:hover { background:var(--color-warning-hover); }
+  .button--danger { background:var(--color-danger); color:#fff; }
+  .button--danger:hover { background:var(--color-danger-hover); }
+  .button--secondary { background:var(--color-surface); color:var(--color-text); border:1px solid var(--color-border); }
+  .button--secondary:hover { background:var(--color-surface-sunken); }
+  .button--ghost { background:transparent; color:var(--color-text-secondary); }
+  .button--ghost:hover { background:var(--color-surface-sunken); color:var(--color-text); }
+
+  /* --- badge --- */
+  .badge { display:inline-flex; align-items:center; padding:var(--space-1) var(--space-3); border-radius:var(--radius-full); font-size:.6875rem; font-weight:500; letter-spacing:.02em; text-transform:uppercase; }
+  .badge--primary { color:var(--color-primary-dark); background:var(--color-primary-light); }
+  .badge--success { color:var(--color-success-dark); background:var(--color-success-light); }
+  .badge--warning { color:var(--color-warning-dark); background:var(--color-warning-light); }
+  .badge--danger { color:var(--color-danger-dark); background:var(--color-danger-light); }
+  .badge--neutral { color:var(--color-text-secondary); background:var(--color-surface-sunken); }
+
+  /* --- input --- */
+  .input { width:100%; padding:var(--space-3) var(--space-4); border:1px solid var(--color-border); border-radius:var(--radius-md); background:var(--color-surface); font-family:var(--font-sans); font-size:1rem; transition:border-color var(--t-fast), box-shadow var(--t-fast); }
+  .input:focus { outline:none; border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-light); }
+
+  /* --- progress --- */
+  .progress-bar { width:100%; height:10px; background:var(--color-surface-sunken); border-radius:var(--radius-full); overflow:hidden; }
+  .progress-fill { height:100%; background:var(--color-primary); border-radius:var(--radius-full); }
+
+  /* --- highlight signature --- */
+  .word { background:var(--highlight-bg); background-size: 100% 100%; background-repeat:no-repeat; color:var(--highlight-text); padding: 1px 6px; border-radius:6px; cursor:pointer; font-weight:500; }
+
+  /* --- mockups --- */
+  .mockup { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); overflow:hidden; }
+  .mockup-header { padding:var(--space-5); border-bottom:1px solid var(--color-border); }
+  .mockup-header h3 { margin:0 0 4px; font-size:1.1rem; }
+  .mockup-header p { margin:0; color:var(--color-text-secondary); font-size:.875rem; }
+  .mockup-body { padding:var(--space-5); display:flex; flex-direction:column; gap:var(--space-4); }
+  .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-3); }
+  .stat-mini { text-align:center; padding:var(--space-3); background:var(--color-surface-sunken); border-radius:var(--radius-md); }
+  .stat-mini .num { font-size:1.25rem; font-weight:700; }
+  .stat-mini .lbl { font-size:.6875rem; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.02em; }
+  .study-mock { text-align:center; padding:var(--space-7) var(--space-5); }
+  .study-mock .word-big { font-size:2.5rem; font-weight:700; margin-bottom:var(--space-5); }
+  .study-mock .actions { display:flex; justify-content:center; gap:var(--space-3); margin-top:var(--space-5); }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <span class="mark">🌐 Glossio</span>
+    <h1>Design System v1</h1>
+    <p>Moderna, acolhedora, motivadora, inteligente. A fonte da verdade visual de toda a plataforma.</p>
+  </header>
+
+  <section>
+    <h2>Paleta</h2>
+    <p class="desc">Indigo como cor de ação principal — sofisticado, evita o azul-SaaS genérico.</p>
+    <div class="grid-4">
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-primary)"></div><div class="swatch-label"><span class="name">Primary — Indigo</span><span class="hex">#4F46E5</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-success)"></div><div class="swatch-label"><span class="name">Success — Emerald</span><span class="hex">#10B981</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-warning)"></div><div class="swatch-label"><span class="name">Warning — Amber</span><span class="hex">#F59E0B</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-danger)"></div><div class="swatch-label"><span class="name">Danger — Rose</span><span class="hex">#F43F5E</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-background); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Background</span><span class="hex">#F8FAFC</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-surface); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Surface</span><span class="hex">#FFFFFF</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text)"></div><div class="swatch-label"><span class="name">Text</span><span class="hex">#0F172A</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text-secondary)"></div><div class="swatch-label"><span class="name">Text secondary</span><span class="hex">#64748B</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tipografia</h2>
+    <p class="desc">Inter, quatro pesos, escala fixa de oito níveis com papel definido.</p>
+    <div>
+      <div class="type-row"><span class="tag">display / 700</span><span style="font-size:2.5rem;font-weight:700;letter-spacing:-.02em">Aprenda todo dia</span></div>
+      <div class="type-row"><span class="tag">h1 / 700</span><span style="font-size:2rem;font-weight:700;letter-spacing:-.02em">Boa noite, Felipe</span></div>
+      <div class="type-row"><span class="tag">h2 / 600</span><span style="font-size:1.375rem;font-weight:600">Continue estudando</span></div>
+      <div class="type-row"><span class="tag">h3 / 600</span><span style="font-size:1.125rem;font-weight:600">Título de card</span></div>
+      <div class="type-row"><span class="tag">body / 400</span><span style="font-size:1rem">Texto corrido padrão da interface.</span></div>
+      <div class="type-row"><span class="tag">body-md / 500</span><span style="font-size:.9375rem;font-weight:500">Labels e navegação</span></div>
+      <div class="type-row"><span class="tag">small / 400</span><span style="font-size:.8125rem;color:var(--color-text-secondary)">Legendas e metadados</span></div>
+      <div class="type-row"><span class="tag">caption / 500</span><span style="font-size:.6875rem;font-weight:500;text-transform:uppercase;letter-spacing:.02em;color:var(--color-text-muted)">Badge / tag</span></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Espaçamento &amp; Radius</h2>
+    <div class="grid-2">
+      <div>
+        <p class="desc" style="margin-bottom:var(--space-3)">Escala de 4px a 96px</p>
+        <div class="space-row"><span class="tag">4px</span><div class="bar" style="width:4px"></div></div>
+        <div class="space-row"><span class="tag">8px</span><div class="bar" style="width:8px"></div></div>
+        <div class="space-row"><span class="tag">12px</span><div class="bar" style="width:12px"></div></div>
+        <div class="space-row"><span class="tag">16px</span><div class="bar" style="width:16px"></div></div>
+        <div class="space-row"><span class="tag">24px</span><div class="bar" style="width:24px"></div></div>
+        <div class="space-row"><span class="tag">32px</span><div class="bar" style="width:32px"></div></div>
+        <div class="space-row"><span class="tag">48px</span><div class="bar" style="width:48px"></div></div>
+        <div class="space-row"><span class="tag">64px</span><div class="bar" style="width:64px"></div></div>
+        <div class="space-row"><span class="tag">96px</span><div class="bar" style="width:96px"></div></div>
+      </div>
+      <div>
+        <p class="desc" style="margin-bottom:var(--space-3)">Radius — 4 níveis, nunca inventar novos</p>
+        <div class="row">
+          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">sm 8</div>
+          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">md 12</div>
+          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">lg 16</div>
+          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">xl 24</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Botões</h2>
+    <div class="row">
+      <button class="button button--primary">Continue Studying</button>
+      <button class="button button--success">Easy</button>
+      <button class="button button--warning">Good</button>
+      <button class="button button--danger">Again</button>
+      <button class="button button--secondary">Cancelar</button>
+      <button class="button button--ghost">Pular</button>
+    </div>
+  </section>
+
+  <section>
+    <h2>Badges</h2>
+    <div class="row">
+      <span class="badge badge--primary">Novo</span>
+      <span class="badge badge--success">Mature</span>
+      <span class="badge badge--warning">Learning</span>
+      <span class="badge badge--danger">Atrasado</span>
+      <span class="badge badge--neutral">Rascunho</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Cards &amp; Input</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3 style="margin:0 0 8px">Streak</h3>
+        <p style="margin:0;color:var(--color-text-secondary)">7 dias seguidos estudando 🔥</p>
+      </div>
+      <div>
+        <input class="input" placeholder="Buscar palavra..." />
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Progress</h2>
+    <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+  </section>
+
+  <section>
+    <h2>Assinatura — highlight de vocabulário</h2>
+    <p class="desc">Toda palavra clicável, badge e estado ativo usa o mesmo gesto: um grifo indigo suave, como marca-texto sobre vocabulário novo.</p>
+    <p style="font-size:1.1rem;line-height:1.9">
+      A <span class="word">Revolução Industrial</span> começou na Inglaterra e transformou a forma como as
+      <span class="word">pessoas</span> trabalhavam e viviam.
+    </p>
+  </section>
+
+  <section>
+    <h2>Wireframe — Dashboard</h2>
+    <div class="mockup">
+      <div class="mockup-header">
+        <h3>Boa noite, Felipe 👋</h3>
+        <p>Pronto pra continuar aprendendo?</p>
+      </div>
+      <div class="mockup-body">
+        <div>
+          <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+          <p style="margin:8px 0 0;font-size:.8125rem;color:var(--color-text-secondary)">14 / 20 — meta diária</p>
+        </div>
+        <div class="stat-strip">
+          <div class="stat-mini"><div class="num">12</div><div class="lbl">Due</div></div>
+          <div class="stat-mini"><div class="num">340</div><div class="lbl">Total</div></div>
+          <div class="stat-mini"><div class="num">7</div><div class="lbl">Streak</div></div>
+          <div class="stat-mini"><div class="num">21</div><div class="lbl">Best</div></div>
+        </div>
+        <button class="button button--primary">Continue Studying</button>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wireframe — Study</h2>
+    <div class="mockup">
+      <div class="mockup-header">
+        <p style="font-size:.8125rem">Progress · 7 / 20</p>
+        <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:35%"></div></div>
+      </div>
+      <div class="study-mock">
+        <div class="word-big">house</div>
+        <button class="button button--secondary" style="width:auto;padding:14px 40px">Reveal</button>
+        <div class="actions">
+          <button class="button button--danger" style="width:110px">Again</button>
+          <button class="button button--warning" style="width:110px">Good</button>
+          <button class="button button--success" style="width:110px">Easy</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+</body>
+</html>

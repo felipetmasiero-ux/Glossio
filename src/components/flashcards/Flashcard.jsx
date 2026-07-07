@@ -1,36 +1,18 @@
-import "./FlashCard.css"
+import { Card } from "../common/Card/Card";
+import { Button } from "../common/Button/Button";
+import "./Flashcard.css";
 
 export function Flashcard({ card, removeFlashcard }) {
-
   return (
-    <div className="flashcard-card">
+    <Card className="flashcard-card">
+      <h3 className="flashcard-word">{card.word}</h3>
+      <p className="flashcard-translation">{card.translation}</p>
+      <p>Interval: {card.interval} days</p>
+      <p>Next review: {new Date(card.nextReview).toLocaleString()}</p>
 
-      <h3 className="flashcard-word">
-        {card.word}
-      </h3>
-
-      <p className="flashcard-translation">
-        {card.translation}
-      </p>
-
-      <p>
-        Interval: {card.interval} days
-      </p>
-
-      <p>
-        Next review:
-        {new Date(card.nextReview).toLocaleString()}
-      </p>
-
-      <button
-        className="flashcard-remove-btn"
-        onClick={() =>
-          removeFlashcard(card.word)
-        }
-      >
+      <Button className="flashcard-remove-btn" onClick={() => removeFlashcard(card.word)}>
         Remove
-      </button>
-
-    </div>
+      </Button>
+    </Card>
   );
 }

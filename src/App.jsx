@@ -11,7 +11,7 @@ import { Alphabets } from './pages/Alphabets'
 import { Home } from './pages/Home'
 import { FlashcardsDashboard } from "./pages/FlashcardsDashboard";
 
-import { Navbar } from './components/Navbar'
+import { Navbar } from './components/common/Navbar/Navbar'
 import { LanguageContext } from './contexts/LanguageContext'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'

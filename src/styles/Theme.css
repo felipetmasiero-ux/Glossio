@@ -1,0 +1,63 @@
+/* ==========================================================================
+   Glossio — Design Tokens
+   Fonte da verdade para cor, radius e sombra. Nada aqui é hardcoded
+   em outro lugar do projeto — todo componente consome estas variáveis.
+   ========================================================================== */
+
+:root {
+
+  /* ---- Primary: Indigo ------------------------------------------------ */
+  --color-primary: #4F46E5;
+  --color-primary-hover: #4338CA;
+  --color-primary-light: #EEF2FF;
+  --color-primary-dark: #3730A3;
+
+  /* ---- Success: Emerald ------------------------------------------------ */
+  --color-success: #10B981;
+  --color-success-hover: #059669;
+  --color-success-light: #ECFDF5;
+  --color-success-dark: #047857;
+
+  /* ---- Warning: Amber ---------------------------------------------------*/
+  --color-warning: #F59E0B;
+  --color-warning-hover: #D97706;
+  --color-warning-light: #FFFBEB;
+  --color-warning-dark: #B45309;
+
+  /* ---- Danger: Rose ------------------------------------------------------*/
+  --color-danger: #F43F5E;
+  --color-danger-hover: #E11D48;
+  --color-danger-light: #FFF1F2;
+  --color-danger-dark: #BE123C;
+
+  /* ---- Neutrals (Slate) -------------------------------------------------*/
+  --color-background: #F8FAFC;
+  --color-surface: #FFFFFF;
+  --color-surface-sunken: #F1F5F9;
+  --color-border: #E2E8F0;
+  --color-border-strong: #CBD5E1;
+
+  --color-text: #0F172A;
+  --color-text-secondary: #64748B;
+  --color-text-muted: #94A3B8;
+  --color-text-on-primary: #FFFFFF;
+
+  /* ---- Radius ------------------------------------------------------------*/
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 999px;
+
+  /* ---- Shadows (apenas 3 — nunca inventar novas) --------------------------*/
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.08);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08), 0 2px 4px rgba(15, 23, 42, 0.06);
+  --shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12), 0 4px 8px rgba(15, 23, 42, 0.06);
+
+  /* ---- Assinatura: highlight de vocabulário -------------------------------
+     Usado em estados ativos, badges e palavras clicáveis no Content.
+     É o mesmo gesto de "grifar" uma palavra nova, reaproveitado como
+     linguagem visual do produto inteiro. */
+  --highlight-bg: var(--color-primary-light);
+  --highlight-text: var(--color-primary-dark);
+}

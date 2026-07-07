@@ -1,22 +1,65 @@
+/* ==========================================================================
+   Glossio — Globals
+   Importar este arquivo uma única vez, no entrypoint da aplicação (main.jsx).
+   Ele carrega os tokens e aplica o reset base.
+   ========================================================================== */
+
+@import "./theme.css";
+@import "./typography.css";
+@import "./spacing.css";
+@import "./animations.css";
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    font-family: Inter, system-ui, sans-serif;
-    background: var(--bg);
-    color: var(--text);
+  background: var(--color-background);
+  color: var(--color-text);
+  font: var(--text-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-button {
-    cursor: pointer;
-    transition: var(--t-fast);
+h1, h2, h3, h4, p, figure {
+  margin: 0;
 }
 
-button:hover {
-    transform: translateY(-2px);
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-h1 {
-    font-size: 2.5rem;
+button, input, textarea, select {
+  font: inherit;
+  color: inherit;
 }
 
-h2 {
-    font-size: 2rem;
+ul, ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Foco visível sempre — nunca remover outline sem substituir por algo
+   igualmente claro. Acessibilidade não é opcional. */
+:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+::selection {
+  background: var(--highlight-bg);
+  color: var(--highlight-text);
 }

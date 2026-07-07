@@ -2,7 +2,7 @@ import { useContext } from "react";
 
 import { FlashcardContext } from "../contexts/FlashcardContext";
 
-import { StudyDashboard } from "../components/flashcards/StudyDashboard";
+import { StudyDashboard } from "../components/studyDashboard/StudyDashboard";
 
 export function FlashcardsDashboard() {
 

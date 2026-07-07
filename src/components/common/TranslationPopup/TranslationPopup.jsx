@@ -1,6 +1,6 @@
 import { useContext } from "react";
-import { FlashcardContext } from "../contexts/FlashcardContext";
-import { LanguageContext } from "../contexts/LanguageContext";
+import { FlashcardContext } from "../../../contexts/FlashcardContext";
+import { LanguageContext } from "../../../contexts/LanguageContext";
 
 export function TranslationPopup({ word }) {
 

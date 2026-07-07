@@ -1,0 +1,19 @@
+.study-dashboard{
+
+    min-height:100vh;
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:40px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:32px;
+
+    justify-content:center;
+
+}

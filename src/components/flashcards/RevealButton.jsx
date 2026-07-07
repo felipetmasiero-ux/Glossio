@@ -1,12 +1,10 @@
-import "./RevealButton.css"
+import { Button } from "../common/Button/Button";
+import "./RevealButton.css";
 
 export function RevealButton({ onReveal }) {
   return (
-    <button
-      className="reveal-btn"
-      onClick={onReveal}
-    >
+    <Button className="reveal-btn" onClick={onReveal}>
       Reveal
-    </button>
+    </Button>
   );
 }

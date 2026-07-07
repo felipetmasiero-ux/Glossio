@@ -1,7 +1,7 @@
 import { contentData } from "../data/contentData"
 import { useParams } from "react-router-dom"
 import { useState } from "react"
-import { TranslationPopup } from "../components/TranslationPopup"
+import { TranslationPopup } from "../components/common/TranslationPopup/TranslationPopup"
 
 import "./ContentReader.css"
 

@@ -12,7 +12,7 @@ import { StudyProgress } from "../components/flashcards/StudyProgress";
 import { RevealButton } from "../components/flashcards/RevealButton";
 import { AnswerButtons } from "../components/flashcards/AnswerButtons";
 import { StudySummary } from "../components/flashcards/StudySummary";
-import { StudyDashboard } from "../components/flashcards/StudyDashboard";
+import { StudyDashboard } from "../components/studyDashboard/StudyDashboard";
 
 import { getDashboardData } from "../utils/study/dashboard";
 

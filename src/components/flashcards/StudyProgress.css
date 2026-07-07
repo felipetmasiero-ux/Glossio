@@ -1,21 +1,11 @@
-.progress-container {
-    width: 600px;
-    height: 12px;
-    background: #e5e7eb;
-    border-radius: 999px;
-    overflow: hidden;
-    margin-bottom: 12px;
+.study-progress-bar-wrapper {
+  max-width: 600px;
+  margin: 0 auto 12px;
 }
 
-.progress-bar {
-    height: 100%;
-    background: var(--primary);
-    transition: width var(--t-normal);
-    border-radius: 999px;
-}
-
+.study-progress,
 .study-progress-text {
-    text-align: center;
-    color: var(--text-light);
-    font-size: 14px;
+  text-align: center;
+  color: var(--text-light);
+  font-size: 14px;
 }

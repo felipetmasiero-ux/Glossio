@@ -1,26 +1,5 @@
-.reveal-btn{
-
-    width:240px;
-
-    height:56px;
-
-    margin-top:25px;
-
-    border:none;
-
-    border-radius:14px;
-
-    font-size:18px;
-
-    font-weight:600;
-
-    cursor:pointer;
-
-    transition:.2s;
-}
-
-.reveal-btn:hover{
-
-    transform:translateY(-2px);
-
+.reveal-btn {
+  width: 240px;
+  height: 56px;
+  margin-top: 25px;
 }
