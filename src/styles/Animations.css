@@ -20,16 +20,12 @@
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* Usado quando o usuário completa uma ação — resposta certa, meta batida,
-   card salvo. Pequeno "pop" motivador, sem exagerar. */
 @keyframes celebrate-pop {
   0%   { transform: scale(1); }
   40%  { transform: scale(1.08); }
   100% { transform: scale(1); }
 }
 
-/* Sweep do highlight de vocabulário — usado quando uma palavra clicável
-   revela a tradução, reforçando a metáfora de "grifar". */
 @keyframes highlight-sweep {
   from { background-size: 0% 100%; }
   to   { background-size: 100% 100%; }

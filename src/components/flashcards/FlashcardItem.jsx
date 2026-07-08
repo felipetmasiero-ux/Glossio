@@ -1,7 +1,7 @@
-import { Card } from "./common/Card/Card";
-import { Button } from "./common/Button/Button";
-import { Badge } from "./common/Badge/Badge";
-import { formatNextReview } from "../utils/flashcards/formatNextReview";
+import { Card } from "../common/Card/Card";
+import { Button } from "../common/Button/Button";
+import { Badge } from "../common/Badge/Badge";
+import { formatNextReview } from "../../utils/flashcards/formatNextReview";
 import "./FlashcardItem.css";
 
 const LEVELS = {

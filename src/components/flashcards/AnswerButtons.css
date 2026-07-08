@@ -1,19 +1,10 @@
 .answer-buttons {
   display: flex;
-  gap: 18px;
-  margin-top: 25px;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
 }
 
 .answer-buttons .button {
   width: 120px;
   height: 52px;
 }
-
-.again-btn { background: var(--color-danger, #e5484d); }
-.again-btn:hover { background: var(--color-danger-hover, #c93c40); }
-
-.good-btn { background: var(--color-warning, #f5a623); }
-.good-btn:hover { background: var(--color-warning-hover, #d68e13); }
-
-.easy-btn { background: var(--color-success, #2fa84f); }
-.easy-btn:hover { background: var(--color-success-hover, #23913e); }

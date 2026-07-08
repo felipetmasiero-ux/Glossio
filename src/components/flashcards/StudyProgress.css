@@ -1,11 +1,11 @@
 .study-progress-bar-wrapper {
-  max-width: 600px;
-  margin: 0 auto 12px;
+  max-width: var(--content-width-md);
+  margin: 0 auto var(--space-3);
 }
 
 .study-progress,
 .study-progress-text {
   text-align: center;
-  color: var(--text-light);
+  color: var(--color-text-secondary);
   font-size: 14px;
 }

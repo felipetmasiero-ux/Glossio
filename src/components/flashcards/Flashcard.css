@@ -1,34 +1,19 @@
-/* Flashcard.css */
 .flashcard-card {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .flashcard-word {
-  font-size: 1.4rem;
-  font-weight: 700;
+  font: var(--text-h3);
 }
 
 .flashcard-translation {
-  opacity: 0.8;
+  color: var(--color-text-secondary);
 }
 
 .flashcard-remove-btn {
   margin-top: auto;
   width: auto;
   align-self: flex-start;
-  background: var(--color-danger, #e5484d);
-}
-
-.flashcard-remove-btn:hover {
-  background: var(--color-danger-hover, #c93c40);
-}
-
-.flashcards-grid {
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 20px;
 }

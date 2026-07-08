@@ -15,8 +15,6 @@
   --space-8: 64px;
   --space-9: 96px;
 
-  /* Aliases semânticos — usar estes na maioria dos componentes;
-     recorrer aos --space-N acima só quando o valor semântico não encaixar. */
   --space-xs: var(--space-1);
   --space-sm: var(--space-2);
   --space-md: var(--space-4);
@@ -24,7 +22,6 @@
   --space-xl: var(--space-6);
   --space-2xl: var(--space-7);
 
-  /* Larguras de conteúdo — reaproveitar em vez de max-width solto */
   --content-width-sm: 480px;
   --content-width-md: 720px;
   --content-width-lg: 960px;

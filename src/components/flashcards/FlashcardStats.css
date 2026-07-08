@@ -1,7 +1,7 @@
 .flashcard-stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 16px;
+  gap: var(--space-4);
 }
 
 .stat-card {
@@ -11,8 +11,8 @@
 .stat-card h3 {
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--text-secondary);
-  margin: 0 0 8px;
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-2);
 }
 
 .stat-card p {

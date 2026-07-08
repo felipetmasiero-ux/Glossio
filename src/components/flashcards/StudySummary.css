@@ -1,15 +1,15 @@
 .study-summary {
-  max-width: 600px;
+  max-width: var(--content-width-sm);
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: var(--space-5);
   text-align: center;
-  padding: 40px;
+  padding: var(--space-7);
 }
 
 .summary-stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
+  gap: var(--space-4);
 }

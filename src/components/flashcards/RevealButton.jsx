@@ -3,7 +3,7 @@ import "./RevealButton.css";
 
 export function RevealButton({ onReveal }) {
   return (
-    <Button className="reveal-btn" onClick={onReveal}>
+    <Button variant="secondary" className="reveal-btn" onClick={onReveal}>
       Reveal
     </Button>
   );
