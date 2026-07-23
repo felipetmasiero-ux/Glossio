@@ -1,0 +1,11 @@
+.lesson-navigation{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    margin-top:var(--space-xl);
+
+    gap:var(--space-md);
+
+}

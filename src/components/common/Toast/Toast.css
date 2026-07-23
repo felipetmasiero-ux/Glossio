@@ -1,0 +1,21 @@
+.toast{
+
+    position:fixed;
+
+    bottom:32px;
+
+    right:32px;
+
+    padding:14px 20px;
+
+    background:var(--color-success);
+
+    color:white;
+
+    border-radius:var(--radius-md);
+
+    box-shadow:var(--shadow-lg);
+
+    z-index:500;
+
+}

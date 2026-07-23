@@ -11,7 +11,7 @@ export function Navbar() {
   const location = useLocation();
 
   const navLinks = [
-    { to: "/content", label: "Conteúdo" },
+    { to: "/lessons", label: "Lições" },
     { to: "/flashcards", label: "Flashcards" },
     { to: "/exercises", label: "Exercícios" },
     { to: "/alphabets", label: "Alfabetos" },

@@ -1,0 +1,25 @@
+.quote-card{
+
+    margin-bottom:var(--space-8);
+
+    border-left:4px solid var(--color-primary);
+
+}
+
+.quote-card blockquote{
+
+    font:var(--text-h3);
+
+    color:var(--color-text);
+
+}
+
+.quote-card footer{
+
+    margin-top:var(--space-lg);
+
+    color:var(--color-text-secondary);
+
+    text-align:right;
+
+}

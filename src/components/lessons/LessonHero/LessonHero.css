@@ -1,0 +1,73 @@
+.lesson-hero{
+
+    padding:48px;
+
+    border-radius:24px;
+
+    background:linear-gradient(
+        135deg,
+        var(--primary-color),
+        #7c6df2
+    );
+
+    color:white;
+
+    margin-bottom:48px;
+
+}
+
+.lesson-level{
+
+    display:inline-block;
+
+    padding:6px 14px;
+
+    border-radius:999px;
+
+    background:rgba(255,255,255,.15);
+
+    font-size:.8rem;
+
+    margin-bottom:18px;
+
+}
+
+.lesson-hero h1{
+
+    font-size:3rem;
+
+    margin-bottom:16px;
+
+}
+
+.lesson-description{
+
+    font-size:1.1rem;
+
+    opacity:.9;
+
+    max-width:650px;
+
+}
+
+.lesson-meta{
+
+    display:flex;
+
+    gap:18px;
+
+    margin-top:32px;
+
+    flex-wrap:wrap;
+
+}
+
+.lesson-meta-item{
+
+    padding:10px 18px;
+
+    background:rgba(255,255,255,.12);
+
+    border-radius:12px;
+
+}

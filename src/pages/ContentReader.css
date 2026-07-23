@@ -1,9 +1,0 @@
-.clickable-word {
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.clickable-word:hover {
-    color: #007bff;
-    text-decoration: underline;
-}

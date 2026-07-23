@@ -1,0 +1,71 @@
+.word-popup-overlay{
+
+    position:fixed;
+
+    inset:0;
+
+    background:
+
+        rgba(0,0,0,0.4);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    z-index:1000;
+
+}
+
+.word-popup{
+
+    width:420px;
+
+    max-width:90%;
+
+    background:white;
+
+    border-radius:var(--radius-lg);
+
+    padding:var(--space-xl);
+
+    box-shadow:var(--shadow-lg);
+
+}
+
+.word-popup-actions{
+
+    margin-top:var(--space-lg);
+
+    display:flex;
+
+    gap:var(--space-md);
+
+}
+
+.popup-example{
+
+    margin:var(--space-lg) 0;
+
+    padding:var(--space-md);
+
+    background:var(--color-primary-light);
+
+    border-radius:var(--radius-md);
+
+}
+
+.popup-example strong{
+
+    display:block;
+
+    margin-bottom:var(--space-sm);
+
+}
+
+.word-popup{
+
+    animation:slide-up var(--t-normal);
+
+}

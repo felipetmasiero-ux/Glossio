@@ -1,0 +1,9 @@
+.pronunciation{
+
+    color:var(--color-text-secondary);
+
+    font-style:italic;
+
+    font-size:.9rem;
+
+}

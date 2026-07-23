@@ -1,0 +1,15 @@
+.vocabulary-section{
+
+    margin-bottom:var(--space-8);
+
+}
+
+.vocabulary-section-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+
+    gap:var(--space-lg);
+
+}

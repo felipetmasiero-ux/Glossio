@@ -1,0 +1,25 @@
+.clickable-word{
+
+    cursor:pointer;
+
+    border-bottom:
+
+        2px solid
+
+        var(--color-primary-light);
+
+    transition:
+
+        all var(--t-fast);
+
+}
+
+.clickable-word:hover{
+
+    color:var(--color-primary);
+
+    background:
+
+        var(--color-primary-light);
+
+}

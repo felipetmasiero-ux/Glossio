@@ -2,14 +2,14 @@ import './App.css'
 import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
-import { LanguageSelection } from './pages/LanguageSelection'
-import { Content } from './pages/Content'
-import { Exercises } from './pages/Exercises'
-import { ContentReader } from './pages/ContentReader'
-import { StudyFlashcards } from './pages/StudyFlashcards'
+import { Home } from "./pages/Home/Home";
+import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
+import { Exercises } from "./pages/Exercises";
+import { MyFlashcards } from "./pages/MyFlashcards/MyFlashcards";
+import { StudyFlashcards } from "./pages/StudyFlashcards/StudyFlashcards";
+import { LessonsPage } from "./pages/LessonsPage/LessonsPage";
+import { LessonPage } from "./pages/LessonPage/LessonPage";
 import { Alphabets } from './pages/Alphabets'
-import { Home } from './pages/Home'
-import { FlashcardsDashboard } from "./pages/FlashcardsDashboard";
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { LanguageContext } from './contexts/LanguageContext'
@@ -55,13 +55,13 @@ function App() {
               />
 
               <Route
-                path="/content"
-                element={<Content />}
+                path="/lessons"
+                element={<LessonsPage />}
               />
 
               <Route
-                path="/content/:id"
-                element={<ContentReader />}
+                path="/lessons/:id"
+                element={<LessonPage />}
               />
 
               <Route
@@ -81,12 +81,13 @@ function App() {
 
               <Route
                 path="/my-flashcards"
-                element={<FlashcardsDashboard />}
+                element={<MyFlashcards />}
               />
+
             </Routes>
           </StudyHistoryProvider>
         </div>
-    </FlashcardProvider>
+      </FlashcardProvider>
     </LanguageContext.Provider >
   )
 }

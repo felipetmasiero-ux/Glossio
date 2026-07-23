@@ -1,0 +1,15 @@
+.lesson-section {
+
+    width: 100%;
+
+    margin: 0 0 var(--space-8);
+
+    animation: fadeIn 0.25s ease;
+
+}
+
+.lesson-section:last-child {
+
+    margin-bottom: var(--spacing-8);
+
+}

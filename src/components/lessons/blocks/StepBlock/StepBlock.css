@@ -1,0 +1,23 @@
+.lesson-step-title{
+
+    display:flex;
+
+    justify-content:center;
+
+    margin:var(--space-xl) 0;
+
+}
+
+.lesson-step-title span{
+
+    background:var(--color-primary-light);
+
+    color:var(--color-primary);
+
+    padding:var(--space-sm) var(--space-lg);
+
+    border-radius:var(--radius-full);
+
+    font:var(--text-body-md);
+
+}

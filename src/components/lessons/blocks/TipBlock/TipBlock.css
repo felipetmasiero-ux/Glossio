@@ -1,0 +1,31 @@
+.lesson-tip{
+
+    margin-bottom:var(--space-8);
+
+}
+
+.tip-card{
+
+    display:flex;
+
+    gap:var(--space-lg);
+
+    align-items:flex-start;
+
+    background:var(--color-warning-light);
+
+}
+
+.tip-icon{
+
+    font-size:2rem;
+
+    flex-shrink:0;
+
+}
+
+.tip-card p{
+
+    font:var(--text-body);
+
+}

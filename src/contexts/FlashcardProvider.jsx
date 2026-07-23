@@ -19,11 +19,25 @@ export function FlashcardProvider({ children }) {
         saveFlashcards(flashcards);
     }, [flashcards]);
 
-    function addFlashcard(word, language) {
+    function addFlashcard(wordData, language) {
+
+        const normalized =
+            typeof wordData === "string"
+                ? {
+                    word: wordData,
+                    translation: ""
+                }
+                : wordData;
+
+        if (!normalized?.word) {
+            console.warn("Invalid flashcard:", wordData);
+            return;
+        }
+
         setFlashcards(previous => {
 
             const alreadyExists = previous.some(card =>
-                card.word === word.word &&
+                card.word?.toLowerCase() === normalized.word.toLowerCase() &&
                 card.language === language
             );
 
@@ -32,8 +46,8 @@ export function FlashcardProvider({ children }) {
             return [
                 ...previous,
                 createFlashcard({
-                    word: word.word,
-                    translation: word.translation,
+                    word: normalized.word,
+                    translation: normalized.translation ?? "",
                     language
                 })
             ];
@@ -65,7 +79,7 @@ export function FlashcardProvider({ children }) {
             )
         );
     }
-    
+
     return (
         <FlashcardContext.Provider value={{
             flashcards,

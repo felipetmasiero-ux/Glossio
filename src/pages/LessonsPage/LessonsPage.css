@@ -1,0 +1,19 @@
+.lessons-page{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:60px 30px;
+
+}
+
+.lessons-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+    gap:28px;
+
+}

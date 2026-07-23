@@ -1,0 +1,41 @@
+.vocabulary-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    min-height:180px;
+
+    gap:var(--space-md);
+
+    cursor:pointer;
+
+    transition:var(--t-normal);
+
+}
+
+.vocabulary-card:hover{
+
+    transform:translateY(-4px);
+
+    box-shadow:var(--shadow-md);
+
+}
+
+.vocabulary-card.flipped{
+
+    background:var(--color-primary-light);
+
+}
+
+.card-language{
+
+    font-size:2rem;
+
+    margin-bottom:var(--space-sm);
+
+}

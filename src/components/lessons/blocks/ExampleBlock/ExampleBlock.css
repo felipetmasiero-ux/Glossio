@@ -1,0 +1,23 @@
+.example-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-md);
+
+    margin-bottom:var(--space-6);
+
+}
+
+.example-original{
+
+    font:var(--text-h3);
+
+}
+
+.example-translation{
+
+    color:var(--color-text-secondary);
+
+}

@@ -1,0 +1,25 @@
+.text-renderer{
+
+    line-height:1.9;
+
+    font-size:1.08rem;
+
+}
+
+.clickable-word{
+
+    cursor:pointer;
+
+    transition:.15s;
+
+}
+
+.clickable-word:hover{
+
+    color:#4f46e5;
+
+    background:#eef2ff;
+
+    border-radius:6px;
+
+}

@@ -1,0 +1,75 @@
+.lesson-dialogue{
+
+    margin-bottom:var(--space-8);
+
+}
+
+.dialogue-list{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-lg);
+
+}
+
+.dialogue-message{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-2);
+
+}
+
+.dialogue-message.right{
+
+    align-items:flex-end;
+
+}
+
+.dialogue-speaker{
+
+    font:var(--text-caption);
+
+    color:var(--color-text-muted);
+
+}
+
+.dialogue-bubble{
+
+    max-width:75%;
+
+    padding:var(--space-md);
+
+    border-radius:var(--radius-lg);
+
+    background:var(--color-primary-light);
+
+}
+
+.dialogue-message.right .dialogue-bubble{
+
+    background:var(--color-success-light);
+
+}
+
+.dialogue-bubble p{
+
+    font:var(--text-body-md);
+
+}
+
+.dialogue-bubble span{
+
+    display:block;
+
+    margin-top:var(--space-2);
+
+    color:var(--color-text-secondary);
+
+    font:var(--text-small);
+
+}
