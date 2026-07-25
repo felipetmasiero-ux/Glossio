@@ -7,14 +7,18 @@ import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
 import { Exercises } from "./pages/Exercises";
 import { MyFlashcards } from "./pages/MyFlashcards/MyFlashcards";
 import { StudyFlashcards } from "./pages/StudyFlashcards/StudyFlashcards";
-import { LessonsPage } from "./pages/LessonsPage/LessonsPage";
+import { ModulesPage } from "./pages/ModulesPage/ModulesPage";
+import { ModuleLessonsPage } from "./pages/ModuleLessonsPage/ModuleLessonsPage";
+import { ModuleCompletePage } from "./pages/ModuleCompletePage/ModuleCompletePage";
 import { LessonPage } from "./pages/LessonPage/LessonPage";
 import { Alphabets } from './pages/Alphabets'
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { LanguageContext } from './contexts/LanguageContext'
+import { EventProvider } from './contexts/EventProvider'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'
+import { LessonProgressProvider } from './contexts/LessonProgressProvider'
 
 function App() {
   const [language, setLanguage] = useState(
@@ -26,69 +30,84 @@ function App() {
   }, [language])
 
   return (
-    <LanguageContext.Provider
-      value={{
-        language,
-        setLanguage,
-      }}
-    >
-      <FlashcardProvider>
-        <div className="app-layout">
+    <EventProvider>
+      <LanguageContext.Provider
+        value={{
+          language,
+          setLanguage,
+        }}
+      >
+        <FlashcardProvider>
+          <div className="app-layout">
 
-          <StudyHistoryProvider>
+            <StudyHistoryProvider>
 
-            <Navbar />
+              <LessonProgressProvider>
 
-            <Routes>
-              <Route
-                path="/"
-                element={
-                  <LanguageSelection
-                    setLanguage={setLanguage}
+                <Navbar />
+
+                <Routes>
+                  <Route
+                    path="/"
+                    element={
+                      <LanguageSelection
+                        setLanguage={setLanguage}
+                      />
+                    }
                   />
-                }
-              />
 
-              <Route
-                path="/home"
-                element={<Home />}
-              />
+                  <Route
+                    path="/home"
+                    element={<Home />}
+                  />
 
-              <Route
-                path="/lessons"
-                element={<LessonsPage />}
-              />
+                  <Route
+                    path="/lessons"
+                    element={<ModulesPage />}
+                  />
 
-              <Route
-                path="/lessons/:id"
-                element={<LessonPage />}
-              />
+                  <Route
+                    path="/lessons/module/:moduleId"
+                    element={<ModuleLessonsPage />}
+                  />
 
-              <Route
-                path="/exercises"
-                element={<Exercises />}
-              />
+                  <Route
+                    path="/lessons/module/:moduleId/complete"
+                    element={<ModuleCompletePage />}
+                  />
 
-              <Route
-                path="/flashcards"
-                element={<StudyFlashcards />}
-              />
+                  <Route
+                    path="/lessons/:id"
+                    element={<LessonPage />}
+                  />
 
-              <Route
-                path="/alphabets"
-                element={<Alphabets />}
-              />
+                  <Route
+                    path="/exercises"
+                    element={<Exercises />}
+                  />
 
-              <Route
-                path="/my-flashcards"
-                element={<MyFlashcards />}
-              />
+                  <Route
+                    path="/flashcards"
+                    element={<StudyFlashcards />}
+                  />
 
-            </Routes>
-          </StudyHistoryProvider>
-        </div>
-      </FlashcardProvider>
-    </LanguageContext.Provider >
+                  <Route
+                    path="/alphabets"
+                    element={<Alphabets />}
+                  />
+
+                  <Route
+                    path="/my-flashcards"
+                    element={<MyFlashcards />}
+                  />
+
+                </Routes>
+              </LessonProgressProvider>
+            </StudyHistoryProvider>
+          </div>
+        </FlashcardProvider>
+      </LanguageContext.Provider>
+    </EventProvider>
   )
 }
 

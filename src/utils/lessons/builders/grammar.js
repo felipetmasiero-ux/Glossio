@@ -3,7 +3,7 @@ import { BLOCK_TYPES } from "../../../constants/lessonBlocks"
 
 export function grammar(
     title,
-    explanation,
+    text,
     id
 ) {
 
@@ -11,7 +11,7 @@ export function grammar(
         BLOCK_TYPES.GRAMMAR,
         {
             title,
-            explanation
+            text
         },
         id
     );

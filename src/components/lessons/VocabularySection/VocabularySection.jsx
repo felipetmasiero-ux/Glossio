@@ -1,5 +1,7 @@
 import "./VocabularySection.css";
 
+import { LessonSection } from "../LessonSection/LessonSection";
+
 import { VocabularyCard } from "../VocabularyCard/VocabularyCard";
 
 import { WordPopup } from "../WordPopup/WordPopup";
@@ -8,11 +10,13 @@ import { useWordPopup } from "../../../hooks/useWordPopup";
 
 export function VocabularySection({
 
-    vocabulary=[]
+    lesson,
 
-}){
+    vocabulary = []
 
-    const{
+}) {
+
+    const {
 
         selectedWord,
 
@@ -20,29 +24,33 @@ export function VocabularySection({
 
         closeWord
 
-    }=useWordPopup({
+    } = useWordPopup(lesson ?? { vocabulary });
 
-        vocabulary
+    if (vocabulary.length === 0) {
 
-    });
+        return null;
 
-    return(
+    }
+
+    return (
 
         <>
 
-            <section className="vocabulary-section">
+            <LessonSection
 
-                <h2>
+                className="vocabulary-section"
 
-                    Vocabulary
+                icon="🗂️"
 
-                </h2>
+                title="Vocabulary"
+
+            >
 
                 <div className="vocabulary-grid">
 
                     {
 
-                        vocabulary.map(word=>(
+                        vocabulary.map(word => (
 
                             <VocabularyCard
 
@@ -60,7 +68,7 @@ export function VocabularySection({
 
                 </div>
 
-            </section>
+            </LessonSection>
 
             <WordPopup
 

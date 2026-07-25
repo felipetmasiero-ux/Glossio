@@ -8,6 +8,8 @@ export function LessonNavigation({
 
     hasNext,
 
+    nextLabel,
+
     onPrevious,
 
     onNext
@@ -34,17 +36,15 @@ export function LessonNavigation({
 
             <Button
 
+                disabled={!hasNext}
+
                 onClick={onNext}
 
             >
 
                 {
 
-                    hasNext
-
-                        ? "Next →"
-
-                        : "Finish"
+                    nextLabel ?? (hasNext ? "Next →" : "Finish")
 
                 }
 

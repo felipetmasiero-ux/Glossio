@@ -1,13 +1,24 @@
 import "./LessonCard.css";
 
+import { Card } from "../../common/Card/Card";
+import { Button } from "../../common/Button/Button";
+
 export function LessonCard({
     lesson,
-    onOpen
+    onOpen,
+    locked = false,
+    completed = false
 }) {
 
     return (
 
-        <article className="lesson-card">
+        <Card
+
+            className={`lesson-card ${locked ? "locked" : ""}`}
+
+            hoverable={!locked}
+
+        >
 
             <div className="lesson-card-header">
 
@@ -27,7 +38,7 @@ export function LessonCard({
 
             <h2>
 
-                {lesson.title}
+                {lesson.title} {completed && "✅"}
 
             </h2>
 
@@ -45,15 +56,33 @@ export function LessonCard({
 
                 </span>
 
-                <button onClick={onOpen}>
+                <Button
 
-                    Start →
+                    disabled={locked}
 
-                </button>
+                    onClick={onOpen}
+
+                >
+
+                    {
+
+                        locked
+
+                            ? "🔒 Locked"
+
+                            : completed
+
+                                ? "Review →"
+
+                                : "Start →"
+
+                    }
+
+                </Button>
 
             </div>
 
-        </article>
+        </Card>
 
     );
 

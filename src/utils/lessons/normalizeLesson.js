@@ -36,15 +36,11 @@ export function normalizeLesson(lesson) {
 
         skills: lesson.skills ?? [],
 
-        prerequisites: lesson.prerequisites ?? [],
-
         objectives: lesson.objectives ?? [],
 
         vocabulary: lesson.vocabulary ?? [],
 
         blocks: lesson.blocks ?? [],
-
-        practice: lesson.practice ?? [],
 
         summary: lesson.summary ?? {
 
@@ -52,9 +48,7 @@ export function normalizeLesson(lesson) {
 
             review: []
 
-        },
-
-        nextLesson: lesson.nextLesson ?? null
+        }
 
     };
 

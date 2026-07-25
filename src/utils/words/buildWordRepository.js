@@ -22,7 +22,7 @@ export function buildWordRepository(lesson) {
 
         const getVocabulary = lessonBlocks[block.type]?.getVocabulary;
 
-        getVocabulary?.(block).forEach(add);
+        getVocabulary?.(block)?.forEach(add);
 
     });
 

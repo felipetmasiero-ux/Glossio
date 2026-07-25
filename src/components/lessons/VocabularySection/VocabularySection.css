@@ -1,10 +1,4 @@
-.vocabulary-section{
-
-    margin-bottom:var(--space-8);
-
-}
-
-.vocabulary-section-grid{
+.vocabulary-grid{
 
     display:grid;
 

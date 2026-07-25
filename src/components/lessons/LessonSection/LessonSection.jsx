@@ -1,12 +1,47 @@
-import "./LessonSection.css";
+import "../../../data/lessons/lesson.css";
+
+import { SectionHeader } from "../../common/SectionHeader/SectionHeader";
 
 export function LessonSection({
-    children,
-    className = ""
+
+    icon,
+
+    title,
+
+    subtitle,
+
+    className = "",
+
+    children
+
 }) {
+
     return (
-        <section className={`lesson-section ${className}`}>
+
+        <section className={`lesson-section animate-fade-in ${className}`.trim()}>
+
+            {
+
+                title && (
+
+                    <SectionHeader
+
+                        icon={icon}
+
+                        title={title}
+
+                        subtitle={subtitle}
+
+                    />
+
+                )
+
+            }
+
             {children}
+
         </section>
+
     );
+
 }

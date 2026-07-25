@@ -20,7 +20,7 @@ export function CultureBlock({
 
             title="Culture"
 
-            subtitle="Language in context"
+            subtitle={block.title}
 
             text={block.text}
 

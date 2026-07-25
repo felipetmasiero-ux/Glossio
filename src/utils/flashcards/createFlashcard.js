@@ -7,7 +7,10 @@ import {
 export function createFlashcard({
     word,
     translation,
-    language
+    language,
+    moduleId = null,
+    lessonId = null,
+    category = null
 }) {
     const now = Date.now();
 
@@ -17,6 +20,10 @@ export function createFlashcard({
     word,
     translation,
     language,
+
+    moduleId,
+    lessonId,
+    category,
 
     favorite: false,
 

@@ -1,3 +1,4 @@
+import { ClickableWord } from "../ClickableWord/ClickableWord";
 import { findWord } from "../../../utils/words/findWord";
 import "./TextRenderer.css";
 
@@ -11,7 +12,7 @@ export function TextRenderer({
 
 }) {
 
-    const words = text.match(/\w+|[^\w\s]+|\s+/g) ?? [];
+    const tokens = text.match(/[\p{L}\p{N}'’]+|[^\s\p{L}\p{N}]+|\s+/gu) ?? [];
 
     function handleClick(cleanWord) {
 
@@ -29,31 +30,35 @@ export function TextRenderer({
 
             {
 
-                words.map((word, index) => {
+                tokens.map((token, index) => {
 
-                    if (/^\s+$/.test(word)) {
+                    if (/^\s+$/.test(token)) {
 
-                        return word;
+                        return token;
 
                     }
 
-                    const cleanWord = word.replace(/[.,!?;:()"']/g, "");
+                    const cleanWord = token.replace(/[.,!?;:()"'’]/g, "");
+
+                    if (!cleanWord) {
+
+                        return token;
+
+                    }
 
                     return (
 
-                        <span
+                        <ClickableWord
 
                             key={index}
-
-                            className="clickable-word"
 
                             onClick={() => handleClick(cleanWord)}
 
                         >
 
-                            {word}
+                            {token}
 
-                        </span>
+                        </ClickableWord>
 
                     );
 

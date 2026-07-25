@@ -1,7 +1,7 @@
 import "./LessonObjectives.css";
 
 import { Card } from "../../common/Card/Card";
-import { SectionHeader } from "../../common/SectionHeader/SectionHeader";
+import { LessonSection } from "../LessonSection/LessonSection";
 
 export function LessonObjectives({
 
@@ -17,17 +17,17 @@ export function LessonObjectives({
 
     return (
 
-        <section className="lesson-objectives animate-fade-in">
+        <LessonSection
 
-            <SectionHeader
+            className="lesson-objectives"
 
-                icon="🎯"
+            icon="🎯"
 
-                title="Learning Objectives"
+            title="Learning Objectives"
 
-                subtitle="By the end of this lesson you will be able to:"
+            subtitle="By the end of this lesson you will be able to:"
 
-            />
+        >
 
             <div className="lesson-objectives-grid">
 
@@ -63,7 +63,7 @@ export function LessonObjectives({
 
             </div>
 
-        </section>
+        </LessonSection>
 
     );
 

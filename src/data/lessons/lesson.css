@@ -1,0 +1,23 @@
+/* Glossio — global stylesheet shared by every lesson block */
+
+.lesson-section{
+
+    margin-bottom:var(--space-8);
+
+}
+
+.lesson-section:last-child{
+
+    margin-bottom:0;
+
+}
+
+.lesson-section .card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-lg);
+
+}

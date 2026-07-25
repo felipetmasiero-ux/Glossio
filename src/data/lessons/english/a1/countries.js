@@ -1,3 +1,16 @@
+import {
+    heading,
+    paragraph,
+    examples,
+    dialogue,
+    grammar,
+    tip,
+    culture,
+    list,
+    quiz,
+    vocabulary
+} from "../../../../utils/lessons/builders";
+
 export const countriesLesson = {
 
     id: "english-a1-countries",
@@ -20,11 +33,11 @@ export const countriesLesson = {
 
     cover: "/covers/countries.webp",
 
-    estimatedTime: 7,
+    estimatedTime: 8,
 
     difficulty: 1,
 
-    xp: 35,
+    xp: 30,
 
     tags: [
         "countries",
@@ -38,13 +51,6 @@ export const countriesLesson = {
         "speaking"
     ],
 
-    prerequisites: [
-        "english-a1-introductions"
-    ],
-
-    nextLesson:
-        "english-a1-numbers",
-
     objectives: [
 
         "Name common countries",
@@ -57,7 +63,7 @@ export const countriesLesson = {
 
     ],
 
-    vocabulary: [
+    vocabulary: vocabulary([
 
         {
             word: "Brazil",
@@ -87,81 +93,131 @@ export const countriesLesson = {
         {
             word: "French",
             translation: "Francês / Francesa"
+        },
+
+        {
+            word: "Japan",
+            translation: "Japão"
+        },
+
+        {
+            word: "Japanese",
+            translation: "Japonês(a)"
+        },
+
+        {
+            word: "Spain",
+            translation: "Espanha"
+        },
+
+        {
+            word: "Spanish",
+            translation: "Espanhol(a)"
         }
 
-    ],
+    ]),
 
     blocks: [
 
-        {
-            id: 1,
-            type: "heading",
-            text: "Talking about Countries"
-        },
+        heading("Talking about Countries"),
 
-        {
-            id: 2,
-            type: "paragraph",
-            text: "When meeting someone, it is common to ask where they are from."
-        },
+        paragraph(
+            "When meeting someone, it is common to ask where they are from. In English, most nationalities are formed by adding an ending like -an, -ian or -ese to the country's name."
+        ),
 
-        {
-            id: 3,
-            type: "example",
-            text: "Where are you from? — I'm from Brazil."
-        },
+        examples([
+            {
+                text: "Where are you from? — I'm from Brazil.",
+                translation: "De onde você é? — Eu sou do Brasil."
+            },
 
-        {
-            id: 4,
-            type: "example",
-            text: "Are you American? — No, I'm Brazilian."
-        },
+            {
+                text: "Are you American? — No, I'm Brazilian.",
+                translation: "Você é americano? — Não, eu sou brasileiro."
+            },
 
-        {
-            id: 5,
-            type: "list",
-            items: [
+            {
+                text: "She is from Japan. She is Japanese.",
+                translation: "Ela é do Japão. Ela é japonesa."
+            }
+        ]),
 
-                "Brazil → Brazilian",
+        dialogue([
+            { speaker: "Anna", text: "Where are you from?" },
+            { speaker: "Kenji", text: "I'm from Japan. I'm Japanese. What about you?" },
+            { speaker: "Anna", text: "I'm from Spain. I'm Spanish." },
+            { speaker: "Kenji", text: "Nice! Do you speak French too?" },
+            { speaker: "Anna", text: "No, just Spanish and English." }
+        ]),
 
-                "France → French",
+        grammar(
+            "Country vs Nationality",
+            "The country name and the nationality adjective are different words: 'Brazil' is the country, 'Brazilian' is the nationality. Use 'I'm from + country' or 'I'm + nationality' to say where you are from."
+        ),
 
-                "Japan → Japanese",
+        list([
 
-                "Spain → Spanish",
+            "Brazil → Brazilian",
 
-                "Italy → Italian"
+            "France → French",
 
-            ]
-        },
+            "Japan → Japanese",
 
-        {
-            id: 6,
-            type: "tip",
-            title: "Remember",
-            text: "Countries and nationalities begin with capital letters in English."
-        }
+            "Spain → Spanish",
+
+            "Italy → Italian"
+
+        ]),
+
+        tip(
+            "Remember",
+            "Countries and nationalities begin with capital letters in English, even in the middle of a sentence."
+        ),
+
+        culture(
+            "One World, Many Nationalities",
+            "English is often used as a common language between people from different countries, so asking about nationalities is one of the most common small-talk topics when traveling or meeting new people."
+        ),
+
+        quiz(
+            "What is the nationality for someone from Japan?",
+            ["Japanese", "Japan", "Japaneseish", "Japanian"],
+            0,
+            "The correct nationality adjective is 'Japanese'."
+        ),
+
+        quiz(
+            "Which sentence is correct?",
+            ["I'm from Brazilian.", "I'm from Brazil.", "I'm Brazil.", "I'm Brazils."],
+            1,
+            "Use 'from' with the country name: 'I'm from Brazil.'"
+        ),
+
+        quiz(
+            "How do you ask where someone is from?",
+            ["What's your name?", "How are you?", "Where are you from?", "Nice to meet you."],
+            2,
+            "'Where are you from?' is the standard way to ask about someone's origin."
+        )
 
     ],
-
-    practice: [],
 
     summary: {
 
         tip:
-            "Practice asking and answering 'Where are you from?' with different countries.",
+            "Practice asking and answering 'Where are you from?' with different countries and their nationalities.",
 
         review: [
 
-            "Brazil",
+            "Brazil → Brazilian",
 
-            "Brazilian",
+            "France → French",
 
-            "France",
+            "Japan → Japanese",
 
-            "French",
+            "Spain → Spanish",
 
-            "Where are you from?"
+            "Where are you from? — I'm from..."
 
         ]
 

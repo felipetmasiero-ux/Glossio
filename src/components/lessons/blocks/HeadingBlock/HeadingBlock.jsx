@@ -1,10 +1,12 @@
 import "./HeadingBlock.css";
 
+import { LessonSection } from "../../LessonSection/LessonSection";
+
 export function HeadingBlock({ block }) {
 
     return (
 
-        <section className="lesson-heading">
+        <LessonSection className="lesson-heading">
 
             <h2>
 
@@ -12,7 +14,7 @@ export function HeadingBlock({ block }) {
 
             </h2>
 
-        </section>
+        </LessonSection>
 
     );
 

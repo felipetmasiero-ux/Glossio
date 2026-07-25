@@ -1,55 +1,88 @@
+import "./ExampleBlock.css";
+
 import { Card } from "../../../common/Card/Card";
-import { SectionHeader } from "../../../common/SectionHeader/SectionHeader";
 
+import { LessonSection } from "../../LessonSection/LessonSection";
 import { TextRenderer } from "../../TextRenderer/TextRenderer";
-
 import { WordPopup } from "../../WordPopup/WordPopup";
 
-import { Toast } from "../../../common/Toast/Toast";
+import { useWordPopup } from "../../../../hooks/useWordPopup";
 
-import { useWordActions } from "../../../../hooks/useWordActions";
+export function ExampleBlock({ block, lesson, wordIndex }) {
 
-export function ExampleBlock({block, wordIndex}){
-
-    const{
+    const {
 
         selectedWord,
 
         openWord,
 
-        closeWord,
+        closeWord
 
-        addWord,
+    } = useWordPopup(lesson);
 
-        toast
+    const examples = block.examples ?? [
 
-    }=useWordActions();
+        { text: block.text, translation: block.translation }
 
-    return(
+    ];
 
-        <section>
+    return (
 
-            <SectionHeader
+        <LessonSection
 
-                icon="💬"
+            icon="💬"
 
-                title="Example"
+            title="Example"
 
-                subtitle="Study the sentence."
+            subtitle={
 
-            />
+                examples.length > 1
+
+                    ? "Study the sentences."
+
+                    : "Study the sentence."
+
+            }
+
+        >
 
             <Card>
 
-                <TextRenderer
+                {
 
-                    text={block.text}
+                    examples.map((example, index) => (
 
-                    wordIndex={wordIndex}
+                        <div className="example-item" key={index}>
 
-                    onWordClick={openWord}
+                            <TextRenderer
 
-                />
+                                text={example.text}
+
+                                wordIndex={wordIndex}
+
+                                onWordClick={openWord}
+
+                            />
+
+                            {
+
+                                example.translation && (
+
+                                    <p className="example-translation">
+
+                                        {example.translation}
+
+                                    </p>
+
+                                )
+
+                            }
+
+                        </div>
+
+                    ))
+
+                }
 
             </Card>
 
@@ -59,17 +92,9 @@ export function ExampleBlock({block, wordIndex}){
 
                 onClose={closeWord}
 
-                onAdd={addWord}
-
             />
 
-            <Toast
-
-                message={toast}
-
-            />
-
-        </section>
+        </LessonSection>
 
     );
 

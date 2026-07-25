@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { FlashcardContext } from "../contexts/FlashcardContext";
 import { scheduleCard } from "../utils/study/scheduling";
+import { useEvents } from "../hooks/useEvents";
+import { EVENT_TYPES } from "../constants/events";
 import {
     createFlashcard,
     loadFlashcards,
@@ -13,7 +15,7 @@ export function FlashcardProvider({ children }) {
 
     const [flashcards, setFlashcards] = useState(loadFlashcards);
 
-
+    const { logEvent } = useEvents();
 
     useEffect(() => {
         saveFlashcards(flashcards);
@@ -34,23 +36,31 @@ export function FlashcardProvider({ children }) {
             return;
         }
 
-        setFlashcards(previous => {
+        const alreadyExists = flashcards.some(card =>
+            card.word?.toLowerCase() === normalized.word.toLowerCase() &&
+            card.language === language
+        );
 
-            const alreadyExists = previous.some(card =>
-                card.word?.toLowerCase() === normalized.word.toLowerCase() &&
-                card.language === language
-            );
+        if (alreadyExists) return;
 
-            if (alreadyExists) return previous;
+        setFlashcards(previous => [
+            ...previous,
+            createFlashcard({
+                word: normalized.word,
+                translation: normalized.translation ?? "",
+                language,
+                moduleId: normalized.moduleId ?? null,
+                lessonId: normalized.lessonId ?? null,
+                category: normalized.category ?? null
+            })
+        ]);
 
-            return [
-                ...previous,
-                createFlashcard({
-                    word: normalized.word,
-                    translation: normalized.translation ?? "",
-                    language
-                })
-            ];
+        logEvent(EVENT_TYPES.VOCABULARY_ADDED, {
+            word: normalized.word,
+            translation: normalized.translation ?? "",
+            language,
+            moduleId: normalized.moduleId ?? null,
+            lessonId: normalized.lessonId ?? null
         });
     }
 
@@ -68,6 +78,11 @@ export function FlashcardProvider({ children }) {
                 return scheduleCard(card, quality);
             })
         );
+
+        logEvent(EVENT_TYPES.FLASHCARD_REVIEWED, {
+            cardId,
+            quality
+        });
     }
 
     function toggleFavorite(cardId) {

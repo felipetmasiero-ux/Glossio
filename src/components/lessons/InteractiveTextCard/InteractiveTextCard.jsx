@@ -1,8 +1,6 @@
-import "./InteractiveTextCard.css";
-
 import { Card } from "../../common/Card/Card";
-import { SectionHeader } from "../../common/SectionHeader/SectionHeader";
 
+import { LessonSection } from "../LessonSection/LessonSection";
 import { TextRenderer } from "../TextRenderer/TextRenderer";
 import { WordPopup } from "../WordPopup/WordPopup";
 
@@ -38,17 +36,15 @@ export function InteractiveTextCard({
 
     return (
 
-        <section className="interactive-text-card">
+        <LessonSection
 
-            <SectionHeader
+            icon={icon}
 
-                icon={icon}
+            title={title}
 
-                title={title}
+            subtitle={subtitle}
 
-                subtitle={subtitle}
-
-            />
+        >
 
             <Card>
 
@@ -74,7 +70,7 @@ export function InteractiveTextCard({
 
             />
 
-        </section>
+        </LessonSection>
 
     );
 

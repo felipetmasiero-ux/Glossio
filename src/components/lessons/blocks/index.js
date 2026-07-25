@@ -28,8 +28,7 @@ export const lessonBlocks = {
   [BLOCK_TYPES.EXAMPLE]: {
     component: ExampleBlock,
     label: "Example",
-    category: "content",
-    getVocabulary: block => block.word ? [block.word] : []
+    category: "content"
   },
 
   [BLOCK_TYPES.TIP]: {
@@ -41,8 +40,7 @@ export const lessonBlocks = {
   [BLOCK_TYPES.QUOTE]: {
     component: QuoteBlock,
     label: "Quote",
-    category: "content",
-    getVocabulary: block => block.words ?? []
+    category: "content"
   },
 
   [BLOCK_TYPES.LIST]: {
@@ -61,15 +59,13 @@ export const lessonBlocks = {
   [BLOCK_TYPES.GRAMMAR]: {
     component: GrammarBlock,
     label: "Grammar",
-    category: "language",
-    getVocabulary: block => block.words ?? []
+    category: "language"
   },
 
   [BLOCK_TYPES.CULTURE]: {
     component: CultureBlock,
     label: "Culture",
-    category: "culture",
-    getVocabulary: block => block.words ?? []
+    category: "culture"
   },
 
   [BLOCK_TYPES.QUIZ]: {

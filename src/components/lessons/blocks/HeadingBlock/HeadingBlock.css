@@ -1,9 +1,7 @@
-.lesson-heading{
+.lesson-heading h2{
 
-    font-size:2rem;
+    font:var(--text-h1);
 
-    font-weight:700;
-
-    margin:16px 0;
+    color:var(--color-text);
 
 }

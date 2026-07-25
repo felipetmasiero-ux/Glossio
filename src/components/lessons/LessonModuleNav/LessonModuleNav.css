@@ -1,0 +1,43 @@
+.lesson-module-nav{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    flex-wrap:wrap;
+
+    gap:var(--space-sm);
+
+    margin-bottom:var(--space-lg);
+
+    font:var(--text-small);
+
+    color:var(--color-text-secondary);
+
+}
+
+.lesson-module-nav-back{
+
+    font:var(--text-body-md);
+
+    color:var(--color-primary);
+
+}
+
+.lesson-module-nav-back:hover{
+
+    text-decoration:underline;
+
+}
+
+.lesson-module-nav-stats{
+
+    display:flex;
+
+    gap:var(--space-md);
+
+    flex-wrap:wrap;
+
+}

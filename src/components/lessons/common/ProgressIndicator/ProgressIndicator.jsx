@@ -4,11 +4,13 @@ export function ProgressIndicator({
 
     current,
 
-    total
+    total,
+
+    label
 
 }) {
 
-    const progress = (current / total) * 100;
+    const progress = total === 0 ? 0 : (current / total) * 100;
 
     return (
 
@@ -18,7 +20,7 @@ export function ProgressIndicator({
 
                 <span>
 
-                    Section {current}
+                    {label ?? `Section ${current}`}
 
                 </span>
 

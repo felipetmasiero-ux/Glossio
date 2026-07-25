@@ -1,3 +1,4 @@
+import { LessonSection } from "../../LessonSection/LessonSection";
 import { InfoBox } from "../../common/InfoBox/InfoBox";
 
 export function TipBlock({
@@ -8,23 +9,27 @@ export function TipBlock({
 
     return (
 
-        <InfoBox
+        <LessonSection>
 
-            variant="tip"
+            <InfoBox
 
-            icon="💡"
+                variant="tip"
 
-            title={block.title ?? "Tip"}
+                icon="💡"
 
-        >
+                title={block.title ?? "Tip"}
 
-            <p>
+            >
 
-                {block.text}
+                <p>
 
-            </p>
+                    {block.text}
 
-        </InfoBox>
+                </p>
+
+            </InfoBox>
+
+        </LessonSection>
 
     );
 

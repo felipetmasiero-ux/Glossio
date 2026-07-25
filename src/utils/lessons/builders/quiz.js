@@ -4,6 +4,8 @@ import { BLOCK_TYPES } from "../../../constants/lessonBlocks";
 export function quiz(
     question,
     options,
+    answer,
+    explanation,
     id
 ) {
 
@@ -11,7 +13,9 @@ export function quiz(
         BLOCK_TYPES.QUIZ,
         {
             question,
-            options
+            options,
+            answer,
+            explanation
         },
         id
     );

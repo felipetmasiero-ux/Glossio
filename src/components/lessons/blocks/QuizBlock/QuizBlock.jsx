@@ -1,34 +1,55 @@
-import { SectionHeader } from "../../../common/SectionHeader/SectionHeader";
+import { LessonSection } from "../../LessonSection/LessonSection";
 
 import { QuizCard } from "../../QuizCard/QuizCard";
 
+import { useEvents } from "../../../../hooks/useEvents";
+import { EVENT_TYPES } from "../../../../constants/events";
+
 export function QuizBlock({
 
-    block
+    block,
+
+    lesson
 
 }){
 
+    const { logEvent } = useEvents();
+
+    function handleComplete(correct) {
+
+        logEvent(EVENT_TYPES.QUIZ_COMPLETED, {
+
+            question: block.question,
+
+            correct,
+
+            lessonId: lesson?.id ?? null
+
+        });
+
+    }
+
     return(
 
-        <section>
+        <LessonSection
 
-            <SectionHeader
+            icon="📝"
 
-                icon="📝"
+            title="Practice"
 
-                title="Practice"
+            subtitle="Answer before continuing."
 
-                subtitle="Answer before continuing."
-
-            />
+        >
 
             <QuizCard
 
                 quiz={block}
 
+                onComplete={handleComplete}
+
             />
 
-        </section>
+        </LessonSection>
 
     );
 

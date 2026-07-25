@@ -1,0 +1,45 @@
+.module-card{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:var(--space-sm);
+
+    cursor:pointer;
+
+}
+
+.module-card-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    font:var(--text-small);
+
+    color:var(--color-text-secondary);
+
+}
+
+.module-card .lesson-level{
+
+    background:var(--color-primary-light);
+
+    color:var(--color-primary);
+
+    padding:var(--space-xs) var(--space-3);
+
+    border-radius:var(--radius-full);
+
+    font:var(--text-caption);
+
+}
+
+.module-card .lesson-progress{
+
+    margin:var(--space-sm) 0 0;
+
+}

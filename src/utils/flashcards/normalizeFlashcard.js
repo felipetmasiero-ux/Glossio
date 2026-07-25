@@ -34,5 +34,11 @@ export function normalizeFlashcard(card) {
             null,
 
         favorite: card.favorite ?? false,
+
+        moduleId: card.moduleId ?? null,
+
+        lessonId: card.lessonId ?? null,
+
+        category: card.category ?? null,
     };
 }

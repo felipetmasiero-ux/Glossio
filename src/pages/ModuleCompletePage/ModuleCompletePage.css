@@ -1,0 +1,57 @@
+.module-complete-page{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding:60px 30px;
+
+}
+
+.module-complete-hero{
+
+    text-align:center;
+
+}
+
+.module-complete-hero .lesson-description{
+
+    max-width:100%;
+
+    margin:0 auto;
+
+}
+
+.module-complete-hero .lesson-meta{
+
+    justify-content:center;
+
+}
+
+.module-complete-actions{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:var(--space-md);
+
+    margin-top:var(--space-7);
+
+}
+
+.module-complete-secondary-link{
+
+    color:var(--color-text-secondary);
+
+    font:var(--text-small);
+
+}
+
+.module-complete-secondary-link:hover{
+
+    color:var(--color-primary);
+
+}

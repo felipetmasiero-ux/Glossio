@@ -1,7 +1,7 @@
 import "./DialogueBlock.css";
 
 import { Card } from "../../../common/Card/Card";
-import { SectionHeader } from "../../../common/SectionHeader/SectionHeader";
+import { LessonSection } from "../../LessonSection/LessonSection";
 import { DialogueLine } from "../../DialogueLine/DialogueLine";
 import { WordPopup } from "../../WordPopup/WordPopup";
 import { useWordPopup } from "../../../../hooks/useWordPopup";
@@ -18,17 +18,17 @@ export function DialogueBlock({ block, lesson, wordIndex }) {
 
     return (
 
-        <section className="lesson-dialogue">
+        <LessonSection
 
-            <SectionHeader
+            className="lesson-dialogue"
 
-                icon="💬"
+            icon="💬"
 
-                title="Dialogue"
+            title="Dialogue"
 
-                subtitle="Practice reading conversations."
+            subtitle="Practice reading conversations."
 
-            />
+        >
 
             <Card>
 
@@ -36,9 +36,11 @@ export function DialogueBlock({ block, lesson, wordIndex }) {
 
                     {
 
-                        block.lines.map((line) => (
+                        block.lines.map((line, index) => (
 
                             <DialogueLine
+
+                                key={index}
 
                                 line={line}
 
@@ -54,16 +56,16 @@ export function DialogueBlock({ block, lesson, wordIndex }) {
 
                 </div>
 
-                <WordPopup
-
-                    word={selectedWord}
-                    onClose={closeWord}
-
-                />
-
             </Card>
 
-        </section>
+            <WordPopup
+
+                word={selectedWord}
+                onClose={closeWord}
+
+            />
+
+        </LessonSection>
 
     );
 

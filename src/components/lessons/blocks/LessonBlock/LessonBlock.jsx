@@ -1,5 +1,6 @@
 import { lessonBlocks } from "..";
 import { UnknownBlock } from "../UnknownBlock/UnknownBlock";
+import"../../../../data/lessons/lesson.css";
 
 export function LessonBlock({
 

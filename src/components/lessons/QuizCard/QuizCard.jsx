@@ -31,7 +31,7 @@ export function QuizCard({
 
     const correct =
 
-        answer === quiz.correct;
+        answer === quiz.answer;
 
     function handleCheck() {
 

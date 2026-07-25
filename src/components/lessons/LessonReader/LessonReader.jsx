@@ -1,9 +1,11 @@
 import "./LessonReader.css";
+import"../../../data/lessons/lesson.css";
 
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 
 import { LessonHero } from "../LessonHero/LessonHero";
+import { LessonModuleNav } from "../LessonModuleNav/LessonModuleNav";
 import { LessonObjectives } from "../LessonObjectives/LessonObjectives";
 import { VocabularySection } from "../VocabularySection/VocabularySection";
 import { LessonBlock } from "../blocks/LessonBlock/LessonBlock";
@@ -12,18 +14,21 @@ import { LessonSummary } from "../LessonSummary/LessonSummary";
 import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator";
 import { LessonNavigation } from "../common/LessonNavigation/LessonNavigation";
 
-import { LessonRepository } from "../../../utils/lessons/LessonRepository";
+import { ModuleRepository } from "../../../utils/courses/ModuleRepository";
 import { buildWordRepository } from "../../../utils/words/buildWordRepository";
 
 
 import { useLanguage } from "../../../hooks/useLanguage";
 import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
+import { useLessonProgress } from "../../../hooks/useLessonProgress";
 
 export function LessonReader({ lesson }) {
 
     const navigate = useNavigate();
 
     const { language } = useLanguage();
+
+    const { completedLessons, completeLesson } = useLessonProgress();
 
     const {
 
@@ -38,14 +43,29 @@ export function LessonReader({ lesson }) {
 
     } = useLessonNavigator(lesson);
 
-    const nextLesson = LessonRepository.getNextLesson(
+    const nextLesson = ModuleRepository.getNextLesson(
         language,
         lesson.id
     );
 
-    const previousLesson = LessonRepository.getPreviousLesson(
+    const previousLesson = ModuleRepository.getPreviousLesson(
         language,
         lesson.id
+    );
+
+    const currentModule = ModuleRepository.getByLesson(language, lesson.id);
+
+    const lessonIndex = currentModule?.lessons.findIndex(
+        moduleLesson => moduleLesson.id === lesson.id
+    ) ?? 0;
+
+    const moduleProgress = currentModule
+        ? ModuleRepository.getProgress(currentModule, completedLessons)
+        : { completed: 0, total: 0 };
+
+    const courseProgress = ModuleRepository.getProgress(
+        { lessons: ModuleRepository.getAllLessonsInOrder(language) },
+        completedLessons
     );
 
     const wordIndex = useMemo(
@@ -72,6 +92,16 @@ export function LessonReader({ lesson }) {
             next();
 
             scrollTop();
+
+            return;
+
+        }
+
+        completeLesson(lesson.id);
+
+        if (currentModule && ModuleRepository.isLastLessonInModule(language, lesson.id)) {
+
+            navigate(`/lessons/module/${currentModule.id}/complete`);
 
             return;
 
@@ -113,6 +143,18 @@ export function LessonReader({ lesson }) {
 
         <div className="lesson-reader">
 
+            <LessonModuleNav
+
+                module={currentModule}
+
+                lessonIndex={lessonIndex}
+
+                moduleProgress={moduleProgress}
+
+                courseProgress={courseProgress}
+
+            />
+
             <LessonHero
 
                 lesson={lesson}
@@ -126,6 +168,8 @@ export function LessonReader({ lesson }) {
             />
 
             <VocabularySection
+
+                lesson={lesson}
 
                 vocabulary={lesson.vocabulary}
 
@@ -153,6 +197,7 @@ export function LessonReader({ lesson }) {
                     currentStep.map(block => (
 
                         <LessonBlock
+                            key={block.id}
                             block={block}
                             lesson={lesson}
                             wordIndex={wordIndex}

@@ -1,10 +1,11 @@
 import { createBlock } from "./createBlock";
+import { BLOCK_TYPES } from "../../../constants/lessonBlocks";
 
 export function step(title, id) {
 
     return createBlock(
 
-        "step",
+        BLOCK_TYPES.STEP,
 
         {
 

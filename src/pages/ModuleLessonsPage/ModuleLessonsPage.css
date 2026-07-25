@@ -1,0 +1,39 @@
+.module-lessons-page{
+
+    max-width:1200px;
+
+    margin:auto;
+
+    padding:60px 30px;
+
+}
+
+.module-lessons-back{
+
+    display:inline-block;
+
+    margin-bottom:var(--space-md);
+
+    color:var(--color-primary);
+
+    font:var(--text-body-md);
+
+}
+
+.module-lessons-back:hover{
+
+    text-decoration:underline;
+
+}
+
+.module-lessons-page .lessons-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+
+    gap:28px;
+
+    margin-top:28px;
+
+}

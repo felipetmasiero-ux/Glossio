@@ -1,4 +1,4 @@
-.lessons-page{
+.modules-page{
 
     max-width:1200px;
 
@@ -8,12 +8,14 @@
 
 }
 
-.lessons-grid{
+.modules-grid{
 
     display:grid;
 
     grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
 
     gap:28px;
+
+    margin-top:28px;
 
 }
