@@ -64,27 +64,16 @@ export const dailyRoutineLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "wake up", translation: "acordar" },
-
-        { word: "get up", translation: "levantar da cama" },
-
-        { word: "have breakfast", translation: "tomar café da manhã" },
-
-        { word: "go to work", translation: "ir trabalhar" },
-
-        { word: "have lunch", translation: "almoçar" },
-
-        { word: "go home", translation: "ir para casa" },
-
-        { word: "have dinner", translation: "jantar" },
-
-        { word: "go to bed", translation: "ir para a cama" },
-
-        { word: "in the morning", translation: "de manhã" },
-
-        { word: "at night", translation: "à noite" }
-
+        "wake up",
+        "get up",
+        "have breakfast",
+        "go to work",
+        "have lunch",
+        "go home",
+        "have dinner",
+        "go to bed",
+        "in the morning",
+        "at night"
     ]),
 
     blocks: [

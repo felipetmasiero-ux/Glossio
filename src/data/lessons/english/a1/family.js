@@ -64,27 +64,16 @@ export const familyLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "mother", translation: "mãe" },
-
-        { word: "father", translation: "pai" },
-
-        { word: "parents", translation: "pais" },
-
-        { word: "brother", translation: "irmão" },
-
-        { word: "sister", translation: "irmã" },
-
-        { word: "sibling", translation: "irmão(ã)", note: "A gender-neutral word for brother or sister." },
-
-        { word: "son", translation: "filho" },
-
-        { word: "daughter", translation: "filha" },
-
-        { word: "grandmother", translation: "avó" },
-
-        { word: "grandfather", translation: "avô" }
-
+        "mother",
+        "father",
+        "parents",
+        "brother",
+        "sister",
+        "sibling",
+        "son",
+        "daughter",
+        "grandmother",
+        "grandfather"
     ]),
 
     blocks: [

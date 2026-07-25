@@ -64,57 +64,16 @@ export const countriesLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        {
-            word: "Brazil",
-            translation: "Brasil"
-        },
-
-        {
-            word: "Brazilian",
-            translation: "Brasileiro(a)"
-        },
-
-        {
-            word: "United States",
-            translation: "Estados Unidos"
-        },
-
-        {
-            word: "American",
-            translation: "Americano(a)"
-        },
-
-        {
-            word: "France",
-            translation: "França"
-        },
-
-        {
-            word: "French",
-            translation: "Francês / Francesa"
-        },
-
-        {
-            word: "Japan",
-            translation: "Japão"
-        },
-
-        {
-            word: "Japanese",
-            translation: "Japonês(a)"
-        },
-
-        {
-            word: "Spain",
-            translation: "Espanha"
-        },
-
-        {
-            word: "Spanish",
-            translation: "Espanhol(a)"
-        }
-
+        "Brazil",
+        "Brazilian",
+        "United States",
+        "American",
+        "France",
+        "French",
+        "Japan",
+        "Japanese",
+        "Spain",
+        "Spanish"
     ]),
 
     blocks: [

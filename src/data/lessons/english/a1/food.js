@@ -64,33 +64,16 @@ export const foodLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "bread", translation: "pão" },
-
-        { word: "rice", translation: "arroz" },
-
-        { word: "chicken", translation: "frango" },
-
-        { word: "fish", translation: "peixe" },
-
-        { word: "vegetables", translation: "vegetais" },
-
-        { word: "fruit", translation: "fruta" },
-
-        { word: "water", translation: "água" },
-
-        { word: "coffee", translation: "café" },
-
-        {
-            word: "I'm hungry.",
-            translation: "Estou com fome."
-        },
-
-        {
-            word: "I'm thirsty.",
-            translation: "Estou com sede."
-        }
-
+        "bread",
+        "rice",
+        "chicken",
+        "fish",
+        "vegetables",
+        "fruit",
+        "water",
+        "coffee",
+        "I'm hungry.",
+        "I'm thirsty."
     ]),
 
     blocks: [

@@ -36,6 +36,11 @@ export function FlashcardProvider({ children }) {
             return;
         }
 
+        if (!normalized.translation?.trim()) {
+            console.warn("Skipped flashcard with no translation:", normalized.word);
+            return;
+        }
+
         const alreadyExists = flashcards.some(card =>
             card.word?.toLowerCase() === normalized.word.toLowerCase() &&
             card.language === language

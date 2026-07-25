@@ -52,8 +52,7 @@ export const lessonBlocks = {
   [BLOCK_TYPES.DIALOGUE]: {
     component: DialogueBlock,
     label: "Dialogue",
-    category: "conversation",
-    getVocabulary: block => block.lines?.flatMap(line => line.words ?? []) ?? []
+    category: "conversation"
   },
 
   [BLOCK_TYPES.GRAMMAR]: {

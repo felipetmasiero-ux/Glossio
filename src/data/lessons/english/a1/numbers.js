@@ -63,37 +63,17 @@ export const numbersLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "zero", translation: "zero" },
-
-        { word: "one", translation: "um" },
-
-        { word: "two", translation: "dois" },
-
-        { word: "three", translation: "três" },
-
-        { word: "four", translation: "quatro" },
-
-        { word: "five", translation: "cinco" },
-
-        { word: "ten", translation: "dez" },
-
-        { word: "twenty", translation: "vinte" },
-
-        { word: "hundred", translation: "cem" },
-
-        {
-            word: "how many",
-            translation: "quantos(as)",
-            example: "How many brothers do you have?"
-        },
-
-        {
-            word: "how old",
-            translation: "quantos anos",
-            example: "How old are you?"
-        }
-
+        "zero",
+        "one",
+        "two",
+        "three",
+        "four",
+        "five",
+        "ten",
+        "twenty",
+        "hundred",
+        "how many",
+        "how old"
     ]),
 
     blocks: [

@@ -6,7 +6,7 @@ import { DialogueLine } from "../../DialogueLine/DialogueLine";
 import { WordPopup } from "../../WordPopup/WordPopup";
 import { useWordPopup } from "../../../../hooks/useWordPopup";
 
-export function DialogueBlock({ block, lesson, wordIndex }) {
+export function DialogueBlock({ block, lesson }) {
 
     const {
 
@@ -44,7 +44,7 @@ export function DialogueBlock({ block, lesson, wordIndex }) {
 
                                 line={line}
 
-                                wordIndex={wordIndex}
+                                language={lesson?.language}
 
                                 onWordClick={openWord}
 

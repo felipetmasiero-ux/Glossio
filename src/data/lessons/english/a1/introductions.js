@@ -66,50 +66,14 @@ export const introductionsLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        {
-            word: "My name is",
-            translation: "Meu nome é",
-            example: "My name is Sofia."
-        },
-
-        {
-            word: "What's your name?",
-            translation: "Qual é o seu nome?"
-        },
-
-        {
-            word: "I'm from Brazil.",
-            translation: "Eu sou do Brasil."
-        },
-
-        {
-            word: "Where are you from?",
-            translation: "De onde você é?"
-        },
-
-        {
-            word: "Nice to meet you.",
-            translation: "Prazer em conhecer você."
-        },
-
-        {
-            word: "Likewise.",
-            translation: "Igualmente.",
-            note: "A short, polite reply to 'Nice to meet you.'"
-        },
-
-        {
-            word: "This is...",
-            translation: "Este é / Esta é...",
-            example: "This is my friend, Marco."
-        },
-
-        {
-            word: "Let me introduce myself.",
-            translation: "Deixe-me me apresentar."
-        }
-
+        "My name is",
+        "What's your name?",
+        "I'm from Brazil.",
+        "Where are you from?",
+        "Nice to meet you.",
+        "Likewise.",
+        "This is...",
+        "Let me introduce myself."
     ]),
 
     blocks: [

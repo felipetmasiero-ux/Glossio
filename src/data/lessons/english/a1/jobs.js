@@ -64,31 +64,15 @@ export const jobsLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "teacher", translation: "professor(a)" },
-
-        { word: "doctor", translation: "médico(a)" },
-
-        { word: "engineer", translation: "engenheiro(a)" },
-
-        { word: "nurse", translation: "enfermeiro(a)" },
-
-        { word: "manager", translation: "gerente" },
-
-        { word: "student", translation: "estudante" },
-
-        { word: "police officer", translation: "policial" },
-
-        {
-            word: "What do you do?",
-            translation: "O que você faz (da vida)?"
-        },
-
-        {
-            word: "I work as a...",
-            translation: "Eu trabalho como..."
-        }
-
+        "teacher",
+        "doctor",
+        "engineer",
+        "nurse",
+        "manager",
+        "student",
+        "police officer",
+        "What do you do?",
+        "I work as a..."
     ]),
 
     blocks: [

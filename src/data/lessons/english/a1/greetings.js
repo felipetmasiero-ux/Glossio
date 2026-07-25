@@ -42,79 +42,18 @@ export const greetingsLesson = {
   ],
 
   vocabulary: vocabulary([
-    {
-      word: "hello",
-      translation: "olá",
-      example: "Hello! Welcome to Glossio.",
-      note: "The most common greeting."
-    },
-
-    {
-      word: "hi",
-      translation: "oi",
-      example: "Hi, Emma!",
-      note: "Informal greeting."
-    },
-
-    {
-      word: "good morning",
-      translation: "bom dia",
-      example: "Good morning, teacher."
-    },
-
-    {
-      word: "good afternoon",
-      translation: "boa tarde",
-      example: "Good afternoon, everyone."
-    },
-
-    {
-      word: "good evening",
-      translation: "boa noite (ao chegar)",
-      example: "Good evening, sir."
-    },
-
-    {
-      word: "good night",
-      translation: "boa noite (ao sair ou dormir)",
-      example: "Good night! See you tomorrow."
-    },
-
-    {
-      word: "goodbye",
-      translation: "adeus",
-      example: "Goodbye! Have a nice day."
-    },
-
-    {
-      word: "bye",
-      translation: "tchau",
-      example: "Bye! See you soon."
-    },
-
-    {
-      word: "thanks",
-      translation: "obrigado",
-      example: "Thanks for your help."
-    },
-
-    {
-      word: "please",
-      translation: "por favor",
-      example: "Please, come in."
-    },
-
-    {
-      word: "welcome",
-      translation: "bem-vindo",
-      example: "Welcome to our school."
-    },
-
-    {
-      word: "see you",
-      translation: "até mais",
-      example: "See you tomorrow."
-    }
+    "hello",
+    "hi",
+    "good morning",
+    "good afternoon",
+    "good evening",
+    "good night",
+    "goodbye",
+    "bye",
+    "thanks",
+    "please",
+    "welcome",
+    "see you"
   ]),
 
   blocks: [

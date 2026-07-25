@@ -7,6 +7,7 @@ import { VocabularyCard } from "../VocabularyCard/VocabularyCard";
 import { WordPopup } from "../WordPopup/WordPopup";
 
 import { useWordPopup } from "../../../hooks/useWordPopup";
+import { DictionaryRepository } from "../../../repositories/DictionaryRepository";
 
 export function VocabularySection({
 
@@ -16,6 +17,10 @@ export function VocabularySection({
 
 }) {
 
+    const entries = vocabulary
+        .map(word => DictionaryRepository.getEntry(lesson?.language, word))
+        .filter(Boolean);
+
     const {
 
         selectedWord,
@@ -24,9 +29,9 @@ export function VocabularySection({
 
         closeWord
 
-    } = useWordPopup(lesson ?? { vocabulary });
+    } = useWordPopup(lesson ?? { vocabulary: entries });
 
-    if (vocabulary.length === 0) {
+    if (entries.length === 0) {
 
         return null;
 
@@ -50,13 +55,13 @@ export function VocabularySection({
 
                     {
 
-                        vocabulary.map(word => (
+                        entries.map(entry => (
 
                             <VocabularyCard
 
-                                key={word.word}
+                                key={entry.id}
 
-                                word={word}
+                                word={entry}
 
                                 onOpen={openWord}
 

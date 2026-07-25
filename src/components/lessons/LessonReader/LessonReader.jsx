@@ -2,7 +2,6 @@ import "./LessonReader.css";
 import"../../../data/lessons/lesson.css";
 
 import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 
 import { LessonHero } from "../LessonHero/LessonHero";
 import { LessonModuleNav } from "../LessonModuleNav/LessonModuleNav";
@@ -15,8 +14,6 @@ import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator
 import { LessonNavigation } from "../common/LessonNavigation/LessonNavigation";
 
 import { ModuleRepository } from "../../../utils/courses/ModuleRepository";
-import { buildWordRepository } from "../../../utils/words/buildWordRepository";
-
 
 import { useLanguage } from "../../../hooks/useLanguage";
 import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
@@ -66,11 +63,6 @@ export function LessonReader({ lesson }) {
     const courseProgress = ModuleRepository.getProgress(
         { lessons: ModuleRepository.getAllLessonsInOrder(language) },
         completedLessons
-    );
-
-    const wordIndex = useMemo(
-        () => buildWordRepository(lesson),
-        [lesson]
     );
 
     function scrollTop() {
@@ -200,7 +192,6 @@ export function LessonReader({ lesson }) {
                             key={block.id}
                             block={block}
                             lesson={lesson}
-                            wordIndex={wordIndex}
                         />
 
                     ))

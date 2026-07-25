@@ -3,7 +3,7 @@ import { TextRenderer } from "../TextRenderer/TextRenderer";
 export function DialogueLine({
 
     line,
-    wordIndex,
+    language,
     onWordClick
 
 }) {
@@ -24,7 +24,7 @@ export function DialogueLine({
 
                     text={line.text}
 
-                    wordIndex={wordIndex}
+                    language={language}
 
                     onWordClick={onWordClick}
 

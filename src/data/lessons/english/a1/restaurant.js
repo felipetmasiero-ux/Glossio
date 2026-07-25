@@ -64,34 +64,15 @@ export const restaurantLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "menu", translation: "cardápio" },
-
-        { word: "table", translation: "mesa" },
-
-        { word: "waiter", translation: "garçom" },
-
-        { word: "order", translation: "pedido / pedir" },
-
-        {
-            word: "Can I have...?",
-            translation: "Posso pedir...?"
-        },
-
-        {
-            word: "I'd like...",
-            translation: "Eu gostaria de..."
-        },
-
-        {
-            word: "The bill, please.",
-            translation: "A conta, por favor."
-        },
-
-        { word: "reservation", translation: "reserva" },
-
-        { word: "tip", translation: "gorjeta" }
-
+        "menu",
+        "table",
+        "waiter",
+        "order",
+        "Can I have...?",
+        "I'd like...",
+        "The bill, please.",
+        "reservation",
+        "tip"
     ]),
 
     blocks: [

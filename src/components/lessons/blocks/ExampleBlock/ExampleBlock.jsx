@@ -8,7 +8,7 @@ import { WordPopup } from "../../WordPopup/WordPopup";
 
 import { useWordPopup } from "../../../../hooks/useWordPopup";
 
-export function ExampleBlock({ block, lesson, wordIndex }) {
+export function ExampleBlock({ block, lesson }) {
 
     const {
 
@@ -58,7 +58,7 @@ export function ExampleBlock({ block, lesson, wordIndex }) {
 
                                 text={example.text}
 
-                                wordIndex={wordIndex}
+                                language={lesson?.language}
 
                                 onWordClick={openWord}
 

@@ -4,9 +4,7 @@ export function GrammarBlock({
 
     block,
 
-    lesson,
-
-    wordIndex
+    lesson
 
 }){
 
@@ -23,8 +21,6 @@ export function GrammarBlock({
             subtitle={block.title}
 
             text={block.text}
-
-            wordIndex={wordIndex}
 
         />
 

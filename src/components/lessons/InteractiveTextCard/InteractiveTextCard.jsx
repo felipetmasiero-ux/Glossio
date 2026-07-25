@@ -18,9 +18,7 @@ export function InteractiveTextCard({
 
     text,
 
-    children,
-
-    wordIndex
+    children
 
 }) {
 
@@ -52,7 +50,7 @@ export function InteractiveTextCard({
 
                     text={text}
 
-                    wordIndex={wordIndex}
+                    language={lesson?.language}
 
                     onWordClick={openWord}
 

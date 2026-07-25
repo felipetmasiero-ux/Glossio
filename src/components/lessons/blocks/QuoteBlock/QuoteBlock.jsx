@@ -4,9 +4,7 @@ export function QuoteBlock({
 
     block,
 
-    lesson,
-
-    wordIndex
+    lesson
 
 }){
 
@@ -21,8 +19,6 @@ export function QuoteBlock({
             title="Quote"
 
             text={block.text}
-
-            wordIndex={wordIndex}
 
         />
 

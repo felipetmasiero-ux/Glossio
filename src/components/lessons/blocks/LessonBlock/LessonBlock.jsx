@@ -5,8 +5,7 @@ import"../../../../data/lessons/lesson.css";
 export function LessonBlock({
 
     block,
-    lesson,
-    wordIndex
+    lesson
 
 }) {
 
@@ -27,8 +26,6 @@ export function LessonBlock({
             block={block}
 
             lesson={lesson}
-
-            wordIndex={wordIndex}
 
         />
 

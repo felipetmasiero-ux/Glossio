@@ -57,11 +57,11 @@ export function WordPopup({
 
                 {
 
-                    word.example && (
+                    word.examples?.[0] && (
 
                         <div className="popup-example">
 
-                            {word.example}
+                            {word.examples[0]}
 
                         </div>
 

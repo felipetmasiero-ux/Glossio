@@ -1,12 +1,12 @@
 import { ClickableWord } from "../ClickableWord/ClickableWord";
-import { findWord } from "../../../utils/words/findWord";
+import { DictionaryRepository } from "../../../repositories/DictionaryRepository";
 import "./TextRenderer.css";
 
 export function TextRenderer({
 
     text,
 
-    wordIndex,
+    language,
 
     onWordClick
 
@@ -17,9 +17,7 @@ export function TextRenderer({
     function handleClick(cleanWord) {
 
         onWordClick(
-
-            findWord(wordIndex, cleanWord)
-
+            DictionaryRepository.getEntry(language, cleanWord)
         );
 
     }
@@ -40,7 +38,7 @@ export function TextRenderer({
 
                     const cleanWord = token.replace(/[.,!?;:()"'’]/g, "");
 
-                    if (!cleanWord) {
+                    if (!cleanWord || !DictionaryRepository.hasWord(language, cleanWord)) {
 
                         return token;
 

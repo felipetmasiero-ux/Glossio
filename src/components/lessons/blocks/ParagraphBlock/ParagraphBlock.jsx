@@ -4,9 +4,7 @@ export function ParagraphBlock({
 
     block,
 
-    lesson,
-
-    wordIndex
+    lesson
 
 }){
 
@@ -21,8 +19,6 @@ export function ParagraphBlock({
             title="Explanation"
 
             text={block.text}
-
-            wordIndex={wordIndex}
 
         />
 

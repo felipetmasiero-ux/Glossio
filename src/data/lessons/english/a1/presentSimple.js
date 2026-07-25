@@ -62,27 +62,16 @@ export const presentSimpleLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "work", translation: "trabalhar" },
-
-        { word: "live", translation: "morar" },
-
-        { word: "study", translation: "estudar" },
-
-        { word: "like", translation: "gostar" },
-
-        { word: "go", translation: "ir" },
-
-        { word: "have", translation: "ter" },
-
-        { word: "every day", translation: "todo dia" },
-
-        { word: "usually", translation: "normalmente" },
-
-        { word: "always", translation: "sempre" },
-
-        { word: "never", translation: "nunca" }
-
+        "work",
+        "live",
+        "study",
+        "like",
+        "go",
+        "have",
+        "every day",
+        "usually",
+        "always",
+        "never"
     ]),
 
     blocks: [

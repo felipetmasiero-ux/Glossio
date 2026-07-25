@@ -63,28 +63,15 @@ export const daysMonthsLesson = {
     ],
 
     vocabulary: vocabulary([
-
-        { word: "Monday", translation: "segunda-feira" },
-
-        { word: "Friday", translation: "sexta-feira" },
-
-        { word: "weekend", translation: "fim de semana" },
-
-        { word: "January", translation: "janeiro" },
-
-        { word: "December", translation: "dezembro" },
-
-        { word: "today", translation: "hoje" },
-
-        { word: "tomorrow", translation: "amanhã" },
-
-        { word: "yesterday", translation: "ontem" },
-
-        {
-            word: "What day is it?",
-            translation: "Que dia é hoje?"
-        }
-
+        "Monday",
+        "Friday",
+        "weekend",
+        "January",
+        "December",
+        "today",
+        "tomorrow",
+        "yesterday",
+        "What day is it?"
     ]),
 
     blocks: [

@@ -3,13 +3,101 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  align-items: center;
+  gap: var(--space-3);
   text-align: center;
-  padding: var(--space-7);
+  padding: var(--space-7) var(--space-5);
+}
+
+.study-summary-badge {
+  display: inline-flex;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font: var(--text-caption);
+}
+
+.study-summary h1 {
+  font: var(--text-h1);
+  color: var(--color-text);
+}
+
+.study-summary-subtitle {
+  color: var(--color-text-secondary);
+  font: var(--text-body);
+  margin-bottom: var(--space-2);
+}
+
+.study-summary-accuracy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.study-summary-accuracy-value {
+  font: var(--text-display);
+  color: var(--color-primary);
+}
+
+.study-summary-accuracy-label {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
 }
 
 .summary-stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--space-4);
+  width: 100%;
+}
+
+.summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  border-top: 3px solid var(--color-border);
+}
+
+.summary-card-value {
+  font: var(--text-h1);
+  color: var(--color-text);
+}
+
+.summary-card-label {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.summary-card--again {
+  border-top-color: var(--color-danger);
+}
+
+.summary-card--good {
+  border-top-color: var(--color-warning);
+}
+
+.summary-card--easy {
+  border-top-color: var(--color-success);
+}
+
+.study-summary-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+  margin-top: var(--space-5);
+}
+
+.study-summary-secondary-link {
+  color: var(--color-text-secondary);
+  font: var(--text-small);
+}
+
+.study-summary-secondary-link:hover {
+  color: var(--color-primary);
 }

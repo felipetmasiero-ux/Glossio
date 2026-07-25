@@ -4,9 +4,7 @@ export function CultureBlock({
 
     block,
 
-    lesson,
-
-    wordIndex
+    lesson
 
 }){
 
@@ -23,8 +21,6 @@ export function CultureBlock({
             subtitle={block.title}
 
             text={block.text}
-
-            wordIndex={wordIndex}
 
         />
 
