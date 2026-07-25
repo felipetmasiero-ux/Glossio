@@ -45,9 +45,9 @@ export function VocabularySection({
 
                 className="vocabulary-section"
 
-                icon="🗂️"
+                icon="cards"
 
-                title="Vocabulary"
+                title="Vocabulário"
 
             >
 

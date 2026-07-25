@@ -1,65 +1,86 @@
-.lesson-card{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:var(--space-md);
-
+.lesson-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  width: 100%;
+  padding: var(--space-4) var(--space-3);
+  margin: 0 calc(-1 * var(--space-3));
+  border: none;
+  border-bottom: 1px dashed var(--color-border);
+  border-radius: var(--radius-sm);
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--t-fast);
 }
 
-.lesson-card.locked{
-
-    opacity:.6;
-
+.lesson-row:hover:not(:disabled) {
+  background: var(--color-surface-sunken);
 }
 
-.lesson-card-header{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
+.lesson-row--locked,
+.lesson-row:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
 }
 
-.lesson-card .lesson-level{
-
-    background:var(--color-primary-light);
-
-    color:var(--color-primary);
-
-    padding:var(--space-xs) var(--space-3);
-
-    border-radius:var(--radius-full);
-
-    font:var(--text-caption);
-
+.lesson-row__level {
+  flex-shrink: 0;
+  width: 34px;
+  padding: var(--space-1) 0;
+  text-align: center;
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
 }
 
-.lesson-card h2{
-
-    font:var(--text-h3);
-
+.lesson-row__body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
 }
 
-.lesson-card p{
-
-    font:var(--text-body);
-
-    color:var(--color-text-secondary);
-
+.lesson-row__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-h3);
+  color: var(--color-text);
 }
 
-.lesson-card-footer{
+.lesson-row__completed {
+  color: var(--color-success);
+}
 
-    display:flex;
+.lesson-row__description {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+}
 
-    justify-content:space-between;
+.lesson-row__meta {
+  display: flex;
+  gap: var(--space-4);
+  margin-top: var(--space-1);
+}
 
-    align-items:center;
+.lesson-row__meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font: var(--text-mono-label);
+  color: var(--color-text-muted);
+}
 
-    margin-top:auto;
+.lesson-row__action {
+  flex-shrink: 0;
+  display: flex;
+  color: var(--color-text-muted);
+  transition: transform var(--t-fast), color var(--t-fast);
+}
 
+.lesson-row:hover:not(:disabled) .lesson-row__action {
+  transform: translateX(3px);
+  color: var(--color-primary);
 }

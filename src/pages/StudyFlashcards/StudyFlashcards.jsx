@@ -114,7 +114,7 @@ export function StudyFlashcards() {
 
   return (
     <div className="study-page">
-      <h1>Study Mode</h1>
+      <h1>Modo de estudo</h1>
 
       <StudyProgress
         completedCards={completedCards}

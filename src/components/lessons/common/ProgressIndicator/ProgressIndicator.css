@@ -1,41 +1,11 @@
-.lesson-progress{
-
-    margin:var(--space-lg) 0;
-
+.lesson-progress {
+  margin: var(--space-lg) 0;
 }
 
-.lesson-progress-top{
-
-    display:flex;
-
-    justify-content:space-between;
-
-    margin-bottom:var(--space-sm);
-
-    font:var(--text-small);
-
-    color:var(--color-text-secondary);
-
-}
-
-.lesson-progress-track{
-
-    height:8px;
-
-    background:var(--color-border);
-
-    border-radius:999px;
-
-    overflow:hidden;
-
-}
-
-.lesson-progress-fill{
-
-    height:100%;
-
-    background:var(--color-primary);
-
-    transition:width var(--t-normal);
-
+.lesson-progress-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-sm);
+  font: var(--text-mono-label);
+  color: var(--color-text-secondary);
 }

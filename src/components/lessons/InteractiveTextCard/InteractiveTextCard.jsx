@@ -1,3 +1,5 @@
+import "./InteractiveTextCard.css";
+
 import { Card } from "../../common/Card/Card";
 
 import { LessonSection } from "../LessonSection/LessonSection";
@@ -18,6 +20,8 @@ export function InteractiveTextCard({
 
     text,
 
+    variant = "card",
+
     children
 
 }) {
@@ -31,6 +35,31 @@ export function InteractiveTextCard({
         closeWord
 
     } = useWordPopup(lesson);
+
+    if (variant === "quote") {
+
+        return (
+
+            <LessonSection className="interactive-quote">
+
+                <blockquote className="interactive-quote__mark">
+                    <TextRenderer
+                        text={text}
+                        language={lesson?.language}
+                        onWordClick={openWord}
+                    />
+                </blockquote>
+
+                <WordPopup
+                    word={selectedWord}
+                    onClose={closeWord}
+                />
+
+            </LessonSection>
+
+        );
+
+    }
 
     return (
 

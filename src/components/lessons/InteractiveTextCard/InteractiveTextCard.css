@@ -1,0 +1,26 @@
+.interactive-quote {
+  position: relative;
+  padding-left: var(--space-7);
+  max-width: 60ch;
+}
+
+.interactive-quote__mark {
+  margin: 0;
+}
+
+.interactive-quote__mark::before {
+  content: "“";
+  position: absolute;
+  left: 0;
+  top: -0.5rem;
+  font-family: var(--font-serif);
+  font-size: 3.5rem;
+  font-weight: 600;
+  color: var(--color-primary-light);
+  line-height: 1;
+}
+
+.interactive-quote .text-renderer {
+  font-style: italic;
+  font-size: 1.1875rem;
+}

@@ -1,4 +1,4 @@
-import "./StartStudyButton.css";
+import { Button } from "../common/Button/Button";
 
 export function StartStudyButton({
     onClick
@@ -6,14 +6,11 @@ export function StartStudyButton({
 
     return (
 
-        <button
-            className="start-study-button"
-            onClick={onClick}
-        >
+        <Button onClick={onClick}>
 
-            Start Studying
+            Começar a estudar
 
-        </button>
+        </Button>
 
     );
 

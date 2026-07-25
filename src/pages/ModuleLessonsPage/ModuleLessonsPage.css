@@ -1,39 +1,36 @@
-.module-lessons-page{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:60px 30px;
-
+.module-lessons-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+  font: var(--text-body-md);
 }
 
-.module-lessons-back{
-
-    display:inline-block;
-
-    margin-bottom:var(--space-md);
-
-    color:var(--color-primary);
-
-    font:var(--text-body-md);
-
+.module-lessons-back:hover {
+  color: var(--color-primary);
 }
 
-.module-lessons-back:hover{
-
-    text-decoration:underline;
-
+.module-lessons-level {
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
 }
 
-.module-lessons-page .lessons-grid{
+.module-lessons-title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
 
-    display:grid;
+.module-lessons-description {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-6);
+}
 
-    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-
-    gap:28px;
-
-    margin-top:28px;
-
+.lessons-index {
+  display: flex;
+  flex-direction: column;
+  margin-top: var(--space-6);
 }

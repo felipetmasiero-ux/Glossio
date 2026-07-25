@@ -24,7 +24,7 @@ export function VocabularyCard({
 
         <Card
 
-            className={`vocabulary-card ${flipped ? "flipped" : ""}`}
+            className={`vocabulary-card card--notch ${flipped ? "flipped" : ""}`}
 
             onClick={() => {
 
@@ -48,10 +48,8 @@ export function VocabularyCard({
 
                 <>
 
-                    <span className="card-language">
-
-                        🇺🇸
-
+                    <span className="vocabulary-card__label text-mono-label">
+                        Vocabulário
                     </span>
 
                     <h3>
@@ -62,7 +60,7 @@ export function VocabularyCard({
 
                     <p>
 
-                        Click to reveal
+                        Toque para revelar
 
                     </p>
 
@@ -72,10 +70,8 @@ export function VocabularyCard({
 
                 <>
 
-                    <span className="card-language">
-
-                        🇧🇷
-
+                    <span className="vocabulary-card__label text-mono-label">
+                        Tradução
                     </span>
 
                     <h3>
@@ -86,7 +82,7 @@ export function VocabularyCard({
 
                     <p>
 
-                        Click again for details
+                        Toque de novo para detalhes
 
                     </p>
 

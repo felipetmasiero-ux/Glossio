@@ -1,21 +1,20 @@
-.lesson-reader{
-
-    max-width:900px;
-
-    margin:auto;
-
-    padding:48px 24px;
-
+.lesson-reader {
+  max-width: var(--content-width-lg);
+  margin: auto;
+  padding: var(--space-7) var(--space-5) var(--space-8);
 }
 
-.lesson-content{
+.lesson-step-heading {
+  font: var(--text-h2);
+  color: var(--color-text);
+  margin-top: var(--space-8);
+}
 
-    display:flex;
-
-    flex-direction:column;
-
-    gap:32px;
-
-    margin-top:40px;
-
+.lesson-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  margin-top: var(--space-5);
+  padding: var(--space-6) var(--space-5) var(--space-6) 56px;
+  border-radius: var(--radius-lg);
 }

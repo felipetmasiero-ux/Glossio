@@ -1,6 +1,7 @@
 import "./WordPopup.css";
 
 import { Button } from "../../common/Button/Button";
+import { Icon } from "../../common/Icon/Icon";
 
 import { useFlashcards } from "../../../hooks/useFlashcards";
 import { useLanguage } from "../../../hooks/useLanguage";
@@ -43,27 +44,23 @@ export function WordPopup({
                 onClick={(event) => event.stopPropagation()}
             >
 
-                <h2>
+                <p className="word-popup__label text-mono-label">Verbete</p>
 
+                <h2 className="word-popup__word">
                     {word.word}
-
                 </h2>
 
-                <h3>
-
+                <p className="word-popup__translation">
                     {word.translation}
-
-                </h3>
+                </p>
 
                 {
 
                     word.examples?.[0] && (
 
-                        <div className="popup-example">
-
+                        <p className="word-popup__example">
                             {word.examples[0]}
-
-                        </div>
+                        </p>
 
                     )
 
@@ -73,10 +70,9 @@ export function WordPopup({
 
                     word.note && (
 
-                        <div className="popup-note">
-
-                            💡 {word.note}
-
+                        <div className="word-popup__note">
+                            <Icon name="lightbulb" size={16} />
+                            <span>{word.note}</span>
                         </div>
 
                     )
@@ -89,7 +85,7 @@ export function WordPopup({
                         onClick={handleAdd}
                     >
 
-                        ⭐ Add Flashcard
+                        <Icon name="cards" size={16} /> Adicionar
 
                     </Button>
 
@@ -98,7 +94,7 @@ export function WordPopup({
                         onClick={onClose}
                     >
 
-                        Close
+                        Fechar
 
                     </Button>
 

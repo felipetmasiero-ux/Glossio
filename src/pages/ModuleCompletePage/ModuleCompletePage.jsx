@@ -1,4 +1,3 @@
-import "../../components/lessons/LessonHero/LessonHero.css";
 import "./ModuleCompletePage.css";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -12,6 +11,7 @@ import { getModuleCompletionStats } from "../../utils/courses/getModuleCompletio
 import { getNextLevel } from "../../utils/courses/getNextLevel";
 
 import { Button } from "../../components/common/Button/Button";
+import { Icon } from "../../components/common/Icon/Icon";
 
 export function ModuleCompletePage() {
 
@@ -29,7 +29,11 @@ export function ModuleCompletePage() {
 
     if (!module) {
 
-        return <h1>Module not found.</h1>;
+        return (
+            <div className="page-container">
+                <h1>Módulo não encontrado.</h1>
+            </div>
+        );
 
     }
 
@@ -40,10 +44,10 @@ export function ModuleCompletePage() {
     const nextLevel = getNextLevel(module.level);
 
     const continueLabel = nextModule
-        ? `Continue to ${nextModule.level}`
+        ? `Continuar para ${nextModule.level}`
         : nextLevel
-            ? `Continue to ${nextLevel}`
-            : "Back to Modules";
+            ? `Continuar para ${nextLevel}`
+            : "Voltar aos módulos";
 
     function handleContinue() {
 
@@ -56,62 +60,49 @@ export function ModuleCompletePage() {
 
     }
 
+    const statRows = [
+        { label: "Lições", value: stats.lessonCount },
+        { label: "Palavras aprendidas", value: stats.wordsLearned },
+        { label: "Flashcards adicionados", value: stats.flashcardsAdded },
+        { label: "Precisão nos quizzes", value: stats.quizAccuracy === null ? "—" : `${stats.quizAccuracy}%` },
+        { label: "Tempo estudado", value: `~${stats.estimatedMinutes} min` },
+    ];
+
     return (
 
-        <div className="module-complete-page">
+        <div className="page-container module-complete-page">
 
-            <section className="lesson-hero module-complete-hero">
+            <div className="module-complete-stamp">
+                <Icon name="check" size={26} />
+            </div>
 
-                <span className="lesson-level">
-                    🎉 Module Complete
-                </span>
+            <p className="module-complete-label text-mono-label">Módulo concluído</p>
 
-                <h1>
-                    {module.title}
-                </h1>
+            <h1 className="module-complete-title">
+                {module.title}
+            </h1>
 
-                <p className="lesson-description">
-                    You've finished all {stats.lessonCount} lessons in this module. Great work!
-                </p>
+            <p className="module-complete-description">
+                Você terminou as {stats.lessonCount} lições deste módulo. Bom trabalho!
+            </p>
 
-                <div className="lesson-meta">
-
-                    <div className="lesson-meta-item">
-                        📚 {stats.lessonCount} lessons
+            <dl className="module-complete-stats">
+                {statRows.map((row) => (
+                    <div className="module-complete-stat" key={row.label}>
+                        <dt>{row.label}</dt>
+                        <dd className="text-mono-number">{row.value}</dd>
                     </div>
-
-                    <div className="lesson-meta-item">
-                        🗣️ {stats.wordsLearned} words learned
-                    </div>
-
-                    <div className="lesson-meta-item">
-                        ⭐ {stats.flashcardsAdded} flashcards added
-                    </div>
-
-                    <div className="lesson-meta-item">
-                        ✅ {
-                            stats.quizAccuracy === null
-                                ? "No quizzes yet"
-                                : `${stats.quizAccuracy}% quiz accuracy`
-                        }
-                    </div>
-
-                    <div className="lesson-meta-item">
-                        ⏱ ~{stats.estimatedMinutes} min studied
-                    </div>
-
-                </div>
-
-            </section>
+                ))}
+            </dl>
 
             <div className="module-complete-actions">
 
                 <Button onClick={handleContinue}>
-                    {continueLabel} →
+                    {continueLabel}
                 </Button>
 
                 <Link to="/lessons" className="module-complete-secondary-link">
-                    Back to Modules
+                    Voltar aos módulos
                 </Link>
 
             </div>

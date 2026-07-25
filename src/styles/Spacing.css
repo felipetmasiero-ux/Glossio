@@ -25,6 +25,7 @@
   --content-width-sm: 480px;
   --content-width-md: 720px;
   --content-width-lg: 960px;
+  --content-width-xl: 1200px;
 }
 
 .stack-xs > * + * { margin-top: var(--space-xs); }

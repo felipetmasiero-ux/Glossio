@@ -22,11 +22,11 @@ export function DialogueBlock({ block, lesson }) {
 
             className="lesson-dialogue"
 
-            icon="💬"
+            icon="chat"
 
-            title="Dialogue"
+            title="Diálogo"
 
-            subtitle="Practice reading conversations."
+            subtitle="Pratique lendo conversas."
 
         >
 

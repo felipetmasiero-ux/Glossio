@@ -14,9 +14,9 @@ export function GrammarBlock({
 
             lesson={lesson}
 
-            icon="📚"
+            icon="ruler"
 
-            title="Grammar"
+            title="Gramática"
 
             subtitle={block.title}
 

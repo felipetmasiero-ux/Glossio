@@ -69,8 +69,17 @@
 }
 
 .summary-card-label {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
   font: var(--text-small);
   color: var(--color-text-secondary);
+}
+
+.study-summary-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
 }
 
 .summary-card--again {

@@ -1,9 +1,6 @@
-.pronunciation{
-
-    color:var(--color-text-secondary);
-
-    font-style:italic;
-
-    font-size:.9rem;
-
+.pronunciation {
+  color: var(--color-text-secondary);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.875rem;
 }

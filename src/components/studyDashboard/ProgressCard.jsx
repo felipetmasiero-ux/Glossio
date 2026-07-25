@@ -1,3 +1,4 @@
+import { ProgressBar } from "../common/ProgressBar/ProgressBar";
 import "./ProgressCard.css";
 
 export function ProgressCard({
@@ -12,24 +13,15 @@ export function ProgressCard({
 
             <div className="progress-header">
 
-                <span>Today's Goal</span>
+                <span className="text-mono-label">Meta de hoje</span>
 
-                <strong>
+                <strong className="progress-card__value">
                     {completed}/{goal}
                 </strong>
 
             </div>
 
-            <div className="goal-progress">
-
-                <div
-                    className="goal-progress-fill"
-                    style={{
-                        width: `${progress}%`
-                    }}
-                />
-
-            </div>
+            <ProgressBar value={progress} />
 
         </div>
 

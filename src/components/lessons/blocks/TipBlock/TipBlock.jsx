@@ -15,9 +15,9 @@ export function TipBlock({
 
                 variant="tip"
 
-                icon="💡"
+                icon="lightbulb"
 
-                title={block.title ?? "Tip"}
+                title={block.title ?? "Dica"}
 
             >
 

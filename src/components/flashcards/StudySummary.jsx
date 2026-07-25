@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 
 import { Card } from "../common/Card/Card";
 import { Button } from "../common/Button/Button";
+import { Icon } from "../common/Icon/Icon";
 import "./StudySummary.css";
 
 export function StudySummary({ stats, totalCards, onRestart }) {
@@ -15,45 +16,47 @@ export function StudySummary({ stats, totalCards, onRestart }) {
   return (
     <div className="study-summary">
 
-      <span className="study-summary-badge">🎉 Session Complete</span>
+      <span className="study-summary-badge">
+        <Icon name="check" size={13} /> Sessão concluída
+      </span>
 
-      <h1>Great work!</h1>
+      <h1>Muito bem!</h1>
 
       <p className="study-summary-subtitle">
-        You reviewed {totalCards} card{totalCards === 1 ? "" : "s"} this session.
+        Você revisou {totalCards} {totalCards === 1 ? "ficha" : "fichas"} nesta sessão.
       </p>
 
       <div className="study-summary-accuracy">
         <span className="study-summary-accuracy-value">{accuracy}%</span>
-        <span className="study-summary-accuracy-label">accuracy</span>
+        <span className="study-summary-accuracy-label">precisão</span>
       </div>
 
       <div className="summary-stats">
         <Card className="summary-card summary-card--again">
           <span className="summary-card-value">{stats.again}</span>
-          <span className="summary-card-label">🔴 Again</span>
+          <span className="summary-card-label"><Icon name="x" size={13} /> De novo</span>
         </Card>
 
         <Card className="summary-card summary-card--good">
           <span className="summary-card-value">{stats.good}</span>
-          <span className="summary-card-label">🟡 Good</span>
+          <span className="summary-card-label"><Icon name="check" size={13} /> Bom</span>
         </Card>
 
         <Card className="summary-card summary-card--easy">
           <span className="summary-card-value">{stats.easy}</span>
-          <span className="summary-card-label">🟢 Easy</span>
+          <span className="summary-card-label"><Icon name="star" size={13} /> Fácil</span>
         </Card>
       </div>
 
       <div className="study-summary-actions">
-        <Button onClick={onRestart}>Study Again</Button>
+        <Button onClick={onRestart}>Estudar de novo</Button>
 
         <Link to="/my-flashcards" className="study-summary-secondary-link">
-          View My Flashcards
+          Ver meus flashcards
         </Link>
 
         <Link to="/lessons" className="study-summary-secondary-link">
-          Back to Lessons
+          Voltar às lições
         </Link>
       </div>
 

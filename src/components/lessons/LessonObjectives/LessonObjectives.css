@@ -1,49 +1,19 @@
-.lesson-objectives-grid{
-
-    display:grid;
-
-    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-
-    gap:var(--space-lg);
-
+.lesson-objectives-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
 }
 
-.lesson-objective-card{
-
-    display:flex;
-
-    align-items:flex-start;
-
-    gap:var(--space-md);
-
+.lesson-objectives-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font: var(--text-body);
+  color: var(--color-text);
 }
 
-.lesson-objective-icon{
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    width:32px;
-
-    height:32px;
-
-    border-radius:var(--radius-full);
-
-    background:var(--color-success-light);
-
-    color:var(--color-success);
-
-    font-weight:var(--weight-bold);
-
-    flex-shrink:0;
-
-}
-
-.lesson-objective-card p{
-
-    font:var(--text-body);
-
+.lesson-objectives-list__icon {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--color-success);
 }

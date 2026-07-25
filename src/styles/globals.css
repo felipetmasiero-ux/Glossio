@@ -61,3 +61,22 @@ img, svg {
   background: var(--highlight-bg);
   color: var(--highlight-text);
 }
+
+/* ---- Papel pautado -------------------------------------------------------
+   Fundo de "folha de caderno": linhas horizontais sutis + margem vertical
+   vermelha. Usar apenas em superfícies de leitura longa (lições, verbetes),
+   nunca como decoração genérica de fundo. Combinar com padding-left do
+   conteúdo em ~56px para o texto respeitar a margem. */
+.paper-ruled {
+  background-color: var(--color-surface);
+  background-image:
+    linear-gradient(to right, transparent 0 47px, var(--paper-margin) 47px 48px, transparent 48px 100%),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--paper-rule-gap) - 1px),
+      var(--paper-rule) calc(var(--paper-rule-gap) - 1px),
+      var(--paper-rule) var(--paper-rule-gap)
+    );
+  background-attachment: local;
+}

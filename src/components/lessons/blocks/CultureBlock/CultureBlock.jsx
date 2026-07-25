@@ -14,9 +14,9 @@ export function CultureBlock({
 
             lesson={lesson}
 
-            icon="🌍"
+            icon="globe"
 
-            title="Culture"
+            title="Cultura"
 
             subtitle={block.title}
 

@@ -53,7 +53,7 @@ export function MyFlashcards() {
 
   return (
     <div className="flashcards-dashboard">
-      <Section title="My Flashcards">
+      <Section title="Meus Flashcards">
         <FlashcardStats
           total={stats.total}
           due={stats.due}

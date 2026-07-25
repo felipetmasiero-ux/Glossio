@@ -10,11 +10,11 @@ export function StudyProgress({ completedCards, total }) {
         <ProgressBar value={percentage} />
       </div>
 
-      <p className="study-progress">
-        Card {completedCards + 1} of {total}
+      <p className="study-progress text-mono-label">
+        Ficha {completedCards + 1} de {total}
       </p>
 
-      <p className="study-progress-text">
+      <p className="study-progress-text text-mono-label">
         {completedCards} / {total} ({Math.round(percentage)}%)
       </p>
     </>

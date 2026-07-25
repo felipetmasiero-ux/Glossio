@@ -1,17 +1,11 @@
-.section{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:20px;
-
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
-.section h2{
-
-    margin:0;
-
-    font-size:1.3rem;
-
+.section h2 {
+  font: var(--text-h2);
+  color: var(--color-text);
+  margin: 0;
 }

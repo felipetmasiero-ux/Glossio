@@ -1,6 +1,7 @@
 import "./AudioButton.css";
 
 import { Button } from "../../../common/Button/Button";
+import { Icon } from "../../../common/Icon/Icon";
 
 export function AudioButton({
 
@@ -30,7 +31,7 @@ export function AudioButton({
 
         >
 
-            🔊 Listen
+            <Icon name="volume" size={16} /> Ouvir
 
         </Button>
 

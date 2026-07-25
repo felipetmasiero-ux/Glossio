@@ -6,6 +6,5 @@
 .study-progress,
 .study-progress-text {
   text-align: center;
-  color: var(--color-text-secondary);
-  font-size: 14px;
+  color: var(--color-text-muted);
 }

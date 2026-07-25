@@ -16,8 +16,8 @@ export function StudyDashboard({
         <div className="study-dashboard">
 
             <DashboardHeader
-                title="Study Mode"
-                subtitle="Ready for today's review?"
+                title="Modo de estudo"
+                subtitle="Pronto para a revisão de hoje?"
             />
 
             <ProgressCard
@@ -30,22 +30,24 @@ export function StudyDashboard({
 
                 <StatsCard
                     value={dashboard.due}
-                    label="Due Today"
+                    label="Pendentes hoje"
                 />
 
                 <StatsCard
                     value={dashboard.total}
-                    label="Total Cards"
+                    label="Total de fichas"
                 />
 
                 <StatsCard
-                    value={`🔥 ${dashboard.streak.current}`}
-                    label="Current Streak"
+                    value={dashboard.streak.current}
+                    label="Sequência atual"
+                    icon="flame"
                 />
 
                 <StatsCard
-                    value={`🏆 ${dashboard.streak.longest}`}
-                    label="Best Streak"
+                    value={dashboard.streak.longest}
+                    label="Melhor sequência"
+                    icon="star"
                 />
 
             </StatsGrid>

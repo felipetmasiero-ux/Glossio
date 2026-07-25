@@ -1,13 +1,13 @@
-import "./EmptyState.css";
+import { EmptyState } from "../components/common/EmptyState/EmptyState";
 
 export function Exercises() {
   return (
     <div className="page-container">
-      <div className="empty-state">
-        <div className="empty-state__icon">✏️</div>
-        <h2 className="empty-state__title">Área de Exercícios</h2>
-        
-      </div>
+      <EmptyState
+        icon="pencil"
+        title="Área de exercícios"
+        description="Em breve: exercícios interativos para praticar o que você já leu."
+      />
     </div>
   );
 }

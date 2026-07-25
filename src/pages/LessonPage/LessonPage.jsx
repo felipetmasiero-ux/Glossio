@@ -1,6 +1,8 @@
 import { Link, useParams } from "react-router-dom";
 
 import { LessonReader } from "../../components/lessons/LessonReader/LessonReader";
+import { Icon } from "../../components/common/Icon/Icon";
+import "./LessonPage.css";
 import { useLessons } from "../../hooks/useLessons";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
@@ -17,14 +19,16 @@ export function LessonPage() {
     const { completedLessons } = useLessonProgress();
 
     const lesson = lessons.find(
-
         lesson => lesson.id === id
-
     );
 
     if (!lesson) {
 
-        return <h1>Lesson not found.</h1>;
+        return (
+            <div className="page-container">
+                <h1>Lição não encontrada.</h1>
+            </div>
+        );
 
     }
 
@@ -42,17 +46,13 @@ export function LessonPage() {
 
         return (
 
-            <h1>
-
-                🔒 Complete the previous lesson first.{" "}
-
-                <Link to="/lessons">
-
-                    Back to modules
-
-                </Link>
-
-            </h1>
+            <div className="page-container">
+                <h1 className="lesson-locked">
+                    <Icon name="lock" size={22} />
+                    Complete a lição anterior primeiro.
+                </h1>
+                <Link to="/lessons">Voltar aos módulos</Link>
+            </div>
 
         );
 

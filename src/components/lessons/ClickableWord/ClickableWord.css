@@ -1,25 +1,13 @@
-.clickable-word{
-
-    cursor:pointer;
-
-    border-bottom:
-
-        2px solid
-
-        var(--color-primary-light);
-
-    transition:
-
-        all var(--t-fast);
-
+.clickable-word {
+  cursor: pointer;
+  border-radius: 2px;
+  border-bottom: 1.5px dotted var(--color-primary);
+  transition: background var(--t-fast), color var(--t-fast);
 }
 
-.clickable-word:hover{
-
-    color:var(--color-primary);
-
-    background:
-
-        var(--color-primary-light);
-
+.clickable-word:hover,
+.clickable-word:focus-visible {
+  background: var(--highlight-bg);
+  color: var(--highlight-text);
+  border-bottom-color: transparent;
 }

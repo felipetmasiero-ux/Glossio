@@ -1,0 +1,147 @@
+import "./Icon.css";
+
+const PATHS = {
+  book: (
+    <>
+      <path d="M12 5.5C12 4.67 11.33 4 10.5 4H5.5C4.67 4 4 4.67 4 5.5v13c0 .83.67 1.5 1.5 1.5H12" />
+      <path d="M12 5.5C12 4.67 12.67 4 13.5 4h5c.83 0 1.5.67 1.5 1.5v13c0 .83-.67 1.5-1.5 1.5H12" />
+      <path d="M12 5.5v14" />
+    </>
+  ),
+  cards: (
+    <>
+      <rect x="4.5" y="8" width="12" height="12" rx="1.5" transform="rotate(-8 10.5 14)" />
+      <rect x="7.5" y="4" width="12" height="12" rx="1.5" />
+    </>
+  ),
+  pencil: (
+    <>
+      <path d="M4 20l.9-3.6L15.6 5.7l2.7 2.7L7.6 19.1 4 20Z" />
+      <path d="M13.4 7.9l2.7 2.7" />
+    </>
+  ),
+  alphabet: (
+    <>
+      <path d="M3 17h18" />
+      <path d="M3 12h18" strokeDasharray="1.5 3" />
+      <path d="M8 17V9.2C8 7.7 9 6.5 10.5 6.5S13 7.7 13 9.2V17" />
+      <path d="M8.4 12.5h4.2" />
+    </>
+  ),
+  flame: (
+    <path d="M12 3c.5 2.2-3.5 3.8-3.5 7.5A3.5 3.5 0 0 0 12 14a3.5 3.5 0 0 0 3.5-3.5c0-.9-.3-1.6-.7-2.2 1.6 1 2.7 2.9 2.7 5A5.5 5.5 0 0 1 12 19a5.5 5.5 0 0 1-5.5-5.5C6.5 9 10.5 7.5 12 3Z" />
+  ),
+  check: <path d="M5 13l4.5 4.5L19 7" />,
+  x: (
+    <>
+      <path d="M6 6l12 12" />
+      <path d="M18 6L6 18" />
+    </>
+  ),
+  "chevron-right": <path d="M9.5 5.5l7 6.5-7 6.5" />,
+  "chevron-left": <path d="M14.5 5.5l-7 6.5 7 6.5" />,
+  search: (
+    <>
+      <circle cx="10.5" cy="10.5" r="6" />
+      <path d="M15 15l5 5" />
+    </>
+  ),
+  tab: (
+    <>
+      <path d="M4 6.5C4 5.7 4.7 5 5.5 5h13c.8 0 1.5.7 1.5 1.5V17H4V6.5Z" />
+      <path d="M4 17l3.5 3h9L20 17" />
+    </>
+  ),
+  chat: (
+    <path d="M4 6.5C4 5.4 4.9 4.5 6 4.5h12c1.1 0 2 .9 2 2v8c0 1.1-.9 2-2 2H9l-4 3.5v-3.5H6c-1.1 0-2-.9-2-2v-8Z" />
+  ),
+  globe: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <path d="M4 12h16" />
+      <path d="M12 4c2.2 2.2 3.3 5 3.3 8s-1.1 5.8-3.3 8c-2.2-2.2-3.3-5-3.3-8s1.1-5.8 3.3-8Z" />
+    </>
+  ),
+  lightbulb: (
+    <>
+      <path d="M9.5 18h5" />
+      <path d="M10.2 21h3.6" />
+      <path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3Z" />
+    </>
+  ),
+  list: (
+    <>
+      <path d="M9.5 6h10" />
+      <path d="M9.5 12h10" />
+      <path d="M9.5 18h10" />
+      <circle cx="4.5" cy="6" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4.5" cy="12" r="1" fill="currentColor" stroke="none" />
+      <circle cx="4.5" cy="18" r="1" fill="currentColor" stroke="none" />
+    </>
+  ),
+  ruler: (
+    <>
+      <path d="M3 16.5 16.5 3 21 7.5 7.5 21 3 16.5Z" />
+      <path d="M12.7 7.3l1.5 1.5" />
+      <path d="M9.7 10.3l1.5 1.5" />
+      <path d="M6.7 13.3l1.5 1.5" />
+    </>
+  ),
+  quote: (
+    <>
+      <path d="M5 9c0-1.7 1.3-3 3-3M5 9v3c0 1.1.9 2 2 2h1V9H5Z" />
+      <path d="M13 9c0-1.7 1.3-3 3-3M13 9v3c0 1.1.9 2 2 2h1V9h-3Z" />
+    </>
+  ),
+  target: (
+    <>
+      <circle cx="12" cy="12" r="7.5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="12" cy="12" r="0.75" fill="currentColor" stroke="none" />
+    </>
+  ),
+  star: (
+    <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9 6.8 19.7l1-5.9-4.3-4.1 5.9-.8L12 3.5Z" />
+  ),
+  clock: (
+    <>
+      <circle cx="12" cy="12" r="8" />
+      <path d="M12 7.5V12l3.2 2" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5" y="10.5" width="14" height="9" rx="1.5" />
+      <path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" />
+    </>
+  ),
+  volume: (
+    <>
+      <path d="M4 9v6h4l5 4V5L8 9H4Z" />
+      <path d="M17 9a4 4 0 0 1 0 6" />
+    </>
+  ),
+};
+
+export function Icon({ name, size = 20, className = "", ...rest }) {
+  const path = PATHS[name];
+  if (!path) return null;
+
+  return (
+    <svg
+      className={`icon ${className}`}
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      {...rest}
+    >
+      {path}
+    </svg>
+  );
+}

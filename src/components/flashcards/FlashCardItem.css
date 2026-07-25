@@ -5,6 +5,10 @@
   gap: var(--space-3);
 }
 
+.flashcard-item h3 {
+  font-family: var(--font-serif);
+}
+
 .flashcard-item-meta {
   display: flex;
   flex-direction: column;

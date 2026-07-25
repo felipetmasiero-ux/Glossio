@@ -30,17 +30,17 @@ export function ExampleBlock({ block, lesson }) {
 
         <LessonSection
 
-            icon="💬"
+            icon="chat"
 
-            title="Example"
+            title="Exemplo"
 
             subtitle={
 
                 examples.length > 1
 
-                    ? "Study the sentences."
+                    ? "Estude as frases."
 
-                    : "Study the sentence."
+                    : "Estude a frase."
 
             }
 

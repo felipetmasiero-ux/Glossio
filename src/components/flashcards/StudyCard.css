@@ -39,5 +39,6 @@
 
 .study-face h2 {
   font: var(--text-display);
+  font-family: var(--font-serif);
   text-align: center;
 }

@@ -20,11 +20,11 @@ export function ExampleCard({
 
             lesson={lesson}
 
-            icon="💬"
+            icon="chat"
 
-            title="Example"
+            title="Exemplo"
 
-            subtitle="Read and understand"
+            subtitle="Leia e compreenda"
 
             text={example.text}
 
@@ -56,11 +56,11 @@ export function ExampleCard({
 
                     show ?
 
-                    "Hide translation"
+                    "Ocultar tradução"
 
                     :
 
-                    "Show translation"
+                    "Mostrar tradução"
 
                 }
 

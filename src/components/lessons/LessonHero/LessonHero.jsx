@@ -1,5 +1,7 @@
 import "./LessonHero.css";
 
+import { Icon } from "../../common/Icon/Icon";
+
 export function LessonHero({ lesson }) {
 
     return (
@@ -8,7 +10,7 @@ export function LessonHero({ lesson }) {
 
             <div className="lesson-hero-content">
 
-                <span className="lesson-level">
+                <span className="lesson-level text-mono-label">
                     {lesson.level}
                 </span>
 
@@ -22,23 +24,17 @@ export function LessonHero({ lesson }) {
 
                 <div className="lesson-meta">
 
-                    <div className="lesson-meta-item">
+                    <span className="lesson-meta-item">
+                        <Icon name="clock" size={14} /> {lesson.estimatedTime} min
+                    </span>
 
-                        ⏱ {lesson.estimatedTime}
+                    <span className="lesson-meta-item">
+                        <Icon name="target" size={14} /> {lesson.difficulty}
+                    </span>
 
-                    </div>
-
-                    <div className="lesson-meta-item">
-
-                        ⭐ {lesson.difficulty}
-
-                    </div>
-
-                    <div className="lesson-meta-item">
-
-                        +{lesson.xp} XP
-
-                    </div>
+                    <span className="lesson-meta-item">
+                        <Icon name="star" size={14} /> +{lesson.xp} xp
+                    </span>
 
                 </div>
 

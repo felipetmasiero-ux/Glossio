@@ -1,6 +1,7 @@
 import "./LessonNavigation.css";
 
 import { Button } from "../../../common/Button/Button";
+import { Icon } from "../../../common/Icon/Icon";
 
 export function LessonNavigation({
 
@@ -14,9 +15,9 @@ export function LessonNavigation({
 
     onNext
 
-}){
+}) {
 
-    return(
+    return (
 
         <div className="lesson-navigation">
 
@@ -30,7 +31,7 @@ export function LessonNavigation({
 
             >
 
-                ← Previous
+                <Icon name="chevron-left" size={16} /> Anterior
 
             </Button>
 
@@ -42,11 +43,7 @@ export function LessonNavigation({
 
             >
 
-                {
-
-                    nextLabel ?? (hasNext ? "Next →" : "Finish")
-
-                }
+                {nextLabel ?? (hasNext ? "Próxima" : "Concluir")} <Icon name="chevron-right" size={16} />
 
             </Button>
 

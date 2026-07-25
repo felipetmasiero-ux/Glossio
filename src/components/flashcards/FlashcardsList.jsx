@@ -9,7 +9,7 @@ export function FlashcardsList({
   if (flashcards.length === 0) {
     return (
       <EmptyState
-        icon="🗂️"
+        icon="cards"
         title="Nenhum flashcard ainda"
         description="Salve palavras enquanto estuda o conteúdo e elas aparecem aqui."
       />

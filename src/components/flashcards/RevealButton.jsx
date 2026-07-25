@@ -4,7 +4,7 @@ import "./RevealButton.css";
 export function RevealButton({ onReveal }) {
   return (
     <Button variant="secondary" className="reveal-btn" onClick={onReveal}>
-      Reveal
+      Revelar
     </Button>
   );
 }

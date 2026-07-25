@@ -9,6 +9,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 
 import { LessonCard } from "../../components/lessons/LessonCard/LessonCard";
 import { ProgressIndicator } from "../../components/lessons/common/ProgressIndicator/ProgressIndicator";
+import { Icon } from "../../components/common/Icon/Icon";
 
 export function ModuleLessonsPage() {
 
@@ -24,7 +25,11 @@ export function ModuleLessonsPage() {
 
     if (!module) {
 
-        return <h1>Module not found.</h1>;
+        return (
+            <div className="page-container">
+                <h1>Módulo não encontrado.</h1>
+            </div>
+        );
 
     }
 
@@ -32,22 +37,21 @@ export function ModuleLessonsPage() {
 
     return (
 
-        <div className="module-lessons-page">
+        <div className="page-container module-lessons-page">
 
             <Link to="/lessons" className="module-lessons-back">
-                ← Back to Modules
+                <Icon name="chevron-left" size={15} />
+                Voltar aos módulos
             </Link>
 
-            <h1>
+            <p className="module-lessons-level text-mono-label">{module.level}</p>
 
+            <h1 className="module-lessons-title">
                 {module.title}
-
             </h1>
 
-            <p>
-
+            <p className="module-lessons-description">
                 {module.description}
-
             </p>
 
             <ProgressIndicator
@@ -56,51 +60,39 @@ export function ModuleLessonsPage() {
 
                 total={progress.total}
 
-                label="Module progress"
+                label="Progresso do módulo"
 
             />
 
-            <div className="lessons-grid">
+            <nav className="lessons-index" aria-label="Lições do módulo">
 
                 {
-
                     module.lessons.map((lesson) => {
 
                         const locked = !ModuleRepository.isLessonUnlocked(
-
                             language,
-
                             lesson.id,
-
                             completedLessons
-
                         );
 
                         return (
 
                             <LessonCard
-
                                 key={lesson.id}
-
                                 lesson={lesson}
-
                                 locked={locked}
-
                                 completed={isLessonCompleted(lesson.id)}
-
                                 onOpen={() =>
                                     !locked && navigate(`/lessons/${lesson.id}`)
                                 }
-
                             />
 
                         );
 
                     })
-
                 }
 
-            </div>
+            </nav>
 
         </div>
 

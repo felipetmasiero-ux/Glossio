@@ -1,6 +1,6 @@
 import "./LessonObjectives.css";
 
-import { Card } from "../../common/Card/Card";
+import { Icon } from "../../common/Icon/Icon";
 import { LessonSection } from "../LessonSection/LessonSection";
 
 export function LessonObjectives({
@@ -21,47 +21,33 @@ export function LessonObjectives({
 
             className="lesson-objectives"
 
-            icon="🎯"
+            icon="target"
 
-            title="Learning Objectives"
+            title="Objetivos"
 
-            subtitle="By the end of this lesson you will be able to:"
+            subtitle="Ao final desta lição você será capaz de:"
 
         >
 
-            <div className="lesson-objectives-grid">
+            <ul className="lesson-objectives-list">
 
                 {
 
                     objectives.map((objective) => (
 
-                        <Card
+                        <li key={objective}>
 
-                            key={objective}
+                            <Icon name="check" size={14} className="lesson-objectives-list__icon" />
 
-                            className="lesson-objective-card"
+                            <span>{objective}</span>
 
-                        >
-
-                            <span className="lesson-objective-icon">
-
-                                ✓
-
-                            </span>
-
-                            <p>
-
-                                {objective}
-
-                            </p>
-
-                        </Card>
+                        </li>
 
                     ))
 
                 }
 
-            </div>
+            </ul>
 
         </LessonSection>
 

@@ -5,22 +5,24 @@
 <title>Glossio — UI Kit</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<!-- impeccable-disable-next-line overused-font -- see Typography.css: Inter is scoped to UI chrome only -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --color-primary: #4F46E5; --color-primary-hover: #4338CA; --color-primary-light: #EEF2FF; --color-primary-dark: #3730A3;
-    --color-success: #10B981; --color-success-hover: #059669; --color-success-light: #ECFDF5; --color-success-dark: #047857;
-    --color-warning: #F59E0B; --color-warning-hover: #D97706; --color-warning-light: #FFFBEB; --color-warning-dark: #B45309;
-    --color-danger: #F43F5E; --color-danger-hover: #E11D48; --color-danger-light: #FFF1F2; --color-danger-dark: #BE123C;
-    --color-background: #F8FAFC; --color-surface: #FFFFFF; --color-surface-sunken: #F1F5F9;
-    --color-border: #E2E8F0; --color-border-strong: #CBD5E1;
-    --color-text: #0F172A; --color-text-secondary: #64748B; --color-text-muted: #94A3B8; --color-text-on-primary: #FFFFFF;
-    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 999px;
-    --shadow-sm: 0 1px 2px rgba(15,23,42,.06), 0 1px 3px rgba(15,23,42,.08);
-    --shadow-md: 0 4px 12px rgba(15,23,42,.08), 0 2px 4px rgba(15,23,42,.06);
-    --shadow-lg: 0 12px 32px rgba(15,23,42,.12), 0 4px 8px rgba(15,23,42,.06);
+    --color-primary: #2C3E63; --color-primary-hover: #1F2D49; --color-primary-light: #E4E9F2; --color-primary-dark: #17213A;
+    --color-success: #2F6F4E; --color-success-hover: #24593E; --color-success-light: #E3F0E9; --color-success-dark: #1B4530;
+    --color-warning: #B8791A; --color-warning-hover: #96620F; --color-warning-light: #FBF1DF; --color-warning-dark: #6E4A0E;
+    --color-danger: #B23A2E; --color-danger-hover: #8F2E24; --color-danger-light: #F8E7E4; --color-danger-dark: #6B211A;
+    --color-background: #EEF1F5; --color-surface: #FBFCFD; --color-surface-sunken: #E6EAEF;
+    --color-border: #D2D9E0; --color-border-strong: #AEB8C2;
+    --color-text: #1C1F26; --color-text-secondary: #565F6B; --color-text-muted: #8A929C; --color-text-on-primary: #FFFFFF;
+    --radius-sm: 8px; --radius-md: 12px; --radius-lg: 16px; --radius-xl: 24px; --radius-full: 999px; --radius-notch: 14px;
+    --shadow-sm: 0 1px 2px rgba(23,26,31,.10);
+    --shadow-md: 0 6px 16px rgba(23,26,31,.14);
+    --shadow-lg: 0 16px 36px rgba(23,26,31,.18);
     --highlight-bg: var(--color-primary-light); --highlight-text: var(--color-primary-dark);
-    --font-sans: 'Inter', sans-serif;
+    --paper-rule: rgba(44,62,99,.08); --paper-margin: rgba(178,58,46,.32); --paper-rule-gap: 32px;
+    --font-sans: 'Inter', sans-serif; --font-serif: 'Source Serif 4', Georgia, serif; --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
     --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-5:24px;--space-6:32px;--space-7:48px;--space-8:64px;--space-9:96px;
     --t-fast:.15s ease;--t-normal:.25s ease;--t-slow:.4s ease;--ease-out:cubic-bezier(.16,1,.3,1);
   }
@@ -28,9 +30,9 @@
   body { margin:0; background:var(--color-background); color:var(--color-text); font-family:var(--font-sans); -webkit-font-smoothing:antialiased; }
   .wrap { max-width: 960px; margin: 0 auto; padding: var(--space-8) var(--space-5) var(--space-9); }
   header.hero { padding: var(--space-9) var(--space-5) var(--space-7); text-align:center; }
-  .hero .mark { display:inline-flex; align-items:center; gap:var(--space-2); font-weight:700; font-size:1.1rem; padding:var(--space-2) var(--space-4); border-radius:var(--radius-full); background:var(--highlight-bg); color:var(--highlight-text); margin-bottom:var(--space-5); }
-  .hero h1 { font-size:3rem; font-weight:700; letter-spacing:-0.02em; margin:0 0 var(--space-3); }
-  .hero p { color:var(--color-text-secondary); font-size:1.1rem; max-width:520px; margin:0 auto; }
+  .hero .mark { display:inline-flex; align-items:center; gap:var(--space-2); font-family:var(--font-mono); font-weight:600; font-size:.8125rem; letter-spacing:.04em; text-transform:uppercase; padding:var(--space-2) var(--space-4); border:1px solid var(--color-border); border-radius:var(--radius-sm); color:var(--color-primary); margin-bottom:var(--space-5); }
+  .hero h1 { font-size:2.75rem; font-weight:700; letter-spacing:-.02em; margin:0 0 var(--space-3); font-family:var(--font-sans); }
+  .hero p { color:var(--color-text-secondary); font-size:1.05rem; max-width:520px; margin:0 auto; }
   section { margin-bottom: var(--space-9); }
   section > h2 { font-size:1.5rem; font-weight:700; margin:0 0 var(--space-1); }
   section > .desc { color:var(--color-text-secondary); font-size:.9375rem; margin:0 0 var(--space-6); }
@@ -39,25 +41,25 @@
   .grid-2 { display:grid; grid-template-columns:repeat(2,1fr); gap:var(--space-6); }
 
   /* --- palette --- */
-  .swatch { border-radius: var(--radius-lg); overflow:hidden; box-shadow:var(--shadow-sm); background:var(--color-surface); }
+  .swatch { border-radius: var(--radius-lg); overflow:hidden; border:1px solid var(--color-border); background:var(--color-surface); }
   .swatch-fill { height:72px; }
   .swatch-label { padding:var(--space-3) var(--space-4); }
   .swatch-label .name { font-weight:600; font-size:.875rem; display:block; }
-  .swatch-label .hex { color:var(--color-text-muted); font-size:.75rem; font-family:monospace; }
+  .swatch-label .hex { color:var(--color-text-muted); font-size:.75rem; font-family:var(--font-mono); }
 
   /* --- type --- */
-  .type-row { display:flex; align-items:baseline; gap:var(--space-6); padding:var(--space-4) 0; border-bottom:1px solid var(--color-border); }
+  .type-row { display:flex; align-items:baseline; gap:var(--space-6); padding:var(--space-4) 0; border-bottom:1px dashed var(--color-border); }
   .type-row:last-child { border-bottom:none; }
-  .type-row .tag { width:110px; flex-shrink:0; color:var(--color-text-muted); font-size:.75rem; font-family:monospace; }
+  .type-row .tag { width:130px; flex-shrink:0; color:var(--color-text-muted); font-size:.75rem; font-family:var(--font-mono); }
 
-  /* --- spacing --- */
-  .space-row { display:flex; align-items:center; gap:var(--space-4); padding:var(--space-2) 0; }
-  .space-row .bar { background:var(--color-primary); border-radius:2px; height:16px; }
-  .space-row .tag { width:70px; font-family:monospace; font-size:.8125rem; color:var(--color-text-secondary); }
+  /* --- card (plana em repouso, sombra só na interação) --- */
+  .card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-5); transition:transform var(--t-normal), box-shadow var(--t-normal), border-color var(--t-normal); }
+  .card:hover { transform:translateY(-3px); border-color:var(--color-border-strong); box-shadow:var(--shadow-md); }
 
-  /* --- card --- */
-  .card { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-sm); padding:var(--space-5); transition:transform var(--t-normal), box-shadow var(--t-normal); }
-  .card:hover { transform:translateY(-3px); box-shadow:var(--shadow-md); }
+  /* --- ficha (flashcard, corte de canto) --- */
+  .ficha { position:relative; background:var(--color-surface); border:1px solid var(--color-border); padding:var(--space-6) var(--space-5); text-align:center; clip-path: polygon(0 0, calc(100% - var(--radius-notch)) 0, 100% var(--radius-notch), 100% 100%, 0 100%); transition: transform var(--t-normal), box-shadow var(--t-normal); }
+  .ficha:hover { transform:translateY(-3px) rotate(-0.5deg); box-shadow:var(--shadow-md); }
+  .ficha::before { content:""; position:absolute; top:0; right:0; width:var(--radius-notch); height:var(--radius-notch); background:var(--color-background); border-bottom:1px solid var(--color-border); border-left:1px solid var(--color-border); }
 
   /* --- button --- */
   .button { padding:var(--space-3) var(--space-5); border:none; border-radius:var(--radius-md); cursor:pointer; font-weight:600; font-size:.9375rem; font-family:var(--font-sans); transition:transform var(--t-fast), background var(--t-fast), box-shadow var(--t-fast); }
@@ -75,8 +77,8 @@
   .button--ghost { background:transparent; color:var(--color-text-secondary); }
   .button--ghost:hover { background:var(--color-surface-sunken); color:var(--color-text); }
 
-  /* --- badge --- */
-  .badge { display:inline-flex; align-items:center; padding:var(--space-1) var(--space-3); border-radius:var(--radius-full); font-size:.6875rem; font-weight:500; letter-spacing:.02em; text-transform:uppercase; }
+  /* --- badge (carimbo) --- */
+  .badge { display:inline-flex; align-items:center; padding:var(--space-1) var(--space-2); border-radius:var(--radius-sm); font-family:var(--font-mono); font-size:.6875rem; font-weight:500; letter-spacing:.03em; text-transform:uppercase; }
   .badge--primary { color:var(--color-primary-dark); background:var(--color-primary-light); }
   .badge--success { color:var(--color-success-dark); background:var(--color-success-light); }
   .badge--warning { color:var(--color-warning-dark); background:var(--color-warning-light); }
@@ -88,107 +90,80 @@
   .input:focus { outline:none; border-color:var(--color-primary); box-shadow:0 0 0 3px var(--color-primary-light); }
 
   /* --- progress --- */
-  .progress-bar { width:100%; height:10px; background:var(--color-surface-sunken); border-radius:var(--radius-full); overflow:hidden; }
+  .progress-bar { width:100%; height:8px; background:var(--color-surface-sunken); border-radius:var(--radius-full); overflow:hidden; }
   .progress-fill { height:100%; background:var(--color-primary); border-radius:var(--radius-full); }
 
   /* --- highlight signature --- */
-  .word { background:var(--highlight-bg); background-size: 100% 100%; background-repeat:no-repeat; color:var(--highlight-text); padding: 1px 6px; border-radius:6px; cursor:pointer; font-weight:500; }
+  .word { background:var(--highlight-bg); color:var(--highlight-text); padding: 1px 6px; border-radius:6px; cursor:pointer; font-weight:500; }
 
-  /* --- mockups --- */
-  .mockup { background:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); box-shadow:var(--shadow-md); overflow:hidden; }
-  .mockup-header { padding:var(--space-5); border-bottom:1px solid var(--color-border); }
-  .mockup-header h3 { margin:0 0 4px; font-size:1.1rem; }
-  .mockup-header p { margin:0; color:var(--color-text-secondary); font-size:.875rem; }
-  .mockup-body { padding:var(--space-5); display:flex; flex-direction:column; gap:var(--space-4); }
-  .stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:var(--space-3); }
-  .stat-mini { text-align:center; padding:var(--space-3); background:var(--color-surface-sunken); border-radius:var(--radius-md); }
-  .stat-mini .num { font-size:1.25rem; font-weight:700; }
-  .stat-mini .lbl { font-size:.6875rem; color:var(--color-text-muted); text-transform:uppercase; letter-spacing:.02em; }
-  .study-mock { text-align:center; padding:var(--space-7) var(--space-5); }
-  .study-mock .word-big { font-size:2.5rem; font-weight:700; margin-bottom:var(--space-5); }
-  .study-mock .actions { display:flex; justify-content:center; gap:var(--space-3); margin-top:var(--space-5); }
+  /* --- papel pautado --- */
+  .paper { background-color:var(--color-surface); border:1px solid var(--color-border); border-radius:var(--radius-lg); padding:var(--space-6) var(--space-6) var(--space-6) 64px;
+    background-image:
+      linear-gradient(to right, transparent 0 47px, var(--paper-margin) 47px 48px, transparent 48px 100%),
+      repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--paper-rule-gap) - 1px), var(--paper-rule) calc(var(--paper-rule-gap) - 1px), var(--paper-rule) var(--paper-rule-gap));
+  }
+  .paper p { font-family:var(--font-serif); font-size:1.0625rem; line-height:1.75; margin:0 0 var(--space-3); }
+
+  /* --- índice de capítulos --- */
+  .index-entry { display:flex; align-items:center; gap:var(--space-4); padding:var(--space-4) 0; border-bottom:1px dashed var(--color-border); }
+  .index-entry:last-child { border-bottom:none; }
+  .index-entry .num { font-family:var(--font-mono); font-size:.75rem; color:var(--color-text-muted); width:24px; }
+  .index-entry .body strong { display:block; font-size:1rem; }
+  .index-entry .body span { color:var(--color-text-secondary); font-size:.875rem; }
+
+  /* --- exercício (worksheet) --- */
+  .worksheet-line { font-family:var(--font-serif); font-size:1.0625rem; }
+  .blank { display:inline-block; border-bottom: 1px dashed var(--color-text-muted); min-width:90px; text-align:center; }
+  .ink-correct { color:var(--color-success-dark); font-weight:600; font-family:var(--font-mono); font-size:.9rem; }
+  .ink-wrong { color:var(--color-danger-dark); font-weight:600; font-family:var(--font-mono); font-size:.9rem; text-decoration:line-through; }
 </style>
 </head>
 <body>
 <div class="wrap">
 
   <header class="hero">
-    <span class="mark">🌐 Glossio</span>
-    <h1>Design System v1</h1>
-    <p>Moderna, acolhedora, motivadora, inteligente. A fonte da verdade visual de toda a plataforma.</p>
+    <span class="mark">Glossio — design system v2</span>
+    <h1>Caderno de exercícios de idioma</h1>
+    <p>Capítulos numerados, papel pautado, correções à caneta, fichas recortáveis. A fonte da verdade visual de toda a plataforma.</p>
   </header>
 
   <section>
     <h2>Paleta</h2>
-    <p class="desc">Indigo como cor de ação principal — sofisticado, evita o azul-SaaS genérico.</p>
+    <p class="desc">Tinta-tinteiro (azul profundo e dessaturado) como cor de ação. Papel frio — nunca creme. Vermelho reservado só para correção, verde só para acerto.</p>
     <div class="grid-4">
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-primary)"></div><div class="swatch-label"><span class="name">Primary — Indigo</span><span class="hex">#4F46E5</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-success)"></div><div class="swatch-label"><span class="name">Success — Emerald</span><span class="hex">#10B981</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-warning)"></div><div class="swatch-label"><span class="name">Warning — Amber</span><span class="hex">#F59E0B</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-danger)"></div><div class="swatch-label"><span class="name">Danger — Rose</span><span class="hex">#F43F5E</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-background); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Background</span><span class="hex">#F8FAFC</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-surface); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Surface</span><span class="hex">#FFFFFF</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text)"></div><div class="swatch-label"><span class="name">Text</span><span class="hex">#0F172A</span></div></div>
-      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text-secondary)"></div><div class="swatch-label"><span class="name">Text secondary</span><span class="hex">#64748B</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-primary)"></div><div class="swatch-label"><span class="name">Tinta — Ink Blue</span><span class="hex">#2C3E63</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-success)"></div><div class="swatch-label"><span class="name">Carimbo — Verde</span><span class="hex">#2F6F4E</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-warning)"></div><div class="swatch-label"><span class="name">Ocre</span><span class="hex">#B8791A</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-danger)"></div><div class="swatch-label"><span class="name">Caneta — Vermelho</span><span class="hex">#B23A2E</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-background); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Papel (fundo)</span><span class="hex">#EEF1F5</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-surface); border-bottom:1px solid var(--color-border)"></div><div class="swatch-label"><span class="name">Superfície</span><span class="hex">#FBFCFD</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text)"></div><div class="swatch-label"><span class="name">Texto</span><span class="hex">#1C1F26</span></div></div>
+      <div class="swatch"><div class="swatch-fill" style="background:var(--color-text-secondary)"></div><div class="swatch-label"><span class="name">Texto secundário</span><span class="hex">#565F6B</span></div></div>
     </div>
   </section>
 
   <section>
     <h2>Tipografia</h2>
-    <p class="desc">Inter, quatro pesos, escala fixa de oito níveis com papel definido.</p>
+    <p class="desc">Três famílias, cada uma com um papel fixo: Inter para interface, serif para leitura longa, mono só para numeração e dados reais.</p>
     <div>
-      <div class="type-row"><span class="tag">display / 700</span><span style="font-size:2.5rem;font-weight:700;letter-spacing:-.02em">Aprenda todo dia</span></div>
-      <div class="type-row"><span class="tag">h1 / 700</span><span style="font-size:2rem;font-weight:700;letter-spacing:-.02em">Boa noite, Felipe</span></div>
-      <div class="type-row"><span class="tag">h2 / 600</span><span style="font-size:1.375rem;font-weight:600">Continue estudando</span></div>
-      <div class="type-row"><span class="tag">h3 / 600</span><span style="font-size:1.125rem;font-weight:600">Título de card</span></div>
-      <div class="type-row"><span class="tag">body / 400</span><span style="font-size:1rem">Texto corrido padrão da interface.</span></div>
-      <div class="type-row"><span class="tag">body-md / 500</span><span style="font-size:.9375rem;font-weight:500">Labels e navegação</span></div>
-      <div class="type-row"><span class="tag">small / 400</span><span style="font-size:.8125rem;color:var(--color-text-secondary)">Legendas e metadados</span></div>
-      <div class="type-row"><span class="tag">caption / 500</span><span style="font-size:.6875rem;font-weight:500;text-transform:uppercase;letter-spacing:.02em;color:var(--color-text-muted)">Badge / tag</span></div>
+      <div class="type-row"><span class="tag">display · sans</span><span style="font-size:2.25rem;font-weight:700;letter-spacing:-.02em">Aprenda todo dia</span></div>
+      <div class="type-row"><span class="tag">h2 · sans</span><span style="font-size:1.375rem;font-weight:600">Continue estudando</span></div>
+      <div class="type-row"><span class="tag">reading · serif</span><span style="font-family:var(--font-serif);font-size:1.0625rem">A Revolução Industrial começou na Inglaterra.</span></div>
+      <div class="type-row"><span class="tag">mono label</span><span style="font-family:var(--font-mono);font-size:.75rem;letter-spacing:.03em;text-transform:uppercase;color:var(--color-text-muted)">Capítulo 03 · página 12/20</span></div>
+      <div class="type-row"><span class="tag">mono number</span><span style="font-family:var(--font-mono);font-weight:600;font-size:1.5rem">07</span></div>
     </div>
   </section>
 
   <section>
-    <h2>Espaçamento &amp; Radius</h2>
-    <div class="grid-2">
-      <div>
-        <p class="desc" style="margin-bottom:var(--space-3)">Escala de 4px a 96px</p>
-        <div class="space-row"><span class="tag">4px</span><div class="bar" style="width:4px"></div></div>
-        <div class="space-row"><span class="tag">8px</span><div class="bar" style="width:8px"></div></div>
-        <div class="space-row"><span class="tag">12px</span><div class="bar" style="width:12px"></div></div>
-        <div class="space-row"><span class="tag">16px</span><div class="bar" style="width:16px"></div></div>
-        <div class="space-row"><span class="tag">24px</span><div class="bar" style="width:24px"></div></div>
-        <div class="space-row"><span class="tag">32px</span><div class="bar" style="width:32px"></div></div>
-        <div class="space-row"><span class="tag">48px</span><div class="bar" style="width:48px"></div></div>
-        <div class="space-row"><span class="tag">64px</span><div class="bar" style="width:64px"></div></div>
-        <div class="space-row"><span class="tag">96px</span><div class="bar" style="width:96px"></div></div>
-      </div>
-      <div>
-        <p class="desc" style="margin-bottom:var(--space-3)">Radius — 4 níveis, nunca inventar novos</p>
-        <div class="row">
-          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">sm 8</div>
-          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">md 12</div>
-          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">lg 16</div>
-          <div style="width:64px;height:64px;background:var(--color-primary-light);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:var(--color-primary-dark)">xl 24</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Botões</h2>
-    <div class="row">
-      <button class="button button--primary">Continue Studying</button>
-      <button class="button button--success">Easy</button>
-      <button class="button button--warning">Good</button>
-      <button class="button button--danger">Again</button>
+    <h2>Botões &amp; Badges</h2>
+    <div class="row" style="margin-bottom:var(--space-4)">
+      <button class="button button--primary">Continuar estudando</button>
+      <button class="button button--success">Fácil</button>
+      <button class="button button--warning">Bom</button>
+      <button class="button button--danger">De novo</button>
       <button class="button button--secondary">Cancelar</button>
       <button class="button button--ghost">Pular</button>
     </div>
-  </section>
-
-  <section>
-    <h2>Badges</h2>
     <div class="row">
       <span class="badge badge--primary">Novo</span>
       <span class="badge badge--success">Mature</span>
@@ -199,72 +174,48 @@
   </section>
 
   <section>
-    <h2>Cards &amp; Input</h2>
+    <h2>Cards &amp; Fichas</h2>
+    <p class="desc">Cards ficam planos em repouso (só borda); a sombra só aparece na interação — a ficha "levanta" da mesa. O corte de canto identifica as fichas de vocabulário (flashcards).</p>
     <div class="grid-2">
       <div class="card">
-        <h3 style="margin:0 0 8px">Streak</h3>
-        <p style="margin:0;color:var(--color-text-secondary)">7 dias seguidos estudando 🔥</p>
+        <h3 style="margin:0 0 8px">Sequência</h3>
+        <p style="margin:0;color:var(--color-text-secondary)">7 dias seguidos estudando</p>
       </div>
-      <div>
-        <input class="input" placeholder="Buscar palavra..." />
+      <div class="ficha">
+        <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:.03em;margin:0 0 12px">Ficha 07/20</p>
+        <p style="font-family:var(--font-serif);font-size:1.75rem;font-weight:600;margin:0">house</p>
       </div>
     </div>
+  </section>
+
+  <section>
+    <h2>Papel pautado &amp; leitura</h2>
+    <p class="desc">Fundo de folha de caderno — linhas horizontais sutis e margem vermelha — usado só nas superfícies de leitura longa (lições, verbetes).</p>
+    <div class="paper">
+      <p>A <span class="word">Revolução Industrial</span> começou na Inglaterra e transformou a forma como as <span class="word">pessoas</span> trabalhavam e viviam.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Índice de capítulos</h2>
+    <p class="desc">Navegação de módulos/lições como sumário de livro, não grade de cards de ícone.</p>
+    <div>
+      <div class="index-entry"><span class="num">01</span><div class="body"><strong>Lições</strong><span>Textos por nível com legendas inteligentes</span></div></div>
+      <div class="index-entry"><span class="num">02</span><div class="body"><strong>Flashcards</strong><span>Revisão espaçada estilo Anki</span></div></div>
+      <div class="index-entry"><span class="num">03</span><div class="body"><strong>Exercícios</strong><span>Exercícios interativos</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Exercício (worksheet)</h2>
+    <p class="desc">Correção literal em tinta — verde para acerto, vermelho para erro — em vez de badges coloridos genéricos.</p>
+    <p class="worksheet-line">1. Eu <span class="blank"></span> (ir) ao mercado ontem. <span class="ink-correct">✓ fui</span></p>
+    <p class="worksheet-line">2. Ela <span class="blank"></span> (ser) muito gentil. <span class="ink-wrong">✗ é</span></p>
   </section>
 
   <section>
     <h2>Progress</h2>
     <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
-  </section>
-
-  <section>
-    <h2>Assinatura — highlight de vocabulário</h2>
-    <p class="desc">Toda palavra clicável, badge e estado ativo usa o mesmo gesto: um grifo indigo suave, como marca-texto sobre vocabulário novo.</p>
-    <p style="font-size:1.1rem;line-height:1.9">
-      A <span class="word">Revolução Industrial</span> começou na Inglaterra e transformou a forma como as
-      <span class="word">pessoas</span> trabalhavam e viviam.
-    </p>
-  </section>
-
-  <section>
-    <h2>Wireframe — Dashboard</h2>
-    <div class="mockup">
-      <div class="mockup-header">
-        <h3>Boa noite, Felipe 👋</h3>
-        <p>Pronto pra continuar aprendendo?</p>
-      </div>
-      <div class="mockup-body">
-        <div>
-          <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
-          <p style="margin:8px 0 0;font-size:.8125rem;color:var(--color-text-secondary)">14 / 20 — meta diária</p>
-        </div>
-        <div class="stat-strip">
-          <div class="stat-mini"><div class="num">12</div><div class="lbl">Due</div></div>
-          <div class="stat-mini"><div class="num">340</div><div class="lbl">Total</div></div>
-          <div class="stat-mini"><div class="num">7</div><div class="lbl">Streak</div></div>
-          <div class="stat-mini"><div class="num">21</div><div class="lbl">Best</div></div>
-        </div>
-        <button class="button button--primary">Continue Studying</button>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Wireframe — Study</h2>
-    <div class="mockup">
-      <div class="mockup-header">
-        <p style="font-size:.8125rem">Progress · 7 / 20</p>
-        <div class="progress-bar" style="margin-top:8px"><div class="progress-fill" style="width:35%"></div></div>
-      </div>
-      <div class="study-mock">
-        <div class="word-big">house</div>
-        <button class="button button--secondary" style="width:auto;padding:14px 40px">Reveal</button>
-        <div class="actions">
-          <button class="button button--danger" style="width:110px">Again</button>
-          <button class="button button--warning" style="width:110px">Good</button>
-          <button class="button button--success" style="width:110px">Easy</button>
-        </div>
-      </div>
-    </div>
   </section>
 
 </div>

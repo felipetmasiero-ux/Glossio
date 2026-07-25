@@ -1,3 +1,5 @@
+import "./DialogueLine.css";
+
 import { TextRenderer } from "../TextRenderer/TextRenderer";
 
 export function DialogueLine({
@@ -10,16 +12,13 @@ export function DialogueLine({
 
     return (
 
-        <div className={`dialogue-message ${line.side}`}>
+        <div className="dialogue-line">
 
-            <strong>
-
+            <span className="dialogue-line__speaker text-mono-label">
                 {line.speaker}
+            </span>
 
-            </strong>
-
-            <div className="dialogue-bubble">
-
+            <div className="dialogue-line__text">
                 <TextRenderer
 
                     text={line.text}
@@ -29,7 +28,6 @@ export function DialogueLine({
                     onWordClick={onWordClick}
 
                 />
-
             </div>
 
         </div>

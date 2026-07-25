@@ -24,9 +24,9 @@ export function LanguageSelection() {
   return (
     <div className="language-selection">
       <div className="language-selection-header">
-        <div className="language-selection-icon">🌐</div>
+        <p className="language-selection-mark text-mono-label">Glossio</p>
 
-        <h1>Escolha seu idioma</h1>
+        <h1 className="language-selection-title">Escolha seu idioma</h1>
 
         <p className="language-selection-subtitle">
           Selecione o idioma que você quer aprender

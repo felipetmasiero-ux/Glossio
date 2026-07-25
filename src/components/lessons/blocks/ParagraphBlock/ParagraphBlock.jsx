@@ -14,9 +14,9 @@ export function ParagraphBlock({
 
             lesson={lesson}
 
-            icon="📖"
+            icon="book"
 
-            title="Explanation"
+            title="Explicação"
 
             text={block.text}
 

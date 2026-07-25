@@ -182,7 +182,7 @@ export function LessonReader({ lesson }) {
 
             />
 
-            <div className="lesson-content animate-fade-in">
+            <div className="lesson-content paper-ruled animate-fade-in">
 
                 {
 
@@ -224,9 +224,9 @@ export function LessonReader({ lesson }) {
 
                     isLast
 
-                        ? "Finish Lesson →"
+                        ? "Concluir lição"
 
-                        : "Continue Reading →"
+                        : "Continuar leitura"
 
                 }
 

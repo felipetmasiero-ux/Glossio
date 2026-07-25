@@ -20,7 +20,7 @@ export function LessonSummary({
 
             <h2>
 
-                Lesson Summary
+                Resumo da lição
 
             </h2>
 
@@ -34,7 +34,7 @@ export function LessonSummary({
 
                 <h3>
 
-                    Review
+                    Revisão
 
                 </h3>
 

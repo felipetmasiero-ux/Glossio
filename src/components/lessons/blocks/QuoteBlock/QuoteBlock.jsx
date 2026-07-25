@@ -14,9 +14,7 @@ export function QuoteBlock({
 
             lesson={lesson}
 
-            icon="💬"
-
-            title="Quote"
+            variant="quote"
 
             text={block.text}
 

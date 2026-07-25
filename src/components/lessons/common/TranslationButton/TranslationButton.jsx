@@ -23,9 +23,9 @@ export function TranslationButton({
 
                 visible
 
-                    ? "Hide translation"
+                    ? "Ocultar tradução"
 
-                    : "Show translation"
+                    : "Mostrar tradução"
 
             }
 

@@ -1,4 +1,5 @@
 import { Input } from "../common/Input/Input";
+import { Icon } from "../common/Icon/Icon";
 
 export function FlashcardsSearch({
   search,
@@ -7,10 +8,10 @@ export function FlashcardsSearch({
   return (
     <Input
       className="flashcards-search"
-      placeholder="Search..."
+      placeholder="Buscar..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
-      icon="🔍"
+      icon={<Icon name="search" size={16} />}
     />
   );
 }

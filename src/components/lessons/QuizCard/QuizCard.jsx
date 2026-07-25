@@ -2,8 +2,11 @@ import { useState } from "react";
 
 import { Card } from "../../common/Card/Card";
 import { Button } from "../../common/Button/Button";
+import { Icon } from "../../common/Icon/Icon";
 
 import "./QuizCard.css";
+
+const MARKERS = ["A", "B", "C", "D", "E", "F"];
 
 export function QuizCard({
 
@@ -51,6 +54,18 @@ export function QuizCard({
 
     }
 
+    function optionState(index) {
+
+        if (!checked) return answer === index ? "selected" : "";
+
+        if (index === quiz.answer) return "correct";
+
+        if (index === answer) return "wrong";
+
+        return "";
+
+    }
+
     return (
 
         <Card className="quiz-card">
@@ -71,21 +86,21 @@ export function QuizCard({
 
                             key={index}
 
-                            className={`quiz-option ${
-
-                                answer === index
-
-                                    ? "selected"
-
-                                    : ""
-
-                            }`}
+                            className={`quiz-option ${optionState(index)}`}
 
                             disabled={checked}
 
                             onClick={() => setAnswer(index)}
 
                         >
+
+                            <span className="quiz-option__marker">
+                                {optionState(index) === "correct"
+                                    ? <Icon name="check" size={13} />
+                                    : optionState(index) === "wrong"
+                                        ? <Icon name="x" size={13} />
+                                        : MARKERS[index]}
+                            </span>
 
                             {option}
 
@@ -115,7 +130,7 @@ export function QuizCard({
 
                             >
 
-                                Check
+                                Verificar
 
                             </Button>
 
@@ -144,17 +159,8 @@ export function QuizCard({
                             >
 
                                 <h3>
-
-                                    {
-
-                                        correct
-
-                                            ? "✅ Correct!"
-
-                                            : "❌ Incorrect"
-
-                                    }
-
+                                    <Icon name={correct ? "check" : "x"} size={16} />
+                                    {correct ? "Correto!" : "Incorreto"}
                                 </h3>
 
                                 <p>
@@ -173,7 +179,7 @@ export function QuizCard({
 
                                 >
 
-                                    Continue
+                                    Continuar
 
                                 </Button>
 

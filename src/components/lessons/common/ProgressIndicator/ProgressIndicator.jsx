@@ -1,5 +1,7 @@
 import "./ProgressIndicator.css";
 
+import { ProgressBar } from "../../../common/ProgressBar/ProgressBar";
+
 export function ProgressIndicator({
 
     current,
@@ -20,7 +22,7 @@ export function ProgressIndicator({
 
                 <span>
 
-                    {label ?? `Section ${current}`}
+                    {label ?? `Seção ${current}`}
 
                 </span>
 
@@ -32,21 +34,7 @@ export function ProgressIndicator({
 
             </div>
 
-            <div className="lesson-progress-track">
-
-                <div
-
-                    className="lesson-progress-fill"
-
-                    style={{
-
-                        width:`${progress}%`
-
-                    }}
-
-                />
-
-            </div>
+            <ProgressBar value={progress} />
 
         </div>
 

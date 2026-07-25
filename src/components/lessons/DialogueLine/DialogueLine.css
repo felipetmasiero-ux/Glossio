@@ -1,7 +1,39 @@
-.dialogue-speaker{
+.dialogue-line {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--color-border);
+}
 
-    font:var(--text-caption);
+.dialogue-line:last-child {
+  border-bottom: none;
+}
 
-    color:var(--color-text-muted);
+.dialogue-line__speaker {
+  flex-shrink: 0;
+  width: 96px;
+  padding-top: 2px;
+  text-align: right;
+  color: var(--color-primary);
+}
 
+.dialogue-line__text {
+  flex: 1;
+  min-width: 0;
+}
+
+.dialogue-line__text .text-renderer {
+  max-width: none;
+}
+
+@media (max-width: 480px) {
+  .dialogue-line {
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .dialogue-line__speaker {
+    width: auto;
+    text-align: left;
+  }
 }

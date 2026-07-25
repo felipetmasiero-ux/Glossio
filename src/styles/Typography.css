@@ -1,19 +1,25 @@
 /* ==========================================================================
    Glossio — Typography
-   Uma única família (Inter), quatro pesos, escala fixa. Nada de itálico
-   decorativo ou pesos fora da lista abaixo.
+   Três famílias, cada uma com um papel funcional fixo — nunca decorativo:
+   Inter para controles de interface (nav, botões, labels curtas), uma serif
+   de texto para leitura longa (lições, verbetes), e um monoespaçado só para
+   numeração/dados reais (páginas, exercícios, estatísticas).
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* impeccable-disable-next-line overused-font -- Operate-mode UI chrome (nav/buttons/labels) intentionally uses a workhorse sans; distinctiveness comes from the serif reading type + mono numbering system + notebook motifs, not from the interface font. */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-serif: 'Source Serif 4', ui-serif, Georgia, 'Times New Roman', serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Consolas, monospace;
 
   --weight-regular: 400;
   --weight-medium: 500;
   --weight-semibold: 600;
   --weight-bold: 700;
 
+  /* Interface (Inter) — nav, botões, labels, dashboards */
   --text-display: 700 2.5rem/1.15 var(--font-sans);
   --text-h1:      700 2rem/1.2 var(--font-sans);
   --text-h2:      600 1.375rem/1.3 var(--font-sans);
@@ -22,6 +28,14 @@
   --text-body-md: 500 0.9375rem/1.5 var(--font-sans);
   --text-small:   400 0.8125rem/1.4 var(--font-sans);
   --text-caption: 500 0.6875rem/1.3 var(--font-sans);
+
+  /* Leitura (serif) — corpo de lições, verbetes, diálogos */
+  --text-reading:      400 1.0625rem/1.75 var(--font-serif);
+  --text-reading-lead: 500 1.1875rem/1.6 var(--font-serif);
+
+  /* Numeração e dados (mono) — páginas, exercícios, estatísticas */
+  --text-mono-label:  500 0.75rem/1.3 var(--font-mono);
+  --text-mono-number: 600 1.5rem/1.1 var(--font-mono);
 
   --tracking-tight: -0.02em;
   --tracking-normal: 0;
@@ -36,3 +50,8 @@
 .text-secondary{ font: var(--text-body); color: var(--color-text-secondary); }
 .text-small    { font: var(--text-small); color: var(--color-text-secondary); }
 .text-caption  { font: var(--text-caption); letter-spacing: var(--tracking-wide); text-transform: uppercase; color: var(--color-text-muted); }
+
+.text-reading      { font: var(--text-reading); color: var(--color-text); }
+.text-reading-lead { font: var(--text-reading-lead); color: var(--color-text); }
+.text-mono-label   { font: var(--text-mono-label); letter-spacing: var(--tracking-wide); color: var(--color-text-muted); font-variant-numeric: tabular-nums; }
+.text-mono-number  { font: var(--text-mono-number); color: var(--color-text); font-variant-numeric: tabular-nums; }

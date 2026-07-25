@@ -33,11 +33,11 @@ export function QuizBlock({
 
         <LessonSection
 
-            icon="📝"
+            icon="pencil"
 
-            title="Practice"
+            title="Prática"
 
-            subtitle="Answer before continuing."
+            subtitle="Responda antes de continuar."
 
         >
 

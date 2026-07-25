@@ -1,5 +1,6 @@
 import { Card } from "../../../common/Card/Card";
 import { SectionHeader } from "../../../common/SectionHeader/SectionHeader";
+import "./ListBLock.css";
 
 export function ListBlock({
 
@@ -13,21 +14,20 @@ export function ListBlock({
 
             <SectionHeader
 
-                icon="📋"
+                icon="list"
 
-                title="Key Points"
+                title="Pontos-chave"
 
             />
 
             <Card>
 
-                <ul>
+                <ul className="lesson-list">
 
                     {
 
                         block.items.map(
-
-                            (item,index)=>(
+                            (item, index) => (
 
                                 <li key={index}>
 
@@ -36,7 +36,6 @@ export function ListBlock({
                                 </li>
 
                             )
-
                         )
 
                     }

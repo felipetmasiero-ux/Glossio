@@ -20,7 +20,7 @@ export function DifficultyChip({
 
         <Badge
 
-            color={color}
+            variant={color}
 
         >
 

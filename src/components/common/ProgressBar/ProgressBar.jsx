@@ -19,7 +19,7 @@ export function ProgressBar({
 
       <div
         className={`progress-fill progress-fill--${variant}`}
-        style={{ width: `${clamped}%` }}
+        style={{ transform: `scaleX(${clamped / 100})` }}
       />
 
     </div>

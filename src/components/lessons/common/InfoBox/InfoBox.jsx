@@ -1,3 +1,4 @@
+import { Icon } from "../../../common/Icon/Icon";
 import "./InfoBox.css";
 
 export function InfoBox({
@@ -6,23 +7,21 @@ export function InfoBox({
 
     title,
 
-    children,
-
-    variant = "default"
+    children
 
 }) {
 
     return (
 
-        <div className={`info-box ${variant}`}>
+        <div className="info-box">
 
             <div className="info-box-header">
 
-                <span className="info-box-icon">
-
-                    {icon}
-
-                </span>
+                {icon && (
+                    <span className="info-box-icon">
+                        <Icon name={icon} size={17} />
+                    </span>
+                )}
 
                 <h3>
 

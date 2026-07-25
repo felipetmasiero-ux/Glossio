@@ -2,12 +2,30 @@
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
   padding: var(--space-lg);
-  transition: transform var(--t-normal), box-shadow var(--t-normal);
+  transition: transform var(--t-normal), box-shadow var(--t-normal), border-color var(--t-normal);
 }
 
 .card--hoverable:hover {
   transform: translateY(-3px);
+  border-color: var(--color-border-strong);
   box-shadow: var(--shadow-md);
+}
+
+/* Ficha — corte de canto, usada por flashcards/vocabulário */
+.card--notch {
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - var(--radius-notch)) 0, 100% var(--radius-notch), 100% 100%, 0 100%);
+}
+
+.card--notch::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: var(--radius-notch);
+  height: var(--radius-notch);
+  background: var(--color-background);
+  border-left: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
 }

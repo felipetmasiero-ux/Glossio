@@ -5,15 +5,15 @@
 }
 
 .page-container {
-  max-width: 720px;
+  max-width: var(--content-width-md);
   width: 100%;
   margin: 0 auto;
-  padding: 40px 24px 80px;
+  padding: var(--space-7) var(--space-5) var(--space-8);
   flex: 1;
 }
 
 @media (max-width: 600px) {
   .page-container {
-    padding: 24px 16px 60px;
+    padding: var(--space-5) var(--space-4) var(--space-7);
   }
 }

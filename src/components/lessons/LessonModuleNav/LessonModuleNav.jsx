@@ -1,6 +1,7 @@
 import "./LessonModuleNav.css";
 
 import { Link } from "react-router-dom";
+import { Icon } from "../../common/Icon/Icon";
 
 export function LessonModuleNav({
 
@@ -29,21 +30,21 @@ export function LessonModuleNav({
                 className="lesson-module-nav-back"
 
             >
-                ← {module.title}
+                <Icon name="chevron-left" size={14} /> {module.title}
             </Link>
 
-            <div className="lesson-module-nav-stats">
+            <div className="lesson-module-nav-stats text-mono-label">
 
                 <span>
-                    Lesson {lessonIndex + 1} of {module.lessons.length}
+                    Lição {lessonIndex + 1} de {module.lessons.length}
                 </span>
 
                 <span>
-                    Module {moduleProgress.completed}/{moduleProgress.total}
+                    Módulo {moduleProgress.completed}/{moduleProgress.total}
                 </span>
 
                 <span>
-                    Course {courseProgress.completed}/{courseProgress.total}
+                    Curso {courseProgress.completed}/{courseProgress.total}
                 </span>
 
             </div>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { LanguageContext } from "../../../contexts/LanguageContext";
+import { Icon } from "../Icon/Icon";
 
 import "./Navbar.css";
 
@@ -15,7 +16,7 @@ export function Navbar() {
     { to: "/flashcards", label: "Flashcards" },
     { to: "/exercises", label: "Exercícios" },
     { to: "/alphabets", label: "Alfabetos" },
-    { to: "/my-flashcards", label: "My Flashcards" }
+    { to: "/my-flashcards", label: "Coleção" }
   ];
 
   if (location.pathname === "/") return null;
@@ -24,7 +25,9 @@ export function Navbar() {
     <nav className="navbar">
       <div className="navbar__inner">
         <Link to="/home" className="navbar__logo">
-          <span className="navbar__logo-icon">🌐</span>
+          <span className="navbar__logo-icon">
+            <Icon name="book" size={16} />
+          </span>
           <span className="navbar__logo-name">Glossio</span>
         </Link>
 

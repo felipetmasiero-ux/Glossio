@@ -1,68 +1,26 @@
 import "./ModuleCard.css";
 
-import { Card } from "../../common/Card/Card";
-import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator";
+import { ProgressBar } from "../../common/ProgressBar/ProgressBar";
+import { Icon } from "../../common/Icon/Icon";
 
-export function ModuleCard({
+export function ModuleCard({ module, progress, onOpen }) {
+  const pct = progress.total === 0 ? 0 : (progress.completed / progress.total) * 100;
 
-    module,
+  return (
+    <button type="button" className="module-row" onClick={onOpen}>
+      <span className="module-row__level text-mono-label">{module.level}</span>
 
-    progress,
+      <span className="module-row__body">
+        <span className="module-row__title">{module.title}</span>
+        <span className="module-row__description">{module.description}</span>
+        <ProgressBar value={pct} />
+      </span>
 
-    onOpen
+      <span className="module-row__count text-mono-label">
+        {progress.completed}/{progress.total}
+      </span>
 
-}) {
-
-    return (
-
-        <Card
-
-            className="module-card"
-
-            onClick={onOpen}
-
-        >
-
-            <div className="module-card-header">
-
-                <span className="lesson-level">
-
-                    {module.level}
-
-                </span>
-
-                <span>
-
-                    {progress.completed}/{progress.total} lessons
-
-                </span>
-
-            </div>
-
-            <h2>
-
-                {module.title}
-
-            </h2>
-
-            <p>
-
-                {module.description}
-
-            </p>
-
-            <ProgressIndicator
-
-                current={progress.completed}
-
-                total={progress.total}
-
-                label="Progress"
-
-            />
-
-        </Card>
-
-    );
-
+      <Icon name="chevron-right" size={16} className="module-row__arrow" />
+    </button>
+  );
 }

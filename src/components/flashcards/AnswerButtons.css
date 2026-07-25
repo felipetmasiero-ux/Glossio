@@ -5,6 +5,10 @@
 }
 
 .answer-buttons .button {
-  width: 120px;
+  width: auto;
+  min-width: 120px;
   height: 52px;
+  white-space: nowrap;
+  padding-left: var(--space-4);
+  padding-right: var(--space-4);
 }

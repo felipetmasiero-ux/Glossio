@@ -1,8 +1,9 @@
 import { Button } from "../Button/Button";
+import { Icon } from "../Icon/Icon";
 import "./EmptyState.css";
 
 export function EmptyState({
-  icon = "📭",
+  icon = "book",
   title,
   description,
   actionLabel,
@@ -13,7 +14,9 @@ export function EmptyState({
 
     <div className="empty-state">
 
-      <span className="empty-state__icon">{icon}</span>
+      <span className="empty-state__icon">
+        <Icon name={icon} size={28} />
+      </span>
 
       <h3 className="empty-state__title">{title}</h3>
 

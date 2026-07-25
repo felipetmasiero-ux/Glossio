@@ -1,21 +1,16 @@
-.modules-page{
-
-    max-width:1200px;
-
-    margin:auto;
-
-    padding:60px 30px;
-
+.modules-page__label {
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
 }
 
-.modules-grid{
+.modules-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-7);
+}
 
-    display:grid;
-
-    grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
-
-    gap:28px;
-
-    margin-top:28px;
-
+.modules-index {
+  display: flex;
+  flex-direction: column;
 }

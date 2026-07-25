@@ -1,7 +1,5 @@
-.text-renderer{
-
-    font:var(--text-body);
-
-    line-height:1.8;
-
+.text-renderer {
+  font: var(--text-reading);
+  max-width: 68ch;
+  color: var(--color-text);
 }
