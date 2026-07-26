@@ -1,5 +1,7 @@
 import "./StudyDashboard.css";
 
+import { Link } from "react-router-dom";
+
 import { DashboardHeader } from "./DashboardHeader";
 import { StatsCard } from "./StatsCard";
 import { ProgressCard } from "./ProgressCard";
@@ -55,6 +57,10 @@ export function StudyDashboard({
             <StartStudyButton
                 onClick={onStart}
             />
+
+            <Link to="/my-flashcards" className="study-dashboard__collection-link">
+                Ver coleção completa
+            </Link>
 
         </div>
 

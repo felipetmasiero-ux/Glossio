@@ -1,0 +1,53 @@
+.continue-learning-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  border-top: 3px solid var(--color-primary);
+}
+
+.continue-learning-card__eyebrow {
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.continue-learning-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.continue-learning-card__level {
+  padding: var(--space-1) var(--space-2);
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+}
+
+.continue-learning-card__module {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.continue-learning-card__title {
+  font: var(--text-h1);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin: var(--space-1) 0;
+}
+
+.continue-learning-card__category {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-2);
+}
+
+.continue-learning-card__empty {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+.continue-learning-card .button {
+  width: auto;
+  align-self: flex-start;
+  margin-top: var(--space-2);
+}

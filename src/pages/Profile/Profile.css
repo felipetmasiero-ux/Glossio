@@ -1,0 +1,82 @@
+.profile-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.profile-page__label {
+  color: var(--color-primary);
+  margin-bottom: calc(-1 * var(--space-4));
+}
+
+.profile-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.profile-page__language {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.profile-page__flag {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.profile-page__language-name {
+  flex: 1;
+  font: var(--text-h3);
+  color: var(--color-text);
+}
+
+.profile-page__switch-link {
+  color: var(--color-primary);
+  font: var(--text-body-md);
+}
+
+.profile-page__switch-link:hover {
+  color: var(--color-primary-hover);
+}
+
+.profile-page__danger {
+  padding: var(--space-4);
+  border: 1px solid var(--color-danger);
+  border-radius: var(--radius-lg);
+  background: var(--color-danger-light);
+}
+
+.profile-page__danger-title {
+  font: var(--text-h3);
+  color: var(--color-danger-dark);
+  margin-bottom: var(--space-2);
+}
+
+.profile-page__danger-description {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-4);
+  max-width: 60ch;
+}
+
+.profile-page__danger .button {
+  width: auto;
+}
+
+.profile-page__confirm {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.profile-page__confirm-label {
+  font: var(--text-body-md);
+  color: var(--color-danger-dark);
+}

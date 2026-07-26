@@ -1,6 +1,6 @@
 import "./ModulesPage.css";
 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
@@ -10,6 +10,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 
 import { ModuleCard } from "../../components/lessons/ModuleCard/ModuleCard";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Icon } from "../../components/common/Icon/Icon";
 
 export function ModulesPage() {
 
@@ -57,6 +58,11 @@ export function ModulesPage() {
                     </nav>
                 )
             }
+
+            <Link to="/alphabets" className="modules-page__alphabet-link">
+                Ver alfabeto do idioma
+                <Icon name="chevron-right" size={15} />
+            </Link>
 
         </div>
 

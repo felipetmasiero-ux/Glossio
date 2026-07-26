@@ -14,6 +14,7 @@ import { ModuleLessonsPage } from "./pages/ModuleLessonsPage/ModuleLessonsPage";
 import { ModuleCompletePage } from "./pages/ModuleCompletePage/ModuleCompletePage";
 import { LessonPage } from "./pages/LessonPage/LessonPage";
 import { Alphabets } from './pages/Alphabets'
+import { Profile } from './pages/Profile/Profile'
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { LanguageContext } from './contexts/LanguageContext'
@@ -22,6 +23,7 @@ import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'
 import { LessonProgressProvider } from './contexts/LessonProgressProvider'
 import { ExerciseProgressProvider } from './contexts/ExerciseProgressProvider'
+import { LastActivityProvider } from './contexts/LastActivityProvider'
 
 function App() {
   const [language, setLanguage] = useState(
@@ -47,6 +49,7 @@ function App() {
 
               <LessonProgressProvider>
                 <ExerciseProgressProvider>
+                <LastActivityProvider>
 
                 <Navbar />
 
@@ -115,7 +118,13 @@ function App() {
                     element={<MyFlashcards />}
                   />
 
+                  <Route
+                    path="/profile"
+                    element={<Profile />}
+                  />
+
                 </Routes>
+                </LastActivityProvider>
               </ExerciseProgressProvider>
               </LessonProgressProvider>
             </StudyHistoryProvider>

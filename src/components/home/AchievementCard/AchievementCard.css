@@ -1,0 +1,43 @@
+.achievement-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+}
+
+.achievement-card--empty {
+  border-style: dashed;
+  background: transparent;
+}
+
+.achievement-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  color: var(--color-text-muted);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.achievement-card__icon--earned {
+  color: var(--color-warning-dark);
+  background: var(--color-warning-light);
+  border: none;
+}
+
+.achievement-card__title {
+  font: var(--text-h3);
+  color: var(--color-text);
+}
+
+.achievement-card__subtitle {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+  margin-top: 2px;
+}

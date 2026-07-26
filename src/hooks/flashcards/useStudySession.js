@@ -1,6 +1,7 @@
 import {
   useCallback,
   useContext,
+  useEffect,
   useReducer
 } from "react";
 
@@ -25,6 +26,7 @@ import {
 import { CARD_EXIT_ANIMATION } from "../../constants/studyTiming";
 
 import { StudyHistoryContext } from "../../contexts/StudyHistoryContext";
+import { useLastActivity } from "../useLastActivity";
 
 
 export function useStudySession(
@@ -35,6 +37,8 @@ export function useStudySession(
 
   const { addStudyRecord } =
     useContext(StudyHistoryContext);
+
+  const { setActivity, clearActivity } = useLastActivity();
 
   const [studyState, dispatch] =
     useReducer(
@@ -97,6 +101,24 @@ export function useStudySession(
   }, [answerFlashcard, addStudyRecord, currentCard]);
 
   const restartSession = startSession;
+
+  useEffect(() => {
+
+    if (studyState.sessionCards.length > 0) {
+
+      setActivity({
+        type: "flashcards",
+        remaining: studyState.sessionCards.length,
+        total: studyState.initialSessionSize
+      });
+
+    } else if (studyState.initialSessionSize > 0) {
+
+      clearActivity();
+
+    }
+
+  }, [studyState.sessionCards.length, studyState.initialSessionSize, setActivity, clearActivity]);
 
   return {
     revealed: studyState.revealed,

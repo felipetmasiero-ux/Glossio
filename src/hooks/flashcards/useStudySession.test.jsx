@@ -13,6 +13,7 @@ import {
 } from "@testing-library/react";
 
 import { StudyHistoryContext } from "../../contexts/StudyHistoryContext";
+import { LastActivityContext } from "../../contexts/LastActivityContext";
 import { useStudySession } from "./useStudySession";
 
 import {
@@ -46,7 +47,14 @@ function createWrapper(addStudyRecord = vi.fn()) {
                     addStudyRecord
                 }}
             >
-                {children}
+                <LastActivityContext.Provider
+                    value={{
+                        setActivity: vi.fn(),
+                        clearActivity: vi.fn()
+                    }}
+                >
+                    {children}
+                </LastActivityContext.Provider>
             </StudyHistoryContext.Provider>
         );
 

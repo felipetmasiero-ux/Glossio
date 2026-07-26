@@ -94,6 +94,11 @@ export function ModuleLessonsPage() {
 
             </nav>
 
+            <Link to={`/exercises/module/${module.id}`} className="module-lessons-exercises-link">
+                <Icon name="pencil" size={15} />
+                Praticar exercícios deste módulo
+            </Link>
+
         </div>
 
     );

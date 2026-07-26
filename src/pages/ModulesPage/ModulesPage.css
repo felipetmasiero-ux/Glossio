@@ -14,3 +14,16 @@
   display: flex;
   flex-direction: column;
 }
+
+.modules-page__alphabet-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-6);
+  color: var(--color-text-secondary);
+  font: var(--text-body-md);
+}
+
+.modules-page__alphabet-link:hover {
+  color: var(--color-primary);
+}

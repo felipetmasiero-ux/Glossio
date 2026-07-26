@@ -8,3 +8,13 @@
   gap: var(--space-6);
   justify-content: center;
 }
+
+.study-dashboard__collection-link {
+  align-self: center;
+  color: var(--color-text-secondary);
+  font: var(--text-body-md);
+}
+
+.study-dashboard__collection-link:hover {
+  color: var(--color-primary);
+}

@@ -3,6 +3,8 @@ import { useState, useCallback, useEffect } from "react";
 import { generateExercisesForLesson, updateExerciseQueue } from "../../utils/exercises";
 import { useEvents } from "../useEvents";
 import { useExerciseProgress } from "../useExerciseProgress";
+import { useLastActivity } from "../useLastActivity";
+import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { EVENT_TYPES } from "../../constants/events";
 
 export function useExerciseSession(lesson) {
@@ -10,6 +12,8 @@ export function useExerciseSession(lesson) {
     const { logEvent } = useEvents();
 
     const { practiceLesson } = useExerciseProgress();
+
+    const { setActivity, clearActivity } = useLastActivity();
 
     const [queue, setQueue] = useState(() => generateExercisesForLesson(lesson));
 
@@ -80,7 +84,28 @@ export function useExerciseSession(lesson) {
             practiceLesson(lesson.id);
         }
 
-    }, [finished, lesson, practiceLesson]);
+    }, [finished, lesson?.id, practiceLesson]);
+
+    useEffect(() => {
+
+        if (!lesson) return;
+
+        if (finished) {
+            clearActivity();
+            return;
+        }
+
+        if (initialTotal > 0) {
+            setActivity({
+                type: "exercise",
+                lessonId: lesson.id,
+                moduleId: ModuleRepository.getByLesson(lesson.language, lesson.id)?.id ?? null,
+                remaining: queue.length,
+                total: initialTotal
+            });
+        }
+
+    }, [lesson?.id, lesson?.language, initialTotal, queue.length, finished, setActivity, clearActivity]);
 
     return {
         current,

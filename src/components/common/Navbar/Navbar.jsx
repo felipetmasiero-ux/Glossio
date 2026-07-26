@@ -12,11 +12,10 @@ export function Navbar() {
   const location = useLocation();
 
   const navLinks = [
-    { to: "/lessons", label: "Lições" },
+    { to: "/home", label: "Home" },
+    { to: "/lessons", label: "Cursos" },
     { to: "/flashcards", label: "Flashcards" },
-    { to: "/exercises", label: "Exercícios" },
-    { to: "/alphabets", label: "Alfabetos" },
-    { to: "/my-flashcards", label: "Coleção" }
+    { to: "/profile", label: "Perfil" }
   ];
 
   if (location.pathname === "/") return null;

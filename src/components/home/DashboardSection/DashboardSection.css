@@ -1,0 +1,10 @@
+.dashboard-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-section__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
