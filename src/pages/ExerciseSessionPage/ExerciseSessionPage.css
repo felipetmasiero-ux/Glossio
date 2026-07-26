@@ -1,0 +1,93 @@
+.exercise-session-back {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-bottom: var(--space-5);
+  color: var(--color-text-secondary);
+  font: var(--text-body-md);
+}
+
+.exercise-session-back:hover {
+  color: var(--color-primary);
+}
+
+.exercise-session-page .lesson-progress {
+  margin-bottom: var(--space-6);
+}
+
+.exercise-session-complete {
+  text-align: center;
+  padding-top: var(--space-9);
+}
+
+.exercise-session-complete__stamp {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  margin: 0 auto var(--space-5);
+  border: 2px solid var(--color-success);
+  border-radius: var(--radius-full);
+  color: var(--color-success);
+}
+
+.exercise-session-complete__label {
+  color: var(--color-success-dark);
+  margin-bottom: var(--space-2);
+}
+
+.exercise-session-complete__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-7);
+}
+
+.exercise-session-complete__stats {
+  display: flex;
+  flex-direction: column;
+  max-width: 420px;
+  margin: 0 auto var(--space-7);
+  border-top: 1px solid var(--color-border);
+}
+
+.exercise-session-complete__stat {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: var(--space-3) 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.exercise-session-complete__stat dt {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.exercise-session-complete__stat dd {
+  margin: 0;
+  color: var(--color-text);
+}
+
+.exercise-session-complete__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.exercise-session-complete__actions .button {
+  width: auto;
+  padding-left: var(--space-7);
+  padding-right: var(--space-7);
+}
+
+.exercise-session-complete__secondary-link {
+  color: var(--color-text-secondary);
+  font: var(--text-small);
+}
+
+.exercise-session-complete__secondary-link:hover {
+  color: var(--color-primary);
+}

@@ -1,0 +1,52 @@
+.exercise-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+.exercise-shell__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-primary);
+}
+
+.exercise-shell__prompt {
+  font: var(--text-reading-lead);
+  color: var(--color-text);
+}
+
+.exercise-shell__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.exercise-shell__feedback {
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
+  animation: fade-in var(--t-normal);
+}
+
+.exercise-shell__feedback h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font: var(--text-h3);
+  margin-bottom: var(--space-1);
+}
+
+.exercise-shell__feedback.success {
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.exercise-shell__feedback.error {
+  background: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}
+
+.exercise-shell__actions {
+  display: flex;
+  justify-content: flex-end;
+}

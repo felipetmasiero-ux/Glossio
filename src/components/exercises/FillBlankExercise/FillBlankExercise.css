@@ -1,0 +1,59 @@
+.fill-blank__sentence {
+  padding: var(--space-4);
+  background: var(--color-surface-sunken);
+  border-radius: var(--radius-md);
+}
+
+.fill-blank__gap {
+  display: inline-block;
+  min-width: 4ch;
+  padding: 0 var(--space-2);
+  margin: 0 var(--space-1);
+  border-bottom: 2px solid var(--color-primary);
+  color: var(--color-primary-dark);
+  font-weight: var(--weight-semibold);
+  text-align: center;
+}
+
+.fill-blank__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.fill-blank__chip {
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  font: var(--text-body-md);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.fill-blank__chip:hover:not(:disabled) {
+  border-color: var(--color-primary);
+}
+
+.fill-blank__chip:disabled {
+  cursor: default;
+}
+
+.fill-blank__chip.selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.fill-blank__chip.correct {
+  border-color: var(--color-success);
+  background: var(--color-success-light);
+  color: var(--color-success-dark);
+}
+
+.fill-blank__chip.wrong {
+  border-color: var(--color-danger);
+  background: var(--color-danger-light);
+  color: var(--color-danger-dark);
+}

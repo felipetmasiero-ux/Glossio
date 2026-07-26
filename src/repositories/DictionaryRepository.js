@@ -29,6 +29,10 @@ function getIndex(language) {
 
 export const DictionaryRepository = {
 
+    getAll(language) {
+        return dictionaries[language] ?? [];
+    },
+
     getEntry(language, word) {
         return getIndex(language).get(normalizeWord(word)) ?? null;
     },

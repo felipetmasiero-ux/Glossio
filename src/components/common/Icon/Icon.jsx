@@ -121,6 +121,22 @@ const PATHS = {
       <path d="M17 9a4 4 0 0 1 0 6" />
     </>
   ),
+  link: (
+    <>
+      <path d="M15 7h3a5 5 0 0 1 0 10h-3" />
+      <path d="M9 17H6a5 5 0 0 1 0-10h3" />
+      <path d="M8 12h8" />
+    </>
+  ),
+  shuffle: (
+    <>
+      <path d="M16 3h5v5" />
+      <path d="M4 20 21 3" />
+      <path d="M21 16v5h-5" />
+      <path d="m15 15 6 6" />
+      <path d="m4 4 5 5" />
+    </>
+  ),
 };
 
 export function Icon({ name, size = 20, className = "", ...rest }) {

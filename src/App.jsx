@@ -4,7 +4,9 @@ import { useState, useEffect } from 'react'
 
 import { Home } from "./pages/Home/Home";
 import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
-import { Exercises } from "./pages/Exercises";
+import { Exercises } from "./pages/Exercises/Exercises";
+import { ExerciseModuleLessonsPage } from "./pages/ExerciseModuleLessonsPage/ExerciseModuleLessonsPage";
+import { ExerciseSessionPage } from "./pages/ExerciseSessionPage/ExerciseSessionPage";
 import { MyFlashcards } from "./pages/MyFlashcards/MyFlashcards";
 import { StudyFlashcards } from "./pages/StudyFlashcards/StudyFlashcards";
 import { ModulesPage } from "./pages/ModulesPage/ModulesPage";
@@ -19,6 +21,7 @@ import { EventProvider } from './contexts/EventProvider'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'
 import { LessonProgressProvider } from './contexts/LessonProgressProvider'
+import { ExerciseProgressProvider } from './contexts/ExerciseProgressProvider'
 
 function App() {
   const [language, setLanguage] = useState(
@@ -43,6 +46,7 @@ function App() {
             <StudyHistoryProvider>
 
               <LessonProgressProvider>
+                <ExerciseProgressProvider>
 
                 <Navbar />
 
@@ -87,6 +91,16 @@ function App() {
                   />
 
                   <Route
+                    path="/exercises/module/:moduleId"
+                    element={<ExerciseModuleLessonsPage />}
+                  />
+
+                  <Route
+                    path="/exercises/:lessonId"
+                    element={<ExerciseSessionPage />}
+                  />
+
+                  <Route
                     path="/flashcards"
                     element={<StudyFlashcards />}
                   />
@@ -102,6 +116,7 @@ function App() {
                   />
 
                 </Routes>
+              </ExerciseProgressProvider>
               </LessonProgressProvider>
             </StudyHistoryProvider>
           </div>
