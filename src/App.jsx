@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Home } from "./pages/Home/Home";
 import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
 import { Exercises } from "./pages/Exercises/Exercises";
+import { ExploreHub } from "./pages/ExploreHub/ExploreHub";
 import { ExerciseModuleLessonsPage } from "./pages/ExerciseModuleLessonsPage/ExerciseModuleLessonsPage";
 import { ExerciseSessionPage } from "./pages/ExerciseSessionPage/ExerciseSessionPage";
 import { MyFlashcards } from "./pages/MyFlashcards/MyFlashcards";
@@ -101,6 +102,11 @@ function App() {
                   <Route
                     path="/exercises/:lessonId"
                     element={<ExerciseSessionPage />}
+                  />
+
+                  <Route
+                    path="/explore"
+                    element={<ExploreHub />}
                   />
 
                   <Route

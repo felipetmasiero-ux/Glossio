@@ -137,6 +137,9 @@ const PATHS = {
       <path d="m4 4 5 5" />
     </>
   ),
+  play: (
+    <path d="M7 5.3c0-.9 1-1.5 1.8-1l10 6.7c.7.5.7 1.5 0 2l-10 6.7c-.8.5-1.8-.1-1.8-1V5.3Z" fill="currentColor" stroke="none" />
+  ),
   trophy: (
     <>
       <path d="M7 4h10v5a5 5 0 0 1-10 0V4Z" />

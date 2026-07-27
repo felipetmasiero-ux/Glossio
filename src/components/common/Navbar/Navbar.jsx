@@ -14,6 +14,7 @@ export function Navbar() {
   const navLinks = [
     { to: "/home", label: "Home" },
     { to: "/lessons", label: "Cursos" },
+    { to: "/explore", label: "Explore" },
     { to: "/flashcards", label: "Flashcards" },
     { to: "/profile", label: "Perfil" }
   ];
