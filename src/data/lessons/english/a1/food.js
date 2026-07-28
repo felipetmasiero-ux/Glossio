@@ -21,6 +21,8 @@ export const foodLesson = {
 
     category: "Daily Life",
 
+    topic: "food",
+
     order: 10,
 
     title: "Food",

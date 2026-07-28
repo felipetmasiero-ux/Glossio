@@ -18,13 +18,15 @@ export function normalizeVideo(video) {
 
         topic: video.topic ?? null,
 
+        description: video.description ?? null,
+
         duration: video.duration ?? 0,
 
         creator: video.creator ?? null,
 
         thumbnail: video.thumbnail ?? null,
 
-        videoUrl: video.videoUrl,
+        source: video.source ?? null,
 
         transcript: video.transcript ?? []
 

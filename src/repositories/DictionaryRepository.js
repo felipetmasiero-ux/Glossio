@@ -1,7 +1,20 @@
 import { dictionaries } from "../data/dictionary";
 import { normalizeWord } from "./normalizeWord";
+import { getInflectedForms } from "../utils/text/getInflectedForms";
 
 const indexCache = new Map();
+
+function registerKey(map, rawKey, entry) {
+
+    const key = normalizeWord(rawKey);
+
+    if (!key || map.has(key)) {
+        return;
+    }
+
+    map.set(key, entry);
+
+}
 
 function buildIndex(language) {
 
@@ -9,8 +22,27 @@ function buildIndex(language) {
 
     const map = new Map();
 
+    // Canonical word/id always wins.
     entries.forEach(entry => {
-        map.set(normalizeWord(entry.id ?? entry.word), entry);
+        registerKey(map, entry.id ?? entry.word, entry);
+    });
+
+    // Author-declared aliases are still authoritative over guesses.
+    entries.forEach(entry => {
+        (entry.aliases ?? []).forEach(alias => registerKey(map, alias, entry));
+    });
+
+    // Mechanically-derived inflected forms fill in the rest, lowest priority.
+    entries.forEach(entry => {
+
+        const base = normalizeWord(entry.id ?? entry.word);
+
+        if (!base || base.includes(" ")) {
+            return;
+        }
+
+        getInflectedForms(base).forEach(form => registerKey(map, form, entry));
+
     });
 
     return map;

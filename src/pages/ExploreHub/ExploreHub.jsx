@@ -1,4 +1,5 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import "./ExploreHub.css";
 
@@ -8,6 +9,11 @@ import { VideoRepository } from "../../repositories/VideoRepository";
 
 import { VideoCardList } from "../../components/explore/VideoCardList/VideoCardList";
 import { VideoFilters } from "../../components/explore/VideoFilters/VideoFilters";
+import { Skeleton } from "../../components/common/Skeleton/Skeleton";
+
+const HUB_LOADING_DELAY = 350;
+
+const SKELETON_ROW_COUNT = 4;
 
 const FLAGS = {
     English: "🇺🇸",
@@ -17,6 +23,8 @@ const FLAGS = {
 
 export function ExploreHub() {
 
+    const navigate = useNavigate();
+
     const { language } = useLanguage();
 
     const videos = VideoRepository.getAll(language);
@@ -24,6 +32,13 @@ export function ExploreHub() {
     const [levelFilter, setLevelFilter] = useState(null);
 
     const [topicFilter, setTopicFilter] = useState(null);
+
+    const [isLoading, setIsLoading] = useState(true);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => setIsLoading(false), HUB_LOADING_DELAY);
+        return () => clearTimeout(timeout);
+    }, []);
 
     const levels = useMemo(
         () => [...new Set(videos.map(video => video.level))],
@@ -39,6 +54,14 @@ export function ExploreHub() {
         (!levelFilter || video.level === levelFilter) &&
         (!topicFilter || video.topic === topicFilter)
     );
+
+    const hasActiveFilter = Boolean(levelFilter || topicFilter);
+
+    const resultCount = filteredVideos.length;
+
+    const resultLabel = hasActiveFilter
+        ? `${resultCount} ${resultCount === 1 ? "resultado" : "resultados"}`
+        : `${resultCount} ${resultCount === 1 ? "vídeo" : "vídeos"}`;
 
     return (
 
@@ -72,7 +95,40 @@ export function ExploreHub() {
                 onTopicChange={setTopicFilter}
             />
 
-            <VideoCardList videos={filteredVideos} />
+            {
+                isLoading
+
+                    ? (
+                        <div className="explore-hub__skeleton" aria-hidden="true">
+                            {
+                                Array.from({ length: SKELETON_ROW_COUNT }).map((_, index) => (
+                                    <div key={index} className="explore-hub__skeleton-row">
+                                        <Skeleton className="explore-hub__skeleton-thumb" />
+                                        <div className="explore-hub__skeleton-body">
+                                            <Skeleton className="explore-hub__skeleton-line explore-hub__skeleton-line--title" />
+                                            <Skeleton className="explore-hub__skeleton-line explore-hub__skeleton-line--meta" />
+                                        </div>
+                                    </div>
+                                ))
+                            }
+                        </div>
+                    )
+
+                    : (
+                        <>
+
+                            <p className="explore-hub__count text-mono-label">
+                                {resultLabel}
+                            </p>
+
+                            <VideoCardList
+                                videos={filteredVideos}
+                                onOpenVideo={video => navigate(`/explore/${video.id}`)}
+                            />
+
+                        </>
+                    )
+            }
 
         </div>
 

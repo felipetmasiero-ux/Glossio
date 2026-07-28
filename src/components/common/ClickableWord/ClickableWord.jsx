@@ -4,14 +4,16 @@ export function ClickableWord({
 
     children,
 
-    onClick
+    onClick,
+
+    known = false
 
 }) {
 
     function handleKeyDown(event) {
         if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
-            onClick();
+            onClick(event);
         }
     }
 
@@ -19,7 +21,7 @@ export function ClickableWord({
 
         <span
 
-            className="clickable-word"
+            className={`clickable-word ${known ? "clickable-word--known" : ""}`}
 
             role="button"
 

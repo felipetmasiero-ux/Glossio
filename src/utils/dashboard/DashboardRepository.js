@@ -2,6 +2,7 @@ import { getStudyStats } from "../study/stats/getStudyStats";
 import { getStreak, getTodayReviews, getDailyGoalProgress } from "../study/history";
 
 import { DAILY_GOAL_TARGET, ACTIVITY_EVENT_TYPES } from "../../constants/dashboard";
+import { EVENT_TYPES } from "../../constants/events";
 
 import { adaptEventsToHistory } from "./adaptEventsToHistory";
 import { getGreeting } from "./getGreeting";
@@ -10,7 +11,13 @@ import { getWordsLearnedCount } from "./getWordsLearnedCount";
 import { getStudyMinutes } from "./getStudyMinutes";
 import { getRecentAchievement } from "./getRecentAchievement";
 import { getCoursesOverview } from "./getCoursesOverview";
+import { getNextStep } from "./getNextStep";
 import { ModuleRepository } from "../courses/ModuleRepository";
+import { getNextLevel } from "../courses/getNextLevel";
+import { LessonRepository } from "../lessons/LessonRepository";
+import { VideoRepository } from "../../repositories/VideoRepository";
+import { VideoProgressRepository } from "../../repositories/VideoProgressRepository";
+import { getRelatedContent } from "../recommendations";
 
 function getDailyGoal({ events = [] }) {
 
@@ -83,6 +90,61 @@ function getContinueLastActivity({ lastActivity }) {
 
 }
 
+function getRelatedContentForDashboard({ language, events = [] }) {
+
+    const lessonCompletedEvents = events
+        .filter(event => event.type === EVENT_TYPES.LESSON_COMPLETED)
+        .slice()
+        .sort((a, b) => b.timestamp - a.timestamp);
+
+    for (const event of lessonCompletedEvents) {
+
+        const lesson = LessonRepository.getById(language, event.payload.lessonId);
+
+        if (!lesson) continue;
+
+        const watchedVideoIds = Object.values(
+            VideoProgressRepository.getProgress(lesson.language)
+        )
+            .filter(entry => entry.completed)
+            .map(entry => entry.videoId);
+
+        const related = getRelatedContent({
+            source: lesson,
+            candidates: VideoRepository.getAll(lesson.language),
+            language: lesson.language,
+            completedIds: watchedVideoIds
+        });
+
+        if (related.length > 0) {
+            return related;
+        }
+
+    }
+
+    return [];
+
+}
+
+function getNextLevelInfo({ language }) {
+
+    const modules = ModuleRepository.getAll(language);
+
+    const lastModule = modules.at(-1);
+
+    if (!lastModule) return null;
+
+    const nextLevelValue = getNextLevel(lastModule.level);
+
+    if (!nextLevelValue) return null;
+
+    return {
+        level: nextLevelValue,
+        available: modules.some(module => module.level === nextLevelValue)
+    };
+
+}
+
 export const DashboardRepository = {
 
     getGreeting,
@@ -101,18 +163,30 @@ export const DashboardRepository = {
 
     getContinueLastActivity,
 
+    getNextStep,
+
     getDashboardData({ language, completedLessons = [], flashcards = [], events = [], lastActivity = null }) {
+
+        const continueLearning = getContinueLearning({ language, completedLessons });
+
+        const reviews = getReviewSummary({ flashcards, language });
+
+        const resolvedLastActivity = getContinueLastActivity({ lastActivity });
+
+        const relatedContent = getRelatedContentForDashboard({ language, events });
+
+        const nextLevel = getNextLevelInfo({ language });
 
         return {
             greeting: getGreeting(),
             userName: null,
             language,
 
-            continueLearning: getContinueLearning({ language, completedLessons }),
+            continueLearning,
 
             dailyGoal: getDailyGoal({ events }),
 
-            reviews: getReviewSummary({ flashcards, language }),
+            reviews,
 
             courses: getCoursesOverview({ completedLessons }),
 
@@ -120,7 +194,15 @@ export const DashboardRepository = {
 
             recentAchievement: getRecentAchievement({ language, events }),
 
-            lastActivity: getContinueLastActivity({ lastActivity })
+            lastActivity: resolvedLastActivity,
+
+            nextStep: getNextStep({
+                reviews,
+                lastActivity: resolvedLastActivity,
+                continueLearning,
+                relatedContent,
+                nextLevel
+            })
         };
 
     }

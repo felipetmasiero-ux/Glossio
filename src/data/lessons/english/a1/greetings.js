@@ -17,6 +17,7 @@ export const greetingsLesson = {
   language: "english",
   level: "A1",
   category: "Basics",
+  topic: "greetings",
   order: 1,
 
   title: "Greetings",

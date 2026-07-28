@@ -21,6 +21,8 @@ export const familyLesson = {
 
     category: "Basics",
 
+    topic: "family",
+
     order: 6,
 
     title: "Family",

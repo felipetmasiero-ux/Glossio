@@ -12,8 +12,13 @@ import { LessonSummary } from "../LessonSummary/LessonSummary";
 
 import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator";
 import { LessonNavigation } from "../common/LessonNavigation/LessonNavigation";
+import { RecommendationSection } from "../../common/RecommendationSection/RecommendationSection";
+import { ExploreRecommendationCard } from "../../common/ExploreRecommendationCard/ExploreRecommendationCard";
 
 import { ModuleRepository } from "../../../utils/courses/ModuleRepository";
+import { VideoRepository } from "../../../repositories/VideoRepository";
+import { VideoProgressRepository } from "../../../repositories/VideoProgressRepository";
+import { getRelatedContent } from "../../../utils/recommendations";
 
 import { useLanguage } from "../../../hooks/useLanguage";
 import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
@@ -64,6 +69,17 @@ export function LessonReader({ lesson }) {
         { lessons: ModuleRepository.getAllLessonsInOrder(language) },
         completedLessons
     );
+
+    const relatedVideos = isLast
+        ? getRelatedContent({
+            source: lesson,
+            candidates: VideoRepository.getAll(lesson.language),
+            language: lesson.language,
+            completedIds: Object.values(VideoProgressRepository.getProgress(lesson.language))
+                .filter(entry => entry.completed)
+                .map(entry => entry.videoId)
+        })
+        : [];
 
     function scrollTop() {
 
@@ -208,6 +224,22 @@ export function LessonReader({ lesson }) {
 
                         summary={lesson.summary}
 
+                    />
+
+                )
+
+            }
+
+            {
+
+                isLast && (
+
+                    <RecommendationSection
+                        title="Pratique isso em contexto"
+                        items={relatedVideos}
+                        renderItem={video => (
+                            <ExploreRecommendationCard key={video.id} video={video} />
+                        )}
                     />
 
                 )

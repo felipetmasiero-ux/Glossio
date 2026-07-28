@@ -21,6 +21,8 @@ export const countriesLesson = {
 
     category: "Basics",
 
+    topic: "countries",
+
     order: 3,
 
     title: "Countries & Nationalities",

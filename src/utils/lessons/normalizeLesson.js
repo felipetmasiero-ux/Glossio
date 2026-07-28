@@ -16,6 +16,8 @@ export function normalizeLesson(lesson) {
 
         category: lesson.category,
 
+        topic: lesson.topic ?? null,
+
         order: lesson.order,
 
         title: lesson.title,

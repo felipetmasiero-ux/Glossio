@@ -21,6 +21,8 @@ export const numbersLesson = {
 
     category: "Basics",
 
+    topic: "numbers",
+
     order: 4,
 
     title: "Numbers",

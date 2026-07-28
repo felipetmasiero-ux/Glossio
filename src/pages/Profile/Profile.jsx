@@ -18,6 +18,7 @@ const FLAGS = {
 const RESET_KEYS = [
     "lessonProgress",
     "exerciseProgress",
+    "videoProgress",
     "flashcards",
     "events",
     "studyHistory",

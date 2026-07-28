@@ -21,6 +21,8 @@ export const restaurantLesson = {
 
     category: "Daily Life",
 
+    topic: "restaurant",
+
     order: 11,
 
     title: "At the Restaurant",

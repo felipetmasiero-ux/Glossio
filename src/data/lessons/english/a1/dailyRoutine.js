@@ -21,6 +21,8 @@ export const dailyRoutineLesson = {
 
     category: "Daily Life",
 
+    topic: "daily-routine",
+
     order: 9,
 
     title: "Daily Routine",

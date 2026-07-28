@@ -18,6 +18,8 @@ export const reviewLesson = {
 
     category: "Review",
 
+    topic: "review",
+
     order: 12,
 
     title: "A1 Module Review",

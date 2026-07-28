@@ -20,6 +20,8 @@ export const presentSimpleLesson = {
 
     category: "Grammar",
 
+    topic: "present-simple",
+
     order: 8,
 
     title: "Present Simple",

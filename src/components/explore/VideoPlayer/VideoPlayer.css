@@ -1,0 +1,21 @@
+.video-player {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--color-primary-dark);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.video-player__element {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+.video-player__element iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: none;
+}

@@ -21,6 +21,8 @@ export const introductionsLesson = {
 
     category: "Basics",
 
+    topic: "introductions",
+
     order: 2,
 
     title: "Introductions",

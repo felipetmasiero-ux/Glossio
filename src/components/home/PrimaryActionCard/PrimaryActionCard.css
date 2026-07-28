@@ -1,0 +1,29 @@
+.primary-action-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  border-top: 3px solid var(--color-primary);
+}
+
+.primary-action-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.primary-action-card__title {
+  flex: 1;
+  font: var(--text-h3);
+  color: var(--color-text);
+}
+
+.primary-action-card .button {
+  width: auto;
+  flex-shrink: 0;
+}

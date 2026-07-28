@@ -9,6 +9,7 @@ import {
     saveFlashcards,
     toggleFavorite as toggleFavoriteCard
 } from "../utils/flashcards";
+import { isWordKnown } from "../utils/flashcards/isWordKnown";
 
 
 export function FlashcardProvider({ children }) {
@@ -100,6 +101,10 @@ export function FlashcardProvider({ children }) {
         );
     }
 
+    function hasFlashcard(word, language) {
+        return isWordKnown(flashcards, word, language);
+    }
+
     return (
         <FlashcardContext.Provider value={{
             flashcards,
@@ -107,7 +112,8 @@ export function FlashcardProvider({ children }) {
             addFlashcard,
             removeFlashcard,
             answerFlashcard,
-            toggleFavorite
+            toggleFavorite,
+            hasFlashcard
         }}>
             {children}
         </FlashcardContext.Provider>

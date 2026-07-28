@@ -3,6 +3,7 @@ import "./Home.css";
 import { useDashboardData } from "../../hooks/useDashboardData";
 
 import { DashboardSection } from "../../components/home/DashboardSection/DashboardSection";
+import { PrimaryActionCard } from "../../components/home/PrimaryActionCard/PrimaryActionCard";
 import { HeroCard } from "../../components/home/HeroCard/HeroCard";
 import { ContinueLearningCard } from "../../components/home/ContinueLearningCard/ContinueLearningCard";
 import { DailyGoalCard } from "../../components/home/DailyGoalCard/DailyGoalCard";
@@ -22,6 +23,7 @@ export function Home() {
 
             <section className="home-dashboard__hero animate-fade-in">
                 <HeroCard greeting={dashboard.greeting} language={dashboard.language} />
+                <PrimaryActionCard nextStep={dashboard.nextStep} />
                 <ContinueLearningCard continueLearning={dashboard.continueLearning} />
             </section>
 

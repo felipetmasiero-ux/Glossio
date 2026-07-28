@@ -6,11 +6,16 @@ import { Icon } from "../../common/Icon/Icon";
 import { TOPIC_LABELS } from "../../../constants/topics";
 import { formatDuration } from "../../../utils/videos/formatDuration";
 
-export function VideoCard({ video }) {
+export function VideoCard({ video, onOpen }) {
 
     return (
 
-        <div className="video-row">
+        <button
+            type="button"
+            className="video-row"
+            onClick={onOpen}
+            aria-label={`Assistir ${video.title}`}
+        >
 
             <span className="video-row__thumbnail">
                 {
@@ -45,7 +50,11 @@ export function VideoCard({ video }) {
                 <span className="video-row__duration text-mono-label">{formatDuration(video.duration)}</span>
             </span>
 
-        </div>
+            <span className="video-row__action">
+                <Icon name="chevron-right" size={17} />
+            </span>
+
+        </button>
 
     );
 

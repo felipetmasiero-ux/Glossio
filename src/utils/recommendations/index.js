@@ -1,0 +1,1 @@
+export { getRelatedContent } from "./getRelatedContent";

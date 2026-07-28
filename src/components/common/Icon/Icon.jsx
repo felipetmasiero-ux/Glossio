@@ -150,6 +150,35 @@ const PATHS = {
       <path d="M10.5 17h3l.3 3h-3.6Z" />
     </>
   ),
+  cup: (
+    <>
+      <path d="M5 8h11v6a4 4 0 0 1-4 4H9a4 4 0 0 1-4-4V8Z" />
+      <path d="M16 9.5h1.5a2.5 2.5 0 0 1 0 5H16" />
+      <path d="M8 5c0 .7-.9 1-.9 1.8" />
+      <path d="M11.5 5c0 .7-.9 1-.9 1.8" />
+    </>
+  ),
+  family: (
+    <>
+      <circle cx="9" cy="8" r="2.3" />
+      <circle cx="16" cy="9" r="1.8" />
+      <path d="M4 19.5v-1A4.5 4.5 0 0 1 8.5 14h1A4.5 4.5 0 0 1 14 18.5v1" />
+      <path d="M14.3 14.3A3.6 3.6 0 0 1 20 17.3v2.2" />
+    </>
+  ),
+  pin: (
+    <>
+      <path d="M12 21s6.5-6.2 6.5-11A6.5 6.5 0 0 0 5.5 10c0 4.8 6.5 11 6.5 11Z" />
+      <circle cx="12" cy="10" r="2.2" />
+    </>
+  ),
+  briefcase: (
+    <>
+      <rect x="4" y="8.5" width="16" height="10" rx="1.5" />
+      <path d="M9 8.5V6.8A1.8 1.8 0 0 1 10.8 5h2.4A1.8 1.8 0 0 1 15 6.8v1.7" />
+      <path d="M4 13.3h16" />
+    </>
+  ),
 };
 
 export function Icon({ name, size = 20, className = "", ...rest }) {

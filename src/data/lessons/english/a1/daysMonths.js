@@ -21,6 +21,8 @@ export const daysMonthsLesson = {
 
     category: "Basics",
 
+    topic: "days",
+
     order: 5,
 
     title: "Days & Months",

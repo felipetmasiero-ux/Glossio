@@ -21,6 +21,8 @@ export const jobsLesson = {
 
     category: "Basics",
 
+    topic: "jobs",
+
     order: 7,
 
     title: "Jobs",

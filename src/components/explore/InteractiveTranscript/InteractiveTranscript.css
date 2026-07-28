@@ -1,0 +1,52 @@
+.interactive-transcript {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 46ch;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.interactive-transcript__segment {
+  display: flex;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  margin: 0 calc(-1 * var(--space-3));
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  box-shadow: inset 3px 0 0 transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--t-fast), box-shadow var(--t-fast);
+  animation: slide-up var(--t-normal) var(--ease-out);
+}
+
+.interactive-transcript__segment:hover {
+  background: var(--color-surface-sunken);
+}
+
+.interactive-transcript__segment--active {
+  background: var(--highlight-bg);
+  box-shadow: inset 3px 0 0 var(--color-primary);
+}
+
+.interactive-transcript__segment--active:hover {
+  background: var(--highlight-bg);
+}
+
+.interactive-transcript__time {
+  flex-shrink: 0;
+  width: 40px;
+  padding-top: 0.3em;
+  color: var(--color-text-muted);
+}
+
+.interactive-transcript__text {
+  color: var(--color-text-secondary);
+  transition: color var(--t-fast);
+}
+
+.interactive-transcript__segment--active .interactive-transcript__text {
+  color: var(--color-text);
+}

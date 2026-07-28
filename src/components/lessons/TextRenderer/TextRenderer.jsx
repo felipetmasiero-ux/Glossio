@@ -1,5 +1,7 @@
-import { ClickableWord } from "../ClickableWord/ClickableWord";
+import { ClickableWord } from "../../common/ClickableWord/ClickableWord";
 import { DictionaryRepository } from "../../../repositories/DictionaryRepository";
+import { tokenizeText } from "../../../utils/text/tokenizeText";
+import { stripPunctuation } from "../../../utils/text/stripPunctuation";
 import "./TextRenderer.css";
 
 export function TextRenderer({
@@ -12,7 +14,7 @@ export function TextRenderer({
 
 }) {
 
-    const tokens = text.match(/[\p{L}\p{N}'’]+|[^\s\p{L}\p{N}]+|\s+/gu) ?? [];
+    const tokens = tokenizeText(text);
 
     function handleClick(cleanWord) {
 
@@ -36,7 +38,7 @@ export function TextRenderer({
 
                     }
 
-                    const cleanWord = token.replace(/[.,!?;:()"'’]/g, "");
+                    const cleanWord = stripPunctuation(token);
 
                     if (!cleanWord || !DictionaryRepository.hasWord(language, cleanWord)) {
 
