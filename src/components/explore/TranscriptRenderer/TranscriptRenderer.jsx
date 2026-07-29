@@ -1,8 +1,7 @@
 import { ClickableWord } from "../../common/ClickableWord/ClickableWord";
 import { DictionaryRepository } from "../../../repositories/DictionaryRepository";
 import { normalizeWord } from "../../../repositories/normalizeWord";
-import { tokenizeText } from "../../../utils/text/tokenizeText";
-import { stripPunctuation } from "../../../utils/text/stripPunctuation";
+import { longestMatchTokenize } from "../../../utils/text/longestMatchTokenize";
 
 export function TranscriptRenderer({
 
@@ -16,14 +15,17 @@ export function TranscriptRenderer({
 
 }) {
 
-    const tokens = tokenizeText(segment.text);
+    const chunks = longestMatchTokenize(
+        segment.text,
+        candidate => DictionaryRepository.hasWord(language, candidate)
+    );
 
-    function handleClick(event, word) {
+    function handleClick(event, phrase) {
 
         event?.stopPropagation();
 
         onWordClick({
-            word,
+            word: phrase,
             language,
             anchor: event?.currentTarget ?? null
         });
@@ -36,23 +38,15 @@ export function TranscriptRenderer({
 
             {
 
-                tokens.map((token, index) => {
+                chunks.map((chunk, index) => {
 
-                    if (/^\s+$/.test(token)) {
+                    if (!chunk.isMatch) {
 
-                        return token;
-
-                    }
-
-                    const cleanWord = stripPunctuation(token);
-
-                    if (!cleanWord || !DictionaryRepository.hasWord(language, cleanWord)) {
-
-                        return token;
+                        return chunk.text;
 
                     }
 
-                    const known = knownWords.has(normalizeWord(cleanWord));
+                    const known = knownWords.has(normalizeWord(chunk.text));
 
                     return (
 
@@ -62,11 +56,11 @@ export function TranscriptRenderer({
 
                             known={known}
 
-                            onClick={event => handleClick(event, cleanWord)}
+                            onClick={event => handleClick(event, chunk.text)}
 
                         >
 
-                            {token}
+                            {chunk.text}
 
                         </ClickableWord>
 

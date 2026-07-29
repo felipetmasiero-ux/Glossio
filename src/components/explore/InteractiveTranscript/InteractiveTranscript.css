@@ -16,9 +16,11 @@
   border-radius: var(--radius-sm);
   background: transparent;
   box-shadow: inset 3px 0 0 transparent;
+  opacity: 1;
+  transform: scale(1);
   cursor: pointer;
   text-align: left;
-  transition: background var(--t-fast), box-shadow var(--t-fast);
+  transition: background var(--t-fast), box-shadow var(--t-fast), opacity var(--t-fast), transform var(--t-fast);
   animation: slide-up var(--t-normal) var(--ease-out);
 }
 
@@ -29,10 +31,22 @@
 .interactive-transcript__segment--active {
   background: var(--highlight-bg);
   box-shadow: inset 3px 0 0 var(--color-primary);
+  transform: scale(1.012);
 }
 
 .interactive-transcript__segment--active:hover {
   background: var(--highlight-bg);
+}
+
+/* Teleprompter-style distance fade: past segments dim slightly, future
+   segments start more discreet and fade further the more they drift away. */
+.interactive-transcript__segment--prev-1 { opacity: 0.8; }
+.interactive-transcript__segment--prev-2 { opacity: 0.55; }
+.interactive-transcript__segment--next-1 { opacity: 0.6; }
+.interactive-transcript__segment--next-2 { opacity: 0.35; }
+
+.interactive-transcript__segment:focus-visible {
+  opacity: 1;
 }
 
 .interactive-transcript__time {
@@ -40,6 +54,14 @@
   width: 40px;
   padding-top: 0.3em;
   color: var(--color-text-muted);
+  opacity: 0.3;
+  transition: opacity var(--t-fast);
+}
+
+.interactive-transcript__segment:hover .interactive-transcript__time,
+.interactive-transcript__segment:focus-visible .interactive-transcript__time,
+.interactive-transcript__segment--active .interactive-transcript__time {
+  opacity: 1;
 }
 
 .interactive-transcript__text {

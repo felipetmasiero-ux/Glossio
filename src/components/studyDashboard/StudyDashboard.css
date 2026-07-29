@@ -9,6 +9,12 @@
   justify-content: center;
 }
 
+.study-dashboard__no-reviews {
+  text-align: center;
+  color: var(--color-text-secondary);
+  font: var(--text-body);
+}
+
 .study-dashboard__collection-link {
   align-self: center;
   color: var(--color-text-secondary);

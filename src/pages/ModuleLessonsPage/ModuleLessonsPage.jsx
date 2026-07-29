@@ -9,6 +9,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 
 import { LessonCard } from "../../components/lessons/LessonCard/LessonCard";
 import { ProgressIndicator } from "../../components/lessons/common/ProgressIndicator/ProgressIndicator";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
 
 export function ModuleLessonsPage() {
@@ -27,7 +28,13 @@ export function ModuleLessonsPage() {
 
         return (
             <div className="page-container">
-                <h1>Módulo não encontrado.</h1>
+                <EmptyState
+                    icon="book"
+                    title="Módulo não encontrado"
+                    description="Este módulo pode ter sido movido ou não existe mais."
+                    actionLabel="Voltar aos módulos"
+                    onAction={() => navigate("/lessons")}
+                />
             </div>
         );
 
@@ -37,7 +44,7 @@ export function ModuleLessonsPage() {
 
     return (
 
-        <div className="page-container module-lessons-page">
+        <div className="page-container module-lessons-page animate-fade-in">
 
             <Link to="/lessons" className="module-lessons-back">
                 <Icon name="chevron-left" size={15} />

@@ -106,6 +106,30 @@ export function InteractiveTranscript({
         if (event.key === "Enter" || event.key === " ") {
             event.preventDefault();
             onSeek(startTime);
+            return;
+        }
+
+        if (event.key === "ArrowDown") {
+            event.preventDefault();
+            event.currentTarget.nextElementSibling?.focus();
+            return;
+        }
+
+        if (event.key === "ArrowUp") {
+            event.preventDefault();
+            event.currentTarget.previousElementSibling?.focus();
+            return;
+        }
+
+        if (event.key === "Home") {
+            event.preventDefault();
+            event.currentTarget.parentElement.firstElementChild?.focus();
+            return;
+        }
+
+        if (event.key === "End") {
+            event.preventDefault();
+            event.currentTarget.parentElement.lastElementChild?.focus();
         }
 
     }
@@ -137,6 +161,12 @@ export function InteractiveTranscript({
 
                     const isActive = index === activeIndex;
 
+                    const distance = index - referenceIndex;
+
+                    const distanceClass = distance === 0
+                        ? ""
+                        : `interactive-transcript__segment--${distance < 0 ? "prev" : "next"}-${Math.min(Math.abs(distance), 2)}`;
+
                     return (
 
                         <div
@@ -144,7 +174,7 @@ export function InteractiveTranscript({
                             role="button"
                             tabIndex={0}
                             ref={isActive ? activeRef : null}
-                            className={`interactive-transcript__segment ${isActive ? "interactive-transcript__segment--active" : ""}`}
+                            className={`interactive-transcript__segment ${isActive ? "interactive-transcript__segment--active" : ""} ${distanceClass}`}
                             onClick={() => onSeek(segment.startTime)}
                             onKeyDown={event => handleSegmentKeyDown(event, segment.startTime)}
                         >

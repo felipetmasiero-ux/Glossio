@@ -25,7 +25,7 @@ export function Exercises() {
 
     return (
 
-        <div className="page-container exercises-page">
+        <div className="page-container exercises-page animate-fade-in">
 
             <p className="exercises-page__label text-mono-label">Prática</p>
 

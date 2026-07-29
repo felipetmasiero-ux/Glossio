@@ -19,7 +19,7 @@ export function Navbar() {
     { to: "/profile", label: "Perfil" }
   ];
 
-  if (location.pathname === "/") return null;
+  if (location.pathname === "/" || location.pathname === "/choose-language") return null;
 
   return (
     <nav className="navbar">
@@ -37,6 +37,7 @@ export function Navbar() {
               key={link.to}
               to={link.to}
               className={`navbar__link${location.pathname === link.to ? " navbar__link--active" : ""}`}
+              aria-current={location.pathname === link.to ? "page" : undefined}
             >
               {link.label}
             </Link>

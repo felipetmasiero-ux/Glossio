@@ -9,6 +9,7 @@
   letter-spacing: var(--tracking-wide);
   text-transform: uppercase;
   white-space: nowrap;
+  transition: background-color var(--t-normal), color var(--t-normal);
 }
 
 .badge--primary {

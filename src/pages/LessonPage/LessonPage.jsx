@@ -1,7 +1,7 @@
-import { Link, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { LessonReader } from "../../components/lessons/LessonReader/LessonReader";
-import { Icon } from "../../components/common/Icon/Icon";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import "./LessonPage.css";
 import { useLessons } from "../../hooks/useLessons";
 import { useLanguage } from "../../hooks/useLanguage";
@@ -9,6 +9,8 @@ import { useLessonProgress } from "../../hooks/useLessonProgress";
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 
 export function LessonPage() {
+
+    const navigate = useNavigate();
 
     const { id } = useParams();
 
@@ -26,7 +28,13 @@ export function LessonPage() {
 
         return (
             <div className="page-container">
-                <h1>Lição não encontrada.</h1>
+                <EmptyState
+                    icon="book"
+                    title="Lição não encontrada"
+                    description="Esta lição pode ter sido movida ou não existe mais."
+                    actionLabel="Voltar aos módulos"
+                    onAction={() => navigate("/lessons")}
+                />
             </div>
         );
 
@@ -47,11 +55,13 @@ export function LessonPage() {
         return (
 
             <div className="page-container">
-                <h1 className="lesson-locked">
-                    <Icon name="lock" size={22} />
-                    Complete a lição anterior primeiro.
-                </h1>
-                <Link to="/lessons">Voltar aos módulos</Link>
+                <EmptyState
+                    icon="lock"
+                    title="Lição bloqueada"
+                    description="Complete a lição anterior primeiro para desbloquear esta."
+                    actionLabel="Voltar aos módulos"
+                    onAction={() => navigate("/lessons")}
+                />
             </div>
 
         );

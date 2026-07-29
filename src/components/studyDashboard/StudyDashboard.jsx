@@ -1,17 +1,45 @@
 import "./StudyDashboard.css";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { DashboardHeader } from "./DashboardHeader";
 import { StatsCard } from "./StatsCard";
 import { ProgressCard } from "./ProgressCard";
 import { StatsGrid } from "./StatsGrid";
 import { StartStudyButton } from "./StartStudyButton";
+import { EmptyState } from "../common/EmptyState/EmptyState";
 
 export function StudyDashboard({
     dashboard,
     onStart
 }) {
+
+    const navigate = useNavigate();
+
+    if (dashboard.total === 0) {
+
+        return (
+
+            <div className="study-dashboard">
+
+                <DashboardHeader
+                    title="Modo de estudo"
+                    subtitle="Pronto para a revisão de hoje?"
+                />
+
+                <EmptyState
+                    icon="cards"
+                    title="Nenhum flashcard ainda"
+                    description="Salve palavras enquanto estuda as lições ou explora os vídeos, e elas aparecem aqui para revisão."
+                    actionLabel="Ir para as lições"
+                    onAction={() => navigate("/lessons")}
+                />
+
+            </div>
+
+        );
+
+    }
 
     return (
 
@@ -54,9 +82,17 @@ export function StudyDashboard({
 
             </StatsGrid>
 
-            <StartStudyButton
-                onClick={onStart}
-            />
+            {
+                dashboard.due === 0 ? (
+                    <p className="study-dashboard__no-reviews">
+                        Você está em dia! Nenhuma ficha pendente para revisar hoje.
+                    </p>
+                ) : (
+                    <StartStudyButton
+                        onClick={onStart}
+                    />
+                )
+            }
 
             <Link to="/my-flashcards" className="study-dashboard__collection-link">
                 Ver coleção completa

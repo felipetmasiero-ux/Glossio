@@ -8,9 +8,9 @@ import { useFlashcards } from "../../hooks/useFlashcards";
 
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { getModuleCompletionStats } from "../../utils/courses/getModuleCompletionStats";
-import { getNextLevel } from "../../utils/courses/getNextLevel";
 
 import { Button } from "../../components/common/Button/Button";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
 
 export function ModuleCompletePage() {
@@ -31,7 +31,13 @@ export function ModuleCompletePage() {
 
         return (
             <div className="page-container">
-                <h1>Módulo não encontrado.</h1>
+                <EmptyState
+                    icon="book"
+                    title="Módulo não encontrado"
+                    description="Este módulo pode ter sido movido ou não existe mais."
+                    actionLabel="Voltar aos módulos"
+                    onAction={() => navigate("/lessons")}
+                />
             </div>
         );
 
@@ -41,13 +47,9 @@ export function ModuleCompletePage() {
 
     const nextModule = ModuleRepository.getNextModule(language, module.id);
 
-    const nextLevel = getNextLevel(module.level);
-
     const continueLabel = nextModule
         ? `Continuar para ${nextModule.level}`
-        : nextLevel
-            ? `Continuar para ${nextLevel}`
-            : "Voltar aos módulos";
+        : "Voltar aos módulos";
 
     function handleContinue() {
 
@@ -70,9 +72,9 @@ export function ModuleCompletePage() {
 
     return (
 
-        <div className="page-container module-complete-page">
+        <div className="page-container module-complete-page animate-fade-in">
 
-            <div className="module-complete-stamp">
+            <div className="module-complete-stamp animate-celebrate">
                 <Icon name="check" size={26} />
             </div>
 
@@ -101,9 +103,13 @@ export function ModuleCompletePage() {
                     {continueLabel}
                 </Button>
 
-                <Link to="/lessons" className="module-complete-secondary-link">
-                    Voltar aos módulos
-                </Link>
+                {
+                    nextModule && (
+                        <Link to="/lessons" className="module-complete-secondary-link">
+                            Voltar aos módulos
+                        </Link>
+                    )
+                }
 
             </div>
 

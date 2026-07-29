@@ -2,7 +2,7 @@ import { EmptyState } from "../components/common/EmptyState/EmptyState";
 
 export function Alphabets() {
   return (
-    <div className="page-container">
+    <div className="page-container animate-fade-in">
       <EmptyState
         icon="alphabet"
         title="Alfabetos"

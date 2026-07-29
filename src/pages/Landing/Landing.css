@@ -1,0 +1,124 @@
+.landing {
+  max-width: var(--content-width-md);
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+}
+
+.landing-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+}
+
+.landing-hero__illustration {
+  position: relative;
+  width: 160px;
+  height: 120px;
+  margin-bottom: var(--space-4);
+}
+
+.landing-hero__card {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 120px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+}
+
+.landing-hero__card--back {
+  transform: translateX(-50%) rotate(-8deg);
+  opacity: 0.6;
+}
+
+.landing-hero__card--front {
+  transform: translateX(-50%) rotate(4deg);
+}
+
+.landing-hero__wordmark {
+  color: var(--color-primary);
+}
+
+.landing-hero__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  max-width: 20ch;
+}
+
+.landing-hero__description {
+  font: var(--text-reading);
+  color: var(--color-text-secondary);
+  max-width: 48ch;
+}
+
+.landing-hero__languages {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+  font: var(--text-mono-label);
+  color: var(--color-text-muted);
+}
+
+.landing-pillars__label {
+  text-align: center;
+  margin-bottom: var(--space-4);
+}
+
+.landing-pillars__list {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px dashed var(--color-border);
+}
+
+.landing-pillar-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-2);
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.landing-pillar-row__icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+}
+
+.landing-pillar-row__title {
+  font: var(--text-h3);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.landing-pillar-row__description {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+}
+
+@media (max-width: 480px) {
+  .landing {
+    padding: var(--space-6) var(--space-4) var(--space-7);
+    gap: var(--space-7);
+  }
+
+  .landing-hero__languages {
+    gap: var(--space-3);
+  }
+}

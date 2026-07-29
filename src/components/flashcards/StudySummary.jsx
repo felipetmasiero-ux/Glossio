@@ -14,9 +14,9 @@ export function StudySummary({ stats, totalCards, onRestart }) {
     : Math.round(((stats.good + stats.easy) / totalAnswers) * 100);
 
   return (
-    <div className="study-summary">
+    <div className="study-summary animate-fade-in">
 
-      <span className="study-summary-badge">
+      <span className="study-summary-badge animate-celebrate">
         <Icon name="check" size={13} /> Sessão concluída
       </span>
 

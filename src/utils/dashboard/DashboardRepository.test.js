@@ -7,7 +7,7 @@ import { EVENT_TYPES } from "../../constants/events";
 const englishLessons = ModuleRepository.getAllLessonsInOrder("English");
 const allEnglishLessonIds = englishLessons.map(lesson => lesson.id);
 const firstLessonId = englishLessons[0].id;
-const lastLessonId = englishLessons.at(-1).id;
+const lastA1LessonId = englishLessons.filter(lesson => lesson.level === "A1").at(-1).id;
 
 describe("DashboardRepository.getContinueLearning", () => {
 
@@ -160,7 +160,7 @@ describe("DashboardRepository.getRecentAchievement", () => {
         const achievement = DashboardRepository.getRecentAchievement({
             language: "English",
             events: [
-                { type: EVENT_TYPES.LESSON_COMPLETED, timestamp: Date.now(), payload: { lessonId: lastLessonId } }
+                { type: EVENT_TYPES.LESSON_COMPLETED, timestamp: Date.now(), payload: { lessonId: lastA1LessonId } }
             ]
         });
 

@@ -35,12 +35,12 @@ export function Profile() {
 
     function handleReset() {
         RESET_KEYS.forEach(key => localStorage.removeItem(key));
-        window.location.href = "/";
+        window.location.href = "/choose-language";
     }
 
     return (
 
-        <div className="page-container profile-page">
+        <div className="page-container profile-page animate-fade-in">
 
             <p className="profile-page__label text-mono-label">Perfil</p>
 
@@ -49,7 +49,7 @@ export function Profile() {
             <div className="profile-page__language">
                 <span className="profile-page__flag">{FLAGS[language] ?? "🌐"}</span>
                 <span className="profile-page__language-name">{language || "Nenhum idioma selecionado"}</span>
-                <Link to="/" className="profile-page__switch-link">
+                <Link to="/choose-language" className="profile-page__switch-link">
                     Trocar idioma
                 </Link>
             </div>

@@ -24,7 +24,27 @@ export const TOPIC_LABELS = {
 
     restaurant: "Restaurante",
 
-    review: "Revisão"
+    review: "Revisão",
+
+    shopping: "Compras",
+
+    health: "Saúde",
+
+    weather: "Clima",
+
+    hobbies: "Hobbies",
+
+    technology: "Tecnologia",
+
+    transportation: "Transporte",
+
+    feelings: "Sentimentos",
+
+    hotel: "Hotel",
+
+    plans: "Planos",
+
+    "life-experiences": "Experiências de Vida"
 
 };
 

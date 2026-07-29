@@ -27,7 +27,10 @@ export function ExploreHub() {
 
     const { language } = useLanguage();
 
-    const videos = VideoRepository.getAll(language);
+    const videos = useMemo(
+        () => VideoRepository.getAll(language),
+        [language]
+    );
 
     const [levelFilter, setLevelFilter] = useState(null);
 
@@ -65,7 +68,7 @@ export function ExploreHub() {
 
     return (
 
-        <div className="page-container explore-hub">
+        <div className="page-container explore-hub animate-fade-in">
 
             <div className="explore-hub__header">
 
@@ -124,6 +127,11 @@ export function ExploreHub() {
                             <VideoCardList
                                 videos={filteredVideos}
                                 onOpenVideo={video => navigate(`/explore/${video.id}`)}
+                                hasActiveFilter={hasActiveFilter}
+                                onClearFilters={() => {
+                                    setLevelFilter(null);
+                                    setTopicFilter(null);
+                                }}
                             />
 
                         </>

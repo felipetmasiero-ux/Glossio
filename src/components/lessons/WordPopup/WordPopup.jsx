@@ -76,8 +76,18 @@ export function WordPopup({
 
     useEffect(() => {
 
+        function handleKeyDown(event) {
+
+            if (event.key === "Escape") {
+                onCloseRef.current();
+            }
+
+        }
+
+        document.addEventListener("keydown", handleKeyDown);
+
         if (!isExplore) {
-            return;
+            return () => document.removeEventListener("keydown", handleKeyDown);
         }
 
         function handlePointerDown(event) {
@@ -90,16 +100,7 @@ export function WordPopup({
 
         }
 
-        function handleKeyDown(event) {
-
-            if (event.key === "Escape") {
-                onCloseRef.current();
-            }
-
-        }
-
         document.addEventListener("mousedown", handlePointerDown);
-        document.addEventListener("keydown", handleKeyDown);
 
         const autoCloseTimeout = setTimeout(() => onCloseRef.current(), EXPLORE_AUTO_CLOSE_DELAY);
 
@@ -156,6 +157,12 @@ export function WordPopup({
                     {word.word}
                 </p>
 
+                {word.partOfSpeech && (
+                    <p className="word-popup__pos text-mono-label">
+                        {word.partOfSpeech}
+                    </p>
+                )}
+
                 <p className="word-popup__translation">
                     {word.translation}
                 </p>
@@ -163,7 +170,7 @@ export function WordPopup({
                 <Button onClick={handleAdd} disabled={added}>
                     {
                         added
-                            ? <Icon name="check" size={16} />
+                            ? <Icon name="check" size={16} className="word-popup__add-icon--confirm" />
                             : <><Icon name="cards" size={16} /> Adicionar</>
                     }
                 </Button>

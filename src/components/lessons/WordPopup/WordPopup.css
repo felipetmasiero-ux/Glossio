@@ -97,3 +97,17 @@
   color: var(--color-text);
   margin: 0;
 }
+
+.word-popup__pos {
+  color: var(--color-text-muted);
+  margin: calc(-1 * var(--space-1)) 0 0;
+}
+
+.word-popup__add-icon--confirm {
+  animation: word-popup-add-confirm 220ms var(--ease-out);
+}
+
+@keyframes word-popup-add-confirm {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

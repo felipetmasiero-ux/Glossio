@@ -1,6 +1,6 @@
 import "./ExerciseSessionPage.css";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useLanguage } from "../../hooks/useLanguage";
 import { useExerciseSession } from "../../hooks/exercises/useExerciseSession";
@@ -29,6 +29,8 @@ const EXERCISE_COMPONENTS = {
 
 export function ExerciseSessionPage() {
 
+    const navigate = useNavigate();
+
     const { lessonId } = useParams();
 
     const { language } = useLanguage();
@@ -50,7 +52,13 @@ export function ExerciseSessionPage() {
 
         return (
             <div className="page-container">
-                <h1>Lição não encontrada.</h1>
+                <EmptyState
+                    icon="pencil"
+                    title="Lição não encontrada"
+                    description="Esta lição pode ter sido movida ou não existe mais."
+                    actionLabel="Voltar aos exercícios"
+                    onAction={() => navigate("/exercises")}
+                />
             </div>
         );
 
@@ -85,9 +93,9 @@ export function ExerciseSessionPage() {
 
         return (
 
-            <div className="page-container exercise-session-complete">
+            <div className="page-container exercise-session-complete animate-fade-in">
 
-                <div className="exercise-session-complete__stamp">
+                <div className="exercise-session-complete__stamp animate-celebrate">
                     <Icon name="check" size={26} />
                 </div>
 

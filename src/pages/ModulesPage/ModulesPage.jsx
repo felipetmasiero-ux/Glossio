@@ -26,7 +26,7 @@ export function ModulesPage() {
 
     return (
 
-        <div className="page-container modules-page">
+        <div className="page-container modules-page animate-fade-in">
 
             <p className="modules-page__label text-mono-label">Sumário</p>
 

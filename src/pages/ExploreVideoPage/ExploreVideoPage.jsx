@@ -2,7 +2,7 @@ import { useMemo, useRef, useState } from "react";
 
 import "./ExploreVideoPage.css";
 
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useLanguage } from "../../hooks/useLanguage";
 import { useFlashcards } from "../../hooks/useFlashcards";
@@ -22,8 +22,19 @@ import { WordPopup } from "../../components/lessons/WordPopup/WordPopup";
 import { Badge } from "../../components/common/Badge/Badge";
 import { Icon } from "../../components/common/Icon/Icon";
 import { Skeleton } from "../../components/common/Skeleton/Skeleton";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+
+const TRANSCRIPT_SKELETON_PATTERN = [
+    ["68%"],
+    ["92%", "54%"],
+    ["97%", "38%"],
+    ["62%"],
+    ["48%"]
+];
 
 export function ExploreVideoPage() {
+
+    const navigate = useNavigate();
 
     const { videoId } = useParams();
 
@@ -151,7 +162,13 @@ export function ExploreVideoPage() {
 
         return (
             <div className="page-container">
-                <h1>Vídeo não encontrado.</h1>
+                <EmptyState
+                    icon="play"
+                    title="Vídeo não encontrado"
+                    description="Este vídeo pode ter sido movido ou não existe mais."
+                    actionLabel="Voltar ao Explore"
+                    onAction={() => navigate("/explore")}
+                />
             </div>
         );
 
@@ -160,7 +177,7 @@ export function ExploreVideoPage() {
     if (completed) {
 
         return (
-            <div className="page-container explore-video-page">
+            <div className="page-container explore-video-page animate-fade-in">
                 <ExploreVideoComplete
                     video={video}
                     clickedCount={clickedWords.size}
@@ -173,7 +190,7 @@ export function ExploreVideoPage() {
 
     return (
 
-        <div className="page-container explore-video-page">
+        <div className="page-container explore-video-page animate-fade-in">
 
             <nav className="explore-video-page__breadcrumb" aria-label="Breadcrumb">
 
@@ -263,10 +280,20 @@ export function ExploreVideoPage() {
                             : (
                                 <div className="explore-video-page__transcript-skeleton" aria-hidden="true">
                                     {
-                                        Array.from({ length: 5 }).map((_, index) => (
+                                        TRANSCRIPT_SKELETON_PATTERN.map((lines, index) => (
                                             <div key={index} className="explore-video-page__transcript-skeleton-row">
                                                 <Skeleton className="explore-video-page__transcript-skeleton-time" />
-                                                <Skeleton className="explore-video-page__transcript-skeleton-line" />
+                                                <div className="explore-video-page__transcript-skeleton-lines">
+                                                    {
+                                                        lines.map((width, lineIndex) => (
+                                                            <Skeleton
+                                                                key={lineIndex}
+                                                                className="explore-video-page__transcript-skeleton-line"
+                                                                style={{ width }}
+                                                            />
+                                                        ))
+                                                    }
+                                                </div>
                                             </div>
                                         ))
                                     }

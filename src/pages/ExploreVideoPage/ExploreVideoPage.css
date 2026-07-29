@@ -103,22 +103,25 @@
 .explore-video-page__transcript-skeleton-row {
   display: flex;
   gap: var(--space-3);
-  align-items: center;
+  align-items: flex-start;
 }
 
 .explore-video-page__transcript-skeleton-time {
   flex-shrink: 0;
   width: 32px;
   height: 12px;
+  margin-top: 3px;
+}
+
+.explore-video-page__transcript-skeleton-lines {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
 }
 
 .explore-video-page__transcript-skeleton-line {
-  width: 80%;
   height: 16px;
-}
-
-.explore-video-page__transcript-skeleton-row:nth-child(3) .explore-video-page__transcript-skeleton-line {
-  width: 95%;
 }
 
 @media (min-width: 880px) {

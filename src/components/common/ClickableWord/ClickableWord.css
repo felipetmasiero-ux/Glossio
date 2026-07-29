@@ -15,3 +15,8 @@
 .clickable-word--known {
   border-bottom-color: transparent;
 }
+
+.clickable-word--flash {
+  background: var(--highlight-bg);
+  border-bottom-color: transparent;
+}

@@ -3,9 +3,12 @@ import { FlashcardContext } from "../../contexts/FlashcardContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 
 import { FlashcardsSearch } from "../../components/flashcards/FlashcardsSearch";
-import { FlashcardsList } from "../../components/flashcards/FlashcardsList";
+import { FlashcardCollections } from "../../components/flashcards/FlashcardCollections";
 import { FlashcardStats } from "../../components/flashcards/FlashcardStats";
 import { Section } from "../../components/common/Section/Section";
+import { SectionHeader } from "../../components/common/SectionHeader/SectionHeader";
+
+import { groupFlashcardsByTopic } from "../../utils/flashcards/groupFlashcardsByTopic";
 
 import "./MyFlashcards.css";
 
@@ -51,9 +54,26 @@ export function MyFlashcards() {
     [languageCards, now]
   );
 
+  const collections = useMemo(
+    () => groupFlashcardsByTopic(languageCards),
+    [languageCards]
+  );
+
+  const filteredCollections = useMemo(
+    () => groupFlashcardsByTopic(filteredCards),
+    [filteredCards]
+  );
+
+  const isSearching = search.trim().length > 0;
+
   return (
     <div className="flashcards-dashboard">
-      <Section title="Meus Flashcards">
+      <Section>
+        <SectionHeader
+          title="Meus Flashcards"
+          subtitle={`${stats.total} palavras · ${collections.length} tópicos`}
+        />
+
         <FlashcardStats
           total={stats.total}
           due={stats.due}
@@ -68,8 +88,9 @@ export function MyFlashcards() {
           setSearch={setSearch}
         />
 
-        <FlashcardsList
-          flashcards={filteredCards}
+        <FlashcardCollections
+          collections={filteredCollections}
+          forceOpen={isSearching}
           removeFlashcard={removeFlashcard}
         />
       </Section>

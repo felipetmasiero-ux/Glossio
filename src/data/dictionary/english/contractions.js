@@ -27,5 +27,6 @@ export const englishContractionsDictionary = rawEntries.map(entry => ({
     level: "A1",
     pronunciation: null,
     partOfSpeech: null,
+    topic: null,
     ...entry
 }));

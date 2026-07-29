@@ -1,0 +1,95 @@
+.about-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.about-page__label {
+  color: var(--color-primary);
+}
+
+.about-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.about-page__lead {
+  font: var(--text-reading);
+  color: var(--color-text-secondary);
+  max-width: 68ch;
+  margin-bottom: var(--space-7);
+}
+
+.about-page__section {
+  margin-bottom: var(--space-7);
+}
+
+.about-page__section-title {
+  font: var(--text-h2);
+  color: var(--color-text);
+  margin-bottom: var(--space-5);
+}
+
+.about-pillars {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.about-pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+.about-pillar__icon {
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-primary);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-sm);
+}
+
+.about-pillar__title {
+  font: var(--text-h3);
+  color: var(--color-text);
+  margin-bottom: var(--space-1);
+}
+
+.about-pillar__description {
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  max-width: 60ch;
+}
+
+.about-principles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  list-style: none;
+}
+
+.about-principles li {
+  position: relative;
+  padding-left: var(--space-5);
+  font: var(--text-body);
+  color: var(--color-text-secondary);
+  max-width: 64ch;
+}
+
+.about-principles li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+}

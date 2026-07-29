@@ -38,9 +38,9 @@ export function ExploreVideoComplete({
 
     return (
 
-        <div className="explore-video-complete">
+        <div className="explore-video-complete animate-fade-in">
 
-            <div className="explore-video-complete__stamp">
+            <div className="explore-video-complete__stamp animate-celebrate">
                 <Icon name="check" size={26} />
             </div>
 

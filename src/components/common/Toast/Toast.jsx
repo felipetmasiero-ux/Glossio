@@ -5,7 +5,7 @@ export function Toast({ message }) {
   if (!message) return null;
 
   return (
-    <div className="toast animate-slide-up">
+    <div className="toast animate-slide-up" role="status" aria-live="polite">
       <Icon name="check" size={16} />
       <span>{message}</span>
     </div>

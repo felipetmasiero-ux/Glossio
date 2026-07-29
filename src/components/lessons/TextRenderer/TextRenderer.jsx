@@ -1,7 +1,6 @@
 import { ClickableWord } from "../../common/ClickableWord/ClickableWord";
 import { DictionaryRepository } from "../../../repositories/DictionaryRepository";
-import { tokenizeText } from "../../../utils/text/tokenizeText";
-import { stripPunctuation } from "../../../utils/text/stripPunctuation";
+import { longestMatchTokenize } from "../../../utils/text/longestMatchTokenize";
 import "./TextRenderer.css";
 
 export function TextRenderer({
@@ -14,12 +13,15 @@ export function TextRenderer({
 
 }) {
 
-    const tokens = tokenizeText(text);
+    const chunks = longestMatchTokenize(
+        text,
+        candidate => DictionaryRepository.hasWord(language, candidate)
+    );
 
-    function handleClick(cleanWord) {
+    function handleClick(phrase) {
 
         onWordClick(
-            DictionaryRepository.getEntry(language, cleanWord)
+            DictionaryRepository.getEntry(language, phrase)
         );
 
     }
@@ -30,19 +32,11 @@ export function TextRenderer({
 
             {
 
-                tokens.map((token, index) => {
+                chunks.map((chunk, index) => {
 
-                    if (/^\s+$/.test(token)) {
+                    if (!chunk.isMatch) {
 
-                        return token;
-
-                    }
-
-                    const cleanWord = stripPunctuation(token);
-
-                    if (!cleanWord || !DictionaryRepository.hasWord(language, cleanWord)) {
-
-                        return token;
+                        return chunk.text;
 
                     }
 
@@ -52,11 +46,11 @@ export function TextRenderer({
 
                             key={index}
 
-                            onClick={() => handleClick(cleanWord)}
+                            onClick={() => handleClick(chunk.text)}
 
                         >
 
-                            {token}
+                            {chunk.text}
 
                         </ClickableWord>
 

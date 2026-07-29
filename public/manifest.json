@@ -1,0 +1,17 @@
+{
+  "name": "Glossio — Aprenda idiomas de verdade",
+  "short_name": "Glossio",
+  "description": "Um caderno de estudo de idiomas: lições estruturadas, conteúdo autêntico, um acervo pessoal de vocabulário e revisão espaçada num só lugar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#EEF1F5",
+  "theme_color": "#2C3E63",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

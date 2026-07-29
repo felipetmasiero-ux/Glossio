@@ -10,6 +10,7 @@ import { LessonRepository } from "../../utils/lessons/LessonRepository";
 import { generateExercisesForLesson } from "../../utils/exercises";
 
 import { Icon } from "../../components/common/Icon/Icon";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 
 export function ExerciseModuleLessonsPage() {
 
@@ -27,7 +28,13 @@ export function ExerciseModuleLessonsPage() {
 
         return (
             <div className="page-container">
-                <h1>Módulo não encontrado.</h1>
+                <EmptyState
+                    icon="pencil"
+                    title="Módulo não encontrado"
+                    description="Este módulo pode ter sido movido ou não existe mais."
+                    actionLabel="Voltar aos exercícios"
+                    onAction={() => navigate("/exercises")}
+                />
             </div>
         );
 
@@ -46,7 +53,7 @@ export function ExerciseModuleLessonsPage() {
 
     return (
 
-        <div className="page-container exercise-lessons-page">
+        <div className="page-container exercise-lessons-page animate-fade-in">
 
             <Link to="/exercises" className="exercise-lessons-back">
                 <Icon name="chevron-left" size={15} />
