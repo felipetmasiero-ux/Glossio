@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: glossio-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: glossio
+      POSTGRES_PASSWORD: glossio
+      POSTGRES_DB: glossio
+    ports:
+      - "5432:5432"
+    volumes:
+      - glossio_postgres_data:/var/lib/postgresql/data
+
+volumes:
+  glossio_postgres_data:

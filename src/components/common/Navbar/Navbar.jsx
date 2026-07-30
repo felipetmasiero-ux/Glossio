@@ -1,15 +1,20 @@
 import { useContext } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../../contexts/LanguageContext";
+import { useAuth } from "../../../hooks/useAuth";
 import { Icon } from "../Icon/Icon";
 
 import "./Navbar.css";
 
+const HIDDEN_PATHS = ["/", "/choose-language", "/login", "/register"];
+
 export function Navbar() {
 
   const { language } = useContext(LanguageContext);
+  const { logout } = useAuth();
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navLinks = [
     { to: "/home", label: "Home" },
@@ -19,7 +24,12 @@ export function Navbar() {
     { to: "/profile", label: "Perfil" }
   ];
 
-  if (location.pathname === "/" || location.pathname === "/choose-language") return null;
+  if (HIDDEN_PATHS.includes(location.pathname)) return null;
+
+  function handleLogout() {
+    logout();
+    navigate("/login", { replace: true });
+  }
 
   return (
     <nav className="navbar">
@@ -49,6 +59,10 @@ export function Navbar() {
             {language === "English" ? "🇺🇸" : language === "French" ? "🇫🇷" : "🇧🇷"} {language}
           </span>
         )}
+
+        <button type="button" className="navbar__logout" onClick={handleLogout}>
+          Sair
+        </button>
       </div>
     </nav>
   );

@@ -85,6 +85,20 @@
   white-space: nowrap;
 }
 
+.navbar__logout {
+  flex-shrink: 0;
+  font: var(--text-body-md);
+  color: var(--color-text-secondary);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-sm);
+  transition: all var(--t-fast);
+}
+
+.navbar__logout:hover {
+  color: var(--color-text);
+  background: var(--color-surface-sunken);
+}
+
 @media (max-width: 600px) {
   .navbar__inner {
     padding: 0 var(--space-4);

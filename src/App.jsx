@@ -3,6 +3,8 @@ import { Routes, Route } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 
 import { Landing } from "./pages/Landing/Landing";
+import { Login } from "./pages/Login/Login";
+import { Register } from "./pages/Register/Register";
 import { Home } from "./pages/Home/Home";
 import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
 import { Exercises } from "./pages/Exercises/Exercises";
@@ -23,7 +25,9 @@ import { Roadmap } from './pages/Roadmap/Roadmap'
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
+import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LanguageContext } from './contexts/LanguageContext'
+import { AuthProvider } from './contexts/AuthProvider'
 import { EventProvider } from './contexts/EventProvider'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'
@@ -41,6 +45,7 @@ function App() {
   }, [language])
 
   return (
+    <AuthProvider>
     <EventProvider>
       <LanguageContext.Provider
         value={{
@@ -67,93 +72,107 @@ function App() {
                   />
 
                   <Route
-                    path="/choose-language"
-                    element={
-                      <LanguageSelection
-                        setLanguage={setLanguage}
-                      />
-                    }
+                    path="/login"
+                    element={<Login />}
                   />
 
                   <Route
-                    path="/about"
-                    element={<About />}
+                    path="/register"
+                    element={<Register />}
                   />
 
-                  <Route
-                    path="/roadmap"
-                    element={<Roadmap />}
-                  />
+                  <Route element={<ProtectedRoute />}>
 
-                  <Route
-                    path="/home"
-                    element={<Home />}
-                  />
+                    <Route
+                      path="/choose-language"
+                      element={
+                        <LanguageSelection
+                          setLanguage={setLanguage}
+                        />
+                      }
+                    />
 
-                  <Route
-                    path="/lessons"
-                    element={<ModulesPage />}
-                  />
+                    <Route
+                      path="/about"
+                      element={<About />}
+                    />
 
-                  <Route
-                    path="/lessons/module/:moduleId"
-                    element={<ModuleLessonsPage />}
-                  />
+                    <Route
+                      path="/roadmap"
+                      element={<Roadmap />}
+                    />
 
-                  <Route
-                    path="/lessons/module/:moduleId/complete"
-                    element={<ModuleCompletePage />}
-                  />
+                    <Route
+                      path="/home"
+                      element={<Home />}
+                    />
 
-                  <Route
-                    path="/lessons/:id"
-                    element={<LessonPage />}
-                  />
+                    <Route
+                      path="/lessons"
+                      element={<ModulesPage />}
+                    />
 
-                  <Route
-                    path="/exercises"
-                    element={<Exercises />}
-                  />
+                    <Route
+                      path="/lessons/module/:moduleId"
+                      element={<ModuleLessonsPage />}
+                    />
 
-                  <Route
-                    path="/exercises/module/:moduleId"
-                    element={<ExerciseModuleLessonsPage />}
-                  />
+                    <Route
+                      path="/lessons/module/:moduleId/complete"
+                      element={<ModuleCompletePage />}
+                    />
 
-                  <Route
-                    path="/exercises/:lessonId"
-                    element={<ExerciseSessionPage />}
-                  />
+                    <Route
+                      path="/lessons/:id"
+                      element={<LessonPage />}
+                    />
 
-                  <Route
-                    path="/explore"
-                    element={<ExploreHub />}
-                  />
+                    <Route
+                      path="/exercises"
+                      element={<Exercises />}
+                    />
 
-                  <Route
-                    path="/explore/:videoId"
-                    element={<ExploreVideoPage />}
-                  />
+                    <Route
+                      path="/exercises/module/:moduleId"
+                      element={<ExerciseModuleLessonsPage />}
+                    />
 
-                  <Route
-                    path="/flashcards"
-                    element={<StudyFlashcards />}
-                  />
+                    <Route
+                      path="/exercises/:lessonId"
+                      element={<ExerciseSessionPage />}
+                    />
 
-                  <Route
-                    path="/alphabets"
-                    element={<Alphabets />}
-                  />
+                    <Route
+                      path="/explore"
+                      element={<ExploreHub />}
+                    />
 
-                  <Route
-                    path="/my-flashcards"
-                    element={<MyFlashcards />}
-                  />
+                    <Route
+                      path="/explore/:videoId"
+                      element={<ExploreVideoPage />}
+                    />
 
-                  <Route
-                    path="/profile"
-                    element={<Profile />}
-                  />
+                    <Route
+                      path="/flashcards"
+                      element={<StudyFlashcards />}
+                    />
+
+                    <Route
+                      path="/alphabets"
+                      element={<Alphabets />}
+                    />
+
+                    <Route
+                      path="/my-flashcards"
+                      element={<MyFlashcards />}
+                    />
+
+                    <Route
+                      path="/profile"
+                      element={<Profile />}
+                    />
+
+                  </Route>
 
                 </Routes>
                 </main>
@@ -168,6 +187,7 @@ function App() {
         </FlashcardProvider>
       </LanguageContext.Provider>
     </EventProvider>
+    </AuthProvider>
   )
 }
 

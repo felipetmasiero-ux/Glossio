@@ -1,0 +1,41 @@
+.auth-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 28rem;
+}
+
+.auth-page__label {
+  color: var(--color-primary);
+  margin-bottom: calc(-1 * var(--space-4));
+}
+
+.auth-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-page__error {
+  font: var(--text-small);
+  color: var(--color-danger-dark);
+}
+
+.auth-page__switch {
+  font: var(--text-body-md);
+  color: var(--color-text-secondary);
+}
+
+.auth-page__switch a {
+  color: var(--color-primary);
+}
+
+.auth-page__switch a:hover {
+  color: var(--color-primary-hover);
+}
