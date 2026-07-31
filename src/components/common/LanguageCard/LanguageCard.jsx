@@ -1,11 +1,7 @@
-import { useContext } from "react";
-import { LanguageContext } from "../../../contexts/LanguageContext";
 import { Card } from "../Card/Card";
 import "./LanguageCard.css";
 
-export function LanguageCard({ flag, nativeName, onClick }) {
-  const { language } = useContext(LanguageContext);
-
+export function LanguageCard({ language, flag, nativeName, onClick }) {
   return (
     <Card as="button" className="language-card" onClick={onClick}>
       <span className="language-card__flag">{flag}</span>

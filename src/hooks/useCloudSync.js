@@ -178,32 +178,46 @@ export function useCloudSync() {
 
                 // Progress, lessonProgress, flashcards, videoProgress, events -
                 // same order as hydrate.
+                //
+                // Each "lastSynced" ref is only updated AFTER its save
+                // resolves. If the request fails (offline, backend down),
+                // the snapshot stays marked dirty so the next tick retries
+                // it - marking it synced up-front would silently drop that
+                // change until some unrelated future edit happened to touch
+                // the same data again.
                 if (progressDirty) {
-                    lastSyncedProgressRef.current = progressSerialized;
-                    await saveProgress(progressSnapshot, token).catch(() => {});
+                    await saveProgress(progressSnapshot, token)
+                        .then(() => { lastSyncedProgressRef.current = progressSerialized; })
+                        .catch(() => {});
                 }
 
                 if (lessonProgressDirty) {
-                    lastSyncedLessonProgressRef.current = lessonProgressSerialized;
-                    await saveLessonProgress(lessonIdsSnapshot, token).catch(() => {});
+                    await saveLessonProgress(lessonIdsSnapshot, token)
+                        .then(() => { lastSyncedLessonProgressRef.current = lessonProgressSerialized; })
+                        .catch(() => {});
                 }
 
                 if (cardsDirty) {
-                    lastSyncedFlashcardsRef.current = cardsSerialized;
-                    await saveFlashcards(cardsSnapshot, token).catch(() => {});
+                    await saveFlashcards(cardsSnapshot, token)
+                        .then(() => { lastSyncedFlashcardsRef.current = cardsSerialized; })
+                        .catch(() => {});
                 }
 
                 if (videoProgressDirty) {
-                    lastSyncedVideoProgressRef.current = videoProgressSerialized;
-                    await saveVideoProgress(videoProgressSnapshot, token).catch(() => {});
+                    await saveVideoProgress(videoProgressSnapshot, token)
+                        .then(() => { lastSyncedVideoProgressRef.current = videoProgressSerialized; })
+                        .catch(() => {});
                 }
 
                 if (eventsDirty) {
                     const newEvents = eventsSnapshot.slice(lastSyncedEventsCountRef.current);
-                    lastSyncedEventsCountRef.current = eventsSnapshot.length;
 
                     if (newEvents.length > 0) {
-                        await postEvents(newEvents, token).catch(() => {});
+                        await postEvents(newEvents, token)
+                            .then(() => { lastSyncedEventsCountRef.current = eventsSnapshot.length; })
+                            .catch(() => {});
+                    } else {
+                        lastSyncedEventsCountRef.current = eventsSnapshot.length;
                     }
                 }
             } finally {

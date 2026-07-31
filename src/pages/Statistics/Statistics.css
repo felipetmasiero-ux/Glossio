@@ -15,11 +15,6 @@
   color: var(--color-text);
 }
 
-.statistics-page__empty {
-  font: var(--text-body-md);
-  color: var(--color-text-secondary);
-}
-
 .statistics-page__bars {
   display: flex;
   flex-direction: column;

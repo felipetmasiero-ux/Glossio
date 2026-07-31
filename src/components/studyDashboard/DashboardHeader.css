@@ -14,3 +14,7 @@
   font: var(--text-body);
   color: var(--color-text-secondary);
 }
+
+.dashboard-header__label {
+  color: var(--color-primary);
+}

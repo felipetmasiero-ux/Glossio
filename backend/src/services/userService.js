@@ -23,7 +23,7 @@ export async function updateUserProfile(userId, body = {}) {
     }
 
     if (data.name !== undefined && !data.name) {
-        throw new HttpError(400, "Name is required.");
+        throw new HttpError(400, "O nome é obrigatório.");
     }
 
     const user = await prisma.user.update({ where: { id: userId }, data });
@@ -32,7 +32,7 @@ export async function updateUserProfile(userId, body = {}) {
 
 export async function changePassword(userId, { currentPassword, newPassword }) {
     if (!newPassword || newPassword.length < 8) {
-        throw new HttpError(400, "New password must be at least 8 characters long.");
+        throw new HttpError(400, "A nova senha deve ter no mínimo 8 caracteres.");
     }
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
@@ -42,7 +42,7 @@ export async function changePassword(userId, { currentPassword, newPassword }) {
 
     const currentMatches = await bcrypt.compare(currentPassword || "", user.passwordHash);
     if (!currentMatches) {
-        throw new HttpError(401, "Current password is incorrect.");
+        throw new HttpError(401, "A senha atual está incorreta.");
     }
 
     const passwordHash = await bcrypt.hash(newPassword, SALT_ROUNDS);

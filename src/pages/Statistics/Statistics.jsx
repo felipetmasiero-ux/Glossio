@@ -5,6 +5,7 @@ import { TOPIC_LABELS } from "../../constants/topics";
 import { Section } from "../../components/common/Section/Section";
 import { StatsGrid } from "../../components/studyDashboard/StatsGrid";
 import { StatsCard } from "../../components/studyDashboard/StatsCard";
+import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 
 import "./Statistics.css";
 
@@ -41,9 +42,11 @@ export function Statistics() {
             <Section title="Palavras por tópico">
 
                 {statistics.wordsByTopic.length === 0 ? (
-                    <p className="statistics-page__empty">
-                        Adicione flashcards para ver suas palavras organizadas por tópico.
-                    </p>
+                    <EmptyState
+                        icon="cards"
+                        title="Nenhuma palavra ainda"
+                        description="Adicione flashcards para ver suas palavras organizadas por tópico."
+                    />
                 ) : (
                     <div className="statistics-page__bars">
                         {statistics.wordsByTopic.map(entry => (

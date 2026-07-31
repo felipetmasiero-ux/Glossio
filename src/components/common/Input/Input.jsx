@@ -8,7 +8,8 @@ export function Input({
   className = "",
   type = "text",
   icon = null,
-  disabled = false
+  disabled = false,
+  ariaLabel
 }) {
 
   return (
@@ -25,6 +26,7 @@ export function Input({
         onChange={onChange}
         placeholder={placeholder}
         disabled={disabled}
+        aria-label={ariaLabel || (!id ? placeholder : undefined)}
       />
 
     </div>

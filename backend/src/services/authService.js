@@ -13,13 +13,13 @@ export function toPublicUser(user) {
 
 function validateCredentials({ name, email, password }) {
     if (name !== undefined && !name.trim()) {
-        throw new HttpError(400, "Name is required.");
+        throw new HttpError(400, "O nome é obrigatório.");
     }
     if (!email || !EMAIL_REGEX.test(email)) {
-        throw new HttpError(400, "A valid email is required.");
+        throw new HttpError(400, "Informe um e-mail válido.");
     }
     if (!password || password.length < 8) {
-        throw new HttpError(400, "Password must be at least 8 characters long.");
+        throw new HttpError(400, "A senha deve ter no mínimo 8 caracteres.");
     }
 }
 
@@ -28,7 +28,7 @@ export async function registerUser({ name, email, password, preferredLanguage })
 
     const existingUser = await prisma.user.findUnique({ where: { email } });
     if (existingUser) {
-        throw new HttpError(409, "An account with this email already exists.");
+        throw new HttpError(409, "Já existe uma conta com este e-mail.");
     }
 
     const passwordHash = await bcrypt.hash(password, SALT_ROUNDS);
@@ -52,12 +52,12 @@ export async function loginUser({ email, password }) {
 
     const user = await prisma.user.findUnique({ where: { email } });
     if (!user) {
-        throw new HttpError(401, "Invalid email or password.");
+        throw new HttpError(401, "E-mail ou senha inválidos.");
     }
 
     const passwordMatches = await bcrypt.compare(password, user.passwordHash);
     if (!passwordMatches) {
-        throw new HttpError(401, "Invalid email or password.");
+        throw new HttpError(401, "E-mail ou senha inválidos.");
     }
 
     const token = signToken({ sub: user.id });

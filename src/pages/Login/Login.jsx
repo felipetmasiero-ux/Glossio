@@ -59,7 +59,7 @@ export function Login() {
                     onChange={event => setPassword(event.target.value)}
                 />
 
-                {error && <p className="auth-page__error">{error}</p>}
+                {error && <p className="auth-page__error" role="alert">{error}</p>}
 
                 <Button type="submit" disabled={isSubmitting}>
                     {isSubmitting ? "Entrando..." : "Entrar"}

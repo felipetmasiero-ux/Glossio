@@ -1,12 +1,14 @@
 .answer-buttons {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
   margin-top: var(--space-5);
 }
 
 .answer-buttons .button {
   width: auto;
-  min-width: 120px;
+  flex: 1 1 auto;
+  min-width: 100px;
   height: 52px;
   white-space: nowrap;
   padding-left: var(--space-4);

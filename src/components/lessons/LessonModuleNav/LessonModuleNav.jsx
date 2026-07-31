@@ -29,6 +29,8 @@ export function LessonModuleNav({
 
                 className="lesson-module-nav-back"
 
+                onClick={() => window.scrollTo(0, 0)}
+
             >
                 <Icon name="chevron-left" size={14} /> {module.title}
             </Link>

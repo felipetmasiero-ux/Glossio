@@ -222,7 +222,7 @@ export function Profile() {
                             onChange={event => handleFormChange("bio", event.target.value)}
                         />
 
-                        {accountError && <p className="profile-page__error">{accountError}</p>}
+                        {accountError && <p className="profile-page__error" role="alert">{accountError}</p>}
 
                         <Button type="submit" disabled={isSavingAccount}>
                             {isSavingAccount ? "Salvando..." : "Salvar"}
@@ -264,7 +264,7 @@ export function Profile() {
                             onChange={event => handlePasswordFormChange("confirmPassword", event.target.value)}
                         />
 
-                        {passwordError && <p className="profile-page__error">{passwordError}</p>}
+                        {passwordError && <p className="profile-page__error" role="alert">{passwordError}</p>}
 
                         <div className="profile-page__confirm">
                             <Button type="submit" disabled={isSubmittingPassword}>

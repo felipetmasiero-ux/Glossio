@@ -23,6 +23,7 @@ export function StudyDashboard({
             <div className="study-dashboard">
 
                 <DashboardHeader
+                    eyebrow="Revisão"
                     title="Modo de estudo"
                     subtitle="Pronto para a revisão de hoje?"
                 />

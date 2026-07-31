@@ -32,7 +32,37 @@ const rawEntries = [
     { word: "à côté de", translation: "ao lado de" },
     { word: "en face de", translation: "em frente a" },
     { word: "quelle heure est-il", translation: "que horas são" },
-    { word: "beaucoup de", translation: "muito(a)(s) de" }
+    { word: "beaucoup de", translation: "muito(a)(s) de" },
+
+    // A2 phrases
+    { word: "avoir besoin de", translation: "precisar de", level: "A2" },
+    { word: "être en train de", translation: "estar fazendo (algo no momento)", level: "A2" },
+    { word: "il faut", translation: "é preciso / é necessário", level: "A2" },
+    { word: "de temps en temps", translation: "de vez em quando", level: "A2" },
+    { word: "tout à fait", translation: "exatamente / com certeza", level: "A2" },
+    { word: "je pense que", translation: "eu acho que", level: "A2" },
+    { word: "à cause de", translation: "por causa de", level: "A2" },
+    { word: "grâce à", translation: "graças a", level: "A2" },
+    { word: "dès que", translation: "assim que / logo que", level: "A2" },
+    { word: "avoir l'habitude de", translation: "estar acostumado(a) a", level: "A2" },
+    { word: "avoir envie de", translation: "estar com vontade de", level: "A2" },
+    { word: "avoir peur de", translation: "ter medo de", level: "A2" },
+    { word: "avoir raison", translation: "estar certo(a)", level: "A2" },
+    { word: "avoir tort", translation: "estar errado(a)", level: "A2" },
+    { word: "être sur le point de", translation: "estar prestes a", level: "A2" },
+    { word: "il vaut mieux", translation: "é melhor", level: "A2" },
+    { word: "ça vaut la peine", translation: "vale a pena", level: "A2" },
+    { word: "au lieu de", translation: "em vez de", level: "A2" },
+    { word: "en ce qui concerne", translation: "no que diz respeito a", level: "A2" },
+    { word: "la plupart du temps", translation: "na maior parte do tempo", level: "A2" },
+    { word: "tout le monde", translation: "todo mundo", level: "A2" },
+    { word: "être en retard", translation: "estar atrasado(a)", level: "A2" },
+    { word: "être à l'heure", translation: "estar na hora / pontual", level: "A2" },
+    { word: "non seulement", translation: "não só", note: "Geralmente usado com 'mais aussi' (mas também).", level: "A2" },
+    { word: "mais aussi", translation: "mas também", level: "A2" },
+    { word: "du coup", translation: "por causa disso / então (informal)", level: "A2" },
+    { word: "par contre", translation: "por outro lado / no entanto", level: "A2" },
+    { word: "alors que", translation: "enquanto que / ao passo que", level: "A2" }
 
 ];
 

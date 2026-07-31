@@ -1,6 +1,7 @@
 import "./LessonReader.css";
 import"../../../data/lessons/lesson.css";
 
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LessonHero } from "../LessonHero/LessonHero";
@@ -44,6 +45,14 @@ export function LessonReader({ lesson }) {
         stepTitle
 
     } = useLessonNavigator(lesson);
+
+    // A new lesson.id means a different lesson is being read - whether the
+    // user just followed a Next/Previous link, opened one directly by URL,
+    // or picked it from the module's lesson list. Always land at the top,
+    // instantly (no animation), regardless of how they got here.
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [lesson.id]);
 
     const nextLesson = ModuleRepository.getNextLesson(
         language,
@@ -109,6 +118,8 @@ export function LessonReader({ lesson }) {
 
         if (currentModule && ModuleRepository.isLastLessonInModule(language, lesson.id)) {
 
+            window.scrollTo(0, 0);
+
             navigate(`/lessons/module/${currentModule.id}/complete`);
 
             return;
@@ -122,6 +133,8 @@ export function LessonReader({ lesson }) {
             return;
 
         }
+
+        window.scrollTo(0, 0);
 
         navigate("/lessons");
 
