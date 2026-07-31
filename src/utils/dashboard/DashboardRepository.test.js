@@ -38,7 +38,7 @@ describe("DashboardRepository.getContinueLearning", () => {
     it("reports empty for a language with no course content", () => {
 
         const result = DashboardRepository.getContinueLearning({
-            language: "Portuguese",
+            language: "Klingon",
             completedLessons: []
         });
 
@@ -50,7 +50,7 @@ describe("DashboardRepository.getContinueLearning", () => {
 
 describe("DashboardRepository.getCoursesOverview", () => {
 
-    it("marks English and French as having content and Portuguese as coming soon", () => {
+    it("marks every language with real course content as not coming soon", () => {
 
         const courses = DashboardRepository.getCoursesOverview({ completedLessons: [] });
 
@@ -61,7 +61,7 @@ describe("DashboardRepository.getCoursesOverview", () => {
         expect(english.comingSoon).toBe(false);
         expect(english.percentage).toBe(0);
         expect(french.comingSoon).toBe(false);
-        expect(portuguese.comingSoon).toBe(true);
+        expect(portuguese.comingSoon).toBe(false);
 
     });
 

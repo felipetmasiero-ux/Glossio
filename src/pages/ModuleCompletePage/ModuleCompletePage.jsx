@@ -36,7 +36,10 @@ export function ModuleCompletePage() {
                     title="Módulo não encontrado"
                     description="Este módulo pode ter sido movido ou não existe mais."
                     actionLabel="Voltar aos módulos"
-                    onAction={() => navigate("/lessons")}
+                    onAction={() => {
+                        window.scrollTo(0, 0);
+                        navigate("/lessons");
+                    }}
                 />
             </div>
         );
@@ -52,6 +55,8 @@ export function ModuleCompletePage() {
         : "Voltar aos módulos";
 
     function handleContinue() {
+
+        window.scrollTo(0, 0);
 
         if (nextModule) {
             navigate(`/lessons/module/${nextModule.id}`);
@@ -105,7 +110,11 @@ export function ModuleCompletePage() {
 
                 {
                     nextModule && (
-                        <Link to="/lessons" className="module-complete-secondary-link">
+                        <Link
+                            to="/lessons"
+                            className="module-complete-secondary-link"
+                            onClick={() => window.scrollTo(0, 0)}
+                        >
                             Voltar aos módulos
                         </Link>
                     )

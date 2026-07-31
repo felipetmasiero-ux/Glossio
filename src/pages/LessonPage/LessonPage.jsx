@@ -33,7 +33,10 @@ export function LessonPage() {
                     title="Lição não encontrada"
                     description="Esta lição pode ter sido movida ou não existe mais."
                     actionLabel="Voltar aos módulos"
-                    onAction={() => navigate("/lessons")}
+                    onAction={() => {
+                        window.scrollTo(0, 0);
+                        navigate("/lessons");
+                    }}
                 />
             </div>
         );
@@ -60,7 +63,10 @@ export function LessonPage() {
                     title="Lição bloqueada"
                     description="Complete a lição anterior primeiro para desbloquear esta."
                     actionLabel="Voltar aos módulos"
-                    onAction={() => navigate("/lessons")}
+                    onAction={() => {
+                        window.scrollTo(0, 0);
+                        navigate("/lessons");
+                    }}
                 />
             </div>
 

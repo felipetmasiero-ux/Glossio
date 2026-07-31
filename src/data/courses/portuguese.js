@@ -1,3 +1,5 @@
+import { portugueseA1Module } from "../lessons/portuguese/a1/module";
+
 export const portugueseCourse = {
 
     id: "portuguese",
@@ -11,6 +13,10 @@ export const portugueseCourse = {
 
     cover: "/covers/portuguese.webp",
 
-    modules: []
+    modules: [
+
+        portugueseA1Module
+
+    ]
 
 };

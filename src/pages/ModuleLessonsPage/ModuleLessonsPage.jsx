@@ -33,7 +33,10 @@ export function ModuleLessonsPage() {
                     title="Módulo não encontrado"
                     description="Este módulo pode ter sido movido ou não existe mais."
                     actionLabel="Voltar aos módulos"
-                    onAction={() => navigate("/lessons")}
+                    onAction={() => {
+                        window.scrollTo(0, 0);
+                        navigate("/lessons");
+                    }}
                 />
             </div>
         );
@@ -46,7 +49,11 @@ export function ModuleLessonsPage() {
 
         <div className="page-container module-lessons-page animate-fade-in">
 
-            <Link to="/lessons" className="module-lessons-back">
+            <Link
+                to="/lessons"
+                className="module-lessons-back"
+                onClick={() => window.scrollTo(0, 0)}
+            >
                 <Icon name="chevron-left" size={15} />
                 Voltar aos módulos
             </Link>

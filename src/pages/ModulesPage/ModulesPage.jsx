@@ -49,9 +49,10 @@ export function ModulesPage() {
                                     key={module.id}
                                     module={module}
                                     progress={ModuleRepository.getProgress(module, completedLessons)}
-                                    onOpen={() =>
-                                        navigate(`/lessons/module/${module.id}`)
-                                    }
+                                    onOpen={() => {
+                                        window.scrollTo(0, 0);
+                                        navigate(`/lessons/module/${module.id}`);
+                                    }}
                                 />
                             ))
                         }
