@@ -28,6 +28,12 @@
   padding-left: var(--space-8);
 }
 
+.input:disabled {
+  color: var(--color-text-muted);
+  background: var(--color-surface-sunken);
+  cursor: not-allowed;
+}
+
 .input-icon {
   position: absolute;
   left: var(--space-3);

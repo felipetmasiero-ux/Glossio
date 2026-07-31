@@ -8,10 +8,98 @@ datasource db {
 }
 
 model User {
-  id                String   @id @default(uuid())
+  id                String        @id @default(uuid())
   name              String
-  email             String   @unique
+  email             String        @unique
   passwordHash      String
   preferredLanguage String?
-  createdAt         DateTime @default(now())
+  avatarUrl         String?
+  bio               String?
+  country           String?
+  timezone          String?
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  progress          UserProgress?
+  flashcards        Flashcard[]
+  videoProgress     VideoProgress[]
+  lessonProgress    LessonProgress[]
+  studyEvents       StudyEvent[]
+}
+
+model UserProgress {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language         String?
+  lessonProgress   Json
+  exerciseProgress Json
+  flashcards       Json
+  studyHistory     Json
+  dashboard        Json
+  videoProgress    Json
+  updatedAt        DateTime @updatedAt
+}
+
+model Flashcard {
+  id             String  @id
+  userId         String
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language       String
+  word           String
+  translation    String
+  moduleId       String?
+  lessonId       String?
+  category       String?
+  favorite       Boolean @default(false)
+  easeFactor     Float
+  interval       Int
+  repetitions    Int
+  createdAt      BigInt
+  updatedAt      BigInt
+  nextReview     BigInt
+  lastReviewedAt BigInt?
+
+  @@index([userId])
+}
+
+model VideoProgress {
+  id            String   @id @default(uuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  videoId       String
+  language      String
+  currentTime   Float
+  duration      Float
+  completed     Boolean  @default(false)
+  completedAt   BigInt?
+  lastWatchedAt BigInt
+  clickedWords  Json
+  addedWords    Json
+  updatedAt     DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model LessonProgress {
+  id          String   @id @default(uuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  language    String
+  lessonId    String
+  completed   Boolean  @default(true)
+  completedAt BigInt
+  updatedAt   DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model StudyEvent {
+  id        String @id
+  userId    String
+  user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  payload   Json
+  createdAt BigInt
+
+  @@index([userId])
 }

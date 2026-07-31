@@ -45,6 +45,11 @@
   color: var(--color-primary-hover);
 }
 
+.profile-page__links {
+  display: flex;
+  gap: var(--space-5);
+}
+
 .profile-page__danger {
   padding: var(--space-4);
   border: 1px solid var(--color-danger);
@@ -65,10 +70,6 @@
   max-width: 60ch;
 }
 
-.profile-page__danger .button {
-  width: auto;
-}
-
 .profile-page__confirm {
   display: flex;
   align-items: center;
@@ -76,7 +77,54 @@
   flex-wrap: wrap;
 }
 
+.profile-page__confirm .button {
+  width: auto;
+}
+
 .profile-page__confirm-label {
   font: var(--text-body-md);
   color: var(--color-danger-dark);
+}
+
+.profile-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.profile-page__form .button {
+  width: auto;
+  align-self: flex-start;
+}
+
+.profile-page__field-label {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+.profile-page__avatar-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.profile-page__avatar-row .input-wrapper {
+  flex: 1;
+}
+
+.profile-page__error {
+  font: var(--text-small);
+  color: var(--color-danger-dark);
+}
+
+.profile-page__meta {
+  font: var(--text-body-md);
+  color: var(--color-text-secondary);
+}
+
+textarea.input {
+  resize: vertical;
+  font-family: inherit;
 }

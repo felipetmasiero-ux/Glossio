@@ -1,0 +1,30 @@
+.statistics-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.statistics-summary-card__stats {
+  display: flex;
+  gap: var(--space-5);
+}
+
+.statistics-summary-card__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.statistics-summary-card__value {
+  font: var(--text-h2);
+  color: var(--color-text);
+}
+
+.statistics-summary-card__label {
+  color: var(--color-text-muted);
+}
+
+.statistics-summary-card .button {
+  width: auto;
+  align-self: flex-start;
+}

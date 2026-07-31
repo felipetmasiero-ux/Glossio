@@ -3,6 +3,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { LanguageContext } from "../../../contexts/LanguageContext";
 import { useAuth } from "../../../hooks/useAuth";
 import { Icon } from "../Icon/Icon";
+import { Avatar } from "../Avatar/Avatar";
 
 import "./Navbar.css";
 
@@ -11,7 +12,7 @@ const HIDDEN_PATHS = ["/", "/choose-language", "/login", "/register"];
 export function Navbar() {
 
   const { language } = useContext(LanguageContext);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -20,8 +21,7 @@ export function Navbar() {
     { to: "/home", label: "Home" },
     { to: "/lessons", label: "Cursos" },
     { to: "/explore", label: "Explore" },
-    { to: "/flashcards", label: "Flashcards" },
-    { to: "/profile", label: "Perfil" }
+    { to: "/flashcards", label: "Flashcards" }
   ];
 
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
@@ -59,6 +59,10 @@ export function Navbar() {
             {language === "English" ? "🇺🇸" : language === "French" ? "🇫🇷" : "🇧🇷"} {language}
           </span>
         )}
+
+        <Link to="/profile" className="navbar__avatar-link" aria-label="Perfil">
+          <Avatar name={user?.name} avatarUrl={user?.avatarUrl} size={28} />
+        </Link>
 
         <button type="button" className="navbar__logout" onClick={handleLogout}>
           Sair

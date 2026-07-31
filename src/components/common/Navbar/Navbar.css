@@ -85,6 +85,17 @@
   white-space: nowrap;
 }
 
+.navbar__avatar-link {
+  flex-shrink: 0;
+  display: flex;
+  border-radius: var(--radius-full);
+  transition: opacity var(--t-fast);
+}
+
+.navbar__avatar-link:hover {
+  opacity: 0.8;
+}
+
 .navbar__logout {
   flex-shrink: 0;
   font: var(--text-body-md);

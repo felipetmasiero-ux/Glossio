@@ -1,6 +1,9 @@
 import "./Home.css";
 
 import { useDashboardData } from "../../hooks/useDashboardData";
+import { useStatistics } from "../../hooks/useStatistics";
+import { useAchievements } from "../../hooks/useAchievements";
+import { getAchievementsSummary } from "../../utils/achievements";
 
 import { DashboardSection } from "../../components/home/DashboardSection/DashboardSection";
 import { PrimaryActionCard } from "../../components/home/PrimaryActionCard/PrimaryActionCard";
@@ -12,10 +15,15 @@ import { CourseCard } from "../../components/home/CourseCard/CourseCard";
 import { QuickStatsCard } from "../../components/home/QuickStatsCard/QuickStatsCard";
 import { AchievementCard } from "../../components/home/AchievementCard/AchievementCard";
 import { ResumeActivityCard } from "../../components/home/ResumeActivityCard/ResumeActivityCard";
+import { AchievementsSummaryCard } from "../../components/home/AchievementsSummaryCard/AchievementsSummaryCard";
+import { StatisticsSummaryCard } from "../../components/home/StatisticsSummaryCard/StatisticsSummaryCard";
 
 export function Home() {
 
     const dashboard = useDashboardData();
+    const statistics = useStatistics();
+    const achievements = useAchievements();
+    const achievementsSummary = getAchievementsSummary(achievements);
 
     return (
 
@@ -47,6 +55,11 @@ export function Home() {
             <DashboardSection title="Conquista recente" icon="star">
                 <AchievementCard achievement={dashboard.recentAchievement} />
             </DashboardSection>
+
+            <div className="home-dashboard__row animate-slide-up">
+                <AchievementsSummaryCard summary={achievementsSummary} />
+                <StatisticsSummaryCard statistics={statistics} />
+            </div>
 
             {dashboard.lastActivity && (
                 <DashboardSection title="Continuar de onde parou" icon="clock">

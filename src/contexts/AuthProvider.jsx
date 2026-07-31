@@ -42,15 +42,21 @@ export function AuthProvider({ children }) {
         setUser(null);
     }
 
+    function updateUser(patch) {
+        setUser(previous => ({ ...previous, ...patch }));
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 user,
+                token,
                 isAuthenticated: Boolean(user),
                 isLoading,
                 login,
                 register,
-                logout
+                logout,
+                updateUser
             }}
         >
             {children}

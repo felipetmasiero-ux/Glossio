@@ -22,6 +22,8 @@ import { Alphabets } from './pages/Alphabets'
 import { Profile } from './pages/Profile/Profile'
 import { About } from './pages/About/About'
 import { Roadmap } from './pages/Roadmap/Roadmap'
+import { Statistics } from './pages/Statistics/Statistics'
+import { Achievements } from './pages/Achievements/Achievements'
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
@@ -170,6 +172,16 @@ function App() {
                     <Route
                       path="/profile"
                       element={<Profile />}
+                    />
+
+                    <Route
+                      path="/statistics"
+                      element={<Statistics />}
+                    />
+
+                    <Route
+                      path="/achievements"
+                      element={<Achievements />}
                     />
 
                   </Route>

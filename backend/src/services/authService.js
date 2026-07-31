@@ -6,7 +6,7 @@ import { HttpError } from "../utils/HttpError.js";
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const SALT_ROUNDS = 10;
 
-function toPublicUser(user) {
+export function toPublicUser(user) {
     const { passwordHash, ...publicUser } = user;
     return publicUser;
 }
