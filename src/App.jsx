@@ -1,32 +1,38 @@
 import './App.css'
 import { Routes, Route } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 
-import { Landing } from "./pages/Landing/Landing";
-import { Login } from "./pages/Login/Login";
-import { Register } from "./pages/Register/Register";
-import { Home } from "./pages/Home/Home";
-import { LanguageSelection } from "./pages/LanguageSelection/LanguageSelection";
-import { Exercises } from "./pages/Exercises/Exercises";
-import { ExploreHub } from "./pages/ExploreHub/ExploreHub";
-import { ExploreVideoPage } from "./pages/ExploreVideoPage/ExploreVideoPage";
-import { ExerciseModuleLessonsPage } from "./pages/ExerciseModuleLessonsPage/ExerciseModuleLessonsPage";
-import { ExerciseSessionPage } from "./pages/ExerciseSessionPage/ExerciseSessionPage";
-import { MyFlashcards } from "./pages/MyFlashcards/MyFlashcards";
-import { StudyFlashcards } from "./pages/StudyFlashcards/StudyFlashcards";
-import { ModulesPage } from "./pages/ModulesPage/ModulesPage";
-import { ModuleLessonsPage } from "./pages/ModuleLessonsPage/ModuleLessonsPage";
-import { ModuleCompletePage } from "./pages/ModuleCompletePage/ModuleCompletePage";
-import { LessonPage } from "./pages/LessonPage/LessonPage";
-import { Alphabets } from './pages/Alphabets'
-import { Profile } from './pages/Profile/Profile'
-import { About } from './pages/About/About'
-import { Roadmap } from './pages/Roadmap/Roadmap'
-import { Statistics } from './pages/Statistics/Statistics'
-import { Achievements } from './pages/Achievements/Achievements'
+// Route-level code splitting: each page ships in its own chunk instead of
+// one large bundle, loaded on demand as the user navigates to it.
+const lazyPage = (loader, name) => lazy(() => loader().then(m => ({ default: m[name] })));
+
+const Landing = lazyPage(() => import("./pages/Landing/Landing"), "Landing");
+const Login = lazyPage(() => import("./pages/Login/Login"), "Login");
+const Register = lazyPage(() => import("./pages/Register/Register"), "Register");
+const Home = lazyPage(() => import("./pages/Home/Home"), "Home");
+const LanguageSelection = lazyPage(() => import("./pages/LanguageSelection/LanguageSelection"), "LanguageSelection");
+const Exercises = lazyPage(() => import("./pages/Exercises/Exercises"), "Exercises");
+const ExploreHub = lazyPage(() => import("./pages/ExploreHub/ExploreHub"), "ExploreHub");
+const ExploreVideoPage = lazyPage(() => import("./pages/ExploreVideoPage/ExploreVideoPage"), "ExploreVideoPage");
+const ExerciseModuleLessonsPage = lazyPage(() => import("./pages/ExerciseModuleLessonsPage/ExerciseModuleLessonsPage"), "ExerciseModuleLessonsPage");
+const ExerciseSessionPage = lazyPage(() => import("./pages/ExerciseSessionPage/ExerciseSessionPage"), "ExerciseSessionPage");
+const MyFlashcards = lazyPage(() => import("./pages/MyFlashcards/MyFlashcards"), "MyFlashcards");
+const StudyFlashcards = lazyPage(() => import("./pages/StudyFlashcards/StudyFlashcards"), "StudyFlashcards");
+const ModulesPage = lazyPage(() => import("./pages/ModulesPage/ModulesPage"), "ModulesPage");
+const ModuleLessonsPage = lazyPage(() => import("./pages/ModuleLessonsPage/ModuleLessonsPage"), "ModuleLessonsPage");
+const ModuleCompletePage = lazyPage(() => import("./pages/ModuleCompletePage/ModuleCompletePage"), "ModuleCompletePage");
+const LessonPage = lazyPage(() => import("./pages/LessonPage/LessonPage"), "LessonPage");
+const Alphabets = lazyPage(() => import("./pages/Alphabets"), "Alphabets");
+const Profile = lazyPage(() => import("./pages/Profile/Profile"), "Profile");
+const About = lazyPage(() => import("./pages/About/About"), "About");
+const Roadmap = lazyPage(() => import("./pages/Roadmap/Roadmap"), "Roadmap");
+const Statistics = lazyPage(() => import("./pages/Statistics/Statistics"), "Statistics");
+const Achievements = lazyPage(() => import("./pages/Achievements/Achievements"), "Achievements");
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
+import { PwaUpdatePrompt } from './components/common/PwaUpdatePrompt/PwaUpdatePrompt'
+import { Skeleton } from './components/common/Skeleton/Skeleton'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LanguageContext } from './contexts/LanguageContext'
 import { AuthProvider } from './contexts/AuthProvider'
@@ -67,6 +73,7 @@ function App() {
                 <Navbar />
 
                 <main className="app-layout__main">
+                <Suspense fallback={<Skeleton className="page-suspense-fallback" />}>
                 <Routes>
                   <Route
                     path="/"
@@ -187,9 +194,12 @@ function App() {
                   </Route>
 
                 </Routes>
+                </Suspense>
                 </main>
 
                 <Footer />
+
+                <PwaUpdatePrompt />
 
                 </LastActivityProvider>
               </ExerciseProgressProvider>

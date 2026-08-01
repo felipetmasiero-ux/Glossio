@@ -10,6 +10,12 @@
   flex: 1;
 }
 
+.page-suspense-fallback {
+  flex: 1;
+  min-height: 60vh;
+  margin: var(--space-7) var(--space-5);
+}
+
 .page-container {
   max-width: var(--content-width-md);
   width: 100%;
