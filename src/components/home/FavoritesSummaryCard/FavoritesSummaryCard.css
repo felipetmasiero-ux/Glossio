@@ -1,0 +1,26 @@
+.favorites-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.favorites-summary-card__body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.favorites-summary-card__icon {
+  display: inline-flex;
+  color: var(--color-warning);
+}
+
+.favorites-summary-card__value {
+  font: var(--text-h2);
+  color: var(--color-text);
+}
+
+.favorites-summary-card .button {
+  width: auto;
+  align-self: flex-start;
+}

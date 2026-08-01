@@ -3,7 +3,8 @@ import { EmptyState } from "../common/EmptyState/EmptyState";
 
 export function FlashcardsList({
   flashcards,
-  removeFlashcard
+  removeFlashcard,
+  toggleFavorite
 }) {
 
   if (flashcards.length === 0) {
@@ -23,6 +24,7 @@ export function FlashcardsList({
           key={card.id}
           card={card}
           removeFlashcard={removeFlashcard}
+          toggleFavorite={toggleFavorite}
         />
       ))}
     </div>

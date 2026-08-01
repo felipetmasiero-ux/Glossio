@@ -3,20 +3,25 @@ import { FlashcardContext } from "../../contexts/FlashcardContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 
 import { FlashcardsSearch } from "../../components/flashcards/FlashcardsSearch";
+import { FlashcardsFilterBar } from "../../components/flashcards/FlashcardsFilterBar";
 import { FlashcardCollections } from "../../components/flashcards/FlashcardCollections";
 import { FlashcardStats } from "../../components/flashcards/FlashcardStats";
 import { Section } from "../../components/common/Section/Section";
 import { SectionHeader } from "../../components/common/SectionHeader/SectionHeader";
 
 import { groupFlashcardsByTopic } from "../../utils/flashcards/groupFlashcardsByTopic";
+import { sortFlashcards, SORT_OPTIONS } from "../../utils/flashcards/sortFlashcards";
+import { filterFlashcards } from "../../utils/flashcards/filterFlashcards";
 
 import "./MyFlashcards.css";
 
 export function MyFlashcards() {
-  const { flashcards, removeFlashcard } = useContext(FlashcardContext);
+  const { flashcards, removeFlashcard, toggleFavorite } = useContext(FlashcardContext);
   const { language } = useContext(LanguageContext);
 
   const [search, setSearch] = useState("");
+  const [favoritesOnly, setFavoritesOnly] = useState(false);
+  const [sortBy, setSortBy] = useState(SORT_OPTIONS.ALPHA);
   const [now] = useState(() => Date.now());
 
   const languageCards = useMemo(
@@ -24,19 +29,10 @@ export function MyFlashcards() {
     [flashcards, language]
   );
 
-  const filteredCards = useMemo(() => {
-    const query = search.trim().toLowerCase();
-
-    if (!query) {
-      return languageCards;
-    }
-
-    return languageCards.filter(
-      (card) =>
-        card.word.toLowerCase().includes(query) ||
-        card.translation.toLowerCase().includes(query)
-    );
-  }, [languageCards, search]);
+  const filteredCards = useMemo(
+    () => filterFlashcards(languageCards, { search, favoritesOnly }),
+    [languageCards, search, favoritesOnly]
+  );
 
   const stats = useMemo(
     () => ({
@@ -54,24 +50,32 @@ export function MyFlashcards() {
     [languageCards, now]
   );
 
-  const collections = useMemo(
-    () => groupFlashcardsByTopic(languageCards),
-    [languageCards]
-  );
-
-  const filteredCollections = useMemo(
-    () => groupFlashcardsByTopic(filteredCards),
+  // Reacts to the active filters (search + favorites-only) - the whole point
+  // is to describe what's currently shown below, not the whole collection.
+  const favoriteCount = useMemo(
+    () => filteredCards.filter((card) => card.favorite).length,
     [filteredCards]
   );
 
-  const isSearching = search.trim().length > 0;
+  const collections = useMemo(() => {
+
+    const groups = groupFlashcardsByTopic(filteredCards);
+
+    return groups.map((group) => ({
+      topic: group.topic,
+      cards: sortFlashcards(group.cards, sortBy)
+    }));
+
+  }, [filteredCards, sortBy]);
+
+  const isFiltering = search.trim().length > 0 || favoritesOnly;
 
   return (
     <div className="flashcards-dashboard">
       <Section>
         <SectionHeader
           title="Meus Flashcards"
-          subtitle={`${stats.total} palavras · ${collections.length} tópicos`}
+          subtitle={`${filteredCards.length} palavras · ${favoriteCount} favoritas · ${collections.length} tópicos`}
         />
 
         <FlashcardStats
@@ -88,10 +92,18 @@ export function MyFlashcards() {
           setSearch={setSearch}
         />
 
+        <FlashcardsFilterBar
+          favoritesOnly={favoritesOnly}
+          setFavoritesOnly={setFavoritesOnly}
+          sortBy={sortBy}
+          setSortBy={setSortBy}
+        />
+
         <FlashcardCollections
-          collections={filteredCollections}
-          forceOpen={isSearching}
+          collections={collections}
+          forceOpen={isFiltering}
           removeFlashcard={removeFlashcard}
+          toggleFavorite={toggleFavorite}
         />
       </Section>
     </div>

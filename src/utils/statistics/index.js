@@ -5,4 +5,5 @@ export { getVideosCompleted } from "./getVideosCompleted";
 export { getStudyTimeEstimate } from "./getStudyTimeEstimate";
 export { getReviewStatistics } from "./getReviewStatistics";
 export { getKnownWordsByLevel } from "./getKnownWordsByLevel";
+export { getFavoriteWordsCount } from "./getFavoriteWordsCount";
 export { getStatisticsSummary } from "./getStatisticsSummary";

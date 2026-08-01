@@ -55,6 +55,12 @@ export const ACHIEVEMENT_DEFINITIONS = [
     { id: "vocabulary-100", category: ACHIEVEMENT_CATEGORIES.VOCABULARY, metric: "vocabularyCount", target: 100, icon: "list", title: "100 palavras", description: "Colecione 100 palavras." },
     { id: "vocabulary-250", category: ACHIEVEMENT_CATEGORIES.VOCABULARY, metric: "vocabularyCount", target: 250, icon: "list", title: "250 palavras", description: "Colecione 250 palavras." },
     { id: "vocabulary-500", category: ACHIEVEMENT_CATEGORIES.VOCABULARY, metric: "vocabularyCount", target: 500, icon: "list", title: "500 palavras", description: "Colecione 500 palavras." },
-    { id: "vocabulary-1000", category: ACHIEVEMENT_CATEGORIES.VOCABULARY, metric: "vocabularyCount", target: 1000, icon: "list", title: "1000 palavras", description: "Colecione 1000 palavras." }
+    { id: "vocabulary-1000", category: ACHIEVEMENT_CATEGORIES.VOCABULARY, metric: "vocabularyCount", target: 1000, icon: "list", title: "1000 palavras", description: "Colecione 1000 palavras." },
+
+    // Collect — flashcards marked as favorite
+    { id: "favorites-1", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 1, icon: "star", title: "Primeira favorita", description: "Favorite sua primeira palavra." },
+    { id: "favorites-10", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 10, icon: "star", title: "10 favoritas", description: "Favorite 10 palavras." },
+    { id: "favorites-25", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 25, icon: "star", title: "25 favoritas", description: "Favorite 25 palavras." },
+    { id: "favorites-50", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 50, icon: "star", title: "50 favoritas", description: "Favorite 50 palavras." }
 
 ];

@@ -1,6 +1,7 @@
 import { Card } from "../common/Card/Card";
 import { Button } from "../common/Button/Button";
 import { Badge } from "../common/Badge/Badge";
+import { Icon } from "../common/Icon/Icon";
 import { formatNextReview } from "../../utils/flashcards/formatNextReview";
 import "./FlashcardItem.css";
 
@@ -18,7 +19,8 @@ const LEVEL_LABELS = {
 
 export function FlashcardItem({
   card,
-  removeFlashcard
+  removeFlashcard,
+  toggleFavorite
 }) {
 
   let level = "New";
@@ -27,6 +29,16 @@ export function FlashcardItem({
 
   return (
     <Card className="flashcard-item card--notch">
+      <button
+        type="button"
+        className={`flashcard-item-favorite${card.favorite ? " flashcard-item-favorite--active" : ""}`}
+        aria-label={card.favorite ? "Remover dos favoritos" : "Adicionar aos favoritos"}
+        aria-pressed={Boolean(card.favorite)}
+        onClick={() => toggleFavorite(card.id)}
+      >
+        <Icon name="star" fill={card.favorite ? "currentColor" : "none"} size={18} />
+      </button>
+
       <div>
         <h3>{card.word}</h3>
         <p className="text-secondary">{card.translation}</p>

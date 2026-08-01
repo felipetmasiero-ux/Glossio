@@ -1,8 +1,38 @@
 .flashcard-item {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: var(--space-3);
+}
+
+/* Top-left, mirroring the card--notch fold in the top-right corner. */
+.flashcard-item-favorite {
+  position: absolute;
+  top: var(--space-3);
+  left: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: color var(--t-fast);
+}
+
+.flashcard-item-favorite:hover {
+  color: var(--color-warning);
+}
+
+.flashcard-item-favorite--active {
+  color: var(--color-warning);
+  animation: celebrate-pop var(--t-fast);
+}
+
+.flashcard-item h3 {
+  padding-left: var(--space-6);
 }
 
 .flashcard-item h3 {

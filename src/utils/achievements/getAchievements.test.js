@@ -76,4 +76,25 @@ describe("getAchievements", () => {
 
     });
 
+    it("computes favorites progress only from favorited cards in the current language", () => {
+
+        const flashcards = [
+            ...Array.from({ length: 10 }, (_, i) => flashcard(`fav-${i}`, { favorite: true })),
+            ...Array.from({ length: 5 }, (_, i) => flashcard(`notfav-${i}`, { favorite: false })),
+            flashcard("french-fav", { favorite: true, language: "French" })
+        ];
+
+        const achievements = getAchievements({ language: "English", flashcards, events: [], completedLessons: [] });
+
+        const tier1 = achievements.find(a => a.id === "favorites-1");
+        const tier10 = achievements.find(a => a.id === "favorites-10");
+        const tier25 = achievements.find(a => a.id === "favorites-25");
+
+        expect(tier1.completed).toBe(true);
+        expect(tier10.completed).toBe(true);
+        expect(tier25.completed).toBe(false);
+        expect(tier25.progress).toBe(10);
+
+    });
+
 });

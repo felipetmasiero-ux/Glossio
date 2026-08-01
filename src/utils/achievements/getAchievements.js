@@ -6,7 +6,8 @@ import {
     getLessonsCompleted,
     getVideosCompleted,
     getTotalWordsLearned,
-    getReviewStatistics
+    getReviewStatistics,
+    getFavoriteWordsCount
 } from "../statistics";
 
 // Nothing here is persisted - every achievement's progress is recalculated
@@ -23,7 +24,8 @@ export function getAchievements({ language, completedLessons = [], flashcards = 
         flashcardsCount: wordsCount,
         vocabularyCount: wordsCount,
         totalReviews: getReviewStatistics({ flashcards, events, language }).totalReviews,
-        currentStreak: getStreak(activityRecords).current
+        currentStreak: getStreak(activityRecords).current,
+        favoritesCount: getFavoriteWordsCount({ flashcards, language })
     };
 
     return ACHIEVEMENT_DEFINITIONS.map(definition => {

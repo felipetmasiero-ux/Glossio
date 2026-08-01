@@ -17,6 +17,7 @@ import { AchievementCard } from "../../components/home/AchievementCard/Achieveme
 import { ResumeActivityCard } from "../../components/home/ResumeActivityCard/ResumeActivityCard";
 import { AchievementsSummaryCard } from "../../components/home/AchievementsSummaryCard/AchievementsSummaryCard";
 import { StatisticsSummaryCard } from "../../components/home/StatisticsSummaryCard/StatisticsSummaryCard";
+import { FavoritesSummaryCard } from "../../components/home/FavoritesSummaryCard/FavoritesSummaryCard";
 
 export function Home() {
 
@@ -60,6 +61,10 @@ export function Home() {
                 <AchievementsSummaryCard summary={achievementsSummary} />
                 <StatisticsSummaryCard statistics={statistics} />
             </div>
+
+            <DashboardSection title="Favoritos" icon="star">
+                <FavoritesSummaryCard favoriteCount={statistics.favoriteWords} />
+            </DashboardSection>
 
             {dashboard.lastActivity && (
                 <DashboardSection title="Continuar de onde parou" icon="clock">

@@ -6,7 +6,8 @@ import { EmptyState } from "../common/EmptyState/EmptyState";
 export function FlashcardCollections({
   collections,
   forceOpen,
-  removeFlashcard
+  removeFlashcard,
+  toggleFavorite
 }) {
 
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ export function FlashcardCollections({
           cards={collection.cards}
           forceOpen={forceOpen}
           removeFlashcard={removeFlashcard}
+          toggleFavorite={toggleFavorite}
         />
       ))}
     </div>

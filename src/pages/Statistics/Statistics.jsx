@@ -36,6 +36,7 @@ export function Statistics() {
                 <StatsCard value={statistics.reviews.total} label="Flashcards" icon="list" />
                 <StatsCard value={statistics.reviews.totalReviews} label="Revisões" icon="target" />
                 <StatsCard value={statistics.streak.current} label="Sequência" icon="flame" />
+                <StatsCard value={statistics.favoriteWords} label="Favoritas" icon="star" />
 
             </StatsGrid>
 

@@ -41,6 +41,49 @@ test.describe("Cloud Sync", () => {
         await contextB.close();
     });
 
+    test("favoriting a flashcard in one browser shows up favorited after logging in from another", async ({ browser, request }) => {
+        const user = makeTestUser("favorite-sync");
+
+        const contextA = await browser.newContext();
+        const pageA = await contextA.newPage();
+
+        await registerAndOnboard(pageA, user, "English");
+        await openModule(pageA, "English A1");
+        await openLesson(pageA, "Greetings");
+        await addFlashcardFromLessonVocabulary(pageA, "hello");
+
+        await goToMyFlashcards(pageA);
+        await pageA.getByRole("heading", { name: "Cumprimentos" }).click();
+        await pageA.locator(".flashcard-item").filter({ hasText: "hello" })
+            .getByRole("button", { name: "Adicionar aos favoritos" }).click();
+
+        const token = await readAuthToken(pageA);
+        await expect(async () => {
+            const response = await request.get("http://localhost:4000/api/flashcards", {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+            expect(response.ok()).toBeTruthy();
+            const cards = await response.json();
+            expect(cards.some(card => card.word.toLowerCase() === "hello" && card.favorite)).toBeTruthy();
+        }).toPass({ timeout: 20_000, intervals: [500, 1000, 2000] });
+
+        const contextB = await browser.newContext();
+        const pageB = await contextB.newPage();
+
+        await submitLoginForm(pageB, user);
+        await chooseLanguage(pageB, "English");
+
+        await goToMyFlashcards(pageB);
+        await pageB.getByRole("heading", { name: "Cumprimentos" }).click();
+        await expect(
+            pageB.locator(".flashcard-item").filter({ hasText: "hello" })
+                .getByRole("button", { name: "Remover dos favoritos" })
+        ).toBeVisible();
+
+        await contextA.close();
+        await contextB.close();
+    });
+
     // Regression test (Sprint 33) for the project's most serious known bug:
     // cloud sync only pushes local changes every 8s (or on pagehide), and
     // hydrate() used to unconditionally overwrite local state with whatever

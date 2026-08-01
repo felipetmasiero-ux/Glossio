@@ -7,7 +7,8 @@ export function CollectionSection({
   topic,
   cards,
   forceOpen,
-  removeFlashcard
+  removeFlashcard,
+  toggleFavorite
 }) {
 
   const [open, setOpen] = useState(false);
@@ -25,7 +26,7 @@ export function CollectionSection({
       </summary>
 
       <div className="collection-section__body">
-        <FlashcardsList flashcards={cards} removeFlashcard={removeFlashcard} />
+        <FlashcardsList flashcards={cards} removeFlashcard={removeFlashcard} toggleFavorite={toggleFavorite} />
       </div>
     </details>
   );

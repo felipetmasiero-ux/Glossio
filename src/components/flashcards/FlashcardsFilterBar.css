@@ -1,0 +1,46 @@
+.flashcards-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.flashcards-filter-bar__toggle {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.flashcards-filter-bar__option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font: var(--text-body);
+  font-weight: var(--weight-semibold);
+  cursor: pointer;
+  transition: background var(--t-fast), color var(--t-fast);
+}
+
+.flashcards-filter-bar__option--active {
+  background: var(--color-primary);
+  color: var(--color-text-on-primary);
+}
+
+.flashcards-filter-bar__sort {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.flashcards-filter-bar__sort select {
+  width: auto;
+  padding: var(--space-2) var(--space-3);
+}

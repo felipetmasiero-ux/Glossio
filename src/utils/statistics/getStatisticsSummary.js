@@ -9,6 +9,7 @@ import { getVideosCompleted } from "./getVideosCompleted";
 import { getStudyTimeEstimate } from "./getStudyTimeEstimate";
 import { getReviewStatistics } from "./getReviewStatistics";
 import { getKnownWordsByLevel } from "./getKnownWordsByLevel";
+import { getFavoriteWordsCount } from "./getFavoriteWordsCount";
 
 export function getStatisticsSummary({ language, completedLessons = [], flashcards = [], events = [] }) {
 
@@ -18,6 +19,7 @@ export function getStatisticsSummary({ language, completedLessons = [], flashcar
         totalWordsLearned: getTotalWordsLearned({ flashcards, language }),
         wordsByTopic: getWordsByTopic({ flashcards, language }),
         knownWordsByLevel: getKnownWordsByLevel({ flashcards, language }),
+        favoriteWords: getFavoriteWordsCount({ flashcards, language }),
         lessonsCompleted: getLessonsCompleted({ completedLessons, language }),
         videosCompleted: getVideosCompleted({ language }),
         studyMinutes: getStudyTimeEstimate({ completedLessons, language }),
