@@ -51,18 +51,26 @@ function buildIndex(language) {
 
 function getIndex(language) {
 
-    if (!indexCache.has(language)) {
-        indexCache.set(language, buildIndex(language));
+    const key = language?.toLowerCase();
+
+    if (!indexCache.has(key)) {
+        indexCache.set(key, buildIndex(key));
     }
 
-    return indexCache.get(language);
+    return indexCache.get(key);
 
 }
 
 export const DictionaryRepository = {
 
+    // Consumers pass `language` in whatever casing they have on hand -
+    // display-cased from LanguageContext ("English"), lowercase from video
+    // data ("english"), etc. Normalizing once here (matching the pattern
+    // VideoRepository/VideoProgressRepository already use) is the single
+    // point where that gets reconciled with `dictionaries`' lowercase keys,
+    // instead of every caller needing to remember to lowercase it first.
     getAll(language) {
-        return dictionaries[language] ?? [];
+        return dictionaries[language?.toLowerCase()] ?? [];
     },
 
     getEntry(language, word) {

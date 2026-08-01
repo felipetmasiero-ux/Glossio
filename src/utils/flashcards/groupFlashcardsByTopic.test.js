@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 
 import { groupFlashcardsByTopic, OTHER_TOPIC } from "./groupFlashcardsByTopic";
+import { DictionaryRepository } from "../../repositories/DictionaryRepository";
 
 const entriesByWord = {
     coffee: { word: "coffee", topic: "food" },
@@ -99,6 +100,28 @@ describe("groupFlashcardsByTopic", () => {
         groupFlashcardsByTopic(input, fakeDictionary);
 
         expect(input).toEqual(copy);
+
+    });
+
+    describe("with the real DictionaryRepository (regression)", () => {
+
+        // Cards store `language` exactly as LanguageContext provides it -
+        // display-cased ("English"), not the "english" key the dictionary
+        // data is keyed by. Using the fake dictionary above wouldn't catch a
+        // casing mismatch since its lookup ignores `language` entirely; this
+        // exercises the real default dictionary the app actually uses.
+        it("finds a real topic for a card whose language is display-cased", () => {
+
+            const result = groupFlashcardsByTopic([
+                { id: "hello", word: "hello", translation: "olá", language: "English" }
+            ], DictionaryRepository);
+
+            expect(result).toEqual([
+                { topic: DictionaryRepository.getEntry("english", "hello").topic, cards: [{ id: "hello", word: "hello", translation: "olá", language: "English" }] }
+            ]);
+            expect(result[0].topic).not.toBe(OTHER_TOPIC);
+
+        });
 
     });
 

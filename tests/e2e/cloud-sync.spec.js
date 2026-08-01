@@ -3,29 +3,7 @@ import { makeTestUser, registerAndOnboard, submitLoginForm, chooseLanguage } fro
 import { openModule, openLesson } from "./fixtures/lesson-helpers.js";
 import { addFlashcardFromLessonVocabulary } from "./fixtures/flashcard-helpers.js";
 import { goToMyFlashcards } from "./fixtures/nav-helpers.js";
-
-const API_URL = "http://localhost:4000/api";
-
-/** Reads the JWT AuthProvider stores in localStorage under "authToken". */
-async function readAuthToken(page) {
-    return page.evaluate(() => localStorage.getItem("authToken"));
-}
-
-/**
- * Cloud sync only pushes on an interval (or on pagehide), so instead of an
- * arbitrary sleep we poll the real backend until the change we expect has
- * actually landed - an explicit wait on real state, not on a clock.
- */
-async function waitForFlashcardSynced(request, token, word) {
-    await expect(async () => {
-        const response = await request.get(`${API_URL}/flashcards`, {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        expect(response.ok()).toBeTruthy();
-        const cards = await response.json();
-        expect(cards.some(card => card.word.toLowerCase() === word.toLowerCase())).toBeTruthy();
-    }).toPass({ timeout: 20_000, intervals: [500, 1000, 2000] });
-}
+import { readAuthToken, waitForFlashcardSynced } from "./fixtures/sync-helpers.js";
 
 test.describe("Cloud Sync", () => {
 
@@ -56,14 +34,38 @@ test.describe("Cloud Sync", () => {
         await chooseLanguage(pageB, "English");
 
         await goToMyFlashcards(pageB);
-        // NOTE: flashcards are always grouped under "Outros" today due to a
-        // real app bug (see collect.spec.js) - not something this test is
-        // meant to catch, so we just open whatever single collection exists.
-        await pageB.getByRole("heading", { name: "Outros" }).click();
+        await pageB.getByRole("heading", { name: "Cumprimentos" }).click();
         await expect(pageB.locator(".flashcard-item").filter({ hasText: "hello" })).toBeVisible();
 
         await contextA.close();
         await contextB.close();
+    });
+
+    // Regression test (Sprint 33) for the project's most serious known bug:
+    // cloud sync only pushes local changes every 8s (or on pagehide), and
+    // hydrate() used to unconditionally overwrite local state with whatever
+    // the server still had on file - so refreshing right after a change,
+    // before either of those had a chance to run, silently reverted it. The
+    // fix tracks a persisted "last confirmed synced" marker per resource and
+    // only lets the server overwrite local when local still matches it.
+    test("a local change survives an immediate refresh, before the periodic push fires", async ({ page, request }) => {
+        const user = makeTestUser("refresh-race");
+        await registerAndOnboard(page, user, "English");
+
+        await openModule(page, "English A1");
+        await openLesson(page, "Greetings");
+        await addFlashcardFromLessonVocabulary(page, "hello");
+
+        await page.reload();
+
+        await goToMyFlashcards(page);
+        await page.getByRole("heading", { name: "Cumprimentos" }).click();
+        await expect(page.locator(".flashcard-item").filter({ hasText: "hello" })).toBeVisible({ timeout: 15_000 });
+
+        // It should still reach the server eventually too - either via the
+        // pagehide-triggered flush right before the reload, or the next tick.
+        const token = await readAuthToken(page);
+        await waitForFlashcardSynced(request, token, "hello");
     });
 
 });

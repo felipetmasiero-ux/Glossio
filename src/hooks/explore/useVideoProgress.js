@@ -14,7 +14,11 @@ export function useVideoProgress(video) {
         video ? VideoProgressRepository.getVideoProgress(video.language, video.id) : null
     );
 
-    const [completed, setCompleted] = useState(false);
+    // Must reflect any saved progress right away, not just after a fresh
+    // `handleEnded()` fires this session - otherwise reopening a video
+    // already marked completed briefly (or permanently, since nothing else
+    // ever flips it) shows the player again instead of the completion screen.
+    const [completed, setCompleted] = useState(() => Boolean(initialProgress?.completed));
 
     const playLoggedRef = useRef(false);
 

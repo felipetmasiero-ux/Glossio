@@ -68,7 +68,7 @@ export async function loginUser({ email, password }) {
 export async function getUserById(id) {
     const user = await prisma.user.findUnique({ where: { id } });
     if (!user) {
-        throw new HttpError(404, "User not found.");
+        throw new HttpError(404, "Usuário não encontrado.");
     }
     return toPublicUser(user);
 }

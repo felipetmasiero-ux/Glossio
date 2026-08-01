@@ -6,7 +6,7 @@ export function auth(req, res, next) {
     const [scheme, token] = header.split(" ");
 
     if (scheme !== "Bearer" || !token) {
-        return next(new HttpError(401, "Missing or malformed authorization header."));
+        return next(new HttpError(401, "Cabeçalho de autorização ausente ou inválido."));
     }
 
     try {
@@ -14,6 +14,6 @@ export function auth(req, res, next) {
         req.userId = payload.sub;
         next();
     } catch {
-        next(new HttpError(401, "Invalid or expired token."));
+        next(new HttpError(401, "Sessão expirada. Faça login novamente."));
     }
 }

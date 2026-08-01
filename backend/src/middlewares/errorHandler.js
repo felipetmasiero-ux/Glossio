@@ -1,7 +1,7 @@
 import { HttpError } from "../utils/HttpError.js";
 
 export function notFound(req, res) {
-    res.status(404).json({ error: "Not found." });
+    res.status(404).json({ error: "Não encontrado." });
 }
 
 export function errorHandler(err, req, res, next) {
@@ -10,5 +10,5 @@ export function errorHandler(err, req, res, next) {
     }
 
     console.error(err);
-    res.status(500).json({ error: "Internal server error." });
+    res.status(500).json({ error: "Erro interno do servidor." });
 }

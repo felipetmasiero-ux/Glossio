@@ -9,7 +9,7 @@ const EDITABLE_FIELDS = ["name", "avatarUrl", "bio", "preferredLanguage", "count
 export async function getUserProfile(userId) {
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        throw new HttpError(404, "User not found.");
+        throw new HttpError(404, "Usuário não encontrado.");
     }
     return toPublicUser(user);
 }
@@ -37,7 +37,7 @@ export async function changePassword(userId, { currentPassword, newPassword }) {
 
     const user = await prisma.user.findUnique({ where: { id: userId } });
     if (!user) {
-        throw new HttpError(404, "User not found.");
+        throw new HttpError(404, "Usuário não encontrado.");
     }
 
     const currentMatches = await bcrypt.compare(currentPassword || "", user.passwordHash);

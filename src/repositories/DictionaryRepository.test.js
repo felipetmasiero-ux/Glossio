@@ -133,4 +133,36 @@ describe("DictionaryRepository", () => {
 
     });
 
+    describe("language casing", () => {
+
+        // LanguageContext stores the display-cased value the user picked on
+        // the language selection screen ("English"), not "english" - every
+        // consumer that reads useLanguage() and forwards it here (flashcards,
+        // word popups, transcripts) passes whatever casing it received.
+        // Regression test for the bug where this silently returned an empty
+        // dictionary and sent every flashcard into the "Outros" bucket.
+        it("finds entries regardless of the language argument's casing", () => {
+
+            const lower = DictionaryRepository.getEntry("english", "hello");
+            const capitalized = DictionaryRepository.getEntry("English", "hello");
+            const upper = DictionaryRepository.getEntry("ENGLISH", "hello");
+
+            expect(lower).not.toBeNull();
+            expect(capitalized).toBe(lower);
+            expect(upper).toBe(lower);
+
+        });
+
+        it("returns the same non-empty list from getAll regardless of casing", () => {
+
+            const lower = DictionaryRepository.getAll("english");
+            const capitalized = DictionaryRepository.getAll("English");
+
+            expect(lower.length).toBeGreaterThan(0);
+            expect(capitalized).toEqual(lower);
+
+        });
+
+    });
+
 });

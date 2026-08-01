@@ -77,4 +77,29 @@ test.describe("Explore (English)", () => {
         await expect(page.getByRole("button", { name: "Voltar ao Explore" })).toBeVisible();
     });
 
+    // Regression test (Sprint 33): useVideoProgress's `completed` state used
+    // to always initialize to `false`, ignoring any already-saved progress,
+    // so reopening a video that had genuinely been completed in an earlier
+    // session showed the player again instead of the completion screen.
+    test("reopening an already-completed video shows the completion screen right away", async ({ authedPage: page }) => {
+        await openVideo(page);
+
+        const transcript = page.locator(".interactive-transcript");
+        await expect(transcript).toBeVisible({ timeout: 15_000 });
+
+        await postYtCommand(page, "seekTo", [108, true]);
+        await postYtCommand(page, "playVideo");
+
+        await expect(page.getByText("Vídeo concluído")).toBeVisible({ timeout: 20_000 });
+
+        await page.reload();
+
+        // The reload re-runs the full cloud sync hydrate chain (five
+        // sequential API calls) before this page even renders, on top of
+        // AuthProvider's own /me round trip - well past the default timeout
+        // under real network/db latency.
+        await expect(page.getByText("Vídeo concluído")).toBeVisible({ timeout: 15_000 });
+        await expect(page.locator(".video-player iframe")).toHaveCount(0);
+    });
+
 });

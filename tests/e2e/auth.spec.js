@@ -75,4 +75,30 @@ test.describe("Authentication", () => {
         await expect(page).toHaveURL(/\/home$/);
     });
 
+    // Regression test (Sprint 33): ProtectedRoute always attached
+    // state={{from: location}} to its "/login" redirect, even when the
+    // redirect was caused by the user logging out from a protected page (not
+    // a deep-link attempt). That stale "from" could win a render race against
+    // the navbar's own clean logout navigation, and would then send a later,
+    // unrelated login back to whatever protected page the user had been on
+    // when they logged out - here, deliberately NOT going through any
+    // pre-navigation "flush" step, to exercise the app's own redirect logic
+    // directly rather than a test-side workaround.
+    test("logging back in after logout lands on home, not a previously visited protected page", async ({ page }) => {
+        const user = makeTestUser("clean-redirect");
+        await registerAndOnboard(page, user, "English");
+
+        await page.getByRole("link", { name: "Flashcards", exact: true }).click();
+        await page.waitForURL("**/flashcards");
+
+        await logout(page);
+
+        await page.getByPlaceholder("E-mail", { exact: true }).fill(user.email);
+        await page.getByPlaceholder("Senha", { exact: true }).fill(user.password);
+        await page.getByRole("button", { name: "Entrar", exact: true }).click();
+
+        await page.waitForURL("**/home");
+        await expect(page).toHaveURL(/\/home$/);
+    });
+
 });
