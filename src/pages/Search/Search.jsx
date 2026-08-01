@@ -28,7 +28,9 @@ export function Search() {
         lessons,
         videos,
         dictionary,
-        flashcards
+        flashcards,
+        grammar,
+        placementTest
     } = useUniversalSearch();
 
     return (
@@ -50,7 +52,7 @@ export function Search() {
                 <EmptyState
                     icon="search"
                     title="Busque em todo o Glossio"
-                    description="Encontre lições, vídeos, palavras do dicionário e flashcards em um único lugar."
+                    description="Encontre lições, vídeos, palavras do dicionário, flashcards, gramática e o teste de nivelamento em um único lugar."
                 />
             )}
 
@@ -112,6 +114,32 @@ export function Search() {
                                 query={matchedQuery}
                                 meta={result.data.translation}
                                 onClick={() => navigate(`/my-flashcards?search=${encodeURIComponent(result.label)}`)}
+                            />
+                        ))}
+                    </SearchResultsSection>
+
+                    <SearchResultsSection title="Gramática" count={grammar.length}>
+                        {grammar.map(result => (
+                            <SearchResultRow
+                                key={result.id}
+                                icon="ruler"
+                                title={result.label}
+                                query={matchedQuery}
+                                meta={`${TOPIC_LABELS[result.data.topic] ?? result.data.topic} • ${language} ${result.data.level}`}
+                                onClick={() => navigate(`/grammar?topic=${encodeURIComponent(result.id)}`)}
+                            />
+                        ))}
+                    </SearchResultsSection>
+
+                    <SearchResultsSection title="Placement Test" count={placementTest.length}>
+                        {placementTest.map(result => (
+                            <SearchResultRow
+                                key={result.id}
+                                icon="target"
+                                title={result.label}
+                                query={matchedQuery}
+                                meta={result.data.description}
+                                onClick={() => navigate("/placement-test")}
                             />
                         ))}
                     </SearchResultsSection>

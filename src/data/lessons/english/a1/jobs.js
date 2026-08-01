@@ -1,3 +1,4 @@
+import { jobsBlocks } from "../../../grammar/shared/english/jobs";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const jobsLesson = {
             { speaker: "Sofia", text: "I teach English to beginners." }
         ]),
 
-        grammar(
-            "A vs An with Professions",
-            "Use 'a' before a consonant sound: 'a teacher', 'a doctor'. Use 'an' before a vowel sound: 'an engineer', 'an artist'. Never say 'I am teacher' — the article is required in English."
-        ),
+        grammar(jobsBlocks[0].title, jobsBlocks[0].text),
 
         list([
 

@@ -1,3 +1,4 @@
+import { technologyBlocks } from "../../../grammar/shared/french/technology";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const technologyLesson = {
             { speaker: "Grand-mère", text: "Je sais. La technologie était tellement plus simple avant." }
         ]),
 
-        grammar(
-            "L'Imparfait pour les Habitudes Passées",
-            "Utilise l'imparfait pour des habitudes ou des états passés qui ne sont plus vrais : 'J'avais un téléphone à clapet.' Cela contraste avec le présent : 'Avant, on écrivait des lettres ; maintenant, on envoie des messages.'"
-        ),
+        grammar(technologyBlocks[0].title, technologyBlocks[0].text),
 
         list([
 

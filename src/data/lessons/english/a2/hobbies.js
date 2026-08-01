@@ -1,3 +1,4 @@
+import { hobbiesBlocks } from "../../../grammar/shared/english/hobbies";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const hobbiesLesson = {
             { speaker: "Marco", text: "That's nice. I hate doing puzzles, though!" }
         ]),
 
-        grammar(
-            "Gerunds After Like/Love/Hate/Enjoy",
-            "Use verb + -ing after 'like', 'love', 'hate' and 'enjoy': 'I like drawing.' / 'She hates doing puzzles.' Also use -ing after 'be interested in': 'I'm interested in painting.'"
-        ),
+        grammar(hobbiesBlocks[0].title, hobbiesBlocks[0].text),
 
         list([
 

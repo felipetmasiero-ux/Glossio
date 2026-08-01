@@ -1,0 +1,103 @@
+.placement-test-page {
+  max-width: var(--content-width-md);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.placement-test-page__label {
+  color: var(--color-primary);
+  margin-bottom: calc(-1 * var(--space-3));
+}
+
+.placement-test-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.placement-test-page__subtitle {
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.placement-test-page__languages {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+}
+
+.placement-test-page__progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.placement-test-question {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.placement-test-question__prompt {
+  font: var(--text-h3);
+  color: var(--color-text);
+}
+
+.placement-test-question__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.placement-test-question__option {
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color var(--t-fast), background var(--t-fast);
+}
+
+.placement-test-question__option:hover {
+  border-color: var(--color-border-strong);
+}
+
+.placement-test-question__option--selected {
+  border-color: var(--color-primary);
+  background: var(--color-primary-light);
+  color: var(--color-primary-dark);
+}
+
+.placement-test-page__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.placement-test-page__actions .button {
+  width: auto;
+}
+
+.placement-test-result {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+}
+
+.placement-test-result__eyebrow {
+  color: var(--color-text-muted);
+}
+
+.placement-test-result__level {
+  font: var(--text-display);
+  color: var(--color-primary);
+}
+
+.placement-test-result__message {
+  max-width: 60ch;
+}

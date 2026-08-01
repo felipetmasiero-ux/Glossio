@@ -1,3 +1,4 @@
+import { jobsBlocks } from "../../../grammar/shared/portuguese/jobs";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const jobsLesson = {
             { speaker: "Sofia", text: "Eu ensino português para iniciantes." }
         ]),
 
-        grammar(
-            "Masculino e Feminino nas Profissões",
-            "Most job titles change form between masculine and feminine: professor/professora, enfermeiro/enfermeira, estudante (invariable). Some, like 'gerente' and 'estudante', stay the same regardless of gender."
-        ),
+        grammar(jobsBlocks[0].title, jobsBlocks[0].text),
 
         list([
 

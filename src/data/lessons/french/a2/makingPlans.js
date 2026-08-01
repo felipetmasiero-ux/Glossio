@@ -1,3 +1,4 @@
+import { makingPlansBlocks } from "../../../grammar/shared/french/makingPlans";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const makingPlansLesson = {
             { speaker: "Marco", text: "Parfait. S'il te plaît, n'annule pas cette fois !" }
         ]),
 
-        grammar(
-            "Le Futur Proche pour les Plans",
-            "Utilise le futur proche (aller + infinitif) pour parler de plans déjà arrangés dans le futur : 'Je vais retrouver Ana vendredi.' C'est différent du futur simple, plutôt utilisé pour des prédictions."
-        ),
+        grammar(makingPlansBlocks[0].title, makingPlansBlocks[0].text),
 
         list([
 

@@ -70,6 +70,14 @@ export function Landing() {
                     Começar agora
                 </Button>
 
+                <button
+                    type="button"
+                    className="landing-hero__placement-test-link"
+                    onClick={() => navigate("/placement-test")}
+                >
+                    Já sabe um pouco? Faça um teste.
+                </button>
+
                 <ul className="landing-hero__languages">
                     {LANGUAGES.map(lang => (
                         <li key={lang.name}>

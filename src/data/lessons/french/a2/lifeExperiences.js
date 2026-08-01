@@ -1,3 +1,4 @@
+import { lifeExperiencesBlocks } from "../../../grammar/shared/french/lifeExperiences";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const lifeExperiencesLesson = {
             { speaker: "Marco", text: "Certainement. Mais c'est une de mes plus grandes réussites." }
         ]),
 
-        grammar(
-            "Le Passé Composé pour l'Expérience",
-            "Utilise avoir/être + participe passé pour parler d'expériences de vie : 'J'ai visité le Japon.' Utilise 'déjà' pour une expérience déjà vécue : 'As-tu déjà visité le Japon ?' Utilise 'jamais' pour une expérience négative : 'Je n'ai jamais visité le Japon.' Utilise 'ne... pas encore' pour quelque chose non accompli."
-        ),
+        grammar(lifeExperiencesBlocks[0].title, lifeExperiencesBlocks[0].text),
 
         list([
 

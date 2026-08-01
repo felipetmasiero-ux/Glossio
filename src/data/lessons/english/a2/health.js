@@ -1,3 +1,4 @@
+import { healthBlocks } from "../../../grammar/shared/english/health";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const healthLesson = {
             { speaker: "Doctor", text: "You should rest and take this medicine twice a day." }
         ]),
 
-        grammar(
-            "Should for Advice",
-            "Use 'should' + base verb to give advice: 'You should drink water.' Use 'shouldn't' for negative advice: 'You shouldn't skip meals.' Ask for advice with 'Should I...?': 'Should I see a doctor?'"
-        ),
+        grammar(healthBlocks[0].title, healthBlocks[0].text),
 
         list([
 

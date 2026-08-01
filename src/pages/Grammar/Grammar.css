@@ -1,0 +1,123 @@
+.grammar-page {
+  max-width: var(--content-width-lg);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-5) var(--space-9);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.grammar-page__label {
+  color: var(--color-primary);
+  margin-bottom: calc(-1 * var(--space-3));
+}
+
+.grammar-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.grammar-page__subtitle {
+  margin-top: calc(-1 * var(--space-3));
+}
+
+.grammar-page__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.grammar-page__nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.grammar-nav-group__title {
+  font: var(--text-h3);
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+
+.grammar-nav-item {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface);
+  overflow: hidden;
+  margin-bottom: var(--space-3);
+}
+
+.grammar-nav-item__button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  width: 100%;
+  padding: var(--space-4);
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: background var(--t-fast);
+}
+
+.grammar-nav-item__button:hover {
+  background: var(--color-surface-sunken);
+}
+
+.grammar-nav-item__button--active {
+  background: var(--color-primary-light);
+}
+
+.grammar-nav-item__title {
+  font: var(--text-body-md);
+  color: var(--color-text);
+}
+
+.grammar-nav-item__meta {
+  color: var(--color-text-secondary);
+}
+
+.grammar-nav-item__mobile-content {
+  padding: 0 var(--space-4) var(--space-4);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Desktop-only side pane; the mobile accordion content above stays hidden. */
+.grammar-page__content {
+  display: none;
+}
+
+@media (min-width: 880px) {
+
+  .grammar-page__layout {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .grammar-page__nav {
+    flex: 1 1 38%;
+    max-width: 360px;
+    position: sticky;
+    top: var(--space-5);
+    max-height: calc(100vh - var(--space-9));
+    overflow-y: auto;
+  }
+
+  .grammar-nav-item__mobile-content {
+    display: none;
+  }
+
+  .grammar-page__content {
+    display: block;
+    flex: 1 1 62%;
+    min-width: 0;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    background: var(--color-surface);
+    padding: var(--space-6);
+  }
+
+}

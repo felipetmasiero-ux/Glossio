@@ -9,10 +9,15 @@ import "./Navbar.css";
 
 const HIDDEN_PATHS = ["/", "/choose-language", "/login", "/register"];
 
+// Unlike every other route that ever shows the Navbar, /placement-test is
+// reachable while logged out (from the Landing page) - so it only earns the
+// full authenticated chrome once there's actually a session to show.
+const PUBLIC_PATHS_HIDDEN_WHEN_LOGGED_OUT = ["/placement-test"];
+
 export function Navbar() {
 
   const { language } = useContext(LanguageContext);
-  const { user, logout } = useAuth();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -21,10 +26,13 @@ export function Navbar() {
     { to: "/home", label: "Home" },
     { to: "/lessons", label: "Cursos" },
     { to: "/explore", label: "Explore" },
-    { to: "/flashcards", label: "Flashcards" }
+    { to: "/flashcards", label: "Flashcards" },
+    { to: "/grammar", label: "Gramática" }
   ];
 
   if (HIDDEN_PATHS.includes(location.pathname)) return null;
+
+  if (!isAuthenticated && PUBLIC_PATHS_HIDDEN_WHEN_LOGGED_OUT.includes(location.pathname)) return null;
 
   function handleLogout() {
     logout();

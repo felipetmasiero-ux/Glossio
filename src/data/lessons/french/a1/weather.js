@@ -1,3 +1,4 @@
+import { weatherBlocks } from "../../../grammar/shared/french/weather";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const weatherLesson = {
             { speaker: "Marco", text: "Oui, mais je pense qu'il ne va pas pleuvoir." }
         ]),
 
-        grammar(
-            "Il fait vs Il y a",
-            "Use 'il fait' with adjectives: 'il fait beau', 'il fait froid'. Use 'il y a' with nouns: 'il y a du soleil', 'il y a du vent', 'il y a des nuages'. For rain and snow, use the verbs directly: 'il pleut', 'il neige'."
-        ),
+        grammar(weatherBlocks[0].title, weatherBlocks[0].text),
 
         list([
 

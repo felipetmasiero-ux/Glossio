@@ -7,17 +7,20 @@ import { useDebouncedValue } from "./useDebouncedValue";
 import { ModuleRepository } from "../utils/courses/ModuleRepository";
 import { VideoRepository } from "../repositories/VideoRepository";
 import { DictionaryRepository } from "../repositories/DictionaryRepository";
+import { GrammarRepository } from "../repositories/GrammarRepository";
 
 import {
     searchLessons,
     searchVideos,
     searchDictionary,
-    searchFlashcards
+    searchFlashcards,
+    searchGrammar,
+    searchPlacementTest
 } from "../utils/search";
 
 const DEBOUNCE_MS = 200;
 
-const EMPTY_RESULTS = { lessons: [], videos: [], dictionary: [], flashcards: [] };
+const EMPTY_RESULTS = { lessons: [], videos: [], dictionary: [], flashcards: [], grammar: [], placementTest: [] };
 
 export function useUniversalSearch() {
 
@@ -49,6 +52,8 @@ export function useUniversalSearch() {
         [flashcards, language]
     );
 
+    const grammarTopics = useMemo(() => GrammarRepository.getAll(language), [language]);
+
     const trimmedQuery = query.trim();
 
     const results = useMemo(() => {
@@ -61,13 +66,16 @@ export function useUniversalSearch() {
             lessons: searchLessons(lessons, trimmedQuery),
             videos: searchVideos(videos, trimmedQuery),
             dictionary: searchDictionary(dictionaryEntries, trimmedQuery),
-            flashcards: searchFlashcards(languageFlashcards, trimmedQuery)
+            flashcards: searchFlashcards(languageFlashcards, trimmedQuery),
+            grammar: searchGrammar(grammarTopics, trimmedQuery),
+            placementTest: searchPlacementTest(trimmedQuery)
         };
 
-    }, [lessons, videos, dictionaryEntries, languageFlashcards, trimmedQuery]);
+    }, [lessons, videos, dictionaryEntries, languageFlashcards, grammarTopics, trimmedQuery]);
 
     const totalResults = results.lessons.length + results.videos.length
-        + results.dictionary.length + results.flashcards.length;
+        + results.dictionary.length + results.flashcards.length + results.grammar.length
+        + results.placementTest.length;
 
     return {
         query: rawQuery,

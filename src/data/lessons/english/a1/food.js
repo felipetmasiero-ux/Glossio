@@ -1,3 +1,4 @@
+import { foodBlocks } from "../../../grammar/shared/english/food";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const foodLesson = {
             { speaker: "Sofia", text: "Yes, please. And some water too." }
         ]),
 
-        grammar(
-            "Some vs Any",
-            "Use 'some' in affirmative sentences and offers: 'I want some bread.' Use 'any' in negatives and questions: 'I don't have any coffee.' / 'Do you have any fruit?'"
-        ),
+        grammar(foodBlocks[0].title, foodBlocks[0].text),
 
         list([
 

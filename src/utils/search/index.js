@@ -4,3 +4,5 @@ export { searchLessons } from "./searchLessons";
 export { searchVideos } from "./searchVideos";
 export { searchDictionary } from "./searchDictionary";
 export { searchFlashcards } from "./searchFlashcards";
+export { searchGrammar } from "./searchGrammar";
+export { searchPlacementTest } from "./searchPlacementTest";

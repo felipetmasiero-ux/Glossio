@@ -1,3 +1,4 @@
+import { dailyRoutineBlocks } from "../../../grammar/shared/french/dailyRoutine";
 import {
     heading,
     paragraph,
@@ -103,10 +104,7 @@ export const dailyRoutineLesson = {
             }
         ]),
 
-        grammar(
-            "Reflexive Verbs",
-            "Reflexive verbs use a pronoun that matches the subject: je me réveille, tu te réveilles, il/elle se réveille, nous nous réveillons. This pronoun shows that the action is done to oneself."
-        ),
+        grammar(dailyRoutineBlocks[0].title, dailyRoutineBlocks[0].text),
 
         dialogue([
             { speaker: "Anna", text: "À quelle heure tu te réveilles ?" },

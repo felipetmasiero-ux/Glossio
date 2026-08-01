@@ -1,3 +1,4 @@
+import { travelBlocks } from "../../../grammar/shared/french/travel";
 import {
     heading,
     paragraph,
@@ -111,10 +112,7 @@ export const travelLesson = {
             { speaker: "Voyageur", text: "Le train, c'est parfait. Merci beaucoup !" }
         ]),
 
-        grammar(
-            "Aller + infinitive",
-            "Use 'aller' followed by an infinitive verb to talk about the near future: 'Je vais voyager en France.' / 'Nous allons réserver une chambre.' This is the French equivalent of 'going to' in English."
-        ),
+        grammar(travelBlocks[0].title, travelBlocks[0].text),
 
         list([
 

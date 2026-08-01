@@ -1,0 +1,26 @@
+.placement-test-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.placement-test-card__body {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.placement-test-card__icon {
+  display: inline-flex;
+  color: var(--color-primary);
+}
+
+.placement-test-card__value {
+  font: var(--text-h2);
+  color: var(--color-text);
+}
+
+.placement-test-card .button {
+  width: auto;
+  align-self: flex-start;
+}

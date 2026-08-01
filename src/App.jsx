@@ -29,6 +29,8 @@ const Roadmap = lazyPage(() => import("./pages/Roadmap/Roadmap"), "Roadmap");
 const Statistics = lazyPage(() => import("./pages/Statistics/Statistics"), "Statistics");
 const Achievements = lazyPage(() => import("./pages/Achievements/Achievements"), "Achievements");
 const Search = lazyPage(() => import("./pages/Search/Search"), "Search");
+const Grammar = lazyPage(() => import("./pages/Grammar/Grammar"), "Grammar");
+const PlacementTest = lazyPage(() => import("./pages/PlacementTest/PlacementTest"), "PlacementTest");
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
@@ -89,6 +91,11 @@ function App() {
                   <Route
                     path="/register"
                     element={<Register />}
+                  />
+
+                  <Route
+                    path="/placement-test"
+                    element={<PlacementTest />}
                   />
 
                   <Route element={<ProtectedRoute />}>
@@ -195,6 +202,11 @@ function App() {
                     <Route
                       path="/search"
                       element={<Search />}
+                    />
+
+                    <Route
+                      path="/grammar"
+                      element={<Grammar />}
                     />
 
                   </Route>

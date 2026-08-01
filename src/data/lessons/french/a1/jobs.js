@@ -1,3 +1,4 @@
+import { jobsBlocks } from "../../../grammar/shared/french/jobs";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const jobsLesson = {
             { speaker: "Sofia", text: "J'enseigne le français aux débutants." }
         ]),
 
-        grammar(
-            "Masculine and Feminine Job Titles",
-            "Most job titles change form between masculine and feminine: enseignant/enseignante, infirmier/infirmière, étudiant/étudiante. A few, like 'médecin', stay the same regardless of gender: 'un médecin' or 'une médecin'."
-        ),
+        grammar(jobsBlocks[0].title, jobsBlocks[0].text),
 
         list([
 

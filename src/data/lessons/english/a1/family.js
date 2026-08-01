@@ -1,3 +1,4 @@
+import { familyBlocks } from "../../../grammar/shared/english/family";
 import {
     heading,
     paragraph,
@@ -111,10 +112,7 @@ export const familyLesson = {
             { speaker: "Anna", text: "Yes, very close. We see each other every weekend." }
         ]),
 
-        grammar(
-            "Possessive 's",
-            "Add 's to a name or noun to show that something belongs to someone: 'my sister's name', 'Marco's mother'. If the word already ends in 's', you can just add an apostrophe: 'my parents' house'."
-        ),
+        grammar(familyBlocks[0].title, familyBlocks[0].text),
 
         list([
 

@@ -1,3 +1,4 @@
+import { shoppingBlocks } from "../../../grammar/shared/english/shopping";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const shoppingLesson = {
             { speaker: "Cashier", text: "It's right over there. Here's your receipt if you need a refund later." }
         ]),
 
-        grammar(
-            "Comparative Adjectives",
-            "For short adjectives, add '-er': cheap → cheaper, big → bigger. For long adjectives, use 'more' before the adjective: expensive → more expensive. Use 'than' to compare two things: 'This is cheaper than that.'"
-        ),
+        grammar(shoppingBlocks[0].title, shoppingBlocks[0].text),
 
         list([
 

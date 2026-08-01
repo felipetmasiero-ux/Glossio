@@ -1,0 +1,12 @@
+.grammar-block__reference-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  margin-top: var(--space-3);
+  color: var(--color-text-secondary);
+  font: var(--text-small);
+}
+
+.grammar-block__reference-link:hover {
+  color: var(--color-primary);
+}

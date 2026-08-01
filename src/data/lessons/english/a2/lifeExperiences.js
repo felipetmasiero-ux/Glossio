@@ -1,3 +1,4 @@
+import { lifeExperiencesBlocks } from "../../../grammar/shared/english/lifeExperiences";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const lifeExperiencesLesson = {
             { speaker: "Marco", text: "Definitely. But it's one of my proudest achievements." }
         ]),
 
-        grammar(
-            "Present Perfect for Experience",
-            "Use have/has + past participle to talk about life experiences: 'I have visited Japan.' Use 'ever' in questions: 'Have you ever visited Japan?' Use 'never' for negative experiences: 'I have never visited Japan.' Use 'already' for something done, and 'yet' for something not done (in questions and negatives)."
-        ),
+        grammar(lifeExperiencesBlocks[0].title, lifeExperiencesBlocks[0].text),
 
         list([
 

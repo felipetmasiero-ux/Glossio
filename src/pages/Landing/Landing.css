@@ -60,6 +60,17 @@
   max-width: 48ch;
 }
 
+.landing-hero__placement-test-link {
+  color: var(--color-text-secondary);
+  font: var(--text-body-md);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.landing-hero__placement-test-link:hover {
+  color: var(--color-primary);
+}
+
 .landing-hero__languages {
   display: flex;
   flex-wrap: wrap;

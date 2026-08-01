@@ -18,6 +18,9 @@ import { ResumeActivityCard } from "../../components/home/ResumeActivityCard/Res
 import { AchievementsSummaryCard } from "../../components/home/AchievementsSummaryCard/AchievementsSummaryCard";
 import { StatisticsSummaryCard } from "../../components/home/StatisticsSummaryCard/StatisticsSummaryCard";
 import { FavoritesSummaryCard } from "../../components/home/FavoritesSummaryCard/FavoritesSummaryCard";
+import { PlacementTestCard } from "../../components/home/PlacementTestCard/PlacementTestCard";
+
+import { PlacementTestStorage } from "../../utils/placementTest/placementTestStorage";
 
 export function Home() {
 
@@ -25,6 +28,7 @@ export function Home() {
     const statistics = useStatistics();
     const achievements = useAchievements();
     const achievementsSummary = getAchievementsSummary(achievements);
+    const latestPlacementResult = PlacementTestStorage.getLatestResult();
 
     return (
 
@@ -64,6 +68,10 @@ export function Home() {
 
             <DashboardSection title="Favoritos" icon="star">
                 <FavoritesSummaryCard favoriteCount={statistics.favoriteWords} />
+            </DashboardSection>
+
+            <DashboardSection title="Teste de nivelamento" icon="target">
+                <PlacementTestCard latestResult={latestPlacementResult} />
             </DashboardSection>
 
             {dashboard.lastActivity && (

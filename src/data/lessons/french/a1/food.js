@@ -1,3 +1,4 @@
+import { foodBlocks } from "../../../grammar/shared/french/food";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const foodLesson = {
             { speaker: "Sofia", text: "Oui, s'il vous plaît. Et de l'eau aussi." }
         ]),
 
-        grammar(
-            "Du, de la, des",
-            "Use 'du' with masculine nouns ('du pain'), 'de la' with feminine nouns ('de la viande') and 'des' with plurals ('des légumes') to talk about an unspecified amount of food. In negative sentences, these usually become simply 'de': 'Je ne mange pas de poisson.'"
-        ),
+        grammar(foodBlocks[0].title, foodBlocks[0].text),
 
         list([
 

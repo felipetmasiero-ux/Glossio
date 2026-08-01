@@ -1,3 +1,4 @@
+import { hotelBlocks } from "../../../grammar/shared/english/hotel";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const hotelLesson = {
             { speaker: "Guest", text: "Thank you! Could I also ask for a wake-up call tomorrow?" }
         ]),
 
-        grammar(
-            "First Conditional",
-            "Use if + present simple, will + base verb for real future possibilities: 'If it rains, we will stay at the hotel.' The 'if' clause can come first or second: 'We will stay at the hotel if it rains.'"
-        ),
+        grammar(hotelBlocks[0].title, hotelBlocks[0].text),
 
         list([
 

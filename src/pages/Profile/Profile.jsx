@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useDashboardData } from "../../hooks/useDashboardData";
 import { getUser, updateUser as updateUserRequest, changePassword as changePasswordRequest } from "../../api/userApi";
+import { PlacementTestStorage } from "../../utils/placementTest/placementTestStorage";
 
 import { QuickStatsCard } from "../../components/home/QuickStatsCard/QuickStatsCard";
 import { Button } from "../../components/common/Button/Button";
@@ -56,6 +57,7 @@ export function Profile() {
     const { language } = useLanguage();
     const { updateUser: updateAuthUser } = useAuth();
     const dashboard = useDashboardData();
+    const latestPlacementResult = PlacementTestStorage.getLatestResult();
 
     const [profile, setProfile] = useState(null);
     const [form, setForm] = useState(EMPTY_FORM);
@@ -294,6 +296,16 @@ export function Profile() {
                     <p className="profile-page__meta">Última atualização em {formatDate(profile.updatedAt)}</p>
                 </Section>
             )}
+
+            <Section title="Teste de nivelamento">
+                {latestPlacementResult ? (
+                    <p className="profile-page__meta">
+                        Último teste: {latestPlacementResult.language} {latestPlacementResult.recommendedLevel}
+                    </p>
+                ) : (
+                    <p className="profile-page__meta">Você ainda não fez o teste de nivelamento.</p>
+                )}
+            </Section>
 
             <div className="profile-page__language">
                 <span className="profile-page__flag">{FLAGS[language] ?? "🌐"}</span>

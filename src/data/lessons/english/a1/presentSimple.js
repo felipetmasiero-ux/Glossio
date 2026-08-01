@@ -1,3 +1,4 @@
+import { presentSimpleBlocks } from "../../../grammar/shared/english/presentSimple";
 import {
     heading,
     paragraph,
@@ -106,10 +107,7 @@ export const presentSimpleLesson = {
             }
         ]),
 
-        grammar(
-            "Third Person -s",
-            "For he, she and it, add -s to the verb: 'he works', 'she lives', 'it rains'. Verbs ending in -o, -ch, -sh, -ss or -x take -es instead: 'go → goes', 'watch → watches'. This is the most common mistake beginners make, so pay close attention!"
-        ),
+        grammar(presentSimpleBlocks[0].title, presentSimpleBlocks[0].text),
 
         dialogue([
             { speaker: "Interviewer", text: "What do you do every day?" },
@@ -118,10 +116,7 @@ export const presentSimpleLesson = {
             { speaker: "Lucas", text: "No, she doesn't. She prefers French." }
         ]),
 
-        grammar(
-            "Questions and Negatives",
-            "Use 'do' (I/you/we/they) or 'does' (he/she/it) to make questions and negatives: 'Do you like coffee?', 'Does she work here?', 'I don't like tea.', 'He doesn't study French.' Notice that after do/does, the main verb goes back to its base form — no extra -s."
-        ),
+        grammar(presentSimpleBlocks[1].title, presentSimpleBlocks[1].text),
 
         list([
 

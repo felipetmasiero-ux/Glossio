@@ -1,3 +1,4 @@
+import { foodBlocks } from "../../../grammar/shared/portuguese/food";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const foodLesson = {
             { speaker: "Sofia", text: "Sim, por favor. E água também." }
         ]),
 
-        grammar(
-            "Gostar de + Substantivo",
-            "Use 'gostar de' to say what you like: 'Eu gosto de arroz.' / 'Eu não gosto de peixe.' The preposition 'de' is always required after 'gostar', even when the next word starts with a vowel: 'de água'."
-        ),
+        grammar(foodBlocks[0].title, foodBlocks[0].text),
 
         list([
 

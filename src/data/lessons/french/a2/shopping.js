@@ -1,3 +1,4 @@
+import { shoppingBlocks } from "../../../grammar/shared/french/shopping";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const shoppingLesson = {
             { speaker: "Caissier", text: "C'est juste là. Voici votre reçu, au cas où vous auriez besoin d'un remboursement." }
         ]),
 
-        grammar(
-            "Les Comparatifs",
-            "Utilise 'plus... que' pour dire 'plus que' : 'plus cher que'. Utilise 'moins... que' pour 'moins que' : 'moins cher que'. Utilise 'aussi... que' pour une égalité : 'aussi cher que'. L'adjectif s'accorde toujours avec le nom."
-        ),
+        grammar(shoppingBlocks[0].title, shoppingBlocks[0].text),
 
         list([
 

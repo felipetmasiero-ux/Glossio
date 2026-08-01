@@ -1,3 +1,4 @@
+import { hotelBlocks } from "../../../grammar/shared/french/hotel";
 import {
     heading,
     paragraph,
@@ -110,10 +111,7 @@ export const hotelLesson = {
             { speaker: "Client", text: "Merci ! Je pourrais aussi demander un appel de réveil demain ?" }
         ]),
 
-        grammar(
-            "Si + Présent, Futur Simple",
-            "Utilise si + présent, futur simple pour des possibilités réelles dans le futur : 'S'il pleut, nous resterons à l'hôtel.' La proposition avec 'si' peut venir en premier ou en second : 'Nous resterons à l'hôtel s'il pleut.'"
-        ),
+        grammar(hotelBlocks[0].title, hotelBlocks[0].text),
 
         list([
 

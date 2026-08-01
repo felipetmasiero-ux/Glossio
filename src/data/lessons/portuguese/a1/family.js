@@ -1,3 +1,4 @@
+import { familyBlocks } from "../../../grammar/shared/portuguese/family";
 import {
     heading,
     paragraph,
@@ -111,10 +112,7 @@ export const familyLesson = {
             { speaker: "Anna", text: "Sim, muito próximos. Nos vemos todo fim de semana." }
         ]),
 
-        grammar(
-            "Ter + Plural",
-            "Use 'ter' followed by a plural noun to say you have several people or things: 'Eu tenho irmãos.' Use 'um/uma' for exactly one: 'Eu tenho um irmão e uma irmã.'"
-        ),
+        grammar(familyBlocks[0].title, familyBlocks[0].text),
 
         list([
 

@@ -1,3 +1,4 @@
+import { daysMonthsBlocks } from "../../../grammar/shared/english/daysMonths";
 import {
     heading,
     paragraph,
@@ -129,10 +130,7 @@ export const daysMonthsLesson = {
             }
         ]),
 
-        grammar(
-            "On vs In",
-            "Use 'on' with days: 'on Monday', 'on Fridays'. Use 'in' with months and years: 'in July', 'in 2024'. Use 'at' with specific times of the day: 'at night'."
-        ),
+        grammar(daysMonthsBlocks[0].title, daysMonthsBlocks[0].text),
 
         dialogue([
             { speaker: "Marco", text: "What are you doing this weekend?" },
