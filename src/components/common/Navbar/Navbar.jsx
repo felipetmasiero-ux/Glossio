@@ -54,6 +54,14 @@ export function Navbar() {
           ))}
         </div>
 
+        <Link
+          to="/search"
+          className={`navbar__search${location.pathname === "/search" ? " navbar__search--active" : ""}`}
+          aria-label="Buscar"
+        >
+          <Icon name="search" size={18} />
+        </Link>
+
         {language && (
           <span className="navbar__badge">
             {language === "English" ? "🇺🇸" : language === "French" ? "🇫🇷" : "🇧🇷"} {language}

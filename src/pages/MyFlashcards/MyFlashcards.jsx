@@ -1,4 +1,5 @@
 import { useContext, useMemo, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { FlashcardContext } from "../../contexts/FlashcardContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 
@@ -19,7 +20,12 @@ export function MyFlashcards() {
   const { flashcards, removeFlashcard, toggleFavorite } = useContext(FlashcardContext);
   const { language } = useContext(LanguageContext);
 
-  const [search, setSearch] = useState("");
+  // Universal Search links here as "open the card normally" - prefilling
+  // (not permanently binding) the search box from a one-time ?search= param
+  // is the closest equivalent to a deep link, since there's no standalone
+  // single-flashcard route.
+  const [searchParams] = useSearchParams();
+  const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
   const [favoritesOnly, setFavoritesOnly] = useState(false);
   const [sortBy, setSortBy] = useState(SORT_OPTIONS.ALPHA);
   const [now] = useState(() => Date.now());

@@ -1,0 +1,6 @@
+.search-highlight {
+  background: var(--highlight-bg);
+  color: var(--highlight-text);
+  border-radius: 2px;
+  padding: 0 1px;
+}

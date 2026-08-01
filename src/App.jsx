@@ -28,6 +28,7 @@ const About = lazyPage(() => import("./pages/About/About"), "About");
 const Roadmap = lazyPage(() => import("./pages/Roadmap/Roadmap"), "Roadmap");
 const Statistics = lazyPage(() => import("./pages/Statistics/Statistics"), "Statistics");
 const Achievements = lazyPage(() => import("./pages/Achievements/Achievements"), "Achievements");
+const Search = lazyPage(() => import("./pages/Search/Search"), "Search");
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
@@ -189,6 +190,11 @@ function App() {
                     <Route
                       path="/achievements"
                       element={<Achievements />}
+                    />
+
+                    <Route
+                      path="/search"
+                      element={<Search />}
                     />
 
                   </Route>
