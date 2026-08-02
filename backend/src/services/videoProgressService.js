@@ -1,4 +1,25 @@
 import { prisma } from "../config/prisma.js";
+import { requireString, requireNumber, requireArray, requireTimestamp } from "../utils/validators.js";
+
+const MAX_VIDEO_PROGRESS_ENTRIES = 5_000;
+const MAX_WORD_LIST_LENGTH = 2_000;
+
+// Only applied to real client input (PUT /video-progress) - same reasoning
+// as flashcardService's validateClientCard: the legacy-migration path below
+// reads a user's own already-stored data and stays lenient on purpose.
+function validateClientEntry(entry) {
+    return {
+        videoId: requireString(entry?.videoId, "ID do vídeo", { min: 1, max: 200 }),
+        language: requireString(entry?.language, "Idioma", { min: 1, max: 50 }),
+        currentTime: requireNumber(entry?.currentTime ?? 0, "Tempo atual", { min: 0, max: 100_000 }),
+        duration: requireNumber(entry?.duration ?? 0, "Duração", { min: 0, max: 100_000 }),
+        completed: Boolean(entry?.completed),
+        completedAt: entry?.completedAt == null ? null : requireTimestamp(entry.completedAt, "Data de conclusão"),
+        updatedAt: requireTimestamp(entry?.updatedAt ?? Date.now(), "Data de atualização"),
+        clickedWords: requireArray(entry?.clickedWords ?? [], "Palavras clicadas", { maxLength: MAX_WORD_LIST_LENGTH }),
+        addedWords: requireArray(entry?.addedWords ?? [], "Palavras adicionadas", { maxLength: MAX_WORD_LIST_LENGTH })
+    };
+}
 
 function toPublicEntry(row) {
     return {
@@ -77,7 +98,8 @@ export async function getOrMigrateVideoProgress(userId) {
 }
 
 export async function replaceVideoProgress(userId, entries = []) {
-    const data = entries.map(entry => fromClientEntry(userId, entry));
+    const validated = requireArray(entries, "Progresso de vídeo", { maxLength: MAX_VIDEO_PROGRESS_ENTRIES }).map(validateClientEntry);
+    const data = validated.map(entry => fromClientEntry(userId, entry));
 
     await prisma.$transaction([
         prisma.videoProgress.deleteMany({ where: { userId } }),

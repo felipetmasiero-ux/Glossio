@@ -1,9 +1,11 @@
 import { registerUser, loginUser, getUserById } from "../services/authService.js";
+import { logRequestEvent } from "../utils/logger.js";
 
 export async function register(req, res, next) {
     try {
         const { name, email, password, preferredLanguage } = req.body;
         const result = await registerUser({ name, email, password, preferredLanguage });
+        logRequestEvent("info", "user_registered", req, { userId: result.user.id, email: result.user.email });
         res.status(201).json(result);
     } catch (err) {
         next(err);
@@ -14,6 +16,7 @@ export async function login(req, res, next) {
     try {
         const { email, password } = req.body;
         const result = await loginUser({ email, password });
+        logRequestEvent("info", "login_success", req, { userId: result.user.id, email: result.user.email });
         res.status(200).json(result);
     } catch (err) {
         next(err);

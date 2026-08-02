@@ -1,4 +1,5 @@
 import { prisma } from "../config/prisma.js";
+import { optionalString, optionalPositiveNumber, requireArray } from "../utils/validators.js";
 
 const DEFAULT_GOALS = {
     dailyLessons: null,
@@ -7,6 +8,18 @@ const DEFAULT_GOALS = {
     weeklyMinutes: null,
     weeklyLessons: null
 };
+
+// Every goal is either unset (null) or a positive number within a sane
+// ceiling - matches the sprint's "Goals: somente números positivos" rule.
+function validateGoals(goals = {}) {
+    return {
+        dailyLessons: optionalPositiveNumber(goals.dailyLessons, "Meta diária de lições", { max: 100 }),
+        dailyReviews: optionalPositiveNumber(goals.dailyReviews, "Meta diária de revisões", { max: 10_000 }),
+        dailyVideoMinutes: optionalPositiveNumber(goals.dailyVideoMinutes, "Meta diária de minutos de vídeo", { max: 1_440 }),
+        weeklyMinutes: optionalPositiveNumber(goals.weeklyMinutes, "Meta semanal de minutos", { max: 10_080 }),
+        weeklyLessons: optionalPositiveNumber(goals.weeklyLessons, "Meta semanal de lições", { max: 700 })
+    };
+}
 
 const DEFAULT_PROGRESS = {
     language: null,
@@ -54,13 +67,13 @@ export async function replaceProgress(userId, payload = {}) {
     const existing = await prisma.userProgress.findUnique({ where: { userId } });
 
     const data = {
-        language: payload.language ?? null,
-        exerciseProgress: payload.exerciseProgress ?? [],
-        studyHistory: payload.studyHistory ?? [],
+        language: optionalString(payload.language, "Idioma", { max: 50 }),
+        exerciseProgress: requireArray(payload.exerciseProgress ?? [], "Progresso de exercícios", { maxLength: 5_000 }),
+        studyHistory: requireArray(payload.studyHistory ?? [], "Histórico de estudo", { maxLength: 5_000 }),
         dashboard: {
             events: existing?.dashboard?.events ?? [],
             lastActivity: payload.dashboard?.lastActivity ?? null,
-            goals: payload.dashboard?.goals ?? DEFAULT_GOALS
+            goals: validateGoals(payload.dashboard?.goals)
         }
     };
 

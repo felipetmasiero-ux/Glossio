@@ -41,6 +41,10 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true,
-    exclude: [...configDefaults.exclude, "tests/e2e/**"],
+    // backend/ has its own vitest.config.js (Node environment, its own
+    // .env) and its own `npm test` - excluded here so running the
+    // frontend's test command from the repo root doesn't also try (and
+    // fail) to run backend tests under the wrong environment/cwd.
+    exclude: [...configDefaults.exclude, "tests/e2e/**", "backend/**"],
   },
 });

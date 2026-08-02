@@ -1,4 +1,5 @@
 import { getUserProfile, updateUserProfile, changePassword as changePasswordService } from "../services/userService.js";
+import { logRequestEvent } from "../utils/logger.js";
 
 export async function getUser(req, res, next) {
     try {
@@ -21,6 +22,7 @@ export async function updateUser(req, res, next) {
 export async function changePassword(req, res, next) {
     try {
         await changePasswordService(req.userId, req.body);
+        logRequestEvent("info", "password_changed", req);
         res.status(204).send();
     } catch (err) {
         next(err);

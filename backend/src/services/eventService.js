@@ -1,4 +1,20 @@
 import { prisma } from "../config/prisma.js";
+import { requireArray } from "../utils/validators.js";
+
+const MAX_EVENTS_PER_REQUEST = 1_000;
+
+// Same "id and type" shape check as before, but now actually requires them
+// to be reasonably-sized strings rather than just truthy (a number or a
+// 50,000-character type would previously have passed). Malformed events are
+// still silently dropped rather than failing the whole batch - this is an
+// append-only log fed by small periodic batches, and one bad entry
+// shouldn't cost the rest of a legitimate batch.
+function isValidClientEvent(event) {
+    return (
+        typeof event?.id === "string" && event.id.length > 0 && event.id.length <= 100 &&
+        typeof event?.type === "string" && event.type.length > 0 && event.type.length <= 100
+    );
+}
 
 function toPublicEvent(row) {
     return {
@@ -51,8 +67,8 @@ export async function getOrMigrateEvents(userId) {
 }
 
 export async function appendEvents(userId, events = []) {
-    const data = events
-        .filter(event => event?.id && event?.type)
+    const data = requireArray(events, "Eventos", { maxLength: MAX_EVENTS_PER_REQUEST })
+        .filter(isValidClientEvent)
         .map(event => fromClientEvent(userId, event));
 
     if (data.length === 0) return [];

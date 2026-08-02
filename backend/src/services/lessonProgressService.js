@@ -1,4 +1,12 @@
 import { prisma } from "../config/prisma.js";
+import { requireArray } from "../utils/validators.js";
+import { HttpError } from "../utils/HttpError.js";
+
+const MAX_LESSON_IDS_PER_REQUEST = 5_000;
+
+function isValidLessonId(lessonId) {
+    return typeof lessonId === "string" && lessonId.length > 0 && lessonId.length <= 200;
+}
 
 // Every real lesson id in this app follows a `{language}-{level}-{topic}`
 // naming convention (e.g. "english-a1-greetings") - this is the only place
@@ -46,9 +54,15 @@ export async function getOrMigrateLessonProgress(userId) {
 }
 
 export async function replaceLessonProgress(userId, lessonIds = []) {
+    const validated = requireArray(lessonIds, "Progresso de lições", { maxLength: MAX_LESSON_IDS_PER_REQUEST });
+
+    if (!validated.every(isValidLessonId)) {
+        throw new HttpError(400, "IDs de lição inválidos.");
+    }
+
     const now = BigInt(Date.now());
 
-    const data = lessonIds.map(lessonId => ({
+    const data = validated.map(lessonId => ({
         userId,
         lessonId,
         language: deriveLanguage(lessonId),

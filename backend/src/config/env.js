@@ -1,5 +1,9 @@
 import "dotenv/config";
 
+// PORT deliberately isn't in this list: unlike JWT_SECRET (a secret with no
+// safe default) and DATABASE_URL (nothing works without it), PORT already
+// has a conventional, harmless default (4000) - requiring it adds no real
+// security value and would just be one more way local/dev setup can break.
 const required = ["DATABASE_URL", "JWT_SECRET"];
 
 for (const key of required) {
@@ -8,10 +12,19 @@ for (const key of required) {
     }
 }
 
+// CORS_ORIGIN accepts a comma-separated list so "localhost + production
+// domain" (per the security-hardening sprint) can both be allowed at once,
+// e.g. CORS_ORIGIN="http://localhost:5173,https://app.glossio.com".
+const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
+    .split(",")
+    .map(origin => origin.trim())
+    .filter(Boolean);
+
 export const env = {
     port: Number(process.env.PORT) || 4000,
+    nodeEnv: process.env.NODE_ENV || "development",
     databaseUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
-    corsOrigin: process.env.CORS_ORIGIN || "http://localhost:5173"
+    corsOrigins
 };
