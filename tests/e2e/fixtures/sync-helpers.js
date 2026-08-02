@@ -22,3 +22,15 @@ export async function waitForFlashcardSynced(request, token, word) {
         expect(cards.some(card => card.word.toLowerCase() === word.toLowerCase())).toBeTruthy();
     }).toPass({ timeout: 20_000, intervals: [500, 1000, 2000] });
 }
+
+/** Goals live inside /progress's `dashboard.goals` blob (see progressStorage.js). */
+export async function waitForGoalsSynced(request, token, key, value) {
+    await expect(async () => {
+        const response = await request.get(`${API_URL}/progress`, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        expect(response.ok()).toBeTruthy();
+        const progress = await response.json();
+        expect(progress.dashboard?.goals?.[key]).toBe(value);
+    }).toPass({ timeout: 20_000, intervals: [500, 1000, 2000] });
+}

@@ -5,29 +5,14 @@
   gap: var(--space-3);
   width: 100%;
   padding: var(--space-4);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
-  background: var(--color-surface);
   text-align: left;
   cursor: pointer;
-  transition: transform var(--t-normal), border-color var(--t-normal), box-shadow var(--t-normal);
-}
-
-.course-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--color-border-strong);
-  box-shadow: var(--shadow-md);
 }
 
 .course-card--soon {
   align-items: flex-start;
   cursor: default;
   opacity: 0.7;
-}
-
-.course-card--soon:hover {
-  transform: none;
-  box-shadow: none;
 }
 
 .course-card__top {

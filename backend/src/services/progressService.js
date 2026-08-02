@@ -1,12 +1,20 @@
 import { prisma } from "../config/prisma.js";
 
+const DEFAULT_GOALS = {
+    dailyLessons: null,
+    dailyReviews: null,
+    dailyVideoMinutes: null,
+    weeklyMinutes: null,
+    weeklyLessons: null
+};
+
 const DEFAULT_PROGRESS = {
     language: null,
     lessonProgress: [],
     exerciseProgress: [],
     flashcards: [],
     studyHistory: [],
-    dashboard: { events: [], lastActivity: null },
+    dashboard: { events: [], lastActivity: null, goals: DEFAULT_GOALS },
     videoProgress: {}
 };
 
@@ -15,7 +23,10 @@ function toPublicProgress(row) {
         language: row.language,
         exerciseProgress: row.exerciseProgress,
         studyHistory: row.studyHistory,
-        dashboard: { lastActivity: row.dashboard?.lastActivity ?? null },
+        dashboard: {
+            lastActivity: row.dashboard?.lastActivity ?? null,
+            goals: row.dashboard?.goals ?? DEFAULT_GOALS
+        },
         updatedAt: row.updatedAt
     };
 }
@@ -48,7 +59,8 @@ export async function replaceProgress(userId, payload = {}) {
         studyHistory: payload.studyHistory ?? [],
         dashboard: {
             events: existing?.dashboard?.events ?? [],
-            lastActivity: payload.dashboard?.lastActivity ?? null
+            lastActivity: payload.dashboard?.lastActivity ?? null,
+            goals: payload.dashboard?.goals ?? DEFAULT_GOALS
         }
     };
 

@@ -1,0 +1,21 @@
+.goals-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.goals-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.goals-form__label {
+  font: var(--text-mono-label);
+  color: var(--color-text-secondary);
+}
+
+.goals-form .button {
+  width: auto;
+  align-self: flex-start;
+}

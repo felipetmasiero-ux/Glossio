@@ -40,6 +40,20 @@ export function Statistics() {
 
             </StatsGrid>
 
+            <Section title="Metas concluídas">
+
+                <StatsGrid>
+                    <StatsCard value={`${statistics.goalCompletionRate.thisWeek.rate}%`} label="Esta semana" icon="target" />
+                    <StatsCard
+                        value={`${statistics.goalCompletionRate.last30Days.daysMet} / ${statistics.goalCompletionRate.last30Days.totalDays}`}
+                        label="Últimos 30 dias"
+                        icon="calendar"
+                    />
+                    <StatsCard value={`${statistics.goalCompletionRate.average}%`} label="Média de conclusão" icon="bar-chart" />
+                </StatsGrid>
+
+            </Section>
+
             <Section title="Palavras por tópico">
 
                 {statistics.wordsByTopic.length === 0 ? (

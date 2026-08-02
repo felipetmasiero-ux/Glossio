@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
+import { Card } from "../../common/Card/Card";
 import { Badge } from "../../common/Badge/Badge";
 import { ProgressBar } from "../../common/ProgressBar/ProgressBar";
 import { Icon } from "../../common/Icon/Icon";
@@ -13,18 +14,18 @@ export function CourseCard({ course }) {
     if (course.comingSoon) {
 
         return (
-            <div className="course-card course-card--soon">
+            <Card className="course-card course-card--soon" hoverable={false}>
                 <span className="course-card__flag">{course.flag}</span>
                 <span className="course-card__title">{course.title}</span>
                 <Badge variant="neutral">Em breve</Badge>
-            </div>
+            </Card>
         );
 
     }
 
     return (
 
-        <button type="button" className="course-card" onClick={() => navigate(course.href)}>
+        <Card as="button" type="button" className="course-card" onClick={() => navigate(course.href)}>
 
             <span className="course-card__top">
                 <span className="course-card__flag">{course.flag}</span>
@@ -45,7 +46,7 @@ export function CourseCard({ course }) {
                 <Icon name="chevron-right" size={16} className="course-card__arrow" />
             </span>
 
-        </button>
+        </Card>
 
     );
 

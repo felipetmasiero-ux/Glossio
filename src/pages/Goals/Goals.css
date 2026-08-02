@@ -1,0 +1,37 @@
+.goals-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.goals-page__label {
+  color: var(--color-primary);
+  margin-bottom: calc(-1 * var(--space-4));
+}
+
+.goals-page__title {
+  font: var(--text-display);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.goals-page__rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.goals-page__recommendation {
+  font: var(--text-body-md);
+  color: var(--color-primary-dark);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-bottom: var(--space-4);
+}
+
+.goals-page__estimate {
+  font: var(--text-small);
+  color: var(--color-text-muted);
+  margin-top: var(--space-4);
+}

@@ -1,7 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, beforeEach } from "vitest";
 
 import { getAchievements } from "./getAchievements";
 import { EVENT_TYPES } from "../../constants/events";
+import { GoalsStorage } from "../goals/goalsStorage";
+
+const DAY = 24 * 60 * 60 * 1000;
 
 function flashcard(word, overrides = {}) {
     return { id: word, word, translation: word, language: "English", ...overrides };
@@ -12,6 +15,10 @@ function reviewEvent(timestamp = Date.now()) {
 }
 
 describe("getAchievements", () => {
+
+    beforeEach(() => {
+        localStorage.clear();
+    });
 
     it("marks a tier completed once progress reaches its target", () => {
 
@@ -94,6 +101,56 @@ describe("getAchievements", () => {
         expect(tier10.completed).toBe(true);
         expect(tier25.completed).toBe(false);
         expect(tier25.progress).toBe(10);
+
+    });
+
+    it("unlocks the first-goal tier once a day with every configured goal met exists", () => {
+
+        GoalsStorage.saveGoals({ dailyLessons: 1 });
+
+        const events = [
+            { type: EVENT_TYPES.LESSON_COMPLETED, timestamp: Date.now(), payload: { lessonId: "english-a1-family" } }
+        ];
+
+        const achievements = getAchievements({ language: "English", flashcards: [], events, completedLessons: [] });
+
+        const tier1 = achievements.find(a => a.id === "goals-1");
+        const tier7 = achievements.find(a => a.id === "goals-7");
+
+        expect(tier1.completed).toBe(true);
+        expect(tier7.completed).toBe(false);
+
+    });
+
+    it("unlocks the perfect-week achievement after 7 consecutive days meeting the goal", () => {
+
+        GoalsStorage.saveGoals({ dailyLessons: 1 });
+
+        const now = Date.now();
+
+        const events = Array.from({ length: 7 }, (_, i) => ({
+            type: EVENT_TYPES.LESSON_COMPLETED,
+            timestamp: now - i * DAY,
+            payload: { lessonId: "english-a1-family" }
+        }));
+
+        const achievements = getAchievements({ language: "English", flashcards: [], events, completedLessons: [] });
+
+        const perfectWeek = achievements.find(a => a.id === "goals-perfect-week");
+        const perfectMonth = achievements.find(a => a.id === "goals-perfect-month");
+
+        expect(perfectWeek.completed).toBe(true);
+        expect(perfectMonth.completed).toBe(false);
+
+    });
+
+    it("never unlocks goal achievements when no goal was ever configured", () => {
+
+        const achievements = getAchievements({ language: "English", flashcards: [], events: [], completedLessons: [] });
+
+        const goalAchievements = achievements.filter(a => a.category === "goals");
+
+        expect(goalAchievements.every(a => !a.completed)).toBe(true);
 
     });
 

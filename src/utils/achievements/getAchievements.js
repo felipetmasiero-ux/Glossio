@@ -9,6 +9,8 @@ import {
     getReviewStatistics,
     getFavoriteWordsCount
 } from "../statistics";
+import { getGoalAchievementMetrics } from "../goals/getGoalAchievementMetrics";
+import { GoalsStorage } from "../goals/goalsStorage";
 
 // Nothing here is persisted - every achievement's progress is recalculated
 // from the same data the rest of the app already reads (localStorage-backed
@@ -18,6 +20,9 @@ export function getAchievements({ language, completedLessons = [], flashcards = 
     const activityRecords = adaptEventsToHistory(events, ACTIVITY_EVENT_TYPES);
     const wordsCount = getTotalWordsLearned({ flashcards, language });
 
+    const goals = GoalsStorage.getGoals();
+    const goalMetrics = getGoalAchievementMetrics({ events, flashcards, language, goals });
+
     const metrics = {
         lessonsCompleted: getLessonsCompleted({ completedLessons, language }),
         videosCompleted: getVideosCompleted({ language }),
@@ -25,7 +30,10 @@ export function getAchievements({ language, completedLessons = [], flashcards = 
         vocabularyCount: wordsCount,
         totalReviews: getReviewStatistics({ flashcards, events, language }).totalReviews,
         currentStreak: getStreak(activityRecords).current,
-        favoritesCount: getFavoriteWordsCount({ flashcards, language })
+        favoritesCount: getFavoriteWordsCount({ flashcards, language }),
+        goalsCompletedCount: goalMetrics.goalsCompletedCount,
+        hasPerfectWeek: goalMetrics.hasPerfectWeek,
+        hasPerfectMonth: goalMetrics.hasPerfectMonth
     };
 
     return ACHIEVEMENT_DEFINITIONS.map(definition => {

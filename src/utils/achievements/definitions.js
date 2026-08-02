@@ -4,7 +4,8 @@ export const ACHIEVEMENT_CATEGORIES = {
     COLLECT: "collect",
     REVIEW: "review",
     STREAK: "streak",
-    VOCABULARY: "vocabulary"
+    VOCABULARY: "vocabulary",
+    GOALS: "goals"
 };
 
 export const CATEGORY_LABELS = {
@@ -13,7 +14,8 @@ export const CATEGORY_LABELS = {
     [ACHIEVEMENT_CATEGORIES.COLLECT]: "Collect",
     [ACHIEVEMENT_CATEGORIES.REVIEW]: "Review",
     [ACHIEVEMENT_CATEGORIES.STREAK]: "Streak",
-    [ACHIEVEMENT_CATEGORIES.VOCABULARY]: "Vocabulary"
+    [ACHIEVEMENT_CATEGORIES.VOCABULARY]: "Vocabulary",
+    [ACHIEVEMENT_CATEGORIES.GOALS]: "Metas"
 };
 
 // `metric` identifies which computed number (see getAchievements.js) this
@@ -61,6 +63,14 @@ export const ACHIEVEMENT_DEFINITIONS = [
     { id: "favorites-1", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 1, icon: "star", title: "Primeira favorita", description: "Favorite sua primeira palavra." },
     { id: "favorites-10", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 10, icon: "star", title: "10 favoritas", description: "Favorite 10 palavras." },
     { id: "favorites-25", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 25, icon: "star", title: "25 favoritas", description: "Favorite 25 palavras." },
-    { id: "favorites-50", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 50, icon: "star", title: "50 favoritas", description: "Favorite 50 palavras." }
+    { id: "favorites-50", category: ACHIEVEMENT_CATEGORIES.COLLECT, metric: "favoritesCount", target: 50, icon: "star", title: "50 favoritas", description: "Favorite 50 palavras." },
+
+    // Goals — days with every configured daily goal met
+    { id: "goals-1", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "goalsCompletedCount", target: 1, icon: "target", title: "Primeira meta", description: "Complete suas metas do dia pela primeira vez." },
+    { id: "goals-7", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "goalsCompletedCount", target: 7, icon: "target", title: "7 metas concluídas", description: "Complete suas metas diárias em 7 dias." },
+    { id: "goals-30", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "goalsCompletedCount", target: 30, icon: "target", title: "30 metas concluídas", description: "Complete suas metas diárias em 30 dias." },
+    { id: "goals-100", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "goalsCompletedCount", target: 100, icon: "target", title: "100 metas concluídas", description: "Complete suas metas diárias em 100 dias." },
+    { id: "goals-perfect-week", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "hasPerfectWeek", target: 1, icon: "flame", title: "Semana perfeita", description: "Complete suas metas diárias 7 dias seguidos." },
+    { id: "goals-perfect-month", category: ACHIEVEMENT_CATEGORIES.GOALS, metric: "hasPerfectMonth", target: 1, icon: "flame", title: "Mês perfeito", description: "Complete suas metas diárias 30 dias seguidos." }
 
 ];

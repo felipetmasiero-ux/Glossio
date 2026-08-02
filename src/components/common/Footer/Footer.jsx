@@ -17,11 +17,11 @@ export function Footer() {
                         <Icon name="book" size={14} />
                     </span>
                     <span className="app-footer__name">Glossio</span>
-                    <span className="app-footer__version text-mono-label">Version Beta</span>
+                    <span className="app-footer__version text-mono-label">Versão Beta</span>
                 </div>
 
                 <nav className="app-footer__links" aria-label="Links do rodapé">
-                    <Link to="/about">About</Link>
+                    <Link to="/about">Sobre</Link>
                     <Link to="/roadmap">Roadmap</Link>
                 </nav>
 

@@ -1,0 +1,35 @@
+.goals-progress-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.goals-progress-card__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.goals-progress-card__row-header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.goals-progress-card__label {
+  color: var(--color-text-secondary);
+}
+
+.goals-progress-card__count {
+  color: var(--color-text);
+}
+
+.goals-progress-card__recommendation {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+}
+
+.goals-progress-card .button {
+  width: auto;
+  align-self: flex-start;
+}

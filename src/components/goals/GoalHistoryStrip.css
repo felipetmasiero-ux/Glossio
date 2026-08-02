@@ -1,0 +1,35 @@
+.goal-history-strip {
+  display: flex;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-x: auto;
+}
+
+.goal-history-strip__day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  flex: 1;
+  min-width: 40px;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+}
+
+.goal-history-strip__day--completed {
+  color: var(--color-success);
+  border-color: var(--color-success);
+  background: var(--color-success-light);
+}
+
+.goal-history-strip__day--missed {
+  color: var(--color-text-muted);
+  background: var(--color-surface-sunken);
+}
+
+.goal-history-strip__label {
+  color: inherit;
+}

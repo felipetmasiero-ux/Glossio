@@ -1,0 +1,25 @@
+.goal-detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.goal-detail-row__header {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.goal-detail-row__label {
+  color: var(--color-text-secondary);
+}
+
+.goal-detail-row__count {
+  color: var(--color-text);
+}
+
+.goal-detail-row__meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--color-text-muted);
+}

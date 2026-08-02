@@ -1,0 +1,36 @@
+.vocabulary-distribution-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.vocabulary-distribution-card__row {
+  display: grid;
+  grid-template-columns: 40px 1fr 48px;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.vocabulary-distribution-card__level {
+  color: var(--color-text-secondary);
+}
+
+.vocabulary-distribution-card__track {
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-sunken);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+}
+
+.vocabulary-distribution-card__fill {
+  height: 100%;
+  background: var(--color-primary);
+  border-radius: var(--radius-full);
+  transition: width var(--t-fast);
+}
+
+.vocabulary-distribution-card__percentage {
+  color: var(--color-text);
+  text-align: right;
+}

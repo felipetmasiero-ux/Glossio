@@ -1,0 +1,43 @@
+.upcoming-reviews-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.upcoming-reviews-card__title {
+  font: var(--text-h3);
+  color: var(--color-text);
+}
+
+.upcoming-reviews-card__rows {
+  display: flex;
+  flex-direction: column;
+}
+
+.upcoming-reviews-card__row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding: var(--space-2) 0;
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.upcoming-reviews-card__row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.upcoming-reviews-card__row-label {
+  color: var(--color-text-secondary);
+}
+
+.upcoming-reviews-card__row-count {
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-1);
+}
+
+.upcoming-reviews-card__row-unit {
+  color: var(--color-text-muted);
+}

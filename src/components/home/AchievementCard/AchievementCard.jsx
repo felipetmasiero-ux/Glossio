@@ -1,3 +1,4 @@
+import { Card } from "../../common/Card/Card";
 import { Icon } from "../../common/Icon/Icon";
 
 import "./AchievementCard.css";
@@ -7,7 +8,7 @@ export function AchievementCard({ achievement }) {
     if (!achievement) {
 
         return (
-            <div className="achievement-card achievement-card--empty">
+            <Card className="achievement-card achievement-card--empty" hoverable={false}>
                 <span className="achievement-card__icon">
                     <Icon name="trophy" size={20} />
                 </span>
@@ -17,18 +18,18 @@ export function AchievementCard({ achievement }) {
                         Complete um módulo para desbloquear sua primeira conquista.
                     </p>
                 </div>
-            </div>
+            </Card>
         );
 
     }
 
     return (
-        <div className="achievement-card">
+        <Card className="achievement-card" hoverable={false}>
             <span className="achievement-card__icon achievement-card__icon--earned">
                 <Icon name="trophy" size={20} />
             </span>
             <p className="achievement-card__title">{achievement.title}</p>
-        </div>
+        </Card>
     );
 
 }

@@ -27,7 +27,8 @@ export function Navbar() {
     { to: "/lessons", label: "Cursos" },
     { to: "/explore", label: "Explore" },
     { to: "/flashcards", label: "Flashcards" },
-    { to: "/grammar", label: "Gramática" }
+    { to: "/grammar", label: "Gramática" },
+    { to: "/goals", label: "Metas" }
   ];
 
   if (HIDDEN_PATHS.includes(location.pathname)) return null;

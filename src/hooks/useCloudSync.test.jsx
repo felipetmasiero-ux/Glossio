@@ -3,6 +3,7 @@ import { renderHook, waitFor } from "@testing-library/react";
 
 import { useCloudSync } from "./useCloudSync";
 import { serializeProgress } from "../utils/cloudSync/progressStorage";
+import { DEFAULT_GOALS } from "../utils/goals/goalsStorage";
 
 vi.mock("./useAuth", () => ({ useAuth: vi.fn() }));
 
@@ -40,7 +41,7 @@ function progressState(language) {
         language,
         exerciseProgress: [],
         studyHistory: [],
-        dashboard: { lastActivity: null }
+        dashboard: { lastActivity: null, goals: DEFAULT_GOALS }
     };
 }
 

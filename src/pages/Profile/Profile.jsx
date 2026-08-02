@@ -31,7 +31,8 @@ const RESET_KEYS = [
     "flashcards",
     "events",
     "studyHistory",
-    "lastActivity"
+    "lastActivity",
+    "studyGoals"
 ];
 
 const EMPTY_FORM = {

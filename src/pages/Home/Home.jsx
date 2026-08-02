@@ -19,8 +19,16 @@ import { AchievementsSummaryCard } from "../../components/home/AchievementsSumma
 import { StatisticsSummaryCard } from "../../components/home/StatisticsSummaryCard/StatisticsSummaryCard";
 import { FavoritesSummaryCard } from "../../components/home/FavoritesSummaryCard/FavoritesSummaryCard";
 import { PlacementTestCard } from "../../components/home/PlacementTestCard/PlacementTestCard";
+import { ActivityHeatmap } from "../../components/home/ActivityHeatmap/ActivityHeatmap";
+import { StudyStreakCard } from "../../components/home/StudyStreakCard/StudyStreakCard";
+import { UpcomingReviewsCard } from "../../components/home/UpcomingReviewsCard/UpcomingReviewsCard";
+import { RecentActivityCard } from "../../components/home/RecentActivityCard/RecentActivityCard";
+import { VocabularyDistributionCard } from "../../components/home/VocabularyDistributionCard/VocabularyDistributionCard";
+import { WeeklyEvolutionCard } from "../../components/home/WeeklyEvolutionCard/WeeklyEvolutionCard";
+import { GoalsProgressCard } from "../../components/home/GoalsProgressCard/GoalsProgressCard";
 
 import { PlacementTestStorage } from "../../utils/placementTest/placementTestStorage";
+import { useGoalsSummary } from "../../hooks/useGoalsSummary";
 
 export function Home() {
 
@@ -29,6 +37,7 @@ export function Home() {
     const achievements = useAchievements();
     const achievementsSummary = getAchievementsSummary(achievements);
     const latestPlacementResult = PlacementTestStorage.getLatestResult();
+    const goalsSummary = useGoalsSummary();
 
     return (
 
@@ -45,6 +54,19 @@ export function Home() {
                 <ReviewsCard reviews={dashboard.reviews} />
             </div>
 
+            <div className="home-dashboard__row animate-slide-up">
+                <StudyStreakCard streak={dashboard.streakSummary} />
+                <UpcomingReviewsCard upcoming={dashboard.upcomingReviews} />
+            </div>
+
+            <DashboardSection title="Metas de hoje" icon="target">
+                <GoalsProgressCard summary={goalsSummary} />
+            </DashboardSection>
+
+            <DashboardSection title="Atividade" subtitle="Últimos 90 dias" icon="calendar">
+                <ActivityHeatmap heatmap={dashboard.heatmap} />
+            </DashboardSection>
+
             <DashboardSection title="Continuar curso" icon="book">
                 <div className="home-dashboard__courses">
                     {dashboard.courses.map(course => (
@@ -55,6 +77,18 @@ export function Home() {
 
             <DashboardSection title="Estatísticas rápidas" icon="target">
                 <QuickStatsCard quickStats={dashboard.quickStats} />
+            </DashboardSection>
+
+            <DashboardSection title="Atividade recente" icon="clock">
+                <RecentActivityCard recentActivity={dashboard.recentActivity} />
+            </DashboardSection>
+
+            <DashboardSection title="Distribuição do vocabulário" icon="ruler">
+                <VocabularyDistributionCard distribution={dashboard.vocabularyDistribution} />
+            </DashboardSection>
+
+            <DashboardSection title="Evolução semanal" icon="bar-chart">
+                <WeeklyEvolutionCard weeklyActivity={dashboard.weeklyActivity} />
             </DashboardSection>
 
             <DashboardSection title="Conquista recente" icon="star">

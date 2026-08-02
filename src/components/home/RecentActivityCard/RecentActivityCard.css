@@ -1,0 +1,31 @@
+.recent-activity-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.recent-activity-card__date {
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+}
+
+.recent-activity-card__items {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.recent-activity-card__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-text);
+}
+
+.recent-activity-card__item .icon {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}

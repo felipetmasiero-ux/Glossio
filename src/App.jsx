@@ -31,6 +31,7 @@ const Achievements = lazyPage(() => import("./pages/Achievements/Achievements"),
 const Search = lazyPage(() => import("./pages/Search/Search"), "Search");
 const Grammar = lazyPage(() => import("./pages/Grammar/Grammar"), "Grammar");
 const PlacementTest = lazyPage(() => import("./pages/PlacementTest/PlacementTest"), "PlacementTest");
+const Goals = lazyPage(() => import("./pages/Goals/Goals"), "Goals");
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
@@ -207,6 +208,11 @@ function App() {
                     <Route
                       path="/grammar"
                       element={<Grammar />}
+                    />
+
+                    <Route
+                      path="/goals"
+                      element={<Goals />}
                     />
 
                   </Route>

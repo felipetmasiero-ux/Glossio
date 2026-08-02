@@ -1,3 +1,5 @@
+import { GoalsStorage, DEFAULT_GOALS } from "../goals/goalsStorage";
+
 function readJSON(key, fallback) {
     const raw = localStorage.getItem(key);
 
@@ -16,20 +18,26 @@ export function readProgressSnapshot() {
         exerciseProgress: readJSON("exerciseProgress", []),
         studyHistory: readJSON("studyHistory", []),
         dashboard: {
-            lastActivity: readJSON("lastActivity", null)
+            lastActivity: readJSON("lastActivity", null),
+            goals: GoalsStorage.getGoals()
         }
     };
 }
 
 // Canonical key order, and drops fields (like the server's `updatedAt`) that
-// shouldn't affect whether local and server are considered "in sync".
+// shouldn't affect whether local and server are considered "in sync". Goals
+// is spread onto the fixed DEFAULT_GOALS template (rather than passed
+// through as-is) for the same reason - a Postgres jsonb round trip doesn't
+// guarantee key order, and an unsorted compare would flag that alone as a
+// real change.
 export function serializeProgress(snapshot) {
     return JSON.stringify({
         language: snapshot.language || null,
         exerciseProgress: snapshot.exerciseProgress ?? [],
         studyHistory: snapshot.studyHistory ?? [],
         dashboard: {
-            lastActivity: snapshot.dashboard?.lastActivity ?? null
+            lastActivity: snapshot.dashboard?.lastActivity ?? null,
+            goals: { ...DEFAULT_GOALS, ...(snapshot.dashboard?.goals ?? {}) }
         }
     });
 }
@@ -39,6 +47,7 @@ export function applyProgressSnapshot(snapshot) {
     localStorage.setItem("exerciseProgress", JSON.stringify(snapshot.exerciseProgress ?? []));
     localStorage.setItem("studyHistory", JSON.stringify(snapshot.studyHistory ?? []));
     localStorage.setItem("lastActivity", JSON.stringify(snapshot.dashboard?.lastActivity ?? null));
+    GoalsStorage.saveGoals(snapshot.dashboard?.goals ?? DEFAULT_GOALS);
 }
 
 export function readFlashcardsSnapshot() {

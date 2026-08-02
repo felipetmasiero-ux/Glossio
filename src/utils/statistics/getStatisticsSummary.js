@@ -10,6 +10,8 @@ import { getStudyTimeEstimate } from "./getStudyTimeEstimate";
 import { getReviewStatistics } from "./getReviewStatistics";
 import { getKnownWordsByLevel } from "./getKnownWordsByLevel";
 import { getFavoriteWordsCount } from "./getFavoriteWordsCount";
+import { getGoalCompletionRate } from "../goals/getGoalCompletionRate";
+import { GoalsStorage } from "../goals/goalsStorage";
 
 export function getStatisticsSummary({ language, completedLessons = [], flashcards = [], events = [] }) {
 
@@ -24,7 +26,8 @@ export function getStatisticsSummary({ language, completedLessons = [], flashcar
         videosCompleted: getVideosCompleted({ language }),
         studyMinutes: getStudyTimeEstimate({ completedLessons, language }),
         reviews: getReviewStatistics({ flashcards, events, language }),
-        streak: getStreak(activityRecords)
+        streak: getStreak(activityRecords),
+        goalCompletionRate: getGoalCompletionRate({ events, flashcards, language, goals: GoalsStorage.getGoals() })
     };
 
 }

@@ -1,0 +1,76 @@
+.weekly-evolution-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.weekly-evolution-card__legend {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.weekly-evolution-card__legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  color: var(--color-text-muted);
+}
+
+.weekly-evolution-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+}
+
+.weekly-evolution-card__bar--reviews {
+  background: var(--color-primary);
+}
+
+.weekly-evolution-card__bar--lessons {
+  background: var(--color-text-secondary);
+}
+
+.weekly-evolution-card__bar--videos {
+  background: var(--color-text-muted);
+}
+
+.weekly-evolution-card__chart {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: var(--space-2);
+  align-items: end;
+  height: 96px;
+}
+
+.weekly-evolution-card__week {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  height: 100%;
+}
+
+.weekly-evolution-card__bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  width: 100%;
+}
+
+.weekly-evolution-card__bar {
+  flex: 1;
+  min-width: 4px;
+  border-radius: 2px 2px 0 0;
+}
+
+.weekly-evolution-card__label {
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 600px) {
+  .weekly-evolution-card__chart {
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 96px;
+  }
+}

@@ -179,6 +179,21 @@ const PATHS = {
       <path d="M4 13.3h16" />
     </>
   ),
+  calendar: (
+    <>
+      <rect x="4" y="5.5" width="16" height="14.5" rx="1.5" />
+      <path d="M4 9.5h16" />
+      <path d="M8 3.5v3" />
+      <path d="M16 3.5v3" />
+    </>
+  ),
+  "bar-chart": (
+    <>
+      <path d="M4 20V13" />
+      <path d="M10.5 20V6.5" />
+      <path d="M17 20v-9.5" />
+    </>
+  ),
 };
 
 export function Icon({ name, size = 20, className = "", ...rest }) {

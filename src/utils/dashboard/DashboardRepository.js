@@ -18,6 +18,12 @@ import { LessonRepository } from "../lessons/LessonRepository";
 import { VideoRepository } from "../../repositories/VideoRepository";
 import { VideoProgressRepository } from "../../repositories/VideoProgressRepository";
 import { getRelatedContent } from "../recommendations";
+import { getHeatmap } from "./getHeatmap";
+import { getStreakSummary } from "./getStreakSummary";
+import { getUpcomingReviews } from "./getUpcomingReviews";
+import { getRecentActivity } from "./getRecentActivity";
+import { getVocabularyDistribution } from "./getVocabularyDistribution";
+import { getWeeklyActivity } from "./getWeeklyActivity";
 
 function getDailyGoal({ events = [] }) {
 
@@ -165,6 +171,18 @@ export const DashboardRepository = {
 
     getNextStep,
 
+    getHeatmap,
+
+    getStreakSummary,
+
+    getUpcomingReviews,
+
+    getRecentActivity,
+
+    getVocabularyDistribution,
+
+    getWeeklyActivity,
+
     getDashboardData({ language, completedLessons = [], flashcards = [], events = [], lastActivity = null }) {
 
         const continueLearning = getContinueLearning({ language, completedLessons });
@@ -195,6 +213,18 @@ export const DashboardRepository = {
             recentAchievement: getRecentAchievement({ language, events }),
 
             lastActivity: resolvedLastActivity,
+
+            heatmap: getHeatmap({ events }),
+
+            streakSummary: getStreakSummary({ events }),
+
+            upcomingReviews: getUpcomingReviews({ flashcards, language }),
+
+            recentActivity: getRecentActivity({ language, events, flashcards }),
+
+            vocabularyDistribution: getVocabularyDistribution({ flashcards, language }),
+
+            weeklyActivity: getWeeklyActivity({ events, flashcards, language }),
 
             nextStep: getNextStep({
                 reviews,

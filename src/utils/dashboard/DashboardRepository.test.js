@@ -211,4 +211,23 @@ describe("DashboardRepository.getDashboardData", () => {
 
     });
 
+    it("includes the Sprint 38 dashboard-intelligence fields", () => {
+
+        const data = DashboardRepository.getDashboardData({
+            language: "English",
+            completedLessons: [],
+            flashcards: [],
+            events: [],
+            lastActivity: null
+        });
+
+        expect(data.heatmap).toHaveLength(90);
+        expect(data.streakSummary).toEqual({ current: 0, longest: 0, daysThisMonth: 0 });
+        expect(data.upcomingReviews).toEqual({ today: 0, tomorrow: 0, next7Days: 0 });
+        expect(data.recentActivity).toEqual([]);
+        expect(data.vocabularyDistribution.map(entry => entry.level)).toEqual(["A1", "A2"]);
+        expect(data.weeklyActivity).toHaveLength(8);
+
+    });
+
 });
