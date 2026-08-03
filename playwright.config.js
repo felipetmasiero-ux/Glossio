@@ -1,5 +1,15 @@
 import { defineConfig, devices } from "@playwright/test";
 
+// Set to a deployed URL (e.g. https://glossio.vercel.app) to run the same
+// suite against a real production/preview deployment instead of a local
+// build - see docs/PRODUCTION_CHECKLIST.md. This talks to the *real* backend
+// and its *real* database: auth.spec.js/security.spec.js create real,
+// disposable accounts, and register/login are rate-limited in production
+// (see backend/src/middlewares/rateLimiters.js) - fine for a one-time
+// post-deploy smoke test, not something to run repeatedly against a live
+// environment with real users.
+const REMOTE_BASE_URL = process.env.PLAYWRIGHT_BASE_URL;
+
 export default defineConfig({
     testDir: "./tests/e2e",
     fullyParallel: true,
@@ -9,7 +19,7 @@ export default defineConfig({
     reporter: [["html", { open: "never" }], ["list"]],
 
     use: {
-        baseURL: "http://localhost:5173",
+        baseURL: REMOTE_BASE_URL ?? "http://localhost:5173",
         trace: "on-first-retry",
         screenshot: "only-on-failure"
     },
@@ -23,10 +33,12 @@ export default defineConfig({
 
     // The app requires the real backend (Postgres + Express) for auth and
     // cloud sync, and a production build for the service worker (disabled
-    // in dev mode) - so tests always run against `vite preview`. Port 5173
-    // matches the backend's CORS_ORIGIN (see backend/.env) - using any other
-    // port would have every API request rejected by CORS.
-    webServer: [
+    // in dev mode) - so local runs always go through `vite preview`. Port
+    // 5173 matches the backend's CORS_ORIGIN (see backend/.env) - using any
+    // other port would have every API request rejected by CORS. None of
+    // this applies when PLAYWRIGHT_BASE_URL points at a real deployment -
+    // there's nothing local to spin up in that case.
+    webServer: REMOTE_BASE_URL ? undefined : [
         {
             command: "npm run build && npm run preview -- --port 5173 --strictPort",
             url: "http://localhost:5173",

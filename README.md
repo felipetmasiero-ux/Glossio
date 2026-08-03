@@ -1,16 +1,44 @@
-# React + Vite
+# Glossio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Aprenda idiomas de verdade: lições estruturadas (Learn), conteúdo autêntico com tradução instantânea (Explore), um acervo pessoal de vocabulário (Collect) e revisão espaçada (Review) — inglês, francês e português.
 
-Currently, two official plugins are available:
+React 19 + Vite no frontend, Node/Express + PostgreSQL (Prisma) no backend, PWA instalável, sincronização em nuvem entre dispositivos.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Rodando localmente
 
-## React Compiler
+**Backend** (precisa de um Postgres local - `backend/docker-compose.yml` sobe um):
+```bash
+cd backend
+cp .env.example .env    # ajuste se necessário
+docker compose up -d
+npm install
+npx prisma migrate dev
+npm run dev              # http://localhost:4000
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Frontend**:
+```bash
+cp .env.example .env      # aponta para http://localhost:4000/api por padrão
+npm install
+npm run dev               # http://localhost:5173
+```
 
-## Expanding the ESLint configuration
+## Testes
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npx vitest run                        # frontend
+cd backend && npm test                # backend (precisa do Postgres local rodando)
+npx playwright test                   # e2e (builda o frontend e sobe os dois servidores sozinho)
+npx eslint .                          # lint (frontend + backend)
+```
+
+## Deploy
+
+Ver [`docs/DEPLOY.md`](docs/DEPLOY.md) para o passo a passo completo (Vercel + Render). Documentação relacionada:
+
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — como as peças se encaixam
+- [`docs/ENVIRONMENT_VARIABLES.md`](docs/ENVIRONMENT_VARIABLES.md) — toda variável de ambiente, o que faz e onde configurar
+- [`docs/BACKUP_RESTORE.md`](docs/BACKUP_RESTORE.md) — backup e restore do Postgres
+- [`docs/PRODUCTION_CHECKLIST.md`](docs/PRODUCTION_CHECKLIST.md) — checklist de validação pós-deploy
+
+Outros documentos de produto/design: [`PRODUCT.md`](PRODUCT.md), [`VISION.md`](VISION.md), [`DESIGN.md`](DESIGN.md), [`EXPLORE_ARCHITECTURE.md`](EXPLORE_ARCHITECTURE.md).
