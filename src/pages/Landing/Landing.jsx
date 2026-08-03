@@ -58,7 +58,7 @@ export function Landing() {
                 <p className="landing-hero__wordmark text-mono-label">Glossio</p>
 
                 <h1 className="landing-hero__title">
-                    Aprenda um idioma como estudo de verdade.
+                    Aprenda um idioma do jeito que realmente funciona.
                 </h1>
 
                 <p className="landing-hero__description">
