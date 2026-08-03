@@ -1,8 +1,13 @@
+import { memo } from "react";
+
 import { EmptyState } from "../../common/EmptyState/EmptyState";
 
 import "./VocabularyDistributionCard.css";
 
-export function VocabularyDistributionCard({ distribution }) {
+// distribution stays referentially stable across renders where flashcards/
+// language haven't changed (see useDashboardData.js) - memo lets this card
+// skip re-rendering in that case.
+export const VocabularyDistributionCard = memo(function VocabularyDistributionCard({ distribution }) {
 
     if (distribution.length === 0) {
         return (
@@ -48,4 +53,4 @@ export function VocabularyDistributionCard({ distribution }) {
 
     );
 
-}
+});

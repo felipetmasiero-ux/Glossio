@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useLanguage } from "../../hooks/useLanguage";
 import { useFlashcards } from "../../hooks/useFlashcards";
@@ -39,6 +39,10 @@ export function Goals() {
     const [isSaving, setIsSaving] = useState(false);
     const [toastMessage, setToastMessage] = useState("");
 
+    const toastTimeoutRef = useRef(null);
+
+    useEffect(() => () => clearTimeout(toastTimeoutRef.current), []);
+
     const summary = useMemo(() => getGoalSummary({
         language, flashcards, events, goals
     }), [language, flashcards, events, goals]);
@@ -56,7 +60,8 @@ export function Goals() {
 
         setToastMessage("Metas salvas.");
         setIsSaving(false);
-        setTimeout(() => setToastMessage(""), 2500);
+        clearTimeout(toastTimeoutRef.current);
+        toastTimeoutRef.current = setTimeout(() => setToastMessage(""), 2500);
 
     }
 

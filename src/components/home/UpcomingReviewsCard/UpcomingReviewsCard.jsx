@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Card } from "../../common/Card/Card";
 
 import "./UpcomingReviewsCard.css";
@@ -6,7 +8,10 @@ function wordsLabel(count) {
     return count === 1 ? "palavra" : "palavras";
 }
 
-export function UpcomingReviewsCard({ upcoming }) {
+// upcoming stays referentially stable across renders where flashcards/
+// language haven't changed (see useDashboardData.js) - memo lets this card
+// skip re-rendering in that case.
+export const UpcomingReviewsCard = memo(function UpcomingReviewsCard({ upcoming }) {
 
     const rows = [
         { label: "Hoje", count: upcoming.today },
@@ -35,4 +40,4 @@ export function UpcomingReviewsCard({ upcoming }) {
 
     );
 
-}
+});

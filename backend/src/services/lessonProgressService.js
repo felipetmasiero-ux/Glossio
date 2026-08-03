@@ -18,9 +18,16 @@ function deriveLanguage(lessonId) {
 }
 
 export async function getOrMigrateLessonProgress(userId) {
-    const existingCount = await prisma.lessonProgress.count({ where: { userId } });
+    // Same fix as flashcardService.getOrMigrateFlashcards: read the real
+    // rows first instead of a separate count() just to decide whether
+    // migration is needed, since the steady state (already migrated) is
+    // nearly every request after the first.
+    let rows = await prisma.lessonProgress.findMany({
+        where: { userId },
+        orderBy: { lessonId: "asc" }
+    });
 
-    if (existingCount === 0) {
+    if (rows.length === 0) {
         const progress = await prisma.userProgress.findUnique({ where: { userId } });
         const legacyLessonIds = Array.isArray(progress?.lessonProgress) ? progress.lessonProgress : [];
 
@@ -42,13 +49,13 @@ export async function getOrMigrateLessonProgress(userId) {
                     data: { lessonProgress: [] }
                 })
             ]);
+
+            rows = await prisma.lessonProgress.findMany({
+                where: { userId },
+                orderBy: { lessonId: "asc" }
+            });
         }
     }
-
-    const rows = await prisma.lessonProgress.findMany({
-        where: { userId },
-        orderBy: { lessonId: "asc" }
-    });
 
     return rows.map(row => row.lessonId);
 }

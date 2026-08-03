@@ -74,9 +74,18 @@ function fromClientCard(userId, card) {
 }
 
 export async function getOrMigrateFlashcards(userId) {
-    const existingCount = await prisma.flashcard.count({ where: { userId } });
+    // Reads the real rows first instead of a separate count() purely to
+    // decide whether migration is needed - a user who's already migrated
+    // (the steady state, for nearly every request after their first) used
+    // to cost 2 queries (count + findMany) on every single read. Now it's
+    // just the one findMany(); the legacy check only runs on the empty-rows
+    // path, and re-queries afterward only if it actually wrote something.
+    let rows = await prisma.flashcard.findMany({
+        where: { userId },
+        orderBy: { createdAt: "asc" }
+    });
 
-    if (existingCount === 0) {
+    if (rows.length === 0) {
         const progress = await prisma.userProgress.findUnique({ where: { userId } });
         const legacyCards = Array.isArray(progress?.flashcards) ? progress.flashcards : [];
 
@@ -91,13 +100,13 @@ export async function getOrMigrateFlashcards(userId) {
                     data: { flashcards: [] }
                 })
             ]);
+
+            rows = await prisma.flashcard.findMany({
+                where: { userId },
+                orderBy: { createdAt: "asc" }
+            });
         }
     }
-
-    const rows = await prisma.flashcard.findMany({
-        where: { userId },
-        orderBy: { createdAt: "asc" }
-    });
 
     return rows.map(toPublicFlashcard);
 }

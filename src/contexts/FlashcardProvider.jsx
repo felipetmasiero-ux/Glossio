@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { FlashcardContext } from "../contexts/FlashcardContext";
 import { scheduleCard } from "../utils/study/scheduling";
 import { useEvents } from "../hooks/useEvents";
@@ -22,7 +22,10 @@ export function FlashcardProvider({ children }) {
         saveFlashcards(flashcards);
     }, [flashcards]);
 
-    function addFlashcard(wordData, language) {
+    // Reads `flashcards` directly (for the duplicate check), so this
+    // reference legitimately changes whenever flashcards does - same as
+    // before, just no longer *also* changing on every unrelated render.
+    const addFlashcard = useCallback((wordData, language) => {
 
         const normalized =
             typeof wordData === "string"
@@ -68,15 +71,18 @@ export function FlashcardProvider({ children }) {
             moduleId: normalized.moduleId ?? null,
             lessonId: normalized.lessonId ?? null
         });
-    }
+    }, [flashcards, logEvent]);
 
-    function removeFlashcard(word) {
+    // Functional updates only - never needs to read `flashcards` directly,
+    // so these stay referentially stable across renders regardless of how
+    // often flashcards (or anything else in the app) changes.
+    const removeFlashcard = useCallback(word => {
         setFlashcards(previous =>
             previous.filter(card => card.word !== word)
         );
-    }
+    }, []);
 
-    function answerFlashcard(cardId, quality) {
+    const answerFlashcard = useCallback((cardId, quality) => {
         setFlashcards(previous =>
             previous.map(card => {
                 if (card.id !== cardId) return card;
@@ -89,9 +95,9 @@ export function FlashcardProvider({ children }) {
             cardId,
             quality
         });
-    }
+    }, [logEvent]);
 
-    function toggleFavorite(cardId) {
+    const toggleFavorite = useCallback(cardId => {
         setFlashcards(previous =>
             previous.map(card =>
                 card.id === cardId
@@ -99,22 +105,25 @@ export function FlashcardProvider({ children }) {
                     : card
             )
         );
-    }
+    }, []);
 
-    function hasFlashcard(word, language) {
+    // Reads `flashcards` directly - reference legitimately changes with it.
+    const hasFlashcard = useCallback((word, language) => {
         return isWordKnown(flashcards, word, language);
-    }
+    }, [flashcards]);
+
+    const value = useMemo(() => ({
+        flashcards,
+        setFlashcards,
+        addFlashcard,
+        removeFlashcard,
+        answerFlashcard,
+        toggleFavorite,
+        hasFlashcard
+    }), [flashcards, addFlashcard, removeFlashcard, answerFlashcard, toggleFavorite, hasFlashcard]);
 
     return (
-        <FlashcardContext.Provider value={{
-            flashcards,
-            setFlashcards,
-            addFlashcard,
-            removeFlashcard,
-            answerFlashcard,
-            toggleFavorite,
-            hasFlashcard
-        }}>
+        <FlashcardContext.Provider value={value}>
             {children}
         </FlashcardContext.Provider>
     );

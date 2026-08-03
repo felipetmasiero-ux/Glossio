@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import "./ActivityHeatmap.css";
 
 const dateFormatter = new Intl.DateTimeFormat("pt-BR", { day: "numeric", month: "long" });
@@ -11,7 +13,10 @@ function formatCellLabel(cell) {
 
 }
 
-export function ActivityHeatmap({ heatmap }) {
+// heatmap now stays referentially stable across renders where the
+// underlying events haven't changed (see useDashboardData.js) - memo lets
+// this 90-cell grid actually skip re-rendering when that's the case.
+export const ActivityHeatmap = memo(function ActivityHeatmap({ heatmap }) {
 
     return (
 
@@ -44,4 +49,4 @@ export function ActivityHeatmap({ heatmap }) {
 
     );
 
-}
+});

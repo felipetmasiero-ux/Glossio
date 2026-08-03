@@ -59,7 +59,11 @@ model Flashcard {
   nextReview     BigInt
   lastReviewedAt BigInt?
 
-  @@index([userId])
+  // Every read filters by userId then orders by createdAt (see
+  // flashcardService.getOrMigrateFlashcards) - a composite index lets
+  // Postgres serve that as a pure index-order scan instead of an index
+  // scan followed by an in-memory sort.
+  @@index([userId, createdAt])
 }
 
 model VideoProgress {
@@ -77,7 +81,10 @@ model VideoProgress {
   addedWords    Json
   updatedAt     DateTime @updatedAt
 
-  @@index([userId])
+  // Every read filters by userId then orders by language, videoId (see
+  // videoProgressService.getOrMigrateVideoProgress) - a composite index
+  // lets Postgres serve that as a pure index-order scan.
+  @@index([userId, language, videoId])
 }
 
 model LessonProgress {
@@ -90,7 +97,10 @@ model LessonProgress {
   completedAt BigInt
   updatedAt   DateTime @updatedAt
 
-  @@index([userId])
+  // Every read filters by userId then orders by lessonId (see
+  // lessonProgressService.getOrMigrateLessonProgress) - a composite index
+  // lets Postgres serve that as a pure index-order scan.
+  @@index([userId, lessonId])
 }
 
 model StudyEvent {
@@ -101,5 +111,10 @@ model StudyEvent {
   payload   Json
   createdAt BigInt
 
-  @@index([userId])
+  // Every read filters by userId then orders by createdAt (see
+  // eventService.getOrMigrateEvents) - a composite index lets Postgres
+  // serve that as a pure index-order scan instead of an index scan
+  // followed by an in-memory sort. Most relevant at this app's largest
+  // per-user row count (up to thousands of study events).
+  @@index([userId, createdAt])
 }

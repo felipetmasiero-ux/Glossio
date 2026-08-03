@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { ExerciseProgressContext } from "./ExerciseProgressContext";
 import {
     loadExerciseProgress,
@@ -13,7 +13,7 @@ export function ExerciseProgressProvider({ children }) {
         saveExerciseProgress(practicedLessons);
     }, [practicedLessons]);
 
-    function practiceLesson(lessonId) {
+    const practiceLesson = useCallback(lessonId => {
 
         setPracticedLessons(previous =>
             previous.includes(lessonId)
@@ -21,18 +21,20 @@ export function ExerciseProgressProvider({ children }) {
                 : [...previous, lessonId]
         );
 
-    }
+    }, []);
 
-    function isLessonPracticed(lessonId) {
+    const isLessonPracticed = useCallback(lessonId => {
         return practicedLessons.includes(lessonId);
-    }
+    }, [practicedLessons]);
+
+    const value = useMemo(() => ({
+        practicedLessons,
+        practiceLesson,
+        isLessonPracticed
+    }), [practicedLessons, practiceLesson, isLessonPracticed]);
 
     return (
-        <ExerciseProgressContext.Provider value={{
-            practicedLessons,
-            practiceLesson,
-            isLessonPracticed
-        }}>
+        <ExerciseProgressContext.Provider value={value}>
             {children}
         </ExerciseProgressContext.Provider>
     );

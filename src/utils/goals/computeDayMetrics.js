@@ -15,17 +15,28 @@ export function getDayTimestamp(timestamp) {
 // VideoRepository.getAll(language) only ever returns that language's
 // content), and flashcard reviews are matched back to a language via the
 // card itself, since FLASHCARD_REVIEWED events don't carry one.
-export function computeRangeMetrics({ events = [], flashcards = [], language, startTimestamp, endTimestamp }) {
+export function buildRangeLookups({ flashcards = [], language }) {
 
-    const cardLanguageById = new Map(flashcards.map(card => [card.id, card.language]));
+    return {
+        cardLanguageById: new Map(flashcards.map(card => [card.id, card.language])),
+        lessonMinutesById: new Map(
+            LessonRepository.getAll(language).map(lesson => [lesson.id, lesson.estimatedTime ?? 0])
+        ),
+        videoDurationById: new Map(
+            VideoRepository.getAll(language).map(video => [video.id, video.duration ?? 0])
+        )
+    };
 
-    const lessonMinutesById = new Map(
-        LessonRepository.getAll(language).map(lesson => [lesson.id, lesson.estimatedTime ?? 0])
-    );
+}
 
-    const videoDurationById = new Map(
-        VideoRepository.getAll(language).map(video => [video.id, video.duration ?? 0])
-    );
+// `lookups` lets a caller that's computing many ranges in a row (like
+// getGoalHistory, over its whole day-by-day window) build these maps once
+// instead of once per range - they only depend on flashcards/language, never
+// on the range itself. Defaults to building them fresh, so existing callers
+// that only need a single range are unaffected.
+export function computeRangeMetrics({ events = [], flashcards = [], language, startTimestamp, endTimestamp, lookups }) {
+
+    const { cardLanguageById, lessonMinutesById, videoDurationById } = lookups ?? buildRangeLookups({ flashcards, language });
 
     let lessons = 0;
     let lessonMinutes = 0;
@@ -51,14 +62,15 @@ export function computeRangeMetrics({ events = [], flashcards = [], language, st
 
 }
 
-export function computeDayMetrics({ events = [], flashcards = [], language, dayTimestamp }) {
+export function computeDayMetrics({ events = [], flashcards = [], language, dayTimestamp, lookups }) {
 
     return computeRangeMetrics({
         events,
         flashcards,
         language,
         startTimestamp: dayTimestamp,
-        endTimestamp: dayTimestamp + 24 * 60 * 60 * 1000
+        endTimestamp: dayTimestamp + 24 * 60 * 60 * 1000,
+        lookups
     });
 
 }

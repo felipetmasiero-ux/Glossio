@@ -36,9 +36,16 @@ function fromClientEvent(userId, event) {
 }
 
 export async function getOrMigrateEvents(userId) {
-    const existingCount = await prisma.studyEvent.count({ where: { userId } });
+    // Same fix as flashcardService.getOrMigrateFlashcards: read the real
+    // rows first instead of a separate count() just to decide whether
+    // migration is needed, since the steady state (already migrated) is
+    // nearly every request after the first.
+    let rows = await prisma.studyEvent.findMany({
+        where: { userId },
+        orderBy: { createdAt: "asc" }
+    });
 
-    if (existingCount === 0) {
+    if (rows.length === 0) {
         const progress = await prisma.userProgress.findUnique({ where: { userId } });
         const legacyEvents = Array.isArray(progress?.dashboard?.events) ? progress.dashboard.events : [];
 
@@ -55,13 +62,13 @@ export async function getOrMigrateEvents(userId) {
                     data: { dashboard: { ...progress.dashboard, events: [] } }
                 })
             ]);
+
+            rows = await prisma.studyEvent.findMany({
+                where: { userId },
+                orderBy: { createdAt: "asc" }
+            });
         }
     }
-
-    const rows = await prisma.studyEvent.findMany({
-        where: { userId },
-        orderBy: { createdAt: "asc" }
-    });
 
     return rows.map(toPublicEvent);
 }

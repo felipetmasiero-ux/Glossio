@@ -20,11 +20,16 @@ const corsOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
     .map(origin => origin.trim())
     .filter(Boolean);
 
+const nodeEnv = process.env.NODE_ENV || "development";
+
 export const env = {
     port: Number(process.env.PORT) || 4000,
-    nodeEnv: process.env.NODE_ENV || "development",
+    nodeEnv,
     databaseUrl: process.env.DATABASE_URL,
     jwtSecret: process.env.JWT_SECRET,
     jwtExpiresIn: process.env.JWT_EXPIRES_IN || "7d",
-    corsOrigins
+    corsOrigins,
+    // Quieter by default in production, verbose in dev/test - overridable
+    // (e.g. to silence logs entirely in a test run) without touching code.
+    logLevel: process.env.LOG_LEVEL || (nodeEnv === "production" ? "info" : "debug")
 };

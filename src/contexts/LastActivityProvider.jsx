@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { LastActivityContext } from "./LastActivityContext";
 import {
     loadLastActivity,
@@ -24,12 +24,14 @@ export function LastActivityProvider({ children }) {
         setLastActivity(null);
     }, []);
 
+    const value = useMemo(() => ({
+        lastActivity,
+        setActivity,
+        clearActivity
+    }), [lastActivity, setActivity, clearActivity]);
+
     return (
-        <LastActivityContext.Provider value={{
-            lastActivity,
-            setActivity,
-            clearActivity
-        }}>
+        <LastActivityContext.Provider value={value}>
             {children}
         </LastActivityContext.Provider>
     );

@@ -1,5 +1,6 @@
 import "./ModuleLessonsPage.css";
 
+import { useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useLanguage } from "../../hooks/useLanguage";
@@ -23,6 +24,14 @@ export function ModuleLessonsPage() {
     const { completedLessons, isLessonCompleted } = useLessonProgress();
 
     const module = ModuleRepository.getById(language, moduleId);
+
+    // Stable across renders so LessonCard (memoized) doesn't re-render
+    // every lesson row just because e.g. `completedLessons` changed
+    // elsewhere in this same array of lessons.
+    const handleOpenLesson = useCallback(
+        lesson => navigate(`/lessons/${lesson.id}`),
+        [navigate]
+    );
 
     if (!module) {
 
@@ -96,9 +105,7 @@ export function ModuleLessonsPage() {
                                 lesson={lesson}
                                 locked={locked}
                                 completed={isLessonCompleted(lesson.id)}
-                                onOpen={() =>
-                                    !locked && navigate(`/lessons/${lesson.id}`)
-                                }
+                                onOpenLesson={handleOpenLesson}
                             />
 
                         );

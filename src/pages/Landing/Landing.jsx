@@ -101,7 +101,7 @@ export function Landing() {
                             </span>
 
                             <div className="landing-pillar-row__body">
-                                <h3 className="landing-pillar-row__title">{pillar.title}</h3>
+                                <h2 className="landing-pillar-row__title">{pillar.title}</h2>
                                 <p className="landing-pillar-row__description">{pillar.description}</p>
                             </div>
 

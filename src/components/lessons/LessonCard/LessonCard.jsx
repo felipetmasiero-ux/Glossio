@@ -1,10 +1,18 @@
+import { memo } from "react";
+
 import "./LessonCard.css";
 
 import { Icon } from "../../common/Icon/Icon";
 
-export function LessonCard({
+// Takes the raw `onOpenLesson(lesson)` callback and builds its own
+// (locked-aware) click handler internally, rather than the parent building
+// a fresh `() => !locked && navigate(...)` closure per-item in its .map() -
+// keeps this component's props referentially stable across unrelated
+// re-renders of the lesson list, which is what memo needs to actually skip
+// re-rendering every row.
+export const LessonCard = memo(function LessonCard({
     lesson,
-    onOpen,
+    onOpenLesson,
     locked = false,
     completed = false
 }) {
@@ -14,7 +22,7 @@ export function LessonCard({
         <button
             type="button"
             className={`lesson-row ${locked ? "lesson-row--locked" : ""}`}
-            onClick={onOpen}
+            onClick={() => !locked && onOpenLesson(lesson)}
             disabled={locked}
             aria-label={locked ? `${lesson.title} — lição bloqueada` : completed ? `Revisar ${lesson.title}` : `Começar ${lesson.title}`}
         >
@@ -55,4 +63,4 @@ export function LessonCard({
 
     );
 
-}
+});

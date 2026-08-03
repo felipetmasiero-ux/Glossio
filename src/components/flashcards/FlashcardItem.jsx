@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import { Card } from "../common/Card/Card";
 import { Button } from "../common/Button/Button";
 import { Badge } from "../common/Badge/Badge";
@@ -17,7 +19,12 @@ const LEVEL_LABELS = {
   Mature: "Maduro"
 };
 
-export function FlashcardItem({
+// FlashcardProvider now hands out stable removeFlashcard/toggleFavorite
+// references and only changes a given `card` object when *that* card is the
+// one that changed (see contexts/FlashcardProvider.jsx) - so in a list of
+// hundreds of cards, toggling one favorite no longer has to re-render every
+// other card too.
+export const FlashcardItem = memo(function FlashcardItem({
   card,
   removeFlashcard,
   toggleFavorite
@@ -55,4 +62,4 @@ export function FlashcardItem({
       </Button>
     </Card>
   );
-}
+});

@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import "./WeeklyEvolutionCard.css";
 
 const SERIES = [
@@ -6,7 +8,11 @@ const SERIES = [
     { key: "videos", label: "Vídeos", className: "weekly-evolution-card__bar--videos" }
 ];
 
-export function WeeklyEvolutionCard({ weeklyActivity }) {
+// weeklyActivity stays referentially stable across renders where events/
+// flashcards/language haven't changed (see useDashboardData.js) - memo lets
+// this card skip re-rendering (and re-running its own flatMap/Math.max) in
+// that case.
+export const WeeklyEvolutionCard = memo(function WeeklyEvolutionCard({ weeklyActivity }) {
 
     const maxValue = Math.max(
         1,
@@ -64,4 +70,4 @@ export function WeeklyEvolutionCard({ weeklyActivity }) {
 
     );
 
-}
+});

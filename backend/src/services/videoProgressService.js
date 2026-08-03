@@ -70,9 +70,16 @@ function flattenLegacyVideoProgress(legacy) {
 }
 
 export async function getOrMigrateVideoProgress(userId) {
-    const existingCount = await prisma.videoProgress.count({ where: { userId } });
+    // Same fix as flashcardService.getOrMigrateFlashcards: read the real
+    // rows first instead of a separate count() just to decide whether
+    // migration is needed, since the steady state (already migrated) is
+    // nearly every request after the first.
+    let rows = await prisma.videoProgress.findMany({
+        where: { userId },
+        orderBy: [{ language: "asc" }, { videoId: "asc" }]
+    });
 
-    if (existingCount === 0) {
+    if (rows.length === 0) {
         const progress = await prisma.userProgress.findUnique({ where: { userId } });
         const legacyEntries = flattenLegacyVideoProgress(progress?.videoProgress);
 
@@ -86,13 +93,13 @@ export async function getOrMigrateVideoProgress(userId) {
                     data: { videoProgress: {} }
                 })
             ]);
+
+            rows = await prisma.videoProgress.findMany({
+                where: { userId },
+                orderBy: [{ language: "asc" }, { videoId: "asc" }]
+            });
         }
     }
-
-    const rows = await prisma.videoProgress.findMany({
-        where: { userId },
-        orderBy: [{ language: "asc" }, { videoId: "asc" }]
-    });
 
     return rows.map(toPublicEntry);
 }

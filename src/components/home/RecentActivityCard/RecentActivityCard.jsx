@@ -1,9 +1,14 @@
+import { memo } from "react";
+
 import { Icon } from "../../common/Icon/Icon";
 import { EmptyState } from "../../common/EmptyState/EmptyState";
 
 import "./RecentActivityCard.css";
 
-export function RecentActivityCard({ recentActivity }) {
+// recentActivity stays referentially stable across renders where language/
+// events/flashcards haven't changed (see useDashboardData.js) - memo lets
+// this card skip re-rendering in that case.
+export const RecentActivityCard = memo(function RecentActivityCard({ recentActivity }) {
 
     if (recentActivity.length === 0) {
         return (
@@ -42,4 +47,4 @@ export function RecentActivityCard({ recentActivity }) {
 
     );
 
-}
+});

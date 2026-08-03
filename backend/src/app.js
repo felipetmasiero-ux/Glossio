@@ -3,11 +3,24 @@ import cors from "cors";
 import helmet from "helmet";
 import { env } from "./config/env.js";
 import { routes } from "./routes/index.js";
+import { healthRoutes } from "./routes/healthRoutes.js";
 import { notFound, errorHandler } from "./middlewares/errorHandler.js";
 import { generalGetLimiter, generalPutLimiter, generalPostLimiter } from "./middlewares/rateLimiters.js";
+import { requestId, requestLogger } from "./middlewares/requestContext.js";
 import { HttpError } from "./utils/HttpError.js";
 
 export const app = express();
+
+// Ahead of everything else: every request gets a correlation id and an
+// automatic method/route/status/duration log line, health/ready/metrics
+// included. Health/ready/metrics themselves are mounted here too, before
+// helmet/CORS/rate limiting/body parsing - an orchestrator's liveness probe
+// has nothing to do with browser-facing headers or CORS, shouldn't compete
+// with API traffic for rate-limit budget, and /health specifically must
+// never touch the database or wait on any of this.
+app.use(requestId);
+app.use(requestLogger);
+app.use(healthRoutes);
 
 // helmet() alone already covers most of the OWASP-recommended header set
 // (X-Content-Type-Options: nosniff, X-Frame-Options, X-DNS-Prefetch-Control,

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./ExploreHub.css";
@@ -53,10 +53,27 @@ export function ExploreHub() {
         [videos]
     );
 
-    const filteredVideos = videos.filter(video =>
-        (!levelFilter || video.level === levelFilter) &&
-        (!topicFilter || video.topic === topicFilter)
+    const filteredVideos = useMemo(
+        () => videos.filter(video =>
+            (!levelFilter || video.level === levelFilter) &&
+            (!topicFilter || video.topic === topicFilter)
+        ),
+        [videos, levelFilter, topicFilter]
     );
+
+    // Stable callback references so VideoCard (memoized - individual videos
+    // are already stable via VideoRepository's own memoized getAll) doesn't
+    // see a "changed" prop and re-render every video row on every keystroke/
+    // filter change elsewhere on this page.
+    const handleOpenVideo = useCallback(
+        video => navigate(`/explore/${video.id}`),
+        [navigate]
+    );
+
+    const handleClearFilters = useCallback(() => {
+        setLevelFilter(null);
+        setTopicFilter(null);
+    }, []);
 
     const hasActiveFilter = Boolean(levelFilter || topicFilter);
 
@@ -126,12 +143,9 @@ export function ExploreHub() {
 
                             <VideoCardList
                                 videos={filteredVideos}
-                                onOpenVideo={video => navigate(`/explore/${video.id}`)}
+                                onOpenVideo={handleOpenVideo}
                                 hasActiveFilter={hasActiveFilter}
-                                onClearFilters={() => {
-                                    setLevelFilter(null);
-                                    setTopicFilter(null);
-                                }}
+                                onClearFilters={handleClearFilters}
                             />
 
                         </>

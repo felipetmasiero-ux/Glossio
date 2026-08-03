@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { useAuth } from "../../hooks/useAuth";
@@ -74,6 +74,10 @@ export function Profile() {
     const [toastMessage, setToastMessage] = useState("");
     const [confirmingReset, setConfirmingReset] = useState(false);
 
+    const toastTimeoutRef = useRef(null);
+
+    useEffect(() => () => clearTimeout(toastTimeoutRef.current), []);
+
     useEffect(() => {
         getUser()
             .then(({ user }) => {
@@ -93,7 +97,8 @@ export function Profile() {
 
     function showToast(message) {
         setToastMessage(message);
-        setTimeout(() => setToastMessage(""), 2500);
+        clearTimeout(toastTimeoutRef.current);
+        toastTimeoutRef.current = setTimeout(() => setToastMessage(""), 2500);
     }
 
     function handleFormChange(field, value) {

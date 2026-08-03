@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 
 import { StudyHistoryContext } from "./StudyHistoryContext";
 
@@ -19,10 +19,7 @@ export function StudyHistoryProvider({
         saveStudyHistory(studyHistory);
     }, [studyHistory]);
 
-    function addStudyRecord(
-        cardId,
-        quality
-    ) {
+    const addStudyRecord = useCallback((cardId, quality) => {
         setStudyHistory(previous =>
             recordStudy(
                 previous,
@@ -30,15 +27,15 @@ export function StudyHistoryProvider({
                 quality
             )
         );
-    }
+    }, []);
+
+    const value = useMemo(() => ({
+        studyHistory,
+        addStudyRecord
+    }), [studyHistory, addStudyRecord]);
 
     return (
-        <StudyHistoryContext.Provider
-            value={{
-                studyHistory,
-                addStudyRecord
-            }}
-        >
+        <StudyHistoryContext.Provider value={value}>
             {children}
         </StudyHistoryContext.Provider>
     );

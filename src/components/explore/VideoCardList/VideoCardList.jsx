@@ -39,7 +39,7 @@ export function VideoCardList({ videos, onOpenVideo, hasActiveFilter = false, on
                     <VideoCard
                         key={video.id}
                         video={video}
-                        onOpen={() => onOpenVideo(video)}
+                        onOpenVideo={onOpenVideo}
                     />
                 ))
             }

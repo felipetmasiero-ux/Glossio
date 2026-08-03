@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import "./VideoCard.css";
 
 import { Badge } from "../../common/Badge/Badge";
@@ -6,14 +8,20 @@ import { Icon } from "../../common/Icon/Icon";
 import { TOPIC_LABELS } from "../../../constants/topics";
 import { formatDuration } from "../../../utils/videos/formatDuration";
 
-export function VideoCard({ video, onOpen }) {
+// Takes the raw `onOpenVideo(video)` callback (stable, from ExploreHub)
+// rather than a pre-bound `() => onOpenVideo(video)` closure built fresh
+// per-item in the parent's .map() - building that closure in here instead
+// means this component's *props* stay referentially stable across
+// unrelated re-renders of the list, which is what memo actually needs to
+// skip re-rendering every video row when e.g. a filter changes.
+export const VideoCard = memo(function VideoCard({ video, onOpenVideo }) {
 
     return (
 
         <button
             type="button"
             className="video-row"
-            onClick={onOpen}
+            onClick={() => onOpenVideo(video)}
             aria-label={`Assistir ${video.title}`}
         >
 
@@ -58,4 +66,4 @@ export function VideoCard({ video, onOpen }) {
 
     );
 
-}
+});

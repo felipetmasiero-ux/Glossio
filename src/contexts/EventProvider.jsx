@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import { EventContext } from "./EventContext";
 import { createEvent, loadEvents, saveEvents } from "../utils/events";
 
@@ -14,7 +14,12 @@ export function EventProvider({ children }) {
         saveEvents(events);
     }, [events]);
 
-    function logEvent(type, payload = {}) {
+    // Functional update - never needs to read `events` directly, so this
+    // reference stays stable across every render regardless of how often
+    // events are logged (previously a fresh function every render, which
+    // cascaded into every context consumer re-rendering on every log call
+    // anywhere in the app, whether or not they cared about events).
+    const logEvent = useCallback((type, payload = {}) => {
 
         setEvents(previous => {
 
@@ -26,18 +31,20 @@ export function EventProvider({ children }) {
 
         });
 
-    }
+    }, []);
 
-    function getEventsByType(type) {
+    const getEventsByType = useCallback(type => {
         return events.filter(event => event.type === type);
-    }
+    }, [events]);
+
+    const value = useMemo(() => ({
+        events,
+        logEvent,
+        getEventsByType
+    }), [events, logEvent, getEventsByType]);
 
     return (
-        <EventContext.Provider value={{
-            events,
-            logEvent,
-            getEventsByType
-        }}>
+        <EventContext.Provider value={value}>
             {children}
         </EventContext.Provider>
     );

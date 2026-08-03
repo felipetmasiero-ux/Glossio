@@ -1,7 +1,12 @@
+import { memo } from "react";
+
 import { StatsGrid } from "../../studyDashboard/StatsGrid";
 import { StatsCard } from "../../studyDashboard/StatsCard";
 
-export function StudyStreakCard({ streak }) {
+// streak stays referentially stable across renders where events haven't
+// changed (see useDashboardData.js) - memo lets this card skip re-rendering
+// in that case.
+export const StudyStreakCard = memo(function StudyStreakCard({ streak }) {
 
     return (
 
@@ -15,4 +20,4 @@ export function StudyStreakCard({ streak }) {
 
     );
 
-}
+});

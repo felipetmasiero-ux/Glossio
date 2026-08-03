@@ -1,41 +1,62 @@
-// Minimal structured logger - one JSON line per event, no external
-// dependency. Deliberately narrow surface: callers pass an event name plus
-// a small metadata object built from request *metadata* (ip, path, userId)
-// never from req.body or the Authorization header, so passwords, JWTs, and
-// hashes structurally can never end up in a log line.
+import pino from "pino";
+import { env } from "../config/env.js";
 
-function write(level, event, meta) {
-    const entry = {
-        timestamp: new Date().toISOString(),
-        level,
-        event,
-        ...meta
-    };
+// pino: near-zero overhead structured JSON logging - not a monitoring
+// platform, just a logger (the sprint's "no heavy monitoring libraries"
+// restriction is about Prometheus/Grafana/OpenTelemetry-class tooling, not
+// this). `redact` is a defense-in-depth belt-and-suspenders on top of the
+// existing discipline of never passing these fields into a log call in the
+// first place: if a future call site ever did, these paths still can't
+// reach stdout.
+//
+// Exported (not just used inline below) so tests can build their own pino
+// instance against an in-memory stream with this exact config, rather than
+// trying to intercept the real logger's actual write path (pino writes to
+// stdout through sonic-boom, not a plain synchronous process.stdout.write()
+// call a spy could reliably catch).
+export const pinoOptions = {
+    level: env.logLevel,
+    timestamp: pino.stdTimeFunctions.isoTime,
+    redact: {
+        paths: [
+            "password", "newPassword", "currentPassword", "passwordHash", "token", "jwt",
+            "*.password", "*.newPassword", "*.currentPassword", "*.passwordHash", "*.token", "*.jwt",
+            "req.headers.authorization", "headers.authorization", "authorization"
+        ],
+        censor: "[REDACTED]"
+    }
+};
 
-    const line = JSON.stringify(entry);
+const pinoLogger = pino(pinoOptions);
 
-    if (level === "error") console.error(line);
-    else if (level === "warn") console.warn(line);
-    else console.log(line);
+// Kept as the same (event, meta) call shape the rest of the app already
+// uses (see logRequestEvent below) - callers don't need to change; only the
+// underlying writer does. pino's own signature is (mergingObject, msg), so
+// meta is passed first with `event` as the human-readable message.
+function logWith(level, event, meta) {
+    pinoLogger[level](meta, event);
 }
 
 export const logger = {
     info(event, meta = {}) {
-        write("info", event, meta);
+        logWith("info", event, meta);
     },
     warn(event, meta = {}) {
-        write("warn", event, meta);
+        logWith("warn", event, meta);
     },
     error(event, meta = {}) {
-        write("error", event, meta);
+        logWith("error", event, meta);
     }
 };
 
-// Convenience wrapper for the request-scoped security/audit events the
-// sprint asks for (login, registro, troca de senha, 401/403/429/500) - only
-// ever pulls safe, non-sensitive fields off the request.
+// Convenience wrapper for the request-scoped security/audit events (login,
+// registro, troca de senha, 401/403/429/500) and now also carries the
+// request's correlation id (see middlewares/requestContext.js) so every log
+// line for a given request - security events included - can be traced
+// together. Only ever pulls safe, non-sensitive fields off the request.
 export function logRequestEvent(level, event, req, extra = {}) {
     logger[level](event, {
+        requestId: req.id ?? null,
         ip: req.ip,
         method: req.method,
         path: req.originalUrl?.split("?")[0] ?? req.path,

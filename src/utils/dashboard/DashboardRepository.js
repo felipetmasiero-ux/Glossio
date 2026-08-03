@@ -183,6 +183,10 @@ export const DashboardRepository = {
 
     getWeeklyActivity,
 
+    getRelatedContentForDashboard,
+
+    getNextLevelInfo,
+
     getDashboardData({ language, completedLessons = [], flashcards = [], events = [], lastActivity = null }) {
 
         const continueLearning = getContinueLearning({ language, completedLessons });

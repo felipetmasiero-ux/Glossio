@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ExerciseShell } from "../ExerciseShell/ExerciseShell";
 import { shuffle } from "../../../utils/exercises/shuffle";
@@ -24,6 +24,10 @@ export function MatchTranslationExercise({ exercise, onComplete }) {
     const [matched, setMatched] = useState([]);
 
     const [mistake, setMistake] = useState(null);
+
+    const mistakeTimeoutRef = useRef(null);
+
+    useEffect(() => () => clearTimeout(mistakeTimeoutRef.current), []);
 
     const checked = matched.length === pairs.length;
 
@@ -51,7 +55,8 @@ export function MatchTranslationExercise({ exercise, onComplete }) {
         } else {
             setMistake(id);
             setSelectedWord(null);
-            setTimeout(() => setMistake(null), 500);
+            clearTimeout(mistakeTimeoutRef.current);
+            mistakeTimeoutRef.current = setTimeout(() => setMistake(null), 500);
         }
 
     }
