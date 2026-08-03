@@ -4,10 +4,10 @@
    Ele carrega os tokens e aplica o reset base.
    ========================================================================== */
 
-@import "./theme.css";
-@import "./typography.css";
-@import "./spacing.css";
-@import "./animations.css";
+@import "./Theme.css";
+@import "./Typography.css";
+@import "./Spacing.css";
+@import "./Animations.css";
 
 *, *::before, *::after {
   box-sizing: border-box;
