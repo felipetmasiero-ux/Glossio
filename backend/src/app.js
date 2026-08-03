@@ -78,6 +78,17 @@ app.use(cors({
 
 app.use(express.json({ limit: "1mb" }));
 
+// Every /api response is a private, per-user JSON payload (auth tokens,
+// profile, flashcards, progress...) with nothing cacheable about it - none
+// of it should ever be written to a shared proxy cache or a browser's disk
+// cache, where it could resurface for the next person on a shared/public
+// computer (or via the back button) after logout. Nothing here relied on
+// HTTP caching to begin with, so this changes no observable behavior.
+app.use("/api", (req, res, next) => {
+    res.setHeader("Cache-Control", "no-store");
+    next();
+});
+
 app.use("/api", generalGetLimiter, generalPutLimiter, generalPostLimiter, routes);
 
 app.use(notFound);

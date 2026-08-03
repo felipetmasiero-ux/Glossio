@@ -6,6 +6,14 @@ import { requireString, requireEmail, requirePassword, optionalString } from "..
 
 const SALT_ROUNDS = 12;
 
+// Precomputed once at startup (never matches any real password) so a login
+// attempt for an email that doesn't exist still pays bcrypt's comparison
+// cost below. Without this, the *response time* - not the error message,
+// which is already identical either way - would leak whether an email is
+// registered: fast-fail here vs. a real bcrypt.compare's ~100ms+ for a
+// wrong password on an account that does exist.
+const DUMMY_HASH_FOR_TIMING_SAFETY = bcrypt.hashSync("no-such-account-timing-safety", SALT_ROUNDS);
+
 export function toPublicUser(user) {
     const { passwordHash, ...publicUser } = user;
     return publicUser;
@@ -43,12 +51,10 @@ export async function loginUser({ email, password }) {
     requirePassword(password);
 
     const user = await prisma.user.findUnique({ where: { email: cleanEmail } });
-    if (!user) {
-        throw new HttpError(401, "E-mail ou senha inválidos.");
-    }
 
-    const passwordMatches = await bcrypt.compare(password, user.passwordHash);
-    if (!passwordMatches) {
+    const passwordMatches = await bcrypt.compare(password, user?.passwordHash ?? DUMMY_HASH_FOR_TIMING_SAFETY);
+
+    if (!user || !passwordMatches) {
         throw new HttpError(401, "E-mail ou senha inválidos.");
     }
 

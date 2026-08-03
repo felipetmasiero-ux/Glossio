@@ -123,6 +123,32 @@ describe("Security hardening - validation & auth", () => {
 
     });
 
+    // Security sprint regression guard (section 5): every /api response
+    // carries private, per-user data (tokens, profile, flashcards,
+    // progress) - none of it should ever be written to a shared proxy
+    // cache or a browser's disk cache, where it could resurface for the
+    // next person on a shared/public computer after logout.
+    describe("Cache-Control (no-store on every /api response)", () => {
+
+        it("sets no-store on an authenticated response", async () => {
+            const { token } = await createTestUser("cache-authed");
+
+            const response = await request(app)
+                .get("/api/user")
+                .set("Authorization", `Bearer ${token}`);
+
+            expect(response.headers["cache-control"]).toBe("no-store");
+        });
+
+        it("sets no-store even on a rejected (401) response", async () => {
+            const response = await request(app).get("/api/user");
+
+            expect(response.status).toBe(401);
+            expect(response.headers["cache-control"]).toBe("no-store");
+        });
+
+    });
+
     describe("Payload limits", () => {
 
         it("rejects a request body larger than the 1mb limit", async () => {

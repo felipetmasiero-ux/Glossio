@@ -22,6 +22,35 @@ export function AuthProvider({ children }) {
             .finally(() => setIsLoading(false));
     }, [token]);
 
+    // Logging out (or in) in one tab only ever touched *that* tab's own
+    // React state - another open tab of the same browser kept rendering
+    // protected routes with its last-known `user`/`isAuthenticated` until it
+    // happened to be reloaded, since `token` here is per-tab in-memory
+    // state, not re-read from localStorage. The `storage` event is the
+    // standard way another tab learns a shared localStorage key changed (it
+    // never fires in the tab that made the change, only in the others), so
+    // this is what makes "Sair" actually end the session everywhere it's
+    // open, not just in the tab the button was clicked in.
+    useEffect(() => {
+
+        function handleStorage(event) {
+
+            if (event.key !== TOKEN_KEY) return;
+
+            setToken(event.newValue);
+
+            if (!event.newValue) {
+                setUser(null);
+            }
+
+        }
+
+        window.addEventListener("storage", handleStorage);
+
+        return () => window.removeEventListener("storage", handleStorage);
+
+    }, []);
+
     // None of these read `token`/`user`/`isLoading` from the closure - only
     // ever set them - so every one of them can have an empty dependency
     // array and stay referentially stable for the lifetime of the app.

@@ -94,3 +94,51 @@ describe("getOrMigrateEvents", () => {
     });
 
 });
+
+// Security sprint regression guard (section 3): `payload` used to pass
+// through completely unvalidated - any type, any size. A malformed event is
+// silently dropped (not a hard failure) so one bad entry in a batch never
+// costs the rest of it, matching isValidClientEvent's existing behavior for
+// a bad id/type.
+describe("appendEvents - payload validation", () => {
+
+    it("accepts every real payload shape the app actually logs", async () => {
+        const { user } = await registerUser(creds());
+
+        const events = [
+            sampleEvent({ payload: { lessonId: "english-a1-family" } }),
+            sampleEvent({ payload: { cardId: "card-1", quality: 4 } }),
+            sampleEvent({ payload: { videoId: "en-a1-meeting-family" } }),
+            sampleEvent({ payload: { question: "What is the capital?", correct: true } })
+        ];
+
+        const result = await appendEvents(user.id, events);
+        expect(result).toHaveLength(4);
+    });
+
+    it("drops an event whose payload is not a plain object", async () => {
+        const { user } = await registerUser(creds());
+
+        const events = [
+            sampleEvent({ payload: ["not", "an", "object"] }),
+            sampleEvent({ payload: "also not an object" }),
+            sampleEvent()
+        ];
+
+        const result = await appendEvents(user.id, events);
+        expect(result).toHaveLength(1);
+    });
+
+    it("drops an event whose payload is oversized", async () => {
+        const { user } = await registerUser(creds());
+
+        const events = [
+            sampleEvent({ payload: { junk: "x".repeat(10_000) } }),
+            sampleEvent()
+        ];
+
+        const result = await appendEvents(user.id, events);
+        expect(result).toHaveLength(1);
+    });
+
+});

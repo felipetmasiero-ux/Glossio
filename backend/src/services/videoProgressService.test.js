@@ -92,3 +92,41 @@ describe("getOrMigrateVideoProgress", () => {
     });
 
 });
+
+// Security sprint regression guard (section 3): clickedWords/addedWords used
+// to only be checked as *arrays* (type + max length) - every element inside
+// was free to be any type, or an arbitrarily large string. Unlike events'
+// payload (silently dropped per-event), this whole endpoint validates the
+// entire batch up front and rejects it as one HttpError - matching how
+// every other field on this same entry (videoId, language, ...) already
+// behaves on invalid input.
+describe("replaceVideoProgress - clickedWords/addedWords validation", () => {
+
+    it("accepts a normal list of short words", async () => {
+        const { user } = await registerUser(creds());
+
+        const result = await replaceVideoProgress(user.id, [
+            sampleEntry({ clickedWords: ["casa", "livro"], addedWords: ["carro"] })
+        ]);
+
+        expect(result[0].clickedWords).toEqual(["casa", "livro"]);
+        expect(result[0].addedWords).toEqual(["carro"]);
+    });
+
+    it("rejects a clickedWords entry that isn't a string", async () => {
+        const { user } = await registerUser(creds());
+
+        await expect(
+            replaceVideoProgress(user.id, [sampleEntry({ clickedWords: [{ word: "casa" }] })])
+        ).rejects.toThrow();
+    });
+
+    it("rejects an oversized word", async () => {
+        const { user } = await registerUser(creds());
+
+        await expect(
+            replaceVideoProgress(user.id, [sampleEntry({ clickedWords: ["x".repeat(10_000)] })])
+        ).rejects.toThrow();
+    });
+
+});

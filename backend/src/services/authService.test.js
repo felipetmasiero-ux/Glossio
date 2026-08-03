@@ -97,4 +97,31 @@ describe("loginUser", () => {
         await expect(loginUser({ email: user.email, password: undefined })).rejects.toThrow(HttpError);
     });
 
+    // Security sprint regression guard (section 4, timing attacks): a
+    // non-existent email used to fail fast (no bcrypt call at all), while a
+    // wrong password on a real account paid bcrypt.compare's ~100ms+ cost -
+    // an attacker measuring response times could tell the two apart even
+    // though the error message never did. Both paths now always run a
+    // bcrypt comparison, so a non-existent-email attempt should take
+    // roughly as long as a wrong-password attempt, not dramatically less.
+    it("takes comparable time to reject a non-existent email as it does a wrong password (no timing side-channel)", async () => {
+        const user = creds();
+        await registerUser(user);
+
+        async function timeAttempt(email) {
+            const start = performance.now();
+            await loginUser({ email, password: "definitely-wrong-password" }).catch(() => {});
+            return performance.now() - start;
+        }
+
+        const wrongPasswordDuration = await timeAttempt(user.email);
+        const nonExistentEmailDuration = await timeAttempt("nobody-at-all@glossio-tests.local");
+
+        // Generous tolerance (not asserting near-equality) to avoid CI
+        // flakiness - the regression this guards against is the *fast*
+        // path skipping bcrypt entirely, which shows up as an order-of-
+        // magnitude difference, not a modest one.
+        expect(nonExistentEmailDuration).toBeGreaterThan(wrongPasswordDuration * 0.3);
+    });
+
 });

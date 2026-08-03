@@ -1,8 +1,9 @@
 import { prisma } from "../config/prisma.js";
-import { requireString, requireNumber, requireArray, requireTimestamp } from "../utils/validators.js";
+import { requireString, requireNumber, requireArray, requireStringArray, requireTimestamp } from "../utils/validators.js";
 
 const MAX_VIDEO_PROGRESS_ENTRIES = 5_000;
 const MAX_WORD_LIST_LENGTH = 2_000;
+const MAX_WORD_LENGTH = 200;
 
 // Only applied to real client input (PUT /video-progress) - same reasoning
 // as flashcardService's validateClientCard: the legacy-migration path below
@@ -16,8 +17,12 @@ function validateClientEntry(entry) {
         completed: Boolean(entry?.completed),
         completedAt: entry?.completedAt == null ? null : requireTimestamp(entry.completedAt, "Data de conclusão"),
         updatedAt: requireTimestamp(entry?.updatedAt ?? Date.now(), "Data de atualização"),
-        clickedWords: requireArray(entry?.clickedWords ?? [], "Palavras clicadas", { maxLength: MAX_WORD_LIST_LENGTH }),
-        addedWords: requireArray(entry?.addedWords ?? [], "Palavras adicionadas", { maxLength: MAX_WORD_LIST_LENGTH })
+        // Each entry is meant to be a single normalized word - requireArray
+        // alone only checked the list's length, not what was inside it,
+        // leaving every element free to be an arbitrarily large string (or
+        // any type at all).
+        clickedWords: requireStringArray(entry?.clickedWords ?? [], "Palavras clicadas", { maxLength: MAX_WORD_LIST_LENGTH, maxItemLength: MAX_WORD_LENGTH }),
+        addedWords: requireStringArray(entry?.addedWords ?? [], "Palavras adicionadas", { maxLength: MAX_WORD_LIST_LENGTH, maxItemLength: MAX_WORD_LENGTH })
     };
 }
 

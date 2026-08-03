@@ -151,3 +151,33 @@ export function requireArray(value, field, { maxLength = Infinity } = {}) {
 
     return value;
 }
+
+// For arrays whose elements are meant to be short strings (word lists,
+// lesson ids) - requireArray on its own only checks the *container*, not
+// what's inside it, which left every element free to be arbitrarily large
+// or any type at all.
+export function requireStringArray(value, field, { maxLength = Infinity, maxItemLength = 200 } = {}) {
+    return requireArray(value, field, { maxLength })
+        .map((item, index) => requireString(item, `${field}[${index}]`, { min: 0, max: maxItemLength }));
+}
+
+// For free-form JSON fields (an event's payload, a client-supplied
+// "current activity" snapshot) that are only ever meant to be a small, flat
+// object - never an array/string/number, and never large. `maxBytes` is
+// checked against the serialized form, since a small key count doesn't
+// stop any individual value from being huge.
+export function requirePlainObject(value, field, { maxKeys = 20, maxBytes = 2_000 } = {}) {
+    if (value === null || typeof value !== "object" || Array.isArray(value)) {
+        throw new HttpError(400, `${field} inválido.`);
+    }
+
+    if (Object.keys(value).length > maxKeys) {
+        throw new HttpError(400, `${field} excede o número máximo de campos permitido.`);
+    }
+
+    if (JSON.stringify(value).length > maxBytes) {
+        throw new HttpError(400, `${field} excede o tamanho máximo permitido.`);
+    }
+
+    return value;
+}

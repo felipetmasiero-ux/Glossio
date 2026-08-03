@@ -1,5 +1,7 @@
 import { prisma } from "../config/prisma.js";
-import { optionalString, optionalPositiveNumber, requireArray } from "../utils/validators.js";
+import { optionalString, optionalPositiveNumber, requireArray, requireStringArray, requirePlainObject } from "../utils/validators.js";
+
+const MAX_STUDY_HISTORY_RECORD_BYTES = 500;
 
 const DEFAULT_GOALS = {
     dailyLessons: null,
@@ -66,13 +68,22 @@ export async function replaceProgress(userId, payload = {}) {
     // the current row first rather than blindly overwriting the column.
     const existing = await prisma.userProgress.findUnique({ where: { userId } });
 
+    // requireArray alone only checks the *list* (is it an array, how long),
+    // not what's inside it - exerciseProgress (lesson ids) and studyHistory
+    // (small review records) used to let every element be arbitrarily large
+    // or any type at all.
+    const studyHistory = requireArray(payload.studyHistory ?? [], "Histórico de estudo", { maxLength: 5_000 })
+        .map((record, index) => requirePlainObject(record, `Histórico de estudo[${index}]`, { maxBytes: MAX_STUDY_HISTORY_RECORD_BYTES }));
+
     const data = {
         language: optionalString(payload.language, "Idioma", { max: 50 }),
-        exerciseProgress: requireArray(payload.exerciseProgress ?? [], "Progresso de exercícios", { maxLength: 5_000 }),
-        studyHistory: requireArray(payload.studyHistory ?? [], "Histórico de estudo", { maxLength: 5_000 }),
+        exerciseProgress: requireStringArray(payload.exerciseProgress ?? [], "Progresso de exercícios", { maxLength: 5_000 }),
+        studyHistory,
         dashboard: {
             events: existing?.dashboard?.events ?? [],
-            lastActivity: payload.dashboard?.lastActivity ?? null,
+            lastActivity: payload.dashboard?.lastActivity == null
+                ? null
+                : requirePlainObject(payload.dashboard.lastActivity, "Atividade recente"),
             goals: validateGoals(payload.dashboard?.goals)
         }
     };
