@@ -6,9 +6,12 @@ import "./CollectionSection.css";
 export function CollectionSection({
   topic,
   cards,
+  decks,
   forceOpen,
   removeFlashcard,
-  toggleFavorite
+  toggleFavorite,
+  updateFlashcard,
+  checkDuplicateWord
 }) {
 
   const [open, setOpen] = useState(false);
@@ -26,7 +29,14 @@ export function CollectionSection({
       </summary>
 
       <div className="collection-section__body">
-        <FlashcardsList flashcards={cards} removeFlashcard={removeFlashcard} toggleFavorite={toggleFavorite} />
+        <FlashcardsList
+          flashcards={cards}
+          decks={decks}
+          removeFlashcard={removeFlashcard}
+          toggleFavorite={toggleFavorite}
+          updateFlashcard={updateFlashcard}
+          checkDuplicateWord={checkDuplicateWord}
+        />
       </div>
     </details>
   );

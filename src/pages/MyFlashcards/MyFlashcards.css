@@ -6,3 +6,42 @@
   flex-direction: column;
   gap: var(--space-7);
 }
+
+.flashcards-dashboard__due-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+}
+
+.flashcards-dashboard__due-banner p {
+  font: var(--text-body-md);
+  color: var(--color-primary-dark);
+}
+
+.flashcards-dashboard__due-banner .button {
+  width: auto;
+}
+
+.flashcards-dashboard__toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-3);
+}
+
+.flashcards-dashboard__toolbar .flashcards-search {
+  flex: 1;
+  min-width: 200px;
+}
+
+.flashcards-dashboard__toolbar .button {
+  width: auto;
+}

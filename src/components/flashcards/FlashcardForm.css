@@ -1,0 +1,31 @@
+.flashcard-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.flashcard-form__label {
+  font: var(--text-small);
+  color: var(--color-text-secondary);
+  margin-bottom: calc(-1 * var(--space-2));
+}
+
+.flashcard-form__hint {
+  font: var(--text-small);
+  color: var(--color-text-muted);
+}
+
+.flashcard-form__error {
+  font: var(--text-small);
+  color: var(--color-danger-dark);
+}
+
+.flashcard-form__actions {
+  display: flex;
+  gap: var(--space-md);
+  margin-top: var(--space-2);
+}
+
+.flashcard-form__actions .button {
+  width: auto;
+}

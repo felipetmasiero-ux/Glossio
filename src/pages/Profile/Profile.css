@@ -81,11 +81,6 @@
   width: auto;
 }
 
-.profile-page__confirm-label {
-  font: var(--text-body-md);
-  color: var(--color-danger-dark);
-}
-
 .profile-page__form {
   display: flex;
   flex-direction: column;

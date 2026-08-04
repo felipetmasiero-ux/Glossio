@@ -1,4 +1,6 @@
-export function filterFlashcards(cards, { search = "", favoritesOnly = false } = {}) {
+import { NO_DECK_FILTER } from "../../constants/decks";
+
+export function filterFlashcards(cards, { search = "", favoritesOnly = false, deckId = null } = {}) {
 
     const query = search.trim().toLowerCase();
 
@@ -10,7 +12,10 @@ export function filterFlashcards(cards, { search = "", favoritesOnly = false } =
 
         const matchesFavorite = !favoritesOnly || card.favorite;
 
-        return matchesQuery && matchesFavorite;
+        const matchesDeck = !deckId
+            || (deckId === NO_DECK_FILTER ? !card.deckId : card.deckId === deckId);
+
+        return matchesQuery && matchesFavorite && matchesDeck;
 
     });
 

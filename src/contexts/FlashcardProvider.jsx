@@ -7,7 +7,9 @@ import {
     createFlashcard,
     loadFlashcards,
     saveFlashcards,
-    toggleFavorite as toggleFavoriteCard
+    toggleFavorite as toggleFavoriteCard,
+    updateFlashcard as updateFlashcardCard,
+    isDuplicateFlashcard
 } from "../utils/flashcards";
 import { isWordKnown } from "../utils/flashcards/isWordKnown";
 
@@ -45,12 +47,7 @@ export function FlashcardProvider({ children }) {
             return;
         }
 
-        const alreadyExists = flashcards.some(card =>
-            card.word?.toLowerCase() === normalized.word.toLowerCase() &&
-            card.language === language
-        );
-
-        if (alreadyExists) return;
+        if (isDuplicateFlashcard(flashcards, { word: normalized.word, language })) return;
 
         setFlashcards(previous => [
             ...previous,
@@ -60,7 +57,10 @@ export function FlashcardProvider({ children }) {
                 language,
                 moduleId: normalized.moduleId ?? null,
                 lessonId: normalized.lessonId ?? null,
-                category: normalized.category ?? null
+                category: normalized.category ?? null,
+                deckId: normalized.deckId ?? null,
+                example: normalized.example ?? null,
+                notes: normalized.notes ?? null
             })
         ]);
 
@@ -76,11 +76,37 @@ export function FlashcardProvider({ children }) {
     // Functional updates only - never needs to read `flashcards` directly,
     // so these stay referentially stable across renders regardless of how
     // often flashcards (or anything else in the app) changes.
-    const removeFlashcard = useCallback(word => {
+    const removeFlashcard = useCallback(cardId => {
         setFlashcards(previous =>
-            previous.filter(card => card.word !== word)
+            previous.filter(card => card.id !== cardId)
         );
     }, []);
+
+    // Reads `flashcards` directly (for the duplicate check), same trade-off
+    // as addFlashcard above.
+    const updateFlashcard = useCallback((cardId, updates) => {
+
+        if (updates.word !== undefined && updates.language !== undefined) {
+            const duplicate = isDuplicateFlashcard(flashcards, {
+                word: updates.word,
+                language: updates.language,
+                excludeId: cardId
+            });
+
+            if (duplicate) {
+                console.warn("Skipped update: duplicate flashcard", updates.word);
+                return;
+            }
+        }
+
+        setFlashcards(previous =>
+            previous.map(card =>
+                card.id === cardId
+                    ? updateFlashcardCard(card, updates)
+                    : card
+            )
+        );
+    }, [flashcards]);
 
     const answerFlashcard = useCallback((cardId, quality) => {
         setFlashcards(previous =>
@@ -117,10 +143,11 @@ export function FlashcardProvider({ children }) {
         setFlashcards,
         addFlashcard,
         removeFlashcard,
+        updateFlashcard,
         answerFlashcard,
         toggleFavorite,
         hasFlashcard
-    }), [flashcards, addFlashcard, removeFlashcard, answerFlashcard, toggleFavorite, hasFlashcard]);
+    }), [flashcards, addFlashcard, removeFlashcard, updateFlashcard, answerFlashcard, toggleFavorite, hasFlashcard]);
 
     return (
         <FlashcardContext.Provider value={value}>

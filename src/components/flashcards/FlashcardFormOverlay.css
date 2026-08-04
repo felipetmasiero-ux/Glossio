@@ -1,0 +1,33 @@
+.flashcard-form-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 26, 31, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-5);
+  z-index: 1000;
+  overflow-y: auto;
+}
+
+.flashcard-form-overlay__panel {
+  width: 420px;
+  max-width: 100%;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-primary);
+  border-radius: var(--radius-lg);
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  padding: var(--space-xl);
+  box-shadow: var(--shadow-lg);
+  animation: slide-up var(--t-normal);
+}
+
+.flashcard-form-overlay__title {
+  font: var(--text-h3);
+  font-family: var(--font-serif);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  margin-bottom: var(--space-lg);
+}

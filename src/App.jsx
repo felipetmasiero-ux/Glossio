@@ -42,6 +42,7 @@ import { LanguageContext } from './contexts/LanguageContext'
 import { AuthProvider } from './contexts/AuthProvider'
 import { EventProvider } from './contexts/EventProvider'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
+import { DeckProvider } from './contexts/DeckProvider'
 import { StudyHistoryProvider } from './contexts/StudyHistoryProvider'
 import { LessonProgressProvider } from './contexts/LessonProgressProvider'
 import { ExerciseProgressProvider } from './contexts/ExerciseProgressProvider'
@@ -65,6 +66,7 @@ function App() {
           setLanguage,
         }}
       >
+        <DeckProvider>
         <FlashcardProvider>
           <div className="app-layout">
 
@@ -231,6 +233,7 @@ function App() {
             </StudyHistoryProvider>
           </div>
         </FlashcardProvider>
+        </DeckProvider>
       </LanguageContext.Provider>
     </EventProvider>
     </AuthProvider>

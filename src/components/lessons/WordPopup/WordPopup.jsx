@@ -7,6 +7,7 @@ import { Icon } from "../../common/Icon/Icon";
 
 import { useFlashcards } from "../../../hooks/useFlashcards";
 import { useLanguage } from "../../../hooks/useLanguage";
+import { useOverlayDismiss } from "../../../hooks/useOverlayDismiss";
 
 const EXPLORE_AUTO_CLOSE_DELAY = 6000;
 
@@ -74,41 +75,19 @@ export function WordPopup({
         ? getAnchoredPosition(anchorElement)
         : null;
 
+    useOverlayDismiss({
+        active: true,
+        onDismiss: onClose,
+        ignoreSelector: isExplore ? ".clickable-word, .word-popup" : null
+    });
+
     useEffect(() => {
 
-        function handleKeyDown(event) {
-
-            if (event.key === "Escape") {
-                onCloseRef.current();
-            }
-
-        }
-
-        document.addEventListener("keydown", handleKeyDown);
-
-        if (!isExplore) {
-            return () => document.removeEventListener("keydown", handleKeyDown);
-        }
-
-        function handlePointerDown(event) {
-
-            if (event.target.closest(".clickable-word") || event.target.closest(".word-popup")) {
-                return;
-            }
-
-            onCloseRef.current();
-
-        }
-
-        document.addEventListener("mousedown", handlePointerDown);
+        if (!isExplore) return;
 
         const autoCloseTimeout = setTimeout(() => onCloseRef.current(), EXPLORE_AUTO_CLOSE_DELAY);
 
-        return () => {
-            document.removeEventListener("mousedown", handlePointerDown);
-            document.removeEventListener("keydown", handleKeyDown);
-            clearTimeout(autoCloseTimeout);
-        };
+        return () => clearTimeout(autoCloseTimeout);
 
     }, [isExplore]);
 

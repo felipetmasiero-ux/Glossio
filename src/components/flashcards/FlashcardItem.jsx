@@ -1,10 +1,13 @@
-import { memo } from "react";
+import { memo, useState } from "react";
 
 import { Card } from "../common/Card/Card";
 import { Button } from "../common/Button/Button";
 import { Badge } from "../common/Badge/Badge";
 import { Icon } from "../common/Icon/Icon";
+import { ConfirmInline } from "../common/ConfirmInline/ConfirmInline";
+import { FlashcardFormOverlay } from "./FlashcardFormOverlay";
 import { formatNextReview } from "../../utils/flashcards/formatNextReview";
+import { getReviewUrgency } from "../../utils/flashcards/getReviewUrgency";
 import "./FlashcardItem.css";
 
 const LEVELS = {
@@ -26,13 +29,26 @@ const LEVEL_LABELS = {
 // other card too.
 export const FlashcardItem = memo(function FlashcardItem({
   card,
+  decks,
   removeFlashcard,
-  toggleFavorite
+  toggleFavorite,
+  updateFlashcard,
+  checkDuplicateWord
 }) {
+
+  const [editing, setEditing] = useState(false);
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   let level = "New";
   if (card.repetitions >= 3) level = "Mature";
   else if (card.repetitions > 0) level = "Learning";
+
+  const deckName = decks.find(deck => deck.id === card.deckId)?.name;
+
+  function handleEditSubmit(values) {
+    updateFlashcard(card.id, values);
+    setEditing(false);
+  }
 
   return (
     <Card className="flashcard-item card--notch">
@@ -49,17 +65,56 @@ export const FlashcardItem = memo(function FlashcardItem({
       <div>
         <h3>{card.word}</h3>
         <p className="text-secondary">{card.translation}</p>
+
+        {card.example && (
+          <p className="flashcard-item-example">"{card.example}"</p>
+        )}
+
+        {card.notes && (
+          <p className="flashcard-item-notes">
+            <Icon name="lightbulb" size={14} />
+            <span>{card.notes}</span>
+          </p>
+        )}
       </div>
 
       <div className="flashcard-item-meta">
-        <p className="text-small">Próxima revisão: {formatNextReview(card.nextReview)}</p>
         <p className="text-small">Intervalo: {card.interval} dias</p>
-        <Badge variant={LEVELS[level]}>{LEVEL_LABELS[level]}</Badge>
+        <div className="flashcard-item-badges">
+          <Badge variant={getReviewUrgency(card.nextReview)}>{formatNextReview(card.nextReview)}</Badge>
+          <Badge variant={LEVELS[level]}>{LEVEL_LABELS[level]}</Badge>
+          {deckName && <Badge variant="primary">{deckName}</Badge>}
+        </div>
       </div>
 
-      <Button variant="danger" className="flashcard-item-remove-btn" onClick={() => removeFlashcard(card.word)}>
-        Excluir
-      </Button>
+      <div className="flashcard-item-actions">
+        <Button variant="secondary" onClick={() => setEditing(true)}>
+          <Icon name="pencil" size={14} /> Editar
+        </Button>
+
+        {confirmingDelete ? (
+          <ConfirmInline
+            onConfirm={() => removeFlashcard(card.id)}
+            onCancel={() => setConfirmingDelete(false)}
+          />
+        ) : (
+          <Button variant="danger" className="flashcard-item-remove-btn" onClick={() => setConfirmingDelete(true)}>
+            Excluir
+          </Button>
+        )}
+      </div>
+
+      {editing && (
+        <FlashcardFormOverlay
+          title="Editar flashcard"
+          initialValues={card}
+          decks={decks}
+          isDuplicate={(word, language) => checkDuplicateWord(word, language, card.id)}
+          submitLabel="Salvar"
+          onSubmit={handleEditSubmit}
+          onClose={() => setEditing(false)}
+        />
+      )}
     </Card>
   );
 });

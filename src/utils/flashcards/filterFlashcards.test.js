@@ -1,9 +1,10 @@
 import { describe, expect, it } from "vitest";
 
 import { filterFlashcards } from "./filterFlashcards";
+import { NO_DECK_FILTER } from "../../constants/decks";
 
 function card(word, overrides = {}) {
-    return { id: word, word, translation: `translation-${word}`, language: "english", favorite: false, ...overrides };
+    return { id: word, word, translation: `translation-${word}`, language: "english", favorite: false, deckId: null, ...overrides };
 }
 
 describe("filterFlashcards", () => {
@@ -65,6 +66,32 @@ describe("filterFlashcards", () => {
         const cards = [card("hello")];
 
         expect(filterFlashcards(cards, { search: "xyz" })).toEqual([]);
+
+    });
+
+    it("filters by deckId when a deck is selected", () => {
+
+        const cards = [
+            card("hello", { deckId: "deck-1" }),
+            card("bye", { deckId: "deck-2" })
+        ];
+
+        const result = filterFlashcards(cards, { deckId: "deck-1" });
+
+        expect(result.map(c => c.word)).toEqual(["hello"]);
+
+    });
+
+    it("filters to cards with no deck using the NO_DECK_FILTER sentinel", () => {
+
+        const cards = [
+            card("hello", { deckId: "deck-1" }),
+            card("bye", { deckId: null })
+        ];
+
+        const result = filterFlashcards(cards, { deckId: NO_DECK_FILTER });
+
+        expect(result.map(c => c.word)).toEqual(["bye"]);
 
     });
 

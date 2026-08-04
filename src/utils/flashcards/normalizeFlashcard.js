@@ -40,5 +40,11 @@ export function normalizeFlashcard(card) {
         lessonId: card.lessonId ?? null,
 
         category: card.category ?? null,
+
+        deckId: card.deckId ?? null,
+
+        example: card.example ?? null,
+
+        notes: card.notes ?? null,
     };
 }

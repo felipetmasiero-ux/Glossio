@@ -39,6 +39,25 @@
   font-family: var(--font-serif);
 }
 
+.flashcard-item-example {
+  margin-top: var(--space-2);
+  font: var(--text-small);
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+
+.flashcard-item-notes {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  font: var(--text-small);
+  color: var(--color-warning-dark);
+  background: var(--color-warning-light);
+  border-radius: var(--radius-sm);
+}
+
 .flashcard-item-meta {
   display: flex;
   flex-direction: column;
@@ -46,9 +65,25 @@
   gap: var(--space-1);
 }
 
+.flashcard-item-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+}
+
+.flashcard-item-actions {
+  display: flex;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
 .flashcard-item-remove-btn {
   width: auto;
   align-self: flex-start;
+}
+
+.flashcard-item-actions .button {
+  width: auto;
 }
 
 .flashcards-grid {

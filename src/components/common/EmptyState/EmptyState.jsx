@@ -7,7 +7,9 @@ export function EmptyState({
   title,
   description,
   actionLabel,
-  onAction
+  onAction,
+  secondaryLabel,
+  onSecondaryAction
 }) {
 
   return (
@@ -24,11 +26,23 @@ export function EmptyState({
         <p className="empty-state__description">{description}</p>
       )}
 
-      {actionLabel && onAction && (
-        <Button className="empty-state__action" onClick={onAction}>
-          {actionLabel}
-        </Button>
-      )}
+      {(actionLabel && onAction) || (secondaryLabel && onSecondaryAction) ? (
+        <div className="empty-state__actions">
+
+          {actionLabel && onAction && (
+            <Button className="empty-state__action" onClick={onAction}>
+              {actionLabel}
+            </Button>
+          )}
+
+          {secondaryLabel && onSecondaryAction && (
+            <Button variant="secondary" className="empty-state__action" onClick={onSecondaryAction}>
+              {secondaryLabel}
+            </Button>
+          )}
+
+        </div>
+      ) : null}
 
     </div>
 

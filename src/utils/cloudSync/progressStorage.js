@@ -78,8 +78,24 @@ export function serializeFlashcards(cards) {
     })));
 }
 
+// The backend doesn't know about deckId/example/notes yet (local-only fields,
+// no column on the server's Flashcard table) - a plain overwrite here would
+// silently wipe them for a logged-in user on every hydration that applies the
+// server snapshot. Merging by id keeps whatever the server owns in sync while
+// preserving these three fields from whatever was already on disk.
 export function applyFlashcardsSnapshot(cards) {
-    localStorage.setItem("flashcards", JSON.stringify(cards ?? []));
+    const previousById = new Map(
+        readFlashcardsSnapshot().map(card => [card.id, card])
+    );
+
+    const merged = (cards ?? []).map(card => ({
+        ...card,
+        deckId: card.deckId ?? previousById.get(card.id)?.deckId ?? null,
+        example: card.example ?? previousById.get(card.id)?.example ?? null,
+        notes: card.notes ?? previousById.get(card.id)?.notes ?? null
+    }));
+
+    localStorage.setItem("flashcards", JSON.stringify(merged));
 }
 
 // VideoProgressRepository stores localStorage["videoProgress"] nested by

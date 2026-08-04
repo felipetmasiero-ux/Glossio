@@ -32,6 +32,13 @@
   margin: 0 0 var(--space-2);
 }
 
+.empty-state__actions {
+  display: flex;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 .empty-state__action {
   width: auto;
   padding-left: var(--space-6);

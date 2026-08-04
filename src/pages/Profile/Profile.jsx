@@ -13,6 +13,7 @@ import { Input } from "../../components/common/Input/Input";
 import { Section } from "../../components/common/Section/Section";
 import { Avatar } from "../../components/common/Avatar/Avatar";
 import { Toast } from "../../components/common/Toast/Toast";
+import { ConfirmInline } from "../../components/common/ConfirmInline/ConfirmInline";
 
 import "./Profile.css";
 
@@ -343,15 +344,11 @@ export function Profile() {
                             Resetar progresso
                         </Button>
                     ) : (
-                        <div className="profile-page__confirm">
-                            <span className="profile-page__confirm-label">Tem certeza?</span>
-                            <Button variant="danger" onClick={handleReset}>
-                                Sim, apagar tudo
-                            </Button>
-                            <Button variant="secondary" onClick={() => setConfirmingReset(false)}>
-                                Cancelar
-                            </Button>
-                        </div>
+                        <ConfirmInline
+                            confirmLabel="Sim, apagar tudo"
+                            onConfirm={handleReset}
+                            onCancel={() => setConfirmingReset(false)}
+                        />
                     )
                 }
 

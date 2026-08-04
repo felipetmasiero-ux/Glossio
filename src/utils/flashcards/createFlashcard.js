@@ -10,7 +10,10 @@ export function createFlashcard({
     language,
     moduleId = null,
     lessonId = null,
-    category = null
+    category = null,
+    deckId = null,
+    example = null,
+    notes = null
 }) {
     const now = Date.now();
 
@@ -24,6 +27,9 @@ export function createFlashcard({
     moduleId,
     lessonId,
     category,
+    deckId,
+    example,
+    notes,
 
     favorite: false,
 
