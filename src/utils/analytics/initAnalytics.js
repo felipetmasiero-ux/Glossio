@@ -24,6 +24,21 @@ export function initAnalytics() {
 
     loadGtagScript(measurementId);
 
+    // Without an explicit default, gtag.js's Consent Mode can withhold
+    // analytics_storage (region-dependent) - the tag still runs client-side
+    // (dataLayer fills up, Enhanced Measurement fires) but never actually
+    // sends a hit or sets the _ga cookie, so nothing shows up in GA4 at all.
+    // Glossio has no ads/Google Signals and this app never sends PII (see
+    // trackEvent.js), so analytics_storage is granted by default instead of
+    // gating it behind a consent banner - ad-related storage stays denied
+    // since it's not used and there's nothing to grant it for.
+    pushToDataLayer("consent", "default", {
+        analytics_storage: "granted",
+        ad_storage: "denied",
+        ad_user_data: "denied",
+        ad_personalization: "denied"
+    });
+
     pushToDataLayer("js", new Date());
 
     // send_page_view: false - page views are sent manually (see

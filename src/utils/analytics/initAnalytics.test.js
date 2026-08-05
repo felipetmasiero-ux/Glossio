@@ -48,6 +48,31 @@ describe("initAnalytics", () => {
         expect(pushToDataLayer).toHaveBeenCalledWith("config", "G-ABC123", { send_page_view: false });
     });
 
+    // Regression test: without this, gtag.js's Consent Mode silently
+    // withholds analytics_storage by default in some regions - the tag
+    // still runs (dataLayer fills up, Enhanced Measurement fires) but never
+    // actually sends a hit or sets the _ga cookie, so GA4 shows zero data
+    // even though nothing looks broken client-side.
+    it("grants analytics_storage by default (Consent Mode) before configuring gtag", () => {
+        vi.stubEnv("PROD", "true");
+        vi.stubEnv("VITE_GA_MEASUREMENT_ID", "G-ABC123");
+
+        initAnalytics();
+
+        expect(pushToDataLayer).toHaveBeenCalledWith("consent", "default", {
+            analytics_storage: "granted",
+            ad_storage: "denied",
+            ad_user_data: "denied",
+            ad_personalization: "denied"
+        });
+
+        const consentCallIndex = pushToDataLayer.mock.calls.findIndex(call => call[0] === "consent");
+        const configCallIndex = pushToDataLayer.mock.calls.findIndex(call => call[0] === "config");
+
+        expect(consentCallIndex).toBeGreaterThanOrEqual(0);
+        expect(consentCallIndex).toBeLessThan(configCallIndex);
+    });
+
     it("only initializes once even if called multiple times", () => {
         vi.stubEnv("PROD", "true");
         vi.stubEnv("VITE_GA_MEASUREMENT_ID", "G-ABC123");
