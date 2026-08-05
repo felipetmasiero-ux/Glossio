@@ -114,7 +114,7 @@ export function LessonReader({ lesson }) {
 
         }
 
-        completeLesson(lesson.id);
+        completeLesson(lesson.id, language);
 
         if (currentModule && ModuleRepository.isLastLessonInModule(language, lesson.id)) {
 

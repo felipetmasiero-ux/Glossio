@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
 import { LessonReader } from "../../components/lessons/LessonReader/LessonReader";
@@ -7,6 +8,7 @@ import { useLessons } from "../../hooks/useLessons";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 
 export function LessonPage() {
 
@@ -23,6 +25,22 @@ export function LessonPage() {
     const lesson = lessons.find(
         lesson => lesson.id === id
     );
+
+    // Computed before any early return (and the effect below placed
+    // alongside it) so hooks stay unconditional - LessonPage doesn't remount
+    // between lessons (same route, just a new :id param), so this is also
+    // what re-fires "lesson_started" when navigating lesson to lesson.
+    const locked = lesson
+        ? !ModuleRepository.isLessonUnlocked(language, lesson.id, completedLessons)
+        : false;
+
+    useEffect(() => {
+
+        if (lesson?.id && !locked) {
+            trackEvent(ANALYTICS_EVENTS.LESSON_STARTED, { lessonId: lesson.id, language });
+        }
+
+    }, [lesson?.id, locked, language]);
 
     if (!lesson) {
 
@@ -42,16 +60,6 @@ export function LessonPage() {
         );
 
     }
-
-    const locked = !ModuleRepository.isLessonUnlocked(
-
-        language,
-
-        lesson.id,
-
-        completedLessons
-
-    );
 
     if (locked) {
 

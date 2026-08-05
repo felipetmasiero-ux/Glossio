@@ -7,6 +7,7 @@ import {
     renameDeck as renameDeckEntry,
     isDuplicateDeck
 } from "../utils/decks";
+import { trackEvent, ANALYTICS_EVENTS } from "../utils/analytics";
 
 export function DeckProvider({ children }) {
 
@@ -36,6 +37,8 @@ export function DeckProvider({ children }) {
 
         setDecks(previous => [...previous, deck]);
 
+        trackEvent(ANALYTICS_EVENTS.DECK_CREATED, { deckId: deck.id, language });
+
         return deck;
 
     }, [decks]);
@@ -61,11 +64,19 @@ export function DeckProvider({ children }) {
         );
     }, [decks]);
 
+    // Reads `decks` directly - needed to report the deck's language, same
+    // trade-off as addDeck/updateDeck above.
     const removeDeck = useCallback(deckId => {
+
+        const target = decks.find(deck => deck.id === deckId);
+
         setDecks(previous =>
             previous.filter(deck => deck.id !== deckId)
         );
-    }, []);
+
+        trackEvent(ANALYTICS_EVENTS.DECK_DELETED, { deckId, language: target?.language ?? null });
+
+    }, [decks]);
 
     const value = useMemo(() => ({
         decks,

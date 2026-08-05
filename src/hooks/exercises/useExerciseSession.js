@@ -6,6 +6,7 @@ import { useExerciseProgress } from "../useExerciseProgress";
 import { useLastActivity } from "../useLastActivity";
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { EVENT_TYPES } from "../../constants/events";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 
 export function useExerciseSession(lesson) {
 
@@ -56,6 +57,13 @@ export function useExerciseSession(lesson) {
             correct
         });
 
+        trackEvent(ANALYTICS_EVENTS.EXERCISE_COMPLETED, {
+            lessonId: lesson.id,
+            exerciseId: current.id,
+            exerciseType: current.type,
+            correct
+        });
+
         setResults(previous => [...previous, {
             exerciseId: current.id,
             type: current.type,
@@ -85,6 +93,14 @@ export function useExerciseSession(lesson) {
         }
 
     }, [finished, lesson?.id, practiceLesson]);
+
+    useEffect(() => {
+
+        if (lesson && sessionLessonId === lesson.id) {
+            trackEvent(ANALYTICS_EVENTS.EXERCISE_STARTED, { lessonId: lesson.id, exerciseCount: initialTotal });
+        }
+
+    }, [lesson, sessionLessonId, initialTotal]);
 
     useEffect(() => {
 

@@ -8,6 +8,7 @@ import { Icon } from "../../common/Icon/Icon";
 import { useFlashcards } from "../../../hooks/useFlashcards";
 import { useLanguage } from "../../../hooks/useLanguage";
 import { useOverlayDismiss } from "../../../hooks/useOverlayDismiss";
+import { trackEvent, ANALYTICS_EVENTS } from "../../../utils/analytics";
 
 const EXPLORE_AUTO_CLOSE_DELAY = 6000;
 
@@ -102,6 +103,8 @@ export function WordPopup({
     function handleAdd() {
 
         addFlashcard(word, language);
+
+        trackEvent(ANALYTICS_EVENTS.FLASHCARD_ADDED, { language, source: variant });
 
         onAdd(word.word);
 

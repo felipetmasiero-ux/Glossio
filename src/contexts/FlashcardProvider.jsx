@@ -12,6 +12,7 @@ import {
     isDuplicateFlashcard
 } from "../utils/flashcards";
 import { isWordKnown } from "../utils/flashcards/isWordKnown";
+import { trackEvent, ANALYTICS_EVENTS } from "../utils/analytics";
 
 
 export function FlashcardProvider({ children }) {
@@ -123,15 +124,30 @@ export function FlashcardProvider({ children }) {
         });
     }, [logEvent]);
 
+    // Reads `flashcards` directly - needed to know the card's language and
+    // which way it's about to flip (computed here, not inside the setState
+    // updater, since an updater can run more than once and would risk
+    // double-firing the analytics event).
     const toggleFavorite = useCallback(cardId => {
+
+        const card = flashcards.find(c => c.id === cardId);
+
+        if (!card) return;
+
         setFlashcards(previous =>
-            previous.map(card =>
-                card.id === cardId
-                    ? toggleFavoriteCard(card)
-                    : card
+            previous.map(c =>
+                c.id === cardId
+                    ? toggleFavoriteCard(c)
+                    : c
             )
         );
-    }, []);
+
+        trackEvent(
+            card.favorite ? ANALYTICS_EVENTS.FAVORITE_REMOVED : ANALYTICS_EVENTS.FAVORITE_ADDED,
+            { cardId, language: card.language }
+        );
+
+    }, [flashcards]);
 
     // Reads `flashcards` directly - reference legitimately changes with it.
     const hasFlashcard = useCallback((word, language) => {

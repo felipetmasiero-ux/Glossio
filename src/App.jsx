@@ -36,6 +36,7 @@ const Goals = lazyPage(() => import("./pages/Goals/Goals"), "Goals");
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
 import { PwaUpdatePrompt } from './components/common/PwaUpdatePrompt/PwaUpdatePrompt'
+import { AnalyticsRouteTracker } from './components/common/AnalyticsRouteTracker/AnalyticsRouteTracker'
 import { Skeleton } from './components/common/Skeleton/Skeleton'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LanguageContext } from './contexts/LanguageContext'
@@ -58,6 +59,8 @@ function App() {
   }, [language])
 
   return (
+    <>
+    <AnalyticsRouteTracker />
     <AuthProvider>
     <EventProvider>
       <LanguageContext.Provider
@@ -237,6 +240,7 @@ function App() {
       </LanguageContext.Provider>
     </EventProvider>
     </AuthProvider>
+    </>
   )
 }
 

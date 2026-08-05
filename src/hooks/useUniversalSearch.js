@@ -1,8 +1,9 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useLanguage } from "./useLanguage";
 import { useFlashcards } from "./useFlashcards";
 import { useDebouncedValue } from "./useDebouncedValue";
+import { trackEvent, ANALYTICS_EVENTS } from "../utils/analytics";
 
 import { ModuleRepository } from "../utils/courses/ModuleRepository";
 import { VideoRepository } from "../repositories/VideoRepository";
@@ -76,6 +77,26 @@ export function useUniversalSearch() {
     const totalResults = results.lessons.length + results.videos.length
         + results.dictionary.length + results.flashcards.length + results.grammar.length
         + results.placementTest.length;
+
+    // Fires once per completed (debounced) search, not per keystroke, and
+    // not again just because results/language happen to recompute for the
+    // same search term - lastTrackedQueryRef dedupes that, rather than
+    // trimming the effect's own dependency list.
+    const lastTrackedQueryRef = useRef(null);
+
+    useEffect(() => {
+
+        if (!trimmedQuery || lastTrackedQueryRef.current === trimmedQuery) return;
+
+        lastTrackedQueryRef.current = trimmedQuery;
+
+        trackEvent(ANALYTICS_EVENTS.SEARCH_PERFORMED, {
+            searchTerm: trimmedQuery,
+            resultsCount: totalResults,
+            language
+        });
+
+    }, [trimmedQuery, totalResults, language]);
 
     return {
         query: rawQuery,

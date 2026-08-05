@@ -20,6 +20,7 @@ import { sortFlashcards, SORT_OPTIONS } from "../../utils/flashcards/sortFlashca
 import { filterFlashcards } from "../../utils/flashcards/filterFlashcards";
 import { calculateStats } from "../../utils/flashcards/calculateStats";
 import { isDuplicateFlashcard } from "../../utils/flashcards/isDuplicateFlashcard";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 
 import "./MyFlashcards.css";
 
@@ -101,6 +102,7 @@ export function MyFlashcards() {
 
   function handleCreateFlashcard(values) {
     addFlashcard(values, values.language);
+    trackEvent(ANALYTICS_EVENTS.CUSTOM_FLASHCARD_CREATED, { language: values.language, deckId: values.deckId ?? null });
     setCreatingFlashcard(false);
     showToast(`Flashcard "${values.word}" criado.`);
   }
@@ -165,12 +167,15 @@ export function MyFlashcards() {
           forceOpen={isFiltering}
           hasAnyCards={languageCards.length > 0}
           removeFlashcard={(cardId) => {
+            const card = flashcards.find((c) => c.id === cardId);
             removeFlashcard(cardId);
+            trackEvent(ANALYTICS_EVENTS.CUSTOM_FLASHCARD_DELETED, { cardId, language: card?.language ?? null, deckId: card?.deckId ?? null });
             showToast("Flashcard excluído.");
           }}
           toggleFavorite={toggleFavorite}
           updateFlashcard={(cardId, updates) => {
             updateFlashcard(cardId, updates);
+            trackEvent(ANALYTICS_EVENTS.CUSTOM_FLASHCARD_EDITED, { cardId, language: updates.language ?? null, deckId: updates.deckId ?? null });
             showToast("Flashcard atualizado.");
           }}
           checkDuplicateWord={checkDuplicateWord}

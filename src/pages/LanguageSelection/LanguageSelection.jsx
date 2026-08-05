@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { LanguageCard } from "../../components/common/LanguageCard/LanguageCard";
 import { LanguageContext } from "../../contexts/LanguageContext";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 
 import "./LanguageSelection.css";
 
@@ -12,6 +13,7 @@ export function LanguageSelection() {
 
   function handleLanguage(language) {
     setLanguage(language);
+    trackEvent(ANALYTICS_EVENTS.LANGUAGE_SELECTED, { language });
     navigate("/home");
   }
 
