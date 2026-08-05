@@ -6,6 +6,7 @@ import { Section } from "../../components/common/Section/Section";
 import { StatsGrid } from "../../components/studyDashboard/StatsGrid";
 import { StatsCard } from "../../components/studyDashboard/StatsCard";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Statistics.css";
 
@@ -23,6 +24,8 @@ export function Statistics() {
     return (
 
         <div className="page-container statistics-page animate-fade-in">
+
+            <Seo title="Estatísticas" description="Seu progresso em números: palavras aprendidas, lições concluídas e streak de estudos." robots="noindex, nofollow" path="/statistics" />
 
             <p className="statistics-page__label text-mono-label">Estatísticas</p>
 

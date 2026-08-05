@@ -10,6 +10,7 @@ import { Input } from "../../components/common/Input/Input";
 import { Icon } from "../../components/common/Icon/Icon";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { GrammarTopicDetail } from "../../components/grammar/GrammarTopicDetail";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Grammar.css";
 
@@ -70,6 +71,8 @@ export function Grammar() {
     return (
 
         <div className="page-container grammar-page animate-fade-in">
+
+            <Seo title="Gramática" description="Referência rápida de gramática em inglês, francês e português, organizada por nível." robots="noindex, nofollow" path="/grammar" />
 
             <p className="grammar-page__label text-mono-label">Gramática</p>
             <h1 className="grammar-page__title">Central de gramática</h1>

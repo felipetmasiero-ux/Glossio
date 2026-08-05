@@ -1,6 +1,7 @@
 import "./About.css";
 
 import { Icon } from "../../components/common/Icon/Icon";
+import { Seo } from "../../components/common/Seo/Seo";
 
 const PILLARS = [
     {
@@ -42,6 +43,8 @@ export function About() {
     return (
 
         <div className="page-container about-page animate-fade-in">
+
+            <Seo title="Sobre" description="Conheça a metodologia do Glossio: lições estruturadas, conteúdo autêntico, vocabulário pessoal e revisão espaçada." robots="noindex, nofollow" path="/about" />
 
             <p className="about-page__label text-mono-label">Sobre</p>
 

@@ -14,6 +14,7 @@ import { GoalsForm } from "../../components/goals/GoalsForm";
 import { GoalDetailRow } from "../../components/goals/GoalDetailRow";
 import { GoalHistoryStrip } from "../../components/goals/GoalHistoryStrip";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Goals.css";
 
@@ -68,6 +69,8 @@ export function Goals() {
     return (
 
         <div className="page-container goals-page animate-fade-in">
+
+            <Seo title="Metas" description="Configure e acompanhe suas metas diárias e semanais de estudo." robots="noindex, nofollow" path="/goals" />
 
             <p className="goals-page__label text-mono-label">Metas</p>
             <h1 className="goals-page__title">Metas de estudo</h1>

@@ -9,6 +9,7 @@ import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { SearchResultsSection } from "../../components/search/SearchResultsSection";
 import { SearchResultRow } from "../../components/search/SearchResultRow";
 import { DictionaryResultRow } from "../../components/search/DictionaryResultRow";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import { TOPIC_LABELS } from "../../constants/topics";
 
@@ -36,6 +37,8 @@ export function Search() {
     return (
 
         <div className="page-container search-page animate-fade-in">
+
+            <Seo title="Pesquisar" description="Busque lições, vídeos, palavras do dicionário, gramática e seus flashcards em um só lugar." robots="noindex, nofollow" path="/search" />
 
             <p className="search-page__label text-mono-label">Buscar</p>
             <h1 className="search-page__title">Pesquisa universal</h1>

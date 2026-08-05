@@ -4,6 +4,11 @@ import "./Landing.css";
 
 import { Button } from "../../components/common/Button/Button";
 import { Icon } from "../../components/common/Icon/Icon";
+import { Seo } from "../../components/common/Seo/Seo";
+
+import { buildWebsiteSchema, buildEducationalOrgSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
+
+const LANDING_JSON_LD = combineSchemas(buildWebsiteSchema(), buildEducationalOrgSchema());
 
 const PILLARS = [
     {
@@ -45,6 +50,12 @@ export function Landing() {
     return (
 
         <div className="landing animate-fade-in">
+
+            <Seo
+                description="Aprenda inglês, francês ou português com lições estruturadas por nível (CEFR), conteúdo autêntico com tradução instantânea, um acervo pessoal de vocabulário e revisão espaçada."
+                path="/"
+                jsonLd={LANDING_JSON_LD}
+            />
 
             <section className="landing-hero">
 

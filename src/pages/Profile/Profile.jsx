@@ -14,6 +14,7 @@ import { Section } from "../../components/common/Section/Section";
 import { Avatar } from "../../components/common/Avatar/Avatar";
 import { Toast } from "../../components/common/Toast/Toast";
 import { ConfirmInline } from "../../components/common/ConfirmInline/ConfirmInline";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Profile.css";
 
@@ -161,6 +162,8 @@ export function Profile() {
     return (
 
         <div className="page-container profile-page animate-fade-in">
+
+            <Seo title="Sua Conta" description="Gerencie os dados da sua conta Glossio." robots="noindex, nofollow" path="/profile" />
 
             <p className="profile-page__label text-mono-label">Perfil</p>
 

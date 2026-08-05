@@ -11,6 +11,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { ModuleCard } from "../../components/lessons/ModuleCard/ModuleCard";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
+import { Seo } from "../../components/common/Seo/Seo";
 
 export function ModulesPage() {
 
@@ -27,6 +28,13 @@ export function ModulesPage() {
     return (
 
         <div className="page-container modules-page animate-fade-in">
+
+            <Seo
+                title={`Lições — ${course?.title ?? language}`}
+                description={course?.description ?? `Módulos e lições estruturadas para aprender ${language}.`}
+                robots="noindex, nofollow"
+                path="/lessons"
+            />
 
             <p className="modules-page__label text-mono-label">Sumário</p>
 

@@ -6,6 +6,7 @@ import { StudyHistoryContext } from "../../contexts/StudyHistoryContext";
 
 import { useStudySession } from "../../hooks/flashcards/useStudySession";
 import { useKeyboardShortcuts } from "../../hooks/flashcards/useKeyboardShortcuts";
+import { useSeo } from "../../hooks/useSeo";
 
 import { StudyCard } from "../../components/flashcards/StudyCard";
 import { StudyProgress } from "../../components/flashcards/StudyProgress";
@@ -22,6 +23,15 @@ export function StudyFlashcards() {
 
   const [started, setStarted] =
     useState(false);
+
+  // This page has several early `return`s below (one per session phase),
+  // so useSeo has to run here rather than via <Seo> JSX inside each branch.
+  useSeo({
+    title: "Modo de Estudo",
+    description: "Revise seus flashcards com repetição espaçada (SM-2).",
+    robots: "noindex, nofollow",
+    path: "/flashcards"
+  });
 
   const { flashcards, answerFlashcard } =
     useContext(FlashcardContext);

@@ -12,6 +12,7 @@ import { LessonCard } from "../../components/lessons/LessonCard/LessonCard";
 import { ProgressIndicator } from "../../components/lessons/common/ProgressIndicator/ProgressIndicator";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
+import { Seo } from "../../components/common/Seo/Seo";
 
 export function ModuleLessonsPage() {
 
@@ -37,6 +38,7 @@ export function ModuleLessonsPage() {
 
         return (
             <div className="page-container">
+                <Seo title="Módulo não encontrado" robots="noindex, nofollow" />
                 <EmptyState
                     icon="book"
                     title="Módulo não encontrado"
@@ -57,6 +59,13 @@ export function ModuleLessonsPage() {
     return (
 
         <div className="page-container module-lessons-page animate-fade-in">
+
+            <Seo
+                title={module.title}
+                description={module.description}
+                robots="noindex, nofollow"
+                path={`/lessons/module/${module.id}`}
+            />
 
             <Link
                 to="/lessons"

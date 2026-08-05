@@ -3,12 +3,15 @@ import { useNavigate, useParams } from "react-router-dom";
 
 import { LessonReader } from "../../components/lessons/LessonReader/LessonReader";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 import "./LessonPage.css";
 import { useLessons } from "../../hooks/useLessons";
 import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
+import { buildBreadcrumbSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
+import { SITE_URL } from "../../config/seo";
 
 export function LessonPage() {
 
@@ -46,6 +49,7 @@ export function LessonPage() {
 
         return (
             <div className="page-container">
+                <Seo title="Lição não encontrada" robots="noindex, nofollow" />
                 <EmptyState
                     icon="book"
                     title="Lição não encontrada"
@@ -66,6 +70,7 @@ export function LessonPage() {
         return (
 
             <div className="page-container">
+                <Seo title="Lição bloqueada" robots="noindex, nofollow" />
                 <EmptyState
                     icon="lock"
                     title="Lição bloqueada"
@@ -82,13 +87,33 @@ export function LessonPage() {
 
     }
 
+    const module = ModuleRepository.getByLesson(language, lesson.id);
+
+    const breadcrumbJsonLd = combineSchemas(buildBreadcrumbSchema([
+        { name: "Home", url: `${SITE_URL}/` },
+        ...(module ? [{ name: module.title, url: `${SITE_URL}/lessons/module/${module.id}` }] : []),
+        { name: lesson.title, url: `${SITE_URL}/lessons/${lesson.id}` }
+    ]));
+
     return (
 
-        <LessonReader
+        <>
 
-            lesson={lesson}
+            <Seo
+                title={lesson.title}
+                description={lesson.description}
+                robots="noindex, nofollow"
+                path={`/lessons/${lesson.id}`}
+                jsonLd={breadcrumbJsonLd}
+            />
 
-        />
+            <LessonReader
+
+                lesson={lesson}
+
+            />
+
+        </>
 
     );
 
