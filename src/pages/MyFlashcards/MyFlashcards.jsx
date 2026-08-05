@@ -14,6 +14,7 @@ import { Section } from "../../components/common/Section/Section";
 import { SectionHeader } from "../../components/common/SectionHeader/SectionHeader";
 import { Button } from "../../components/common/Button/Button";
 import { Toast } from "../../components/common/Toast/Toast";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import { groupFlashcardsByTopic } from "../../utils/flashcards/groupFlashcardsByTopic";
 import { sortFlashcards, SORT_OPTIONS } from "../../utils/flashcards/sortFlashcards";
@@ -109,6 +110,8 @@ export function MyFlashcards() {
 
   return (
     <div className="flashcards-dashboard">
+      <Seo title="Meus Flashcards" description="Sua coleção pessoal de vocabulário, organizada por deck e tópico, com revisão espaçada." robots="noindex, nofollow" path="/my-flashcards" />
+
       <Section>
         <SectionHeader
           title="Meus Flashcards"

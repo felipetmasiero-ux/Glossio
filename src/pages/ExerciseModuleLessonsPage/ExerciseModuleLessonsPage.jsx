@@ -11,6 +11,7 @@ import { generateExercisesForLesson } from "../../utils/exercises";
 
 import { Icon } from "../../components/common/Icon/Icon";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 
 export function ExerciseModuleLessonsPage() {
 
@@ -28,6 +29,7 @@ export function ExerciseModuleLessonsPage() {
 
         return (
             <div className="page-container">
+                <Seo title="Módulo não encontrado" robots="noindex, nofollow" />
                 <EmptyState
                     icon="pencil"
                     title="Módulo não encontrado"
@@ -54,6 +56,8 @@ export function ExerciseModuleLessonsPage() {
     return (
 
         <div className="page-container exercise-lessons-page animate-fade-in">
+
+            <Seo title={`Exercícios — ${module.title}`} description={module.description} robots="noindex, nofollow" path={`/exercises/module/${module.id}`} />
 
             <Link to="/exercises" className="exercise-lessons-back">
                 <Icon name="chevron-left" size={15} />

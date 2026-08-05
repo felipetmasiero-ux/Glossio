@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Input } from "../../components/common/Input/Input";
 import { Button } from "../../components/common/Button/Button";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "../Login/Login.css";
 
@@ -36,6 +37,8 @@ export function Register() {
     return (
 
         <div className="page-container auth-page animate-fade-in">
+
+            <Seo title="Criar conta" description="Crie sua conta gratuita no Glossio e comece a aprender um novo idioma hoje." path="/register" />
 
             <p className="auth-page__label text-mono-label">Glossio</p>
 

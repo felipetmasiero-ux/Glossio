@@ -1,5 +1,7 @@
 import "./Roadmap.css";
 
+import { Seo } from "../../components/common/Seo/Seo";
+
 const PHASES = [
     {
         key: "beta",
@@ -44,6 +46,8 @@ export function Roadmap() {
     return (
 
         <div className="page-container roadmap-page animate-fade-in">
+
+            <Seo title="Roadmap" description="Veja o que já foi lançado e o que vem a seguir no desenvolvimento do Glossio." robots="noindex, nofollow" path="/roadmap" />
 
             <p className="roadmap-page__label text-mono-label">Roadmap</p>
 

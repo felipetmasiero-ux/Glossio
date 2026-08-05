@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 
 import { usePlacementTest } from "../../hooks/usePlacementTest";
 import { useLanguage } from "../../hooks/useLanguage";
+import { useSeo } from "../../hooks/useSeo";
 
 import { LanguageCard } from "../../components/common/LanguageCard/LanguageCard";
 import { Button } from "../../components/common/Button/Button";
@@ -62,6 +63,15 @@ export function PlacementTest() {
         // `selectLanguage` identity change would fight a manual language pick.
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    // Called unconditionally, before the step-based early returns below -
+    // this page has several conditional `return`s (one per quiz step), so
+    // useSeo has to run here rather than via <Seo> JSX inside each branch.
+    useSeo({
+        title: "Teste de Nivelamento",
+        description: "Descubra em poucos minutos qual nível (A1, A2...) é o ponto de partida ideal para você no Glossio.",
+        path: "/placement-test"
+    });
 
     function handleSelectLanguage(selected) {
         selectLanguage(selected);

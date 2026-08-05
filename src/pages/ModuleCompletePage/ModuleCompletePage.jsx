@@ -12,6 +12,7 @@ import { getModuleCompletionStats } from "../../utils/courses/getModuleCompletio
 import { Button } from "../../components/common/Button/Button";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
+import { Seo } from "../../components/common/Seo/Seo";
 
 export function ModuleCompletePage() {
 
@@ -31,6 +32,7 @@ export function ModuleCompletePage() {
 
         return (
             <div className="page-container">
+                <Seo title="Módulo não encontrado" robots="noindex, nofollow" />
                 <EmptyState
                     icon="book"
                     title="Módulo não encontrado"
@@ -78,6 +80,8 @@ export function ModuleCompletePage() {
     return (
 
         <div className="page-container module-complete-page animate-fade-in">
+
+            <Seo title={`Módulo concluído — ${module.title}`} robots="noindex, nofollow" path={`/lessons/module/${module.id}/complete`} />
 
             <div className="module-complete-stamp animate-celebrate">
                 <Icon name="check" size={26} />

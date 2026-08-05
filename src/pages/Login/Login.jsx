@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import { Input } from "../../components/common/Input/Input";
 import { Button } from "../../components/common/Button/Button";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Login.css";
 
@@ -38,6 +39,8 @@ export function Login() {
     return (
 
         <div className="page-container auth-page animate-fade-in">
+
+            <Seo title="Entrar" description="Entre na sua conta Glossio para continuar seus estudos de idiomas." path="/login" />
 
             <p className="auth-page__label text-mono-label">Glossio</p>
 

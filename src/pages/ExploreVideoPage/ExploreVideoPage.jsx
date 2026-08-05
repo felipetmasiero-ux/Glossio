@@ -23,6 +23,7 @@ import { Badge } from "../../components/common/Badge/Badge";
 import { Icon } from "../../components/common/Icon/Icon";
 import { Skeleton } from "../../components/common/Skeleton/Skeleton";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 
 const TRANSCRIPT_SKELETON_PATTERN = [
     ["68%"],
@@ -162,6 +163,7 @@ export function ExploreVideoPage() {
 
         return (
             <div className="page-container">
+                <Seo title="Vídeo não encontrado" robots="noindex, nofollow" />
                 <EmptyState
                     icon="play"
                     title="Vídeo não encontrado"
@@ -178,6 +180,7 @@ export function ExploreVideoPage() {
 
         return (
             <div className="page-container explore-video-page animate-fade-in">
+                <Seo title={video.title} description={video.description} robots="noindex, nofollow" path={`/explore/${videoId}`} />
                 <ExploreVideoComplete
                     video={video}
                     clickedCount={clickedWords.size}
@@ -191,6 +194,8 @@ export function ExploreVideoPage() {
     return (
 
         <div className="page-container explore-video-page animate-fade-in">
+
+            <Seo title={video.title} description={video.description} robots="noindex, nofollow" path={`/explore/${videoId}`} />
 
             <nav className="explore-video-page__breadcrumb" aria-label="Breadcrumb">
 

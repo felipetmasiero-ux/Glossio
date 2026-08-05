@@ -1,5 +1,6 @@
 import "./Home.css";
 
+import { Seo } from "../../components/common/Seo/Seo";
 import { useDashboardData } from "../../hooks/useDashboardData";
 import { useStatistics } from "../../hooks/useStatistics";
 import { useAchievements } from "../../hooks/useAchievements";
@@ -42,6 +43,8 @@ export function Home() {
     return (
 
         <div className="page-container home-dashboard">
+
+            <Seo title="Dashboard" description="Seu painel de estudos: progresso, streak, metas diárias e o que revisar hoje." robots="noindex, nofollow" path="/home" />
 
             <section className="home-dashboard__hero animate-fade-in">
                 <HeroCard greeting={dashboard.greeting} language={dashboard.language} />

@@ -4,6 +4,7 @@ import { CATEGORY_LABELS } from "../../utils/achievements";
 import { Icon } from "../../components/common/Icon/Icon";
 import { Badge } from "../../components/common/Badge/Badge";
 import { ProgressBar } from "../../components/common/ProgressBar/ProgressBar";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./Achievements.css";
 
@@ -32,6 +33,8 @@ export function Achievements() {
     return (
 
         <div className="page-container achievements-page animate-fade-in">
+
+            <Seo title="Conquistas" description="Acompanhe suas conquistas e marcos de aprendizado no Glossio." robots="noindex, nofollow" path="/achievements" />
 
             <p className="achievements-page__label text-mono-label">Conquistas</p>
 

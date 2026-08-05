@@ -10,6 +10,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 
 import { ModuleCard } from "../../components/lessons/ModuleCard/ModuleCard";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
+import { Seo } from "../../components/common/Seo/Seo";
 
 export function Exercises() {
 
@@ -26,6 +27,8 @@ export function Exercises() {
     return (
 
         <div className="page-container exercises-page animate-fade-in">
+
+            <Seo title="Exercícios" description="Pratique o que você aprendeu com exercícios organizados por módulo." robots="noindex, nofollow" path="/exercises" />
 
             <p className="exercises-page__label text-mono-label">Prática</p>
 

@@ -10,6 +10,7 @@ import { VideoRepository } from "../../repositories/VideoRepository";
 import { VideoCardList } from "../../components/explore/VideoCardList/VideoCardList";
 import { VideoFilters } from "../../components/explore/VideoFilters/VideoFilters";
 import { Skeleton } from "../../components/common/Skeleton/Skeleton";
+import { Seo } from "../../components/common/Seo/Seo";
 
 const HUB_LOADING_DELAY = 350;
 
@@ -86,6 +87,8 @@ export function ExploreHub() {
     return (
 
         <div className="page-container explore-hub animate-fade-in">
+
+            <Seo title="Explore" description="Vídeos autênticos com tradução instantânea para praticar o idioma no contexto real." robots="noindex, nofollow" path="/explore" />
 
             <div className="explore-hub__header">
 

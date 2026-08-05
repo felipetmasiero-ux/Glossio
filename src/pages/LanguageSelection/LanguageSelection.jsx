@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { LanguageCard } from "../../components/common/LanguageCard/LanguageCard";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
+import { Seo } from "../../components/common/Seo/Seo";
 
 import "./LanguageSelection.css";
 
@@ -25,6 +26,8 @@ export function LanguageSelection() {
 
   return (
     <div className="language-selection">
+      <Seo title="Escolha seu Idioma" description="Escolha o idioma que você quer aprender no Glossio." robots="noindex, nofollow" path="/choose-language" />
+
       <div className="language-selection-header">
         <p className="language-selection-mark text-mono-label">Glossio</p>
 

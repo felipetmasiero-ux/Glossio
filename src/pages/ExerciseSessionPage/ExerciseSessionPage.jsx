@@ -18,6 +18,7 @@ import { OptionListExercise } from "../../components/exercises/OptionListExercis
 import { FillBlankExercise } from "../../components/exercises/FillBlankExercise/FillBlankExercise";
 import { MatchTranslationExercise } from "../../components/exercises/MatchTranslationExercise/MatchTranslationExercise";
 import { OrderSentenceExercise } from "../../components/exercises/OrderSentenceExercise/OrderSentenceExercise";
+import { useSeo } from "../../hooks/useSeo";
 
 const EXERCISE_COMPONENTS = {
     [EXERCISE_TYPES.MULTIPLE_CHOICE]: OptionListExercise,
@@ -47,6 +48,14 @@ export function ExerciseSessionPage() {
         handleAnswered,
         restart
     } = useExerciseSession(lesson);
+
+    // Called unconditionally, before this page's several early returns.
+    useSeo({
+        title: lesson ? `Exercícios — ${lesson.title}` : "Exercícios",
+        description: lesson?.description ?? "Pratique o que você aprendeu.",
+        robots: "noindex, nofollow",
+        path: `/exercises/${lessonId}`
+    });
 
     if (!lesson?.id) {
 

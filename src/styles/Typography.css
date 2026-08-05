@@ -6,8 +6,11 @@
    numeração/dados reais (páginas, exercícios, estatísticas).
    ========================================================================== */
 
-/* impeccable-disable-next-line overused-font -- Operate-mode UI chrome (nav/buttons/labels) intentionally uses a workhorse sans; distinctiveness comes from the serif reading type + mono numbering system + notebook motifs, not from the interface font. */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=IBM+Plex+Mono:wght@500;600&display=swap');
+/* Font faces are loaded from index.html via <link rel="preconnect"> +
+   <link rel="stylesheet"> instead of @import here - @import blocks the
+   browser's preload scanner from discovering the font stylesheet until
+   after this file itself has downloaded and parsed, costing a full extra
+   round trip before font loading even starts. */
 
 :root {
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;

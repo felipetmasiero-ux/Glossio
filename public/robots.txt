@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /$
+Allow: /login
+Allow: /register
+Allow: /placement-test
+Disallow: /
+
+Sitemap: https://www.glossio.pro/sitemap.xml
