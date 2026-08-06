@@ -4,6 +4,7 @@ import {
     buildWebsiteSchema,
     buildEducationalOrgSchema,
     buildCourseSchema,
+    buildFaqSchema,
     buildBreadcrumbSchema,
     combineSchemas
 } from "./buildJsonLd";
@@ -38,6 +39,31 @@ describe("buildCourseSchema", () => {
                 name: "Glossio",
                 url: "https://www.glossio.pro"
             }
+        });
+    });
+});
+
+describe("buildFaqSchema", () => {
+    it("maps a list of {question, answer} into an FAQPage with positioned Question/Answer pairs", () => {
+        const schema = buildFaqSchema([
+            { question: "É grátis?", answer: "Sim, sem custo." },
+            { question: "Funciona no celular?", answer: "Sim, é um PWA instalável." }
+        ]);
+
+        expect(schema).toEqual({
+            "@type": "FAQPage",
+            mainEntity: [
+                {
+                    "@type": "Question",
+                    name: "É grátis?",
+                    acceptedAnswer: { "@type": "Answer", text: "Sim, sem custo." }
+                },
+                {
+                    "@type": "Question",
+                    name: "Funciona no celular?",
+                    acceptedAnswer: { "@type": "Answer", text: "Sim, é um PWA instalável." }
+                }
+            ]
         });
     });
 });

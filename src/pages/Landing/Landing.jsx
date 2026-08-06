@@ -1,126 +1,162 @@
 import { useNavigate } from "react-router-dom";
+import { useRef } from "react";
 
 import "./Landing.css";
 
-import { Button } from "../../components/common/Button/Button";
-import { Icon } from "../../components/common/Icon/Icon";
 import { Seo } from "../../components/common/Seo/Seo";
 
-import { buildWebsiteSchema, buildEducationalOrgSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
+import { buildWebsiteSchema, buildEducationalOrgSchema, buildFaqSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
+import { useScrollDepthTracking } from "../../hooks/useScrollDepthTracking";
 
-const LANDING_JSON_LD = combineSchemas(buildWebsiteSchema(), buildEducationalOrgSchema());
+import { LandingSection } from "../../components/landing/LandingSection/LandingSection";
+import { HeroSection } from "../../components/landing/HeroSection/HeroSection";
+import { BenefitsSection } from "../../components/landing/BenefitsSection/BenefitsSection";
+import { HowItWorksSection } from "../../components/landing/HowItWorksSection/HowItWorksSection";
+import { ProductPreviewSection } from "../../components/landing/ProductPreviewSection/ProductPreviewSection";
+import { FeaturesSection } from "../../components/landing/FeaturesSection/FeaturesSection";
+import { LanguagesSection } from "../../components/landing/LanguagesSection/LanguagesSection";
+import { SpacedRepetitionSection } from "../../components/landing/SpacedRepetitionSection/SpacedRepetitionSection";
+import { TestimonialsSection } from "../../components/landing/TestimonialsSection/TestimonialsSection";
+import { FaqSection } from "../../components/landing/FaqSection/FaqSection";
+import { FAQS } from "../../constants/landingFaqs";
+import { FinalCtaSection } from "../../components/landing/FinalCtaSection/FinalCtaSection";
 
-const PILLARS = [
-    {
-        key: "learn",
-        icon: "book",
-        title: "Learn",
-        description: "Cursos guiados por nível (CEFR: A1 → C2), lição por lição, na ordem certa."
-    },
-    {
-        key: "explore",
-        icon: "globe",
-        title: "Explore",
-        description: "Conteúdo autêntico com tradução instantânea — pratique com algo real."
-    },
-    {
-        key: "collect",
-        icon: "cards",
-        title: "Collect",
-        description: "Todo vocabulário aprendido se acumula num acervo pessoal organizado por tema."
-    },
-    {
-        key: "review",
-        icon: "clock",
-        title: "Review",
-        description: "Revisão espaçada que garante que o que você aprendeu nunca se perca."
-    }
-];
+const LANDING_JSON_LD = combineSchemas(
+    buildWebsiteSchema(),
+    buildEducationalOrgSchema(),
+    buildFaqSchema(FAQS)
+);
 
-const LANGUAGES = [
-    { flag: "🇺🇸", name: "Inglês" },
-    { flag: "🇫🇷", name: "Francês" },
-    { flag: "🇧🇷", name: "Português" }
-];
+// No real testimonial exists yet - kept empty on purpose rather than
+// fabricating quotes (see TestimonialsSection.jsx). The section below
+// simply doesn't render while this is empty; fill it in once there's real
+// data and it (and its background-tone slot) appears automatically.
+const TESTIMONIALS = [];
 
 export function Landing() {
 
     const navigate = useNavigate();
+
+    // Scroll-depth sentinels: real section boundaries, not a measured %
+    // of document height (see useScrollDepthTracking.js for why).
+    const benefitsRef = useRef(null);
+    const previewRef = useRef(null);
+    const faqRef = useRef(null);
+    const finalCtaRef = useRef(null);
+
+    useScrollDepthTracking([
+        { depth: 25, ref: benefitsRef },
+        { depth: 50, ref: previewRef },
+        { depth: 75, ref: faqRef },
+        { depth: 100, ref: finalCtaRef }
+    ]);
+
+    // Every trackEvent call for this page goes through here (or
+    // handleFaqOpen below) - section components stay presentational and
+    // only call the callback prop they're given, they never import
+    // trackEvent themselves.
+    function handleCtaClick(cta, location, destination) {
+        trackEvent(ANALYTICS_EVENTS.LANDING_CTA_CLICKED, { cta, location });
+        navigate(destination);
+    }
+
+    function handleFaqOpen(question) {
+        trackEvent(ANALYTICS_EVENTS.LANDING_FAQ_OPENED, { question });
+    }
+
+    // Alternates surface/background per rendered section, driven by render
+    // order rather than a hardcoded tone per section - stays correct even
+    // though the testimonials section conditionally doesn't render at all.
+    let toneIndex = 0;
+    const nextTone = () => (toneIndex++ % 2 === 0 ? "surface" : "background");
 
     return (
 
         <div className="landing animate-fade-in">
 
             <Seo
-                description="Aprenda inglês, francês ou português com lições estruturadas por nível (CEFR), conteúdo autêntico com tradução instantânea, um acervo pessoal de vocabulário e revisão espaçada."
+                description="Aprenda inglês, francês ou português com lições estruturadas por nível (CEFR), conteúdo autêntico com tradução instantânea, um acervo pessoal de vocabulário e revisão espaçada. Grátis para começar."
                 path="/"
                 jsonLd={LANDING_JSON_LD}
             />
 
-            <section className="landing-hero">
+            <HeroSection onPrimaryCta={() => handleCtaClick("comecar_agora", "hero", "/choose-language")} />
 
-                <div className="landing-hero__illustration" aria-hidden="true">
-                    <div className="landing-hero__card landing-hero__card--back card card--notch" />
-                    <div className="landing-hero__card landing-hero__card--front card card--notch">
-                        <Icon name="book" size={30} />
-                    </div>
-                </div>
+            <LandingSection
+                eyebrow="Benefícios"
+                title="Por que estudar com o Glossio"
+                tone={nextTone()}
+                sectionRef={benefitsRef}
+            >
+                <BenefitsSection />
+            </LandingSection>
 
-                <p className="landing-hero__wordmark text-mono-label">Glossio</p>
+            <LandingSection
+                eyebrow="Como funciona"
+                title="Do primeiro clique à primeira lição"
+                tone={nextTone()}
+            >
+                <HowItWorksSection />
+            </LandingSection>
 
-                <h1 className="landing-hero__title">
-                    Aprenda um idioma do jeito que realmente funciona.
-                </h1>
+            <LandingSection
+                eyebrow="Por dentro do app"
+                title="Veja como é estudar no Glossio"
+                tone={nextTone()}
+                sectionRef={previewRef}
+            >
+                <ProductPreviewSection />
+            </LandingSection>
 
-                <p className="landing-hero__description">
-                    Lições estruturadas, conteúdo autêntico, um acervo pessoal de vocabulário
-                    e revisão espaçada — tudo em um só lugar, sem hábito gamificado.
-                </p>
+            <LandingSection
+                eyebrow="Recursos principais"
+                title="Os quatro pilares"
+                subtitle="Learn, Explore, Collect e Review — um único ecossistema, não quatro ferramentas separadas."
+                tone={nextTone()}
+            >
+                <FeaturesSection />
+            </LandingSection>
 
-                <Button onClick={() => navigate("/choose-language")}>
-                    Começar agora
-                </Button>
+            <LandingSection
+                eyebrow="Idiomas disponíveis"
+                title="Escolha um idioma e comece agora"
+                subtitle="Do zero ao avançado — A1 a C2, no padrão CEFR."
+                tone={nextTone()}
+            >
+                <LanguagesSection />
+            </LandingSection>
 
-                <button
-                    type="button"
-                    className="landing-hero__placement-test-link"
-                    onClick={() => navigate("/placement-test")}
+            <LandingSection
+                eyebrow="Retenção"
+                title="Como funciona a repetição espaçada"
+                tone={nextTone()}
+            >
+                <SpacedRepetitionSection />
+            </LandingSection>
+
+            {TESTIMONIALS.length > 0 && (
+                <LandingSection
+                    eyebrow="Depoimentos"
+                    title="Quem estuda com o Glossio"
+                    tone={nextTone()}
                 >
-                    Já sabe um pouco? Faça um teste.
-                </button>
+                    <TestimonialsSection testimonials={TESTIMONIALS} />
+                </LandingSection>
+            )}
 
-                <ul className="landing-hero__languages">
-                    {LANGUAGES.map(lang => (
-                        <li key={lang.name}>
-                            <span aria-hidden="true">{lang.flag}</span> {lang.name}
-                        </li>
-                    ))}
-                </ul>
+            <LandingSection
+                eyebrow="Dúvidas"
+                title="Perguntas frequentes"
+                tone={nextTone()}
+                sectionRef={faqRef}
+            >
+                <FaqSection onFaqOpen={handleFaqOpen} />
+            </LandingSection>
 
-            </section>
-
-            <section className="landing-pillars">
-
-                <p className="landing-pillars__label text-mono-label">Os quatro pilares</p>
-
-                <div className="landing-pillars__list">
-                    {PILLARS.map(pillar => (
-                        <div className="landing-pillar-row" key={pillar.key}>
-
-                            <span className="landing-pillar-row__icon">
-                                <Icon name={pillar.icon} size={20} />
-                            </span>
-
-                            <div className="landing-pillar-row__body">
-                                <h2 className="landing-pillar-row__title">{pillar.title}</h2>
-                                <p className="landing-pillar-row__description">{pillar.description}</p>
-                            </div>
-
-                        </div>
-                    ))}
-                </div>
-
-            </section>
+            <LandingSection tone={nextTone()} sectionRef={finalCtaRef}>
+                <FinalCtaSection onCta={() => handleCtaClick("criar_conta", "final_cta", "/register")} />
+            </LandingSection>
 
         </div>
 
