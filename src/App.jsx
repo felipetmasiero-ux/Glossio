@@ -32,15 +32,18 @@ const Search = lazyPage(() => import("./pages/Search/Search"), "Search");
 const Grammar = lazyPage(() => import("./pages/Grammar/Grammar"), "Grammar");
 const PlacementTest = lazyPage(() => import("./pages/PlacementTest/PlacementTest"), "PlacementTest");
 const Goals = lazyPage(() => import("./pages/Goals/Goals"), "Goals");
+const LanguagesIndexPage = lazyPage(() => import("./pages/LanguagesIndexPage/LanguagesIndexPage"), "LanguagesIndexPage");
 
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
 import { PwaUpdatePrompt } from './components/common/PwaUpdatePrompt/PwaUpdatePrompt'
 import { AnalyticsRouteTracker } from './components/common/AnalyticsRouteTracker/AnalyticsRouteTracker'
+import { AuthGateBanner } from './components/common/AuthGateBanner/AuthGateBanner'
 import { Skeleton } from './components/common/Skeleton/Skeleton'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
 import { LanguageContext } from './contexts/LanguageContext'
 import { AuthProvider } from './contexts/AuthProvider'
+import { AuthGateProvider } from './contexts/AuthGateProvider'
 import { EventProvider } from './contexts/EventProvider'
 import { FlashcardProvider } from './contexts/FlashcardProvider'
 import { DeckProvider } from './contexts/DeckProvider'
@@ -62,6 +65,7 @@ function App() {
     <>
     <AnalyticsRouteTracker />
     <AuthProvider>
+    <AuthGateProvider>
     <EventProvider>
       <LanguageContext.Provider
         value={{
@@ -104,6 +108,32 @@ function App() {
                     element={<PlacementTest />}
                   />
 
+                  {/* Public preview mode: reading a lesson/module requires
+                  no session - language comes from the id/moduleId itself
+                  (getLanguageFromId), not LanguageContext. Anything that
+                  writes data (completing a lesson, adding a flashcard from
+                  one) is still gated inline via useRequireAuth, not by
+                  keeping the route itself behind ProtectedRoute. */}
+                  <Route
+                    path="/languages"
+                    element={<LanguagesIndexPage />}
+                  />
+
+                  <Route
+                    path="/lessons/language/:language"
+                    element={<ModulesPage />}
+                  />
+
+                  <Route
+                    path="/lessons/module/:moduleId"
+                    element={<ModuleLessonsPage />}
+                  />
+
+                  <Route
+                    path="/lessons/:id"
+                    element={<LessonPage />}
+                  />
+
                   <Route element={<ProtectedRoute />}>
 
                     <Route
@@ -136,18 +166,8 @@ function App() {
                     />
 
                     <Route
-                      path="/lessons/module/:moduleId"
-                      element={<ModuleLessonsPage />}
-                    />
-
-                    <Route
                       path="/lessons/module/:moduleId/complete"
                       element={<ModuleCompletePage />}
-                    />
-
-                    <Route
-                      path="/lessons/:id"
-                      element={<LessonPage />}
                     />
 
                     <Route
@@ -230,6 +250,8 @@ function App() {
 
                 <PwaUpdatePrompt />
 
+                <AuthGateBanner />
+
                 </LastActivityProvider>
               </ExerciseProgressProvider>
               </LessonProgressProvider>
@@ -239,6 +261,7 @@ function App() {
         </DeckProvider>
       </LanguageContext.Provider>
     </EventProvider>
+    </AuthGateProvider>
     </AuthProvider>
     </>
   )

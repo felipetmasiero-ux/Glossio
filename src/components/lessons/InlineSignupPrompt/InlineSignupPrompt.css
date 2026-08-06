@@ -1,0 +1,14 @@
+.inline-signup-prompt {
+  background: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-lg);
+}
+
+.inline-signup-prompt__description {
+  color: var(--color-text-secondary);
+  margin-bottom: var(--space-3);
+}
+
+.inline-signup-prompt .button {
+  width: auto;
+}
