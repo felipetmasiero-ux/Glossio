@@ -18,6 +18,7 @@ import { EventProvider } from "./contexts/EventProvider";
 import { FlashcardProvider } from "./contexts/FlashcardProvider";
 import { LessonProgressProvider } from "./contexts/LessonProgressProvider";
 import { LastActivityProvider } from "./contexts/LastActivityProvider";
+import { StudyHistoryProvider } from "./contexts/StudyHistoryProvider";
 
 // Section 13 of the performance sprint: simulate a long-time user (1000
 // flashcards, 5000 study events including 2000 reviews, 100 completed
@@ -169,7 +170,9 @@ describe("stress test - 1000 flashcards / 5000 events (2000 reviews) / 100 compl
                     <FlashcardProvider>
                         <LessonProgressProvider>
                             <LastActivityProvider>
-                                {children}
+                                <StudyHistoryProvider>
+                                    {children}
+                                </StudyHistoryProvider>
                             </LastActivityProvider>
                         </LessonProgressProvider>
                     </FlashcardProvider>

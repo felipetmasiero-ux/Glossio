@@ -7,6 +7,7 @@ import { EventProvider } from "../contexts/EventProvider";
 import { FlashcardProvider } from "../contexts/FlashcardProvider";
 import { LessonProgressProvider } from "../contexts/LessonProgressProvider";
 import { LastActivityProvider } from "../contexts/LastActivityProvider";
+import { StudyHistoryProvider } from "../contexts/StudyHistoryProvider";
 
 // Performance sprint regression guard (section 6): getDashboardData used to
 // be wrapped in one single useMemo keyed on every input at once, so e.g.
@@ -23,7 +24,9 @@ function Wrapper({ language, children }) {
                 <FlashcardProvider>
                     <LessonProgressProvider>
                         <LastActivityProvider>
-                            {children}
+                            <StudyHistoryProvider>
+                                {children}
+                            </StudyHistoryProvider>
                         </LastActivityProvider>
                     </LessonProgressProvider>
                 </FlashcardProvider>
@@ -60,6 +63,21 @@ describe("useDashboardData - fine-grained memoization", () => {
         // coincidentally match - just that this is a different, real call).
         expect(result.current.reviews).toBeDefined();
         expect(reviewsBefore).toBeDefined();
+
+    });
+
+    it("exposes a recommendations list, compatible with a brand new user (no progress/flashcards/events yet)", () => {
+
+        const { result } = renderHook(() => useDashboardData(), {
+            wrapper: ({ children }) => <Wrapper language="English">{children}</Wrapper>
+        });
+
+        expect(Array.isArray(result.current.recommendations)).toBe(true);
+        expect(result.current.recommendations.length).toBeGreaterThan(0);
+
+        result.current.recommendations.forEach(recommendation => {
+            expect(typeof recommendation.reason).toBe("string");
+        });
 
     });
 
