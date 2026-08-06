@@ -5,8 +5,11 @@ import { useLessonProgress } from "./useLessonProgress";
 import { useFlashcards } from "./useFlashcards";
 import { useEvents } from "./useEvents";
 import { useLastActivity } from "./useLastActivity";
+import { useStudyHistory } from "./useStudyHistory";
 
 import { DashboardRepository } from "../utils/dashboard";
+import { RecommendationEngine } from "../utils/adaptiveLearning";
+import { PlacementTestStorage } from "../utils/placementTest/placementTestStorage";
 
 // Previously a single useMemo wrapped the entire getDashboardData() call,
 // keyed on every input at once - so e.g. switching the study language (which
@@ -31,6 +34,8 @@ export function useDashboardData() {
     const { events } = useEvents();
 
     const { lastActivity } = useLastActivity();
+
+    const { studyHistory } = useStudyHistory();
 
     const greeting = useMemo(() => DashboardRepository.getGreeting(), []);
 
@@ -120,6 +125,24 @@ export function useDashboardData() {
         [reviews, resolvedLastActivity, continueLearning, relatedContent, nextLevel]
     );
 
+    // "Recommended for you" - distinct from nextStep above (the single
+    // biggest CTA on the dashboard): a short, prioritized, *explained* list
+    // ("why" this lesson/flashcard, not just "what"). See
+    // docs/ADAPTIVE_LEARNING.md for the full architecture; every input here
+    // is data the dashboard already loads for other cards, nothing new is
+    // stored to compute this.
+    const recommendations = useMemo(
+        () => RecommendationEngine.generate({
+            language,
+            completedLessons,
+            flashcards,
+            studyHistory,
+            events,
+            hasTakenPlacementTest: Boolean(PlacementTestStorage.getResult(language))
+        }),
+        [language, completedLessons, flashcards, studyHistory, events]
+    );
+
     return useMemo(() => ({
         greeting,
         userName: null,
@@ -137,12 +160,13 @@ export function useDashboardData() {
         recentActivity,
         vocabularyDistribution,
         weeklyActivity,
-        nextStep
+        nextStep,
+        recommendations
     }), [
         greeting, language, continueLearning, dailyGoal, reviews, courses,
         quickStats, recentAchievement, resolvedLastActivity, heatmap,
         streakSummary, upcomingReviews, recentActivity, vocabularyDistribution,
-        weeklyActivity, nextStep
+        weeklyActivity, nextStep, recommendations
     ]);
 
 }

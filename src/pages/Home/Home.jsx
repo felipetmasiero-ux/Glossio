@@ -27,6 +27,7 @@ import { RecentActivityCard } from "../../components/home/RecentActivityCard/Rec
 import { VocabularyDistributionCard } from "../../components/home/VocabularyDistributionCard/VocabularyDistributionCard";
 import { WeeklyEvolutionCard } from "../../components/home/WeeklyEvolutionCard/WeeklyEvolutionCard";
 import { GoalsProgressCard } from "../../components/home/GoalsProgressCard/GoalsProgressCard";
+import { RecommendedForYouCard } from "../../components/home/RecommendedForYouCard/RecommendedForYouCard";
 
 import { PlacementTestStorage } from "../../utils/placementTest/placementTestStorage";
 import { useGoalsSummary } from "../../hooks/useGoalsSummary";
@@ -51,6 +52,12 @@ export function Home() {
                 <PrimaryActionCard nextStep={dashboard.nextStep} />
                 <ContinueLearningCard continueLearning={dashboard.continueLearning} />
             </section>
+
+            {dashboard.recommendations.length > 0 && (
+                <DashboardSection title="Recomendado para você" icon="lightbulb">
+                    <RecommendedForYouCard recommendations={dashboard.recommendations} />
+                </DashboardSection>
+            )}
 
             <div className="home-dashboard__row animate-slide-up">
                 <DailyGoalCard dailyGoal={dashboard.dailyGoal} />
