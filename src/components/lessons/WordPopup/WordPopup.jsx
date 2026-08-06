@@ -8,6 +8,7 @@ import { Icon } from "../../common/Icon/Icon";
 import { useFlashcards } from "../../../hooks/useFlashcards";
 import { useLanguage } from "../../../hooks/useLanguage";
 import { useOverlayDismiss } from "../../../hooks/useOverlayDismiss";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
 import { trackEvent, ANALYTICS_EVENTS } from "../../../utils/analytics";
 
 const EXPLORE_AUTO_CLOSE_DELAY = 6000;
@@ -60,6 +61,8 @@ export function WordPopup({
 
     const { language } = useLanguage();
 
+    const requireAuth = useRequireAuth();
+
     const isExplore = variant === "explore";
 
     const [added, setAdded] = useState(false);
@@ -100,24 +103,36 @@ export function WordPopup({
 
     }
 
+    // Every bit of this - the actual add, the analytics event, the
+    // "added!" feedback - is only meaningful once a card was really saved,
+    // so unlike LessonReader's handleNext (where reading should carry on
+    // regardless), the whole handler is what's gated here: a visitor gets
+    // the CTA and nothing else runs. requireAuth(...) is invoked here,
+    // inside handleAdd's own body, so it (and the ref access in its
+    // callback) only ever runs when handleAdd is called from an event
+    // handler - never during render.
     function handleAdd() {
 
-        addFlashcard(word, language);
+        requireAuth(() => {
 
-        trackEvent(ANALYTICS_EVENTS.FLASHCARD_ADDED, { language, source: variant });
+            addFlashcard(word, language);
 
-        onAdd(word.word);
+            trackEvent(ANALYTICS_EVENTS.FLASHCARD_ADDED, { language, source: variant });
 
-        if (!isExplore) {
-            onClose();
-            return;
-        }
+            onAdd(word.word);
 
-        setAdded(true);
+            if (!isExplore) {
+                onClose();
+                return;
+            }
 
-        clearTimeout(addedTimeoutRef.current);
+            setAdded(true);
 
-        addedTimeoutRef.current = setTimeout(() => setAdded(false), ADDED_FEEDBACK_DURATION);
+            clearTimeout(addedTimeoutRef.current);
+
+            addedTimeoutRef.current = setTimeout(() => setAdded(false), ADDED_FEEDBACK_DURATION);
+
+        })();
 
     }
 

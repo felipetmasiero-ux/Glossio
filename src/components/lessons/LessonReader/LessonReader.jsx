@@ -21,17 +21,29 @@ import { VideoRepository } from "../../../repositories/VideoRepository";
 import { VideoProgressRepository } from "../../../repositories/VideoProgressRepository";
 import { getRelatedContent } from "../../../utils/recommendations";
 
-import { useLanguage } from "../../../hooks/useLanguage";
 import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
 import { useLessonProgress } from "../../../hooks/useLessonProgress";
+import { useRequireAuth } from "../../../hooks/useRequireAuth";
+import { useAuth } from "../../../hooks/useAuth";
+import { InlineSignupPrompt } from "../InlineSignupPrompt/InlineSignupPrompt";
 
+// `lesson.language` (already on every lesson object), not LanguageContext -
+// LessonReader is reachable while logged out (public preview mode, see
+// App.jsx), where LanguageContext is empty unless the visitor happens to
+// have used the app before. Using the lesson's own field means next/
+// previous lesson, module progress and course progress all resolve
+// correctly regardless of auth state or local language history.
 export function LessonReader({ lesson }) {
 
     const navigate = useNavigate();
 
-    const { language } = useLanguage();
+    const language = lesson.language;
 
     const { completedLessons, completeLesson } = useLessonProgress();
+
+    const { isAuthenticated } = useAuth();
+
+    const requireAuth = useRequireAuth();
 
     const {
 
@@ -114,9 +126,15 @@ export function LessonReader({ lesson }) {
 
         }
 
-        completeLesson(lesson.id, language);
+        requireAuth(() => completeLesson(lesson.id, language))();
 
-        if (currentModule && ModuleRepository.isLastLessonInModule(language, lesson.id)) {
+        // The "module complete" celebration page is itself behind
+        // ProtectedRoute (it shows personalized stats that don't exist for
+        // a visitor) - for a signed-in reader it's still the right next
+        // stop, but for a visitor finishing the module's last lesson,
+        // sending them there would just bounce them straight to /login,
+        // which is exactly the auto-redirect this whole feature avoids.
+        if (isAuthenticated && currentModule && ModuleRepository.isLastLessonInModule(language, lesson.id)) {
 
             window.scrollTo(0, 0);
 
@@ -136,7 +154,10 @@ export function LessonReader({ lesson }) {
 
         window.scrollTo(0, 0);
 
-        navigate("/lessons");
+        // /lessons (no param) is the authenticated, LanguageContext-driven
+        // module list; a visitor gets the public equivalent instead of
+        // hitting ProtectedRoute.
+        navigate(isAuthenticated ? "/lessons" : `/lessons/language/${language}`);
 
     }
 
@@ -195,6 +216,8 @@ export function LessonReader({ lesson }) {
                 vocabulary={lesson.vocabulary}
 
             />
+
+            {!isAuthenticated && lesson.vocabulary?.length > 0 && <InlineSignupPrompt />}
 
             <h2 className="lesson-step-heading">
 

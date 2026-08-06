@@ -5,29 +5,31 @@ import { LessonReader } from "../../components/lessons/LessonReader/LessonReader
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Seo } from "../../components/common/Seo/Seo";
 import "./LessonPage.css";
-import { useLessons } from "../../hooks/useLessons";
-import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
+import { LessonRepository } from "../../utils/lessons/LessonRepository";
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
+import { getLanguageFromId } from "../../utils/courses/getLanguageFromId";
 import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 import { buildBreadcrumbSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
 import { SITE_URL } from "../../config/seo";
 
+// Public route (see App.jsx) - language comes from the lesson id itself,
+// not LanguageContext. Looking it up via LanguageContext would silently
+// fail for a visitor who never set one (an empty string resolves to no
+// course at all), and would show the wrong language's content for a
+// logged-in reader studying a different language than whatever this one
+// lesson belongs to.
 export function LessonPage() {
 
     const navigate = useNavigate();
 
     const { id } = useParams();
 
-    const { language } = useLanguage();
-
-    const lessons = useLessons();
+    const language = getLanguageFromId(id);
 
     const { completedLessons } = useLessonProgress();
 
-    const lesson = lessons.find(
-        lesson => lesson.id === id
-    );
+    const lesson = LessonRepository.getById(language, id);
 
     // Computed before any early return (and the effect below placed
     // alongside it) so hooks stay unconditional - LessonPage doesn't remount
@@ -91,6 +93,7 @@ export function LessonPage() {
 
     const breadcrumbJsonLd = combineSchemas(buildBreadcrumbSchema([
         { name: "Home", url: `${SITE_URL}/` },
+        { name: "Idiomas", url: `${SITE_URL}/languages` },
         ...(module ? [{ name: module.title, url: `${SITE_URL}/lessons/module/${module.id}` }] : []),
         { name: lesson.title, url: `${SITE_URL}/lessons/${lesson.id}` }
     ]));
@@ -102,7 +105,6 @@ export function LessonPage() {
             <Seo
                 title={lesson.title}
                 description={lesson.description}
-                robots="noindex, nofollow"
                 path={`/lessons/${lesson.id}`}
                 jsonLd={breadcrumbJsonLd}
             />

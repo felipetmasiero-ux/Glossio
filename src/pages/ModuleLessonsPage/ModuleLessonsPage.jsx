@@ -3,24 +3,30 @@ import "./ModuleLessonsPage.css";
 import { useCallback } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
 
 import { ModuleRepository } from "../../utils/courses/ModuleRepository";
+import { getLanguageFromId } from "../../utils/courses/getLanguageFromId";
 
 import { LessonCard } from "../../components/lessons/LessonCard/LessonCard";
 import { ProgressIndicator } from "../../components/lessons/common/ProgressIndicator/ProgressIndicator";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
 import { Seo } from "../../components/common/Seo/Seo";
+import { buildCourseSchema, buildBreadcrumbSchema, combineSchemas } from "../../utils/seo/buildJsonLd";
+import { SITE_URL } from "../../config/seo";
 
+// Public route (see App.jsx) - language comes from the moduleId itself
+// (every id is prefixed with it, e.g. "english-a1"), not LanguageContext,
+// so this page is fully self-sufficient from its own URL regardless of
+// whether the visitor is logged in or has ever set a language at all.
 export function ModuleLessonsPage() {
 
     const navigate = useNavigate();
 
     const { moduleId } = useParams();
 
-    const { language } = useLanguage();
+    const language = getLanguageFromId(moduleId);
 
     const { completedLessons, isLessonCompleted } = useLessonProgress();
 
@@ -56,6 +62,15 @@ export function ModuleLessonsPage() {
 
     const progress = ModuleRepository.getProgress(module, completedLessons);
 
+    const jsonLd = combineSchemas(
+        buildCourseSchema(module),
+        buildBreadcrumbSchema([
+            { name: "Home", url: `${SITE_URL}/` },
+            { name: "Idiomas", url: `${SITE_URL}/languages` },
+            { name: module.title, url: `${SITE_URL}/lessons/module/${module.id}` }
+        ])
+    );
+
     return (
 
         <div className="page-container module-lessons-page animate-fade-in">
@@ -63,8 +78,8 @@ export function ModuleLessonsPage() {
             <Seo
                 title={module.title}
                 description={module.description}
-                robots="noindex, nofollow"
                 path={`/lessons/module/${module.id}`}
+                jsonLd={jsonLd}
             />
 
             <Link

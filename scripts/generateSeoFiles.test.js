@@ -15,9 +15,20 @@ describe("buildSitemap", () => {
     it("only lists public routes - no protected app routes leak in", () => {
         const xml = buildSitemap();
 
-        expect(xml).not.toContain("/home");
-        expect(xml).not.toContain("/my-flashcards");
-        expect(xml).not.toContain("/lessons");
+        // Exact <loc> matches, not substring checks: lesson/module/language
+        // URLs legitimately contain "/lessons/..." as a prefix, so a bare
+        // `.not.toContain("/lessons")` would also (wrongly) flag those.
+        expect(xml).not.toContain(`<loc>${SITE_URL}/home</loc>`);
+        expect(xml).not.toContain(`<loc>${SITE_URL}/my-flashcards</loc>`);
+        expect(xml).not.toContain(`<loc>${SITE_URL}/lessons</loc>`);
+    });
+
+    it("includes public preview URLs for every language, module and lesson", () => {
+        const xml = buildSitemap();
+
+        expect(xml).toContain(`<loc>${SITE_URL}/lessons/language/english</loc>`);
+        expect(xml).toContain(`<loc>${SITE_URL}/lessons/module/english-a1</loc>`);
+        expect(xml).toContain(`<loc>${SITE_URL}/lessons/english-a1-greetings</loc>`);
     });
 
     it("is well-formed XML with a single urlset root", () => {

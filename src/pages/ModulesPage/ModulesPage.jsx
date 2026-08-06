@@ -1,6 +1,6 @@
 import "./ModulesPage.css";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useLanguage } from "../../hooks/useLanguage";
 import { useLessonProgress } from "../../hooks/useLessonProgress";
@@ -13,11 +13,21 @@ import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Icon } from "../../components/common/Icon/Icon";
 import { Seo } from "../../components/common/Seo/Seo";
 
+// Two entry points render this same page: the authenticated /lessons (no
+// param, driven by LanguageContext - "continue studying my language") and
+// the public /lessons/language/:language (driven by the URL, reachable
+// while logged out - see App.jsx). The URL param wins when present so a
+// visitor's link always shows the same course regardless of their local
+// LanguageContext state (which they may not have set at all).
 export function ModulesPage() {
 
     const navigate = useNavigate();
 
-    const { language } = useLanguage();
+    const { language: paramLanguage } = useParams();
+
+    const { language: contextLanguage } = useLanguage();
+
+    const language = paramLanguage ?? contextLanguage;
 
     const { completedLessons } = useLessonProgress();
 
@@ -32,8 +42,8 @@ export function ModulesPage() {
             <Seo
                 title={`Lições — ${course?.title ?? language}`}
                 description={course?.description ?? `Módulos e lições estruturadas para aprender ${language}.`}
-                robots="noindex, nofollow"
-                path="/lessons"
+                robots={paramLanguage ? "index, follow" : "noindex, nofollow"}
+                path={paramLanguage ? `/lessons/language/${paramLanguage}` : "/lessons"}
             />
 
             <p className="modules-page__label text-mono-label">Sumário</p>

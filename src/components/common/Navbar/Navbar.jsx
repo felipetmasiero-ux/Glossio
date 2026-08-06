@@ -35,6 +35,30 @@ export function Navbar() {
 
   if (!isAuthenticated && PUBLIC_PATHS_HIDDEN_WHEN_LOGGED_OUT.includes(location.pathname)) return null;
 
+  // Public preview mode (see App.jsx: /languages, /lessons/language/:x,
+  // /lessons/module/:x, /lessons/:id) is reachable while logged out - a
+  // visitor there gets a lightweight nav (logo + sign in/up) instead of the
+  // authenticated links below, which all lead to screens they can't use yet.
+  if (!isAuthenticated) {
+    return (
+      <nav className="navbar">
+        <div className="navbar__inner">
+          <Link to="/home" className="navbar__logo">
+            <span className="navbar__logo-icon">
+              <Icon name="book" size={16} />
+            </span>
+            <span className="navbar__logo-name">Glossio</span>
+          </Link>
+
+          <div className="navbar__guest-actions">
+            <Link to="/login" className="navbar__link">Entrar</Link>
+            <Link to="/register" className="navbar__signup-cta">Criar conta grátis</Link>
+          </div>
+        </div>
+      </nav>
+    );
+  }
+
   function handleLogout() {
     logout();
     navigate("/login", { replace: true });
