@@ -8,7 +8,7 @@ export const SITE_URL = "https://www.glossio.pro";
 export const DEFAULT_TITLE = "Glossio — Aprenda idiomas de verdade";
 
 export const DEFAULT_DESCRIPTION =
-    "Um caderno de estudo de idiomas: lições estruturadas (Learn), conteúdo autêntico com tradução instantânea (Explore), um acervo pessoal de vocabulário (Collect) e revisão espaçada que nunca deixa você esquecer (Review).";
+    "Aprenda inglês, francês ou português com lições estruturadas por nível (CEFR), conteúdo autêntico com tradução instantânea, um acervo pessoal de vocabulário e revisão espaçada. Grátis para começar.";
 
 // PNG, not the SVG favicon - social platforms (Facebook/Twitter/LinkedIn
 // link previews) generally don't render SVG og:image at all. Reuses the

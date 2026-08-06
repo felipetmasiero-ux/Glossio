@@ -31,6 +31,10 @@ export const ANALYTICS_EVENTS = {
     SEARCH_PERFORMED: "search_performed",
 
     FAVORITE_ADDED: "favorite_added",
-    FAVORITE_REMOVED: "favorite_removed"
+    FAVORITE_REMOVED: "favorite_removed",
+
+    LANDING_CTA_CLICKED: "landing_cta_clicked",
+    LANDING_SCROLL_DEPTH: "landing_scroll_depth",
+    LANDING_FAQ_OPENED: "landing_faq_opened"
 
 };
