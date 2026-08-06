@@ -154,6 +154,66 @@ describe("validateBlock", () => {
             expect(issues.some(i => i.severity === "warning" && i.message.includes("rotula"))).toBe(true);
         });
 
+        describe("feedback", () => {
+
+            it("is optional - a quiz with no feedback field is still fully valid", () => {
+                expect(validateBlock(validQuiz, "path")).toEqual([]);
+            });
+
+            it("accepts a feedback object with any subset of the known fields", () => {
+                const issues = validateBlock({
+                    ...validQuiz,
+                    feedback: { hint: "Think of a greeting.", commonMistake: "People mix these up." }
+                }, "path");
+                expect(issues).toEqual([]);
+            });
+
+            it("accepts all five known feedback fields", () => {
+                const issues = validateBlock({
+                    ...validQuiz,
+                    feedback: {
+                        hint: "hint",
+                        commonMistake: "mistake",
+                        funFact: "fact",
+                        grammarNote: "note",
+                        extraExample: "example"
+                    }
+                }, "path");
+                expect(issues).toEqual([]);
+            });
+
+            it("rejects a feedback value that isn't a plain object", () => {
+                const issues = validateBlock({ ...validQuiz, feedback: "a hint" }, "path");
+                expect(issues).toHaveLength(1);
+                expect(issues[0].severity).toBe("error");
+                expect(issues[0].message).toContain("feedback()");
+            });
+
+            it("rejects an array as a feedback value", () => {
+                const issues = validateBlock({ ...validQuiz, feedback: ["hint"] }, "path");
+                expect(issues[0].severity).toBe("error");
+            });
+
+            it("flags an empty feedback object as a warning", () => {
+                const issues = validateBlock({ ...validQuiz, feedback: {} }, "path");
+                expect(severities(issues)).toEqual(["warning"]);
+                expect(issues[0].message).toContain("vazio");
+            });
+
+            it("warns about an unknown feedback field, e.g. a typo", () => {
+                const issues = validateBlock({ ...validQuiz, feedback: { tip: "typo for hint" } }, "path");
+                expect(issues).toHaveLength(1);
+                expect(issues[0].severity).toBe("warning");
+                expect(issues[0].message).toContain("tip");
+            });
+
+            it("errors on a known feedback field with an empty value", () => {
+                const issues = validateBlock({ ...validQuiz, feedback: { hint: "" } }, "path");
+                expect(issues.some(i => i.severity === "error" && i.message.includes('"hint"'))).toBe(true);
+            });
+
+        });
+
     });
 
 });

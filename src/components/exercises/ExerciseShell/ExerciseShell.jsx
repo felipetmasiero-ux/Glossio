@@ -1,6 +1,7 @@
 import { Card } from "../../common/Card/Card";
 import { Button } from "../../common/Button/Button";
 import { Icon } from "../../common/Icon/Icon";
+import { ExerciseFeedback } from "../ExerciseFeedback/ExerciseFeedback";
 import { EXERCISE_TYPE_META } from "../../../constants/exerciseTypes";
 
 import "./ExerciseShell.css";
@@ -9,6 +10,7 @@ export function ExerciseShell({
     type,
     prompt,
     explanation,
+    feedback,
     checked,
     correct,
     canCheck = true,
@@ -55,7 +57,7 @@ export function ExerciseShell({
                                     {correct ? "Correto!" : "Incorreto"}
                                 </h3>
 
-                                {explanation && <p>{explanation}</p>}
+                                <ExerciseFeedback correct={correct} explanation={explanation} feedback={feedback} />
                             </div>
 
                             <div className="exercise-shell__actions">

@@ -152,7 +152,7 @@ formato consistente).
 | `examples([{text, translation}])` | `example` | ≥1 item, cada um com `text` (`translation` recomendado) |
 | `dialogue([{speaker, text}])` | `dialogue` | ≥1 linha, cada uma com `speaker` e `text` |
 | `list([items])` | `list` | ≥1 item, todos não vazios |
-| `quiz(question, options, answerIndex, explanation)` | `quiz` | `question`, ≥2 `options` únicas, `answerIndex` dentro do intervalo, `explanation` recomendado |
+| `quiz(question, options, answerIndex, explanation, feedback)` | `quiz` | `question`, ≥2 `options` únicas, `answerIndex` dentro do intervalo, `explanation` recomendado, `feedback` opcional (veja a seção Feedback educativo) |
 | `step(title)` | `step` | `title` — divide a lição em passos/telas; nenhuma lição usa isso hoje (todas são uma tela só), mas o suporte já existe |
 
 Todo esse mapeamento (tipo → validação → componente de renderização) tem
@@ -161,6 +161,64 @@ uma única fonte de verdade por camada: `BLOCK_TYPES`
 `src/components/lessons/blocks/index.js` para como renderizar. Um teste
 (`src/components/lessons/blocks/index.test.js`) garante que os dois nunca
 saem de sincronia.
+
+## Feedback educativo
+
+Qualquer bloco `quiz` pode, opcionalmente, ensinar mais do que "certo" ou
+"errado". Isso vale tanto para o quiz dentro da lição (`QuizCard`, durante a
+leitura) quanto para o exercício de múltipla escolha gerado a partir dele
+(`/exercises/...`) — os dois usam o mesmo componente de renderização
+(`ExerciseFeedback`), então o que você escreve aparece nos dois lugares
+automaticamente.
+
+### Os 6 tipos de feedback
+
+| Campo | Builder | Aparece quando... |
+|---|---|---|
+| Explicação | 4º argumento de `quiz(...)` (já existia) | Sempre que existir, certo ou errado |
+| Regra gramatical | `grammarNote(texto)` | Sempre que existir, certo ou errado |
+| Exemplo adicional | `extraExample(texto)` | Sempre que existir, certo ou errado |
+| Curiosidade | `funFact(texto)` | Só quando a resposta está **certa** |
+| Dica para lembrar | `hint(texto)` | Só quando a resposta está **errada** |
+| Erro comum | `commonMistake(texto)` | Só quando a resposta está **errada** |
+
+Todos são opcionais e independentes — escreva só os que fizerem sentido para
+aquela pergunta.
+
+### Como usar
+
+```js
+import { heading, quiz, feedback, hint, commonMistake, funFact, grammarNote, extraExample }
+    from "../../../../utils/lessons/builders";
+
+quiz(
+    "She ___ at a hospital.",
+    ["work", "works", "working", "worked"],
+    1,
+    "Com he/she/it no presente simples, o verbo recebe -s.", // explicação (já existia)
+    feedback(
+        grammarNote("3ª pessoa do singular no presente simples sempre leva -s: he/she/it + verbo-s."),
+        commonMistake("Muita gente esquece o -s com he/she/it."),
+        hint("Pergunte: é 'ele/ela faz' ou 'eles fazem'? Se for ele/ela, o verbo ganha -s."),
+        funFact("O inglês só marca a 3ª pessoa do singular no presente — nas outras pessoas o verbo não muda.")
+    )
+)
+```
+
+`feedback(...)` aceita quantas partes fizerem sentido, em qualquer ordem —
+`feedback(hint("..."))` sozinho é perfeitamente válido.
+
+### Compatibilidade
+
+`feedback` é o 5º argumento de `quiz(...)` — todo quiz existente (que só
+passa 4 argumentos) continua funcionando exatamente como antes, sem
+`feedback` nenhum. Nenhum outro tipo de exercício (escolha de palavra,
+complete a frase, associe a tradução, ordene a frase) tem um feedback
+autorado hoje — eles são gerados em massa a partir do vocabulário/frases da
+lição, sem um bloco individual para anexar feedback (veja "Melhorias
+futuras"). `ExerciseShell`/`ExerciseFeedback` já sabem renderizar feedback
+para qualquer tipo de exercício que venha a ganhar essa fonte de dado no
+futuro — não vai ser preciso mexer na UI de novo.
 
 ## Vocabulário e dicionário
 
@@ -195,7 +253,7 @@ O que cada um verifica (arquivos em `src/utils/content/validation/`):
 
 | Categoria | Verificações |
 |---|---|
-| `block` | tipo existe, campos obrigatórios por tipo, opções de quiz únicas e não vazias, `answer` dentro do intervalo de `options` |
+| `block` | tipo existe, campos obrigatórios por tipo, opções de quiz únicas e não vazias, `answer` dentro do intervalo de `options`, `feedback` (quando existir) só com campos válidos (`hint`, `commonMistake`, `funFact`, `grammarNote`, `extraExample`) e não vazio |
 | `lesson` | campos obrigatórios presentes, `level` é um CEFR válido, `language` é suportado, tem ao menos 1 objetivo, tem ao menos 1 bloco |
 | `module` / `course` | campos obrigatórios presentes, tem ao menos 1 lição/módulo |
 | `id` | ids de curso/módulo/lição/bloco únicos (dentro do escopo e globalmente), lição prefixada pelo id do módulo, módulo prefixado pelo id do curso |
@@ -224,6 +282,9 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
   um novo; se criar um novo, adicione o rótulo em `topics.js` no mesmo PR.
 - Todo `quiz` deve ter uma `explanation` — mesmo que pareça óbvia, ela é o
   que aparece depois que o usuário responde.
+- Use `feedback()` nas perguntas em que os alunos costumam errar — é
+  exatamente aí que uma dica ou um "erro comum" bem escrito vira
+  aprendizado de verdade, em vez de só um "Incorreto".
 - Rode `npm run validate-content` antes de abrir o PR, não depois.
 
 ## Checklist antes de abrir o PR
@@ -233,6 +294,8 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
 - [ ] Lição adicionada ao array `lessons` do módulo certo
 - [ ] `topic` tem entrada em `TOPIC_LABELS`
 - [ ] Todo `quiz` tem `explanation`
+- [ ] Nos `quiz` mais difíceis, considere adicionar `feedback()` (dica, erro
+      comum, regra gramatical, exemplo extra ou curiosidade)
 - [ ] `npm run validate-content` sem erros (avisos pré-existentes de outras
       lições não são sua responsabilidade, mas não adicione novos)
 - [ ] `npm run content-report` mostra a contagem esperada (uma lição a
@@ -248,3 +311,10 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
 - Expandir `validateContent` para cruzar `lesson.tags`/`skills` com uma
   lista canônica, do mesmo jeito que já é feito com `topic`.
 - CI rodando `npm run validate-content` em todo PR que toque `src/data/`.
+- Estender `feedback` para os outros tipos de exercício (escolha de
+  palavra, complete a frase, associe a tradução), anexando-o à entrada do
+  dicionário em vez de a um bloco — a UI (`ExerciseShell`/
+  `ExerciseFeedback`) já está pronta para isso, falta só a fonte de dado.
+- Um relatório de "perguntas mais erradas" (a partir dos eventos de
+  exercício já registrados) para saber quais `quiz` mais se beneficiariam
+  de um `feedback()` bem escrito.

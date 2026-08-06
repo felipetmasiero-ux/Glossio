@@ -19,6 +19,8 @@ export function generateMultipleChoice(lesson) {
 
         explanation: block.explanation ?? null,
 
+        feedback: block.feedback ?? null,
+
         payload: {
             options: block.options,
             answerIndex: block.answer

@@ -42,6 +42,7 @@ export function FillBlankExercise({ exercise, onComplete }) {
             type={exercise.type}
             prompt={exercise.prompt}
             explanation={exercise.explanation}
+            feedback={exercise.feedback}
             checked={checked}
             correct={correct}
             canCheck={selected !== null}

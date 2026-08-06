@@ -71,6 +71,10 @@ export function generateFillBlank(lesson) {
 
             explanation: null,
 
+            // See generateSelectWord.js's comment - no per-exercise
+            // feedback source for this generator today.
+            feedback: null,
+
             payload: {
                 sentence,
                 answer,

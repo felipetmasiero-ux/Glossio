@@ -1,0 +1,75 @@
+import { Icon } from "../../common/Icon/Icon";
+import "./ExerciseFeedback.css";
+
+// Which of a quiz block's optional feedback() fields show up depending on
+// whether the answer was correct - a grammar rule and an extra example are
+// useful context either way, a fun fact rewards a correct answer, a hint
+// and a common-mistake note are only useful after getting it wrong (see
+// docs/CONTENT_AUTHORING.md's Feedback section for the full reasoning).
+// Icons match the block type each field is conceptually closest to
+// (grammar -> "ruler", example -> "chat", culture/curiosity -> "globe",
+// tip/hint -> "lightbulb"), same icons GrammarBlock/ExampleBlock/
+// CultureBlock/TipBlock already use.
+const FEEDBACK_FIELDS = [
+    { key: "grammarNote", label: "Regra gramatical", icon: "ruler", showOnCorrect: true, showOnIncorrect: true },
+    { key: "extraExample", label: "Exemplo", icon: "chat", showOnCorrect: true, showOnIncorrect: true },
+    { key: "funFact", label: "Curiosidade", icon: "globe", showOnCorrect: true, showOnIncorrect: false },
+    { key: "hint", label: "Dica para lembrar", icon: "lightbulb", showOnCorrect: false, showOnIncorrect: true },
+    { key: "commonMistake", label: "Erro comum", icon: "x", showOnCorrect: false, showOnIncorrect: true }
+];
+
+// Used by ExerciseShell, so every exercise type renders this the same way
+// the moment its generator starts passing a `feedback` object through -
+// today only generateMultipleChoice does (from quiz blocks). Renders
+// nothing beyond the plain explanation when `feedback` is absent, which is
+// exactly the pre-existing behavior for every other exercise type.
+export function ExerciseFeedback({ correct, explanation, feedback }) {
+
+    const visibleFields = FEEDBACK_FIELDS.filter(field => {
+
+        const value = feedback?.[field.key];
+
+        if (!value) {
+            return false;
+        }
+
+        return correct ? field.showOnCorrect : field.showOnIncorrect;
+
+    });
+
+    if (!explanation && visibleFields.length === 0) {
+        return null;
+    }
+
+    return (
+
+        <div className="exercise-feedback">
+
+            {explanation && <p className="exercise-feedback__explanation">{explanation}</p>}
+
+            {
+
+                visibleFields.map(field => (
+
+                    <div key={field.key} className="exercise-feedback__item">
+
+                        <p className="exercise-feedback__item-label text-mono-label">
+                            <Icon name={field.icon} size={14} />
+                            {field.label}
+                        </p>
+
+                        <p className="exercise-feedback__item-text">
+                            {feedback[field.key]}
+                        </p>
+
+                    </div>
+
+                ))
+
+            }
+
+        </div>
+
+    );
+
+}
