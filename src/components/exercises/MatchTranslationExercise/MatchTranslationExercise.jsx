@@ -73,6 +73,7 @@ export function MatchTranslationExercise({ exercise, onComplete }) {
             type={exercise.type}
             prompt={exercise.prompt}
             explanation={exercise.explanation}
+            feedback={exercise.feedback}
             checked={checked}
             correct={true}
             onContinue={handleContinue}

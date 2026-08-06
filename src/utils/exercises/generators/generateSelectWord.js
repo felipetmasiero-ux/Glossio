@@ -43,6 +43,14 @@ export function generateSelectWord(lesson) {
 
             explanation: null,
 
+            // No per-exercise feedback source today - unlike quiz blocks,
+            // vocabulary entries don't carry a feedback() object (see
+            // docs/CONTENT_AUTHORING.md's Feedback section for why that
+            // scope was deliberately left for later). Explicit null, not
+            // just omitted, so ExerciseShell's contract is the same for
+            // every exercise type regardless of whether it's used yet.
+            feedback: null,
+
             payload: {
                 options,
                 answerIndex: options.indexOf(entry.word)

@@ -46,6 +46,7 @@ export function OrderSentenceExercise({ exercise, onComplete }) {
             type={exercise.type}
             prompt={exercise.prompt}
             explanation={exercise.explanation}
+            feedback={exercise.feedback}
             checked={checked}
             correct={correct}
             canCheck={strip.length === tokens.length}

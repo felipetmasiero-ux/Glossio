@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Card } from "../../common/Card/Card";
 import { Button } from "../../common/Button/Button";
 import { Icon } from "../../common/Icon/Icon";
+import { ExerciseFeedback } from "../../exercises/ExerciseFeedback/ExerciseFeedback";
 
 import "./QuizCard.css";
 
@@ -163,11 +164,15 @@ export function QuizCard({
                                     {correct ? "Correto!" : "Incorreto"}
                                 </h3>
 
-                                <p>
+                                <ExerciseFeedback
 
-                                    {quiz.explanation}
+                                    correct={correct}
 
-                                </p>
+                                    explanation={quiz.explanation}
+
+                                    feedback={quiz.feedback}
+
+                                />
 
                             </div>
 

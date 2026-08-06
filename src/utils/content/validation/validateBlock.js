@@ -147,6 +147,49 @@ function validateQuizBlock(block, path) {
         issues.push(warning("block", path, `Bloco "quiz" sem "explanation" - considere explicar a resposta correta.`));
     }
 
+    issues.push(...validateQuizFeedback(block.feedback, path));
+
+    return issues;
+
+}
+
+const FEEDBACK_FIELDS = ["hint", "commonMistake", "funFact", "grammarNote", "extraExample"];
+
+// `feedback` is optional (built by the feedback() builder - see
+// src/utils/lessons/builders/feedback.js) - `undefined` (never set) is
+// valid and produces no issues, matching every other optional lesson
+// field's "just don't include it" convention.
+function validateQuizFeedback(feedbackValue, path) {
+
+    if (feedbackValue === undefined) {
+        return [];
+    }
+
+    if (typeof feedbackValue !== "object" || feedbackValue === null || Array.isArray(feedbackValue)) {
+        return [error("block", path, `"feedback" precisa ser um objeto (use o builder feedback()).`)];
+    }
+
+    const issues = [];
+
+    const keys = Object.keys(feedbackValue);
+
+    keys.forEach(key => {
+
+        if (!FEEDBACK_FIELDS.includes(key)) {
+            issues.push(warning("block", path, `Campo de feedback desconhecido: "${key}". Campos válidos: ${FEEDBACK_FIELDS.join(", ")}.`));
+            return;
+        }
+
+        if (!isNonEmptyString(feedbackValue[key])) {
+            issues.push(error("block", path, `Campo de feedback "${key}" precisa ser uma string não vazia.`));
+        }
+
+    });
+
+    if (keys.length === 0) {
+        issues.push(warning("block", path, `"feedback" está vazio - remova ou preencha ao menos um campo (hint, commonMistake, funFact, grammarNote, extraExample).`));
+    }
+
     return issues;
 
 }
