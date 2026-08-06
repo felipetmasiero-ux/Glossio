@@ -5,6 +5,8 @@ import { configDefaults } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import { VitePWA } from "vite-plugin-pwa";
 
+import { pwaManifest } from "./src/config/pwaManifest.js";
+
 export default defineConfig({
   plugins: [
     react(),
@@ -20,21 +22,7 @@ export default defineConfig({
         globPatterns: ["**/*.{js,css,html,svg,png,jpg,jpeg,woff,woff2,ico}"]
       },
 
-      manifest: {
-        name: "Glossio",
-        short_name: "Glossio",
-        description: "Learn languages through lessons, exploration and spaced repetition.",
-        theme_color: "#2C3E63",
-        background_color: "#EEF1F5",
-        display: "standalone",
-        start_url: "/",
-        icons: [
-          { src: "/icons/icon-192.png", sizes: "192x192", type: "image/png", purpose: "any" },
-          { src: "/icons/icon-512.png", sizes: "512x512", type: "image/png", purpose: "any" },
-          { src: "/icons/icon-maskable-192.png", sizes: "192x192", type: "image/png", purpose: "maskable" },
-          { src: "/icons/icon-maskable-512.png", sizes: "512x512", type: "image/png", purpose: "maskable" }
-        ]
-      }
+      manifest: pwaManifest
     })
   ],
 

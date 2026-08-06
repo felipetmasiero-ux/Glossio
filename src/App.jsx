@@ -37,6 +37,7 @@ const LanguagesIndexPage = lazyPage(() => import("./pages/LanguagesIndexPage/Lan
 import { Navbar } from './components/common/Navbar/Navbar'
 import { Footer } from './components/common/Footer/Footer'
 import { PwaUpdatePrompt } from './components/common/PwaUpdatePrompt/PwaUpdatePrompt'
+import { InstallPrompt } from './components/common/InstallPrompt/InstallPrompt'
 import { AnalyticsRouteTracker } from './components/common/AnalyticsRouteTracker/AnalyticsRouteTracker'
 import { AuthGateBanner } from './components/common/AuthGateBanner/AuthGateBanner'
 import { Skeleton } from './components/common/Skeleton/Skeleton'
@@ -249,6 +250,8 @@ function App() {
                 <Footer />
 
                 <PwaUpdatePrompt />
+
+                <InstallPrompt />
 
                 <AuthGateBanner />
 
