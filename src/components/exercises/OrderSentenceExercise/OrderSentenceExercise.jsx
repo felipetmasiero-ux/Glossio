@@ -4,7 +4,7 @@ import { ExerciseShell } from "../ExerciseShell/ExerciseShell";
 
 import "./OrderSentenceExercise.css";
 
-export function OrderSentenceExercise({ exercise, onComplete }) {
+export function OrderSentenceExercise({ exercise, onComplete, language }) {
 
     const { tokens, correctOrder } = exercise.payload;
 
@@ -47,6 +47,7 @@ export function OrderSentenceExercise({ exercise, onComplete }) {
             prompt={exercise.prompt}
             explanation={exercise.explanation}
             feedback={exercise.feedback}
+            language={language}
             checked={checked}
             correct={correct}
             canCheck={strip.length === tokens.length}

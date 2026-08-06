@@ -21,6 +21,7 @@ function printStatsTable(label, stats) {
     console.log(`  Palavras (vocabulário): ${stats.vocabularyWordCount}`);
     console.log(`  Palavras (dicionário):  ${stats.dictionaryWordCount}`);
     console.log(`  Exercícios gerados:     ${stats.exerciseCount}`);
+    console.log(`  Referências de áudio:   ${stats.audioReferenceCount}`);
 
 }
 
@@ -46,7 +47,7 @@ function main() {
 
     const issues = [
         ...validateContent({ courses, dictionaries }),
-        ...checkAssets(courses)
+        ...checkAssets({ courses, dictionaries })
     ];
 
     console.log("\n=== Problemas encontrados ===");

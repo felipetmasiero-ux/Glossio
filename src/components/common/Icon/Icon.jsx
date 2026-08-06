@@ -201,6 +201,18 @@ const PATHS = {
       <path d="M5 20h14" />
     </>
   ),
+  pause: (
+    <>
+      <path d="M9 5v14" />
+      <path d="M15 5v14" />
+    </>
+  ),
+  replay: (
+    <>
+      <path d="M3 12a9 9 0 1 0 3-6.7" />
+      <path d="M3 4v5h5" />
+    </>
+  ),
 };
 
 export function Icon({ name, size = 20, className = "", ...rest }) {

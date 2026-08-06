@@ -18,6 +18,8 @@ export function QuoteBlock({
 
             text={block.text}
 
+            audio={block.audio}
+
         />
 
     );

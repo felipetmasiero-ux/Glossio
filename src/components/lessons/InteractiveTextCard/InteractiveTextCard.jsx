@@ -1,6 +1,7 @@
 import "./InteractiveTextCard.css";
 
 import { Card } from "../../common/Card/Card";
+import { AudioButton } from "../../common/AudioButton/AudioButton";
 
 import { LessonSection } from "../LessonSection/LessonSection";
 import { TextRenderer } from "../TextRenderer/TextRenderer";
@@ -19,6 +20,8 @@ export function InteractiveTextCard({
     subtitle,
 
     text,
+
+    audio,
 
     variant = "card",
 
@@ -49,6 +52,8 @@ export function InteractiveTextCard({
                         onWordClick={openWord}
                     />
                 </blockquote>
+
+                <AudioButton audio={audio} text={text} language={lesson?.language} className="interactive-quote__audio" />
 
                 <WordPopup
                     word={selectedWord}
@@ -84,6 +89,8 @@ export function InteractiveTextCard({
                     onWordClick={openWord}
 
                 />
+
+                <AudioButton audio={audio} text={text} language={lesson?.language} className="interactive-text-card__audio" />
 
                 {children}
 

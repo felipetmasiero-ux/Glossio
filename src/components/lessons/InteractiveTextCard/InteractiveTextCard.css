@@ -24,3 +24,11 @@
   font-style: italic;
   font-size: 1.1875rem;
 }
+
+.interactive-quote__audio {
+  margin-top: var(--space-3);
+}
+
+.interactive-text-card__audio {
+  margin-top: var(--space-3);
+}

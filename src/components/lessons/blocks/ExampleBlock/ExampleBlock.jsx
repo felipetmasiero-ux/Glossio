@@ -1,6 +1,7 @@
 import "./ExampleBlock.css";
 
 import { Card } from "../../../common/Card/Card";
+import { AudioButton } from "../../../common/AudioButton/AudioButton";
 
 import { LessonSection } from "../../LessonSection/LessonSection";
 import { TextRenderer } from "../../TextRenderer/TextRenderer";
@@ -54,15 +55,29 @@ export function ExampleBlock({ block, lesson }) {
 
                         <div className="example-item" key={index}>
 
-                            <TextRenderer
+                            <div className="example-item__text-row">
 
-                                text={example.text}
+                                <TextRenderer
 
-                                language={lesson?.language}
+                                    text={example.text}
 
-                                onWordClick={openWord}
+                                    language={lesson?.language}
 
-                            />
+                                    onWordClick={openWord}
+
+                                />
+
+                                <AudioButton
+
+                                    audio={example.audio}
+
+                                    text={example.text}
+
+                                    language={lesson?.language}
+
+                                />
+
+                            </div>
 
                             {
 

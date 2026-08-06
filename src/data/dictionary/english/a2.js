@@ -226,6 +226,7 @@ export const englishA2Dictionary = rawEntries.map(entry => ({
     language: "english",
     level: "A2",
     pronunciation: null,
+    audio: null,
     partOfSpeech: null,
     topic: null,
     ...entry

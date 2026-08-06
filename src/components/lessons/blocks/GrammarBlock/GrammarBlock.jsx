@@ -31,6 +31,8 @@ export function GrammarBlock({
 
             text={block.text}
 
+            audio={block.audio}
+
         >
 
             {topic && (

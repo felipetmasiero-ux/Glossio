@@ -20,6 +20,8 @@ export function ParagraphBlock({
 
             text={block.text}
 
+            audio={block.audio}
+
         />
 
     );

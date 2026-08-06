@@ -47,6 +47,8 @@ export function QuizBlock({
 
                 onComplete={handleComplete}
 
+                language={lesson?.language}
+
             />
 
         </LessonSection>

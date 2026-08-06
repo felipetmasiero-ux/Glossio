@@ -6,6 +6,7 @@ import { commonMistake } from "./commonMistake";
 import { funFact } from "./funFact";
 import { grammarNote } from "./grammarNote";
 import { extraExample } from "./extraExample";
+import { audio } from "./audio";
 
 describe("feedback part builders", () => {
 
@@ -15,6 +16,23 @@ describe("feedback part builders", () => {
         expect(funFact("Did you know...")).toEqual({ funFact: "Did you know..." });
         expect(grammarNote("Use the present simple here.")).toEqual({ grammarNote: "Use the present simple here." });
         expect(extraExample("Another sentence using it.")).toEqual({ extraExample: "Another sentence using it." });
+    });
+
+    it("stays a plain string when no audio is given - every existing feedback() call", () => {
+        expect(hint("Remember this.").hint).toBe("Remember this.");
+        expect(typeof hint("Remember this.").hint).toBe("string");
+    });
+
+    it("wraps into { text, audio } only when an audio() reference is given", () => {
+
+        expect(hint("Remember this.", audio("/audio/hint.mp3"))).toEqual({
+            hint: { text: "Remember this.", audio: { file: "/audio/hint.mp3" } }
+        });
+
+        expect(commonMistake("Mix-up.", audio())).toEqual({
+            commonMistake: { text: "Mix-up.", audio: {} }
+        });
+
     });
 
 });

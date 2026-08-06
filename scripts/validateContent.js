@@ -16,7 +16,7 @@ function main() {
 
     const issues = [
         ...validateContent({ courses, dictionaries }),
-        ...checkAssets(courses)
+        ...checkAssets({ courses, dictionaries })
     ];
 
     console.log("[validate-content] Validando conteúdo do Glossio...");

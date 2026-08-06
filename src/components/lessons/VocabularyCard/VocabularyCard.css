@@ -14,9 +14,16 @@
 }
 
 .vocabulary-card h3 {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   font: var(--text-h2);
   font-family: var(--font-serif);
   color: var(--color-text);
+}
+
+.vocabulary-card__audio {
+  font-family: var(--font-sans);
 }
 
 .vocabulary-card p {

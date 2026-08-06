@@ -1,4 +1,5 @@
 import { generateExercisesForLesson } from "../../exercises/generateExercisesForLesson";
+import { BLOCK_TYPES } from "../../../constants/lessonBlocks";
 
 // Exercises aren't authored data - generateExercisesForLesson() derives
 // them at read time from a lesson's quiz blocks/vocabulary/examples/dialogue
@@ -15,6 +16,46 @@ function countExercises(lesson) {
         return 0;
     }
 
+}
+
+// Counts every audio() opt-in (see docs/CONTENT_AUTHORING.md's Audio
+// section) on a lesson's blocks - both a recorded file and a TTS-only
+// `{}` count, since both mean "this can be played", which is the thing an
+// author cares about here. Mirrors (in spirit, not by import - this stays
+// portable/fs-free, unlike scripts/content/checkAssets.js's ref collector)
+// every place audio can attach: a block, an example/dialogue item, or a
+// quiz feedback field.
+function countLessonAudioRefs(lesson) {
+
+    let count = 0;
+
+    (lesson?.blocks ?? []).forEach(block => {
+
+        if (block.audio) {
+            count += 1;
+        }
+
+        if (block.type === BLOCK_TYPES.EXAMPLE) {
+            count += (block.examples ?? []).filter(example => example.audio).length;
+        }
+
+        if (block.type === BLOCK_TYPES.DIALOGUE) {
+            count += (block.lines ?? []).filter(line => line.audio).length;
+        }
+
+        if (block.type === BLOCK_TYPES.QUIZ && block.feedback) {
+            count += Object.values(block.feedback)
+                .filter(value => typeof value === "object" && value?.audio).length;
+        }
+
+    });
+
+    return count;
+
+}
+
+function countDictionaryAudioRefs(entries) {
+    return (entries ?? []).filter(entry => entry.audio).length;
 }
 
 // `courses`: { [language]: course }, `dictionaries`: { [language]: entries[] }
@@ -37,6 +78,8 @@ export function collectContentStats({ courses, dictionaries }) {
 
     let exerciseCount = 0;
 
+    let audioReferenceCount = 0;
+
     courseList.forEach(course => {
 
         (course?.modules ?? []).forEach(module => {
@@ -55,14 +98,21 @@ export function collectContentStats({ courses, dictionaries }) {
 
                 exerciseCount += countExercises(lesson);
 
+                audioReferenceCount += countLessonAudioRefs(lesson);
+
             });
 
         });
 
     });
 
-    const dictionaryWordCount = Object.values(dictionaries ?? {})
+    const dictionaryEntryLists = Object.values(dictionaries ?? {});
+
+    const dictionaryWordCount = dictionaryEntryLists
         .reduce((sum, entries) => sum + (entries?.length ?? 0), 0);
+
+    audioReferenceCount += dictionaryEntryLists
+        .reduce((sum, entries) => sum + countDictionaryAudioRefs(entries), 0);
 
     return {
 
@@ -80,7 +130,9 @@ export function collectContentStats({ courses, dictionaries }) {
 
         dictionaryWordCount,
 
-        exerciseCount
+        exerciseCount,
+
+        audioReferenceCount
 
     };
 

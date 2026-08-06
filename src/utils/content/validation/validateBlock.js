@@ -1,5 +1,6 @@
 import { BLOCK_TYPES } from "../../../constants/lessonBlocks";
 import { error, warning } from "./createIssue";
+import { validateAudioRef } from "./validateAudioRef";
 
 const KNOWN_TYPES = new Set(Object.values(BLOCK_TYPES));
 
@@ -14,6 +15,8 @@ function validateTextBlock(block, path) {
     if (!isNonEmptyString(block.text)) {
         issues.push(error("block", path, `Bloco "${block.type}" precisa de um "text" não vazio.`));
     }
+
+    issues.push(...validateAudioRef(block.audio, path));
 
     return issues;
 
@@ -31,6 +34,8 @@ function validateTitledTextBlock(block, path) {
         issues.push(error("block", path, `Bloco "${block.type}" precisa de um "text" não vazio.`));
     }
 
+    issues.push(...validateAudioRef(block.audio, path));
+
     return issues;
 
 }
@@ -46,13 +51,17 @@ function validateExampleBlock(block, path) {
 
     block.examples.forEach((example, index) => {
 
+        const examplePath = `${path}.examples[${index}]`;
+
         if (!isNonEmptyString(example.text)) {
-            issues.push(error("block", `${path}.examples[${index}]`, `Exemplo sem "text".`));
+            issues.push(error("block", examplePath, `Exemplo sem "text".`));
         }
 
         if (!isNonEmptyString(example.translation)) {
-            issues.push(warning("block", `${path}.examples[${index}]`, `Exemplo sem "translation" - considere adicionar para ajudar o aprendizado.`));
+            issues.push(warning("block", examplePath, `Exemplo sem "translation" - considere adicionar para ajudar o aprendizado.`));
         }
+
+        issues.push(...validateAudioRef(example.audio, examplePath));
 
     });
 
@@ -71,13 +80,17 @@ function validateDialogueBlock(block, path) {
 
     block.lines.forEach((line, index) => {
 
+        const linePath = `${path}.lines[${index}]`;
+
         if (!isNonEmptyString(line.speaker)) {
-            issues.push(error("block", `${path}.lines[${index}]`, `Linha de diálogo sem "speaker".`));
+            issues.push(error("block", linePath, `Linha de diálogo sem "speaker".`));
         }
 
         if (!isNonEmptyString(line.text)) {
-            issues.push(error("block", `${path}.lines[${index}]`, `Linha de diálogo sem "text".`));
+            issues.push(error("block", linePath, `Linha de diálogo sem "text".`));
         }
+
+        issues.push(...validateAudioRef(line.audio, linePath));
 
     });
 
@@ -180,8 +193,28 @@ function validateQuizFeedback(feedbackValue, path) {
             return;
         }
 
-        if (!isNonEmptyString(feedbackValue[key])) {
-            issues.push(error("block", path, `Campo de feedback "${key}" precisa ser uma string não vazia.`));
+        const value = feedbackValue[key];
+
+        // Plain string (no audio) or { text, audio } (built by e.g.
+        // hint(text, audio(...))) - see createFeedbackField.js's comment.
+        if (typeof value === "string") {
+
+            if (!isNonEmptyString(value)) {
+                issues.push(error("block", path, `Campo de feedback "${key}" precisa ser uma string não vazia.`));
+            }
+
+        } else if (typeof value === "object" && value !== null && !Array.isArray(value)) {
+
+            if (!isNonEmptyString(value.text)) {
+                issues.push(error("block", path, `Campo de feedback "${key}.text" precisa ser uma string não vazia.`));
+            }
+
+            issues.push(...validateAudioRef(value.audio, path));
+
+        } else {
+
+            issues.push(error("block", path, `Campo de feedback "${key}" precisa ser uma string ou um objeto { text, audio }.`));
+
         }
 
     });

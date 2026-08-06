@@ -144,13 +144,13 @@ formato consistente).
 | Builder | Tipo | Campos obrigatórios |
 |---|---|---|
 | `heading(text)` | `heading` | `text` |
-| `paragraph(text)` | `paragraph` | `text` |
-| `quote(text)` | `quote` | `text` |
-| `tip(title, text)` | `tip` | `title`, `text` |
-| `grammar(title, text)` | `grammar` | `title`, `text` |
-| `culture(title, text)` | `culture` | `title`, `text` |
-| `examples([{text, translation}])` | `example` | ≥1 item, cada um com `text` (`translation` recomendado) |
-| `dialogue([{speaker, text}])` | `dialogue` | ≥1 linha, cada uma com `speaker` e `text` |
+| `paragraph(text, audio?)` | `paragraph` | `text` |
+| `quote(text, audio?)` | `quote` | `text` |
+| `tip(title, text, audio?)` | `tip` | `title`, `text` |
+| `grammar(title, text, audio?)` | `grammar` | `title`, `text` |
+| `culture(title, text, audio?)` | `culture` | `title`, `text` |
+| `examples([{text, translation, audio?}])` | `example` | ≥1 item, cada um com `text` (`translation` recomendado) |
+| `dialogue([{speaker, text, audio?}])` | `dialogue` | ≥1 linha, cada uma com `speaker` e `text` |
 | `list([items])` | `list` | ≥1 item, todos não vazios |
 | `quiz(question, options, answerIndex, explanation, feedback)` | `quiz` | `question`, ≥2 `options` únicas, `answerIndex` dentro do intervalo, `explanation` recomendado, `feedback` opcional (veja a seção Feedback educativo) |
 | `step(title)` | `step` | `title` — divide a lição em passos/telas; nenhuma lição usa isso hoje (todas são uma tela só), mas o suporte já existe |
@@ -220,6 +220,95 @@ futuras"). `ExerciseShell`/`ExerciseFeedback` já sabem renderizar feedback
 para qualquer tipo de exercício que venha a ganhar essa fonte de dado no
 futuro — não vai ser preciso mexer na UI de novo.
 
+## Áudio
+
+Palavras de vocabulário, exemplos, linhas de diálogo, blocos de texto
+(`paragraph`/`quote`/`tip`/`grammar`/`culture`) e cada campo de `feedback()`
+podem, opcionalmente, ter áudio. Onde quer que apareça, o mesmo componente
+(`AudioButton`) cuida de tocar — nada disso é escrito por lição; é a mesma
+peça reutilizada em todo lugar.
+
+### Como usar
+
+```js
+import { paragraph, examples, dialogue, quiz, feedback, hint, audio }
+    from "../../../../utils/lessons/builders";
+
+paragraph("Technology is part of daily life...", audio("/audio/english/a1/technology-intro.mp3")),
+
+examples([
+    { text: "I use my phone every day.", translation: "Eu uso meu celular todos os dias.", audio: audio("/audio/english/a1/phone-example.mp3") }
+]),
+
+dialogue([
+    { speaker: "Ana", text: "Do you have a computer?", audio: audio("/audio/english/a1/ana-computer.mp3") },
+    { speaker: "Leo", text: "Yes, I use it for work." } // sem áudio - tudo bem, é sempre opcional
+]),
+
+quiz(
+    "Which word means 'celular'?",
+    ["Computer", "Phone", "Internet"],
+    1,
+    "'Phone' is the word for 'celular'.",
+    feedback(hint("Think of what you carry in your pocket.", audio("/audio/english/a1/phone-hint.mp3")))
+)
+```
+
+E no dicionário (`src/data/dictionary/english/a1.js`):
+
+```js
+{ word: "phone", translation: "celular", audio: { file: "/audio/english/a1/phone.mp3" }, topic: "technology" },
+```
+
+### Arquivo gravado ou TTS
+
+`audio(file)` aceita um caminho (mesma convenção do `cover`: absoluto a
+partir de `public/`, ex. `/audio/english/a1/phone.mp3`) **ou nenhum
+argumento**:
+
+```js
+audio("/audio/english/a1/phone.mp3")  // toca o arquivo gravado
+audio()                                // sem arquivo ainda - toca por
+                                        // texto-para-fala (TTS) no navegador
+```
+
+Isso é o que "preparar para dois provedores" significa na prática: você
+nunca escreve qual provedor usar — só diz se já existe um arquivo gravado
+ou não. Quem decide como tocar é uma única função,
+`resolveAudioSource()` (`src/utils/audio/resolveAudioSource.js`) — trocar
+de "ainda não gravamos" para "já gravamos" é só adicionar o caminho do
+arquivo dentro do mesmo `audio(...)`, em um lugar só, sem tocar em nenhum
+componente.
+
+### Compatibilidade
+
+`audio`/`audio()` são sempre opcionais. Nenhuma lição, exemplo, diálogo,
+bloco ou entrada de dicionário existente tem isso hoje - e sem essa
+referência, `AudioButton` simplesmente não renderiza nada (nenhum botão
+vazio, nenhum erro). Toda entrada de dicionário já ganhou um `audio: null`
+no mesmo lugar onde já existia `pronunciation: null` (um placeholder que já
+existia, sem uso ainda) - `null` e "campo nunca declarado" significam a
+mesma coisa para a validação e para o player.
+
+### Onde o áudio é tocado
+
+Um único serviço (`src/utils/audio/`) é o único lugar do app que encosta em
+`Audio()`/`speechSynthesis` - nenhum componente faz isso diretamente:
+
+- `resolveAudioSource.js` — decide arquivo vs. TTS (pura, sem tocar nada).
+- `AudioPlaybackService.js` — de fato toca (`HTMLAudioElement` ou
+  `SpeechSynthesisUtterance`), reportando `idle`/`loading`/`playing`/
+  `ended`/`error`.
+- `useAudioPlayer` (hook, `src/hooks/audio/`) — conecta os dois acima ao
+  React.
+- `AudioButton` (`src/components/common/AudioButton/`) — o player visível,
+  com play/pause/loading/replay, `aria-label` dinâmico e totalmente
+  operável por teclado (é um `<button>` de verdade). É o único componente
+  que qualquer tela usa para tocar áudio.
+
+O áudio só é buscado quando o usuário aperta o botão - nada é pré-carregado
+("carregar sob demanda", ver seção Performance da sprint original).
+
 ## Vocabulário e dicionário
 
 - `lesson.vocabulary` é sempre um array de strings — as mesmas palavras que
@@ -232,6 +321,8 @@ futuro — não vai ser preciso mexer na UI de novo.
   entradas com o mesmo texto (ex.: "Hello" e "hello") colidem: a segunda é
   **silenciosamente ignorada**. `npm run validate-content` detecta isso.
 - Não repita uma palavra dentro do `vocabulary` da mesma lição.
+- `audio` é opcional (veja a seção Áudio acima) — `{ file: "..." }` para um
+  áudio gravado, `{}` para TTS, `null` (o padrão) para nenhum.
 
 ## Tópicos (`topic`)
 
@@ -258,8 +349,9 @@ O que cada um verifica (arquivos em `src/utils/content/validation/`):
 | `module` / `course` | campos obrigatórios presentes, tem ao menos 1 lição/módulo |
 | `id` | ids de curso/módulo/lição/bloco únicos (dentro do escopo e globalmente), lição prefixada pelo id do módulo, módulo prefixado pelo id do curso |
 | `vocabulary` | palavra não vazia, não repetida na lição, existe no dicionário do idioma |
-| `dictionary` | entrada tem `word`+`translation`, sem duas entradas colidindo no mesmo id normalizado |
-| `asset` (só no script, não em `src/`) | todo `cover` (de curso ou lição) existe de fato em `public/` |
+| `dictionary` | entrada tem `word`+`translation`, sem duas entradas colidindo no mesmo id normalizado, `audio` (quando existir) é válido |
+| `audio` | onde quer que apareça (bloco, exemplo, diálogo, campo de feedback, entrada de dicionário): é um objeto (`audio()`), só com o campo `file`, não vazio quando presente |
+| `asset` (só no script, não em `src/`) | todo `cover` **e todo `audio.file`** (de bloco, exemplo, diálogo, feedback ou dicionário) existe de fato em `public/` |
 
 **Erro (✖)** = quebra alguma coisa de verdade (bloco não vai renderizar
 direito, palavra vai sumir, id duplicado vai confundir progresso/URLs).
@@ -285,6 +377,11 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
 - Use `feedback()` nas perguntas em que os alunos costumam errar — é
   exatamente aí que uma dica ou um "erro comum" bem escrito vira
   aprendizado de verdade, em vez de só um "Incorreto".
+- Priorize áudio no vocabulário primeiro (é o que mais se repete pelo app -
+  card de vocabulário, popup de palavra, exercícios) antes de blocos de
+  texto inteiros.
+- Sem arquivo gravado ainda? Use `audio()` mesmo assim - TTS funciona hoje,
+  e trocar para um arquivo de verdade depois é uma mudança de uma linha.
 - Rode `npm run validate-content` antes de abrir o PR, não depois.
 
 ## Checklist antes de abrir o PR
@@ -296,11 +393,34 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
 - [ ] Todo `quiz` tem `explanation`
 - [ ] Nos `quiz` mais difíceis, considere adicionar `feedback()` (dica, erro
       comum, regra gramatical, exemplo extra ou curiosidade)
+- [ ] Considere adicionar `audio()` no vocabulário novo (arquivo gravado, ou
+      `audio()` sem argumento para TTS)
 - [ ] `npm run validate-content` sem erros (avisos pré-existentes de outras
       lições não são sua responsabilidade, mas não adicione novos)
 - [ ] `npm run content-report` mostra a contagem esperada (uma lição a
       mais, N palavras a mais)
 - [ ] `npx vitest run` continua passando
+
+## Como integrar um serviço de Text-to-Speech de verdade
+
+Hoje, quando um `audio()` não tem `file`, `AudioPlaybackService.js` usa o
+Web Speech API do navegador (`window.speechSynthesis` +
+`SpeechSynthesisUtterance`) - funciona sem custo e sem configuração, mas a
+qualidade da voz varia por navegador/SO. Trocar para um serviço de TTS de
+verdade (ex.: Google Cloud TTS, Amazon Polly, ElevenLabs) é uma mudança
+contida a **um arquivo só**: a função `playTts()` dentro de
+`src/utils/audio/AudioPlaybackService.js`. Em vez de chamar
+`speechSynthesis.speak(...)`, ela passaria a:
+
+1. Chamar um endpoint do backend (ex.: `POST /api/tts { text, language }`)
+   que devolve uma URL de áudio (idealmente cacheada - o mesmo texto não
+   precisa ser sintetizado duas vezes).
+2. Tocar essa URL exatamente como `playFile()` já faz hoje.
+
+Nada em `resolveAudioSource.js`, `useAudioPlayer.js`, `AudioButton` ou em
+qualquer lição precisaria mudar - eles só sabem que existe um "provedor
+TTS", não como ele funciona por baixo. É essa a fronteira que "a troca
+acontece em um lugar só" protege.
 
 ## Melhorias futuras
 
@@ -318,3 +438,14 @@ não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
 - Um relatório de "perguntas mais erradas" (a partir dos eventos de
   exercício já registrados) para saber quais `quiz` mais se beneficiariam
   de um `feedback()` bem escrito.
+- Gravar os primeiros áudios de verdade (começando pelo vocabulário A1, que
+  é reutilizado em mais lugares) e trocar `audio()` de TTS para arquivo
+  lição por lição.
+- Trocar o Web Speech API por um provedor de TTS de verdade (veja a seção
+  acima) - principalmente para francês/português, onde a qualidade de voz
+  varia mais entre navegadores.
+- Cachear os arquivos de TTS gerados (mesmo texto + idioma = mesmo áudio),
+  em vez de sintetizar de novo a cada play().
+- `npm run content-report` já conta referências de áudio - dá pra somar um
+  "% do vocabulário A1 com áudio" por idioma, para acompanhar o progresso
+  da gravação.

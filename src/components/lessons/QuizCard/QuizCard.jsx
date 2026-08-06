@@ -13,7 +13,9 @@ export function QuizCard({
 
     quiz,
 
-    onComplete
+    onComplete,
+
+    language
 
 }) {
 
@@ -171,6 +173,8 @@ export function QuizCard({
                                     explanation={quiz.explanation}
 
                                     feedback={quiz.feedback}
+
+                                    language={language}
 
                                 />
 

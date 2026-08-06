@@ -4,6 +4,7 @@ import "./WordPopup.css";
 
 import { Button } from "../../common/Button/Button";
 import { Icon } from "../../common/Icon/Icon";
+import { AudioButton } from "../../common/AudioButton/AudioButton";
 
 import { useFlashcards } from "../../../hooks/useFlashcards";
 import { useLanguage } from "../../../hooks/useLanguage";
@@ -152,6 +153,7 @@ export function WordPopup({
 
                 <p className="word-popup__word word-popup__word--explore">
                     {word.word}
+                    <AudioButton audio={word.audio} text={word.word} language={word.language} />
                 </p>
 
                 {word.partOfSpeech && (
@@ -194,6 +196,7 @@ export function WordPopup({
 
                 <h2 className="word-popup__word">
                     {word.word}
+                    <AudioButton audio={word.audio} text={word.word} language={word.language} />
                 </h2>
 
                 <p className="word-popup__translation">

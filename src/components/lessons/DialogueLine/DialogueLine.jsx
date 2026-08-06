@@ -1,6 +1,7 @@
 import "./DialogueLine.css";
 
 import { TextRenderer } from "../TextRenderer/TextRenderer";
+import { AudioButton } from "../../common/AudioButton/AudioButton";
 
 export function DialogueLine({
 
@@ -29,6 +30,8 @@ export function DialogueLine({
 
                 />
             </div>
+
+            <AudioButton audio={line.audio} text={line.text} language={language} />
 
         </div>
 
