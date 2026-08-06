@@ -216,4 +216,131 @@ describe("validateBlock", () => {
 
     });
 
+    describe("audio", () => {
+
+        it("is valid with no audio field at all - every block predating this feature", () => {
+            expect(validateBlock({ id: "1", type: "paragraph", text: "Hi" }, "path")).toEqual([]);
+        });
+
+        it("accepts a valid audio() reference on a text block", () => {
+            const issues = validateBlock({ id: "1", type: "paragraph", text: "Hi", audio: { file: "/audio/x.mp3" } }, "path");
+            expect(issues).toEqual([]);
+        });
+
+        it("accepts a valid audio() reference on a titled text block", () => {
+            const issues = validateBlock({ id: "1", type: "tip", title: "T", text: "Hi", audio: {} }, "path");
+            expect(issues).toEqual([]);
+        });
+
+        it("rejects a malformed audio value on a text block", () => {
+            const issues = validateBlock({ id: "1", type: "paragraph", text: "Hi", audio: "x.mp3" }, "path");
+            expect(issues.some(i => i.severity === "error" && i.message.includes("audio()"))).toBe(true);
+        });
+
+        it("validates audio on each example item", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "example",
+                examples: [{ text: "Hi", translation: "Oi", audio: { file: "" } }]
+            }, "path");
+
+            expect(issues.some(i => i.severity === "error" && i.message.includes("audio.file"))).toBe(true);
+
+        });
+
+        it("validates audio on each dialogue line", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "dialogue",
+                lines: [{ speaker: "Ana", text: "Hi", audio: { file: "/audio/hi.mp3" } }]
+            }, "path");
+
+            expect(issues).toEqual([]);
+
+        });
+
+        it("accepts a quiz feedback field as a plain string (no audio)", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "quiz",
+                question: "Q?",
+                options: ["A", "B"],
+                answer: 0,
+                explanation: "E",
+                feedback: { hint: "Remember this." }
+            }, "path");
+
+            expect(issues).toEqual([]);
+
+        });
+
+        it("accepts a quiz feedback field with an attached audio() reference", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "quiz",
+                question: "Q?",
+                options: ["A", "B"],
+                answer: 0,
+                explanation: "E",
+                feedback: { hint: { text: "Remember this.", audio: { file: "/audio/hint.mp3" } } }
+            }, "path");
+
+            expect(issues).toEqual([]);
+
+        });
+
+        it("rejects a quiz feedback field with an empty text alongside audio", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "quiz",
+                question: "Q?",
+                options: ["A", "B"],
+                answer: 0,
+                explanation: "E",
+                feedback: { hint: { text: "", audio: { file: "/audio/hint.mp3" } } }
+            }, "path");
+
+            expect(issues.some(i => i.severity === "error" && i.message.includes("hint.text"))).toBe(true);
+
+        });
+
+        it("rejects a malformed audio inside a quiz feedback field", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "quiz",
+                question: "Q?",
+                options: ["A", "B"],
+                answer: 0,
+                explanation: "E",
+                feedback: { hint: { text: "Remember this.", audio: "x.mp3" } }
+            }, "path");
+
+            expect(issues.some(i => i.severity === "error" && i.message.includes("audio()"))).toBe(true);
+
+        });
+
+        it("rejects a quiz feedback field that is neither a string nor an object", () => {
+
+            const issues = validateBlock({
+                id: "1",
+                type: "quiz",
+                question: "Q?",
+                options: ["A", "B"],
+                answer: 0,
+                explanation: "E",
+                feedback: { hint: 42 }
+            }, "path");
+
+            expect(issues.some(i => i.severity === "error")).toBe(true);
+
+        });
+
+    });
+
 });

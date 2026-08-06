@@ -6,7 +6,7 @@ import "./FillBlankExercise.css";
 
 const BLANK = "_____";
 
-export function FillBlankExercise({ exercise, onComplete }) {
+export function FillBlankExercise({ exercise, onComplete, language }) {
 
     const [selected, setSelected] = useState(null);
 
@@ -43,6 +43,7 @@ export function FillBlankExercise({ exercise, onComplete }) {
             prompt={exercise.prompt}
             explanation={exercise.explanation}
             feedback={exercise.feedback}
+            language={language}
             checked={checked}
             correct={correct}
             canCheck={selected !== null}

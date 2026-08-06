@@ -89,4 +89,36 @@ describe("ExerciseFeedback", () => {
 
     });
 
+    it("renders a field's plain-string value with no audio button, when it has no audio() reference", () => {
+
+        render(
+            <ExerciseFeedback
+                correct={false}
+                explanation={null}
+                feedback={{ hint: "Think of a greeting." }}
+                language="english"
+            />
+        );
+
+        expect(screen.getByText("Think of a greeting.")).not.toBeNull();
+        expect(screen.queryByRole("button")).toBeNull();
+
+    });
+
+    it("renders an audio button for a field authored with an audio() reference", () => {
+
+        render(
+            <ExerciseFeedback
+                correct={false}
+                explanation={null}
+                feedback={{ hint: { text: "Think of a greeting.", audio: { file: "/audio/hint.mp3" } } }}
+                language="english"
+            />
+        );
+
+        expect(screen.getByText("Think of a greeting.")).not.toBeNull();
+        expect(screen.getByRole("button", { name: "Reproduzir áudio" })).not.toBeNull();
+
+    });
+
 });

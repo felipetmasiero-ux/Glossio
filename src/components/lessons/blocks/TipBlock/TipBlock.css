@@ -29,3 +29,9 @@
     font:var(--text-body);
 
 }
+
+.tip-block__audio {
+
+    margin-top: var(--space-3);
+
+}

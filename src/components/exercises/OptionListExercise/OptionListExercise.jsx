@@ -7,7 +7,7 @@ import "./OptionListExercise.css";
 
 const MARKERS = ["A", "B", "C", "D", "E", "F"];
 
-export function OptionListExercise({ exercise, onComplete }) {
+export function OptionListExercise({ exercise, onComplete, language }) {
 
     const [answer, setAnswer] = useState(null);
 
@@ -42,6 +42,7 @@ export function OptionListExercise({ exercise, onComplete }) {
             prompt={exercise.prompt}
             explanation={exercise.explanation}
             feedback={exercise.feedback}
+            language={language}
             checked={checked}
             correct={correct}
             canCheck={answer !== null}

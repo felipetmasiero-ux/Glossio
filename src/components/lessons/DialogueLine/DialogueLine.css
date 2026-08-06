@@ -1,5 +1,6 @@
 .dialogue-line {
   display: flex;
+  align-items: flex-start;
   gap: var(--space-4);
   padding: var(--space-3) 0;
   border-bottom: 1px dashed var(--color-border);

@@ -1,9 +1,12 @@
 import { createBlock } from "./createBlock"
 import { BLOCK_TYPES } from "../../../constants/lessonBlocks"
 
+// `audio` (built by audio()) is optional - see docs/CONTENT_AUTHORING.md's
+// Audio section.
 export function grammar(
     title,
     text,
+    audio,
     id
 ) {
 
@@ -11,7 +14,8 @@ export function grammar(
         BLOCK_TYPES.GRAMMAR,
         {
             title,
-            text
+            text,
+            audio
         },
         id
     );

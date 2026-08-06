@@ -16,3 +16,4 @@ export { commonMistake } from "./commonMistake";
 export { funFact } from "./funFact";
 export { grammarNote } from "./grammarNote";
 export { extraExample } from "./extraExample";
+export { audio } from "./audio";

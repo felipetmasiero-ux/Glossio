@@ -48,4 +48,20 @@ describe("validateDictionary", () => {
         expect(issues.some(i => i.message.includes("duplicada"))).toBe(true);
     });
 
+    it("accepts the audio: null default every dictionary entry already has - compatibility with the whole existing dictionary", () => {
+        const entries = [{ id: "hello", word: "hello", translation: "olá", audio: null }];
+        expect(validateDictionary(entries)).toEqual([]);
+    });
+
+    it("accepts a valid audio() reference on an entry", () => {
+        const entries = [{ id: "hello", word: "hello", translation: "olá", audio: { file: "/audio/hello.mp3" } }];
+        expect(validateDictionary(entries)).toEqual([]);
+    });
+
+    it("flags a malformed audio value on an entry", () => {
+        const entries = [{ id: "hello", word: "hello", translation: "olá", audio: "hello.mp3" }];
+        const issues = validateDictionary(entries);
+        expect(issues.some(i => i.severity === "error" && i.message.includes("audio()"))).toBe(true);
+    });
+
 });

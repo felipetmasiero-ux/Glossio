@@ -1,9 +1,14 @@
 import { LessonSection } from "../../LessonSection/LessonSection";
 import { InfoBox } from "../../common/InfoBox/InfoBox";
+import { AudioButton } from "../../../common/AudioButton/AudioButton";
+
+import "./TipBlock.css";
 
 export function TipBlock({
 
-    block
+    block,
+
+    lesson
 
 }) {
 
@@ -26,6 +31,18 @@ export function TipBlock({
                     {block.text}
 
                 </p>
+
+                <AudioButton
+
+                    audio={block.audio}
+
+                    text={block.text}
+
+                    language={lesson?.language}
+
+                    className="tip-block__audio"
+
+                />
 
             </InfoBox>
 

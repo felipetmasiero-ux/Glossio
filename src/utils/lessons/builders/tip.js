@@ -1,6 +1,8 @@
 import { createBlock } from "./createBlock";
-import { BLOCK_TYPES } from "../../../constants/lessonBlocks";  
+import { BLOCK_TYPES } from "../../../constants/lessonBlocks";
 
-export function tip(title, text, id) {
-    return createBlock(BLOCK_TYPES.TIP, { title, text }, id);
+// `audio` (built by audio()) is optional - see docs/CONTENT_AUTHORING.md's
+// Audio section.
+export function tip(title, text, audio, id) {
+    return createBlock(BLOCK_TYPES.TIP, { title, text, audio }, id);
 }

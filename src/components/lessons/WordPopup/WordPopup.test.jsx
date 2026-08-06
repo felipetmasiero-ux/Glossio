@@ -65,4 +65,29 @@ describe("WordPopup", () => {
 
     });
 
+    it("shows no audio button for a word with no audio() reference - compatibility with every existing dictionary entry", () => {
+
+        renderPopup({ isAuthenticated: true });
+
+        expect(screen.queryByLabelText(/áudio/i)).toBeNull();
+
+    });
+
+    it("shows an audio button for a word authored with an audio() reference", () => {
+
+        render(
+            <AuthContext.Provider value={{ isAuthenticated: true }}>
+                <AuthGateContext.Provider value={{ requestAuth: vi.fn() }}>
+                    <WordPopup
+                        word={{ word: "hello", translation: "olá", audio: { file: "/audio/hello.mp3" }, language: "english" }}
+                        onClose={vi.fn()}
+                    />
+                </AuthGateContext.Provider>
+            </AuthContext.Provider>
+        );
+
+        expect(screen.getByLabelText("Reproduzir áudio")).not.toBeNull();
+
+    });
+
 });

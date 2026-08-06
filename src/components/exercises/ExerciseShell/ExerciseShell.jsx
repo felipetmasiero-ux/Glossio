@@ -11,6 +11,7 @@ export function ExerciseShell({
     prompt,
     explanation,
     feedback,
+    language,
     checked,
     correct,
     canCheck = true,
@@ -57,7 +58,7 @@ export function ExerciseShell({
                                     {correct ? "Correto!" : "Incorreto"}
                                 </h3>
 
-                                <ExerciseFeedback correct={correct} explanation={explanation} feedback={feedback} />
+                                <ExerciseFeedback correct={correct} explanation={explanation} feedback={feedback} language={language} />
                             </div>
 
                             <div className="exercise-shell__actions">

@@ -6,6 +6,16 @@
 
 }
 
+.example-item__text-row {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: var(--space-2);
+
+}
+
 .example-translation{
 
     margin-top:var(--space-2);

@@ -110,8 +110,62 @@ describe("collectContentStats", () => {
             objectiveCount: 0,
             vocabularyWordCount: 0,
             dictionaryWordCount: 0,
-            exerciseCount: 0
+            exerciseCount: 0,
+            audioReferenceCount: 0
         });
+
+    });
+
+    it("counts audio() references across blocks, examples, dialogue, quiz feedback and dictionary entries", () => {
+
+        const course = {
+            id: "english",
+            language: "english",
+            title: "English",
+            modules: [{
+                id: "english-a1",
+                courseId: "english",
+                language: "english",
+                level: "A1",
+                title: "English A1",
+                lessons: [{
+                    id: "english-a1-greetings",
+                    language: "english",
+                    blocks: [
+                        { id: "b1", type: "paragraph", text: "Text", audio: { file: "/audio/x.mp3" } },
+                        { id: "b2", type: "example", examples: [{ text: "Hi", audio: {} }, { text: "Bye" }] },
+                        { id: "b3", type: "dialogue", lines: [{ speaker: "A", text: "Hi", audio: { file: "/audio/y.mp3" } }] },
+                        {
+                            id: "b4",
+                            type: "quiz",
+                            question: "Q?",
+                            options: ["A", "B"],
+                            answer: 0,
+                            feedback: {
+                                hint: { text: "Hint", audio: { file: "/audio/z.mp3" } },
+                                commonMistake: "Just text, no audio"
+                            }
+                        }
+                    ],
+                    objectives: [],
+                    vocabulary: []
+                }]
+            }]
+        };
+
+        const stats = collectContentStats({
+            courses: { english: course },
+            dictionaries: {
+                english: [
+                    { word: "hello", audio: { file: "/audio/hello.mp3" } },
+                    { word: "bye", audio: null }
+                ]
+            }
+        });
+
+        // 1 (paragraph) + 1 (example with audio) + 1 (dialogue line) +
+        // 1 (quiz feedback.hint) + 1 (dictionary "hello") = 5
+        expect(stats.audioReferenceCount).toBe(5);
 
     });
 

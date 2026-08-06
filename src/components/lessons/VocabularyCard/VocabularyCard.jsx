@@ -3,6 +3,7 @@ import { useState } from "react";
 import "./VocabularyCard.css";
 
 import { Card } from "../../common/Card/Card";
+import { AudioButton } from "../../common/AudioButton/AudioButton";
 
 export function VocabularyCard({
 
@@ -55,6 +56,13 @@ export function VocabularyCard({
                     <h3>
 
                         {word.word}
+
+                        <AudioButton
+                            audio={word.audio}
+                            text={word.word}
+                            language={word.language}
+                            className="vocabulary-card__audio"
+                        />
 
                     </h3>
 

@@ -22,6 +22,8 @@ export function CultureBlock({
 
             text={block.text}
 
+            audio={block.audio}
+
         />
 
     );

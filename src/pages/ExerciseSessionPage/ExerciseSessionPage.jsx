@@ -162,6 +162,7 @@ export function ExerciseSessionPage() {
                 key={current.id}
                 exercise={current}
                 onComplete={handleAnswered}
+                language={language}
             />
 
         </div>

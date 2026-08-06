@@ -1,5 +1,6 @@
 import { normalizeWord } from "../../../repositories/normalizeWord";
 import { error } from "./createIssue";
+import { validateAudioRef } from "./validateAudioRef";
 
 function isNonEmptyString(value) {
     return typeof value === "string" && value.trim().length > 0;
@@ -36,6 +37,8 @@ export function validateDictionary(entries, { language } = {}) {
         if (!isNonEmptyString(entry?.translation)) {
             issues.push(error("dictionary", entryPath, `Entrada "${entry.word}" sem "translation".`));
         }
+
+        issues.push(...validateAudioRef(entry?.audio, entryPath));
 
         const key = normalizeWord(entry.id ?? entry.word);
 

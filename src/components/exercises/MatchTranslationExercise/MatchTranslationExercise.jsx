@@ -5,7 +5,7 @@ import { shuffle } from "../../../utils/exercises/shuffle";
 
 import "./MatchTranslationExercise.css";
 
-export function MatchTranslationExercise({ exercise, onComplete }) {
+export function MatchTranslationExercise({ exercise, onComplete, language }) {
 
     const { pairs } = exercise.payload;
 
@@ -74,6 +74,7 @@ export function MatchTranslationExercise({ exercise, onComplete }) {
             prompt={exercise.prompt}
             explanation={exercise.explanation}
             feedback={exercise.feedback}
+            language={language}
             checked={checked}
             correct={true}
             onContinue={handleContinue}
