@@ -194,6 +194,13 @@ const PATHS = {
       <path d="M17 20v-9.5" />
     </>
   ),
+  download: (
+    <>
+      <path d="M12 4v11" />
+      <path d="M7.5 11.5L12 16l4.5-4.5" />
+      <path d="M5 20h14" />
+    </>
+  ),
 };
 
 export function Icon({ name, size = 20, className = "", ...rest }) {
