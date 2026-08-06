@@ -10,7 +10,9 @@
     "test": "vitest",
     "test:watch": "vitest --watch",
     "test:e2e": "playwright test",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "validate-content": "node --import ./scripts/registerLoader.mjs scripts/validateContent.js",
+    "content-report": "node --import ./scripts/registerLoader.mjs scripts/contentReport.js"
   },
   "dependencies": {
     "react": "^19.2.6",
