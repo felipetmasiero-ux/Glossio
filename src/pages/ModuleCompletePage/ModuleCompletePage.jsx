@@ -112,17 +112,45 @@ export function ModuleCompletePage() {
                     {continueLabel}
                 </Button>
 
-                {
-                    nextModule && (
-                        <Link
-                            to="/lessons"
-                            className="module-complete-secondary-link"
-                            onClick={() => window.scrollTo(0, 0)}
-                        >
-                            Voltar aos módulos
-                        </Link>
-                    )
-                }
+                <div className="module-complete-secondary-actions">
+
+                    {/* Exercises are generated from each lesson's own content
+                    (generateExercisesForLesson.js) and every lesson requires
+                    at least one block - in practice a real module always has
+                    something to practice, so this link is unconditional
+                    rather than adding a second, heavier computation here
+                    just to decide whether to show it. */}
+                    <Link
+                        to={`/exercises/module/${module.id}`}
+                        className="module-complete-secondary-link"
+                    >
+                        Praticar exercícios
+                    </Link>
+
+                    {
+                        stats.flashcardsAdded > 0 && (
+                            <Link
+                                to="/flashcards"
+                                className="module-complete-secondary-link"
+                            >
+                                Revisar flashcards
+                            </Link>
+                        )
+                    }
+
+                    {
+                        nextModule && (
+                            <Link
+                                to="/lessons"
+                                className="module-complete-secondary-link"
+                                onClick={() => window.scrollTo(0, 0)}
+                            >
+                                Voltar aos módulos
+                            </Link>
+                        )
+                    }
+
+                </div>
 
             </div>
 

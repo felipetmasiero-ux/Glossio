@@ -38,6 +38,15 @@ vi.mock("../VocabularySection/VocabularySection", () => ({
     VocabularySection: ({ vocabulary }) => <div data-testid="vocabulary-section">{vocabulary.length} words</div>
 }));
 
+// Same rationale as VocabularySection above: the real component resolves
+// lesson.vocabulary through DictionaryRepository, which this test's
+// fixture isn't shaped for. VocabularyFlashcardsPrompt.test.jsx already
+// covers its own logic in isolation - here we only need to know LessonReader
+// renders it at the right time (isLast + authenticated).
+vi.mock("../VocabularyFlashcardsPrompt/VocabularyFlashcardsPrompt", () => ({
+    VocabularyFlashcardsPrompt: () => <div data-testid="vocabulary-flashcards-prompt" />
+}));
+
 import { useLessonProgress } from "../../../hooks/useLessonProgress";
 import { ModuleRepository } from "../../../utils/courses/ModuleRepository";
 
@@ -94,6 +103,22 @@ describe("LessonReader", () => {
         renderReader({ isAuthenticated: true });
 
         expect(screen.queryByText(/Crie uma conta grátis/)).toBeNull();
+
+    });
+
+    it("shows the vocabulary-to-flashcards prompt on the last step, only for an authenticated reader", () => {
+
+        renderReader({ isAuthenticated: true });
+
+        expect(screen.getByTestId("vocabulary-flashcards-prompt")).not.toBeNull();
+
+    });
+
+    it("does not show the vocabulary-to-flashcards prompt to an anonymous visitor", () => {
+
+        renderReader({ isAuthenticated: false });
+
+        expect(screen.queryByTestId("vocabulary-flashcards-prompt")).toBeNull();
 
     });
 
