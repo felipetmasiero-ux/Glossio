@@ -4,6 +4,22 @@
   gap: var(--space-3);
 }
 
+/* The play button is the primary action of a listening exercise (it's how
+   you get the content in the first place), so it gets a larger, more
+   prominent treatment than the small inline audio icons used elsewhere
+   (feedback fields, vocabulary cards) - same tokens/colors, just bigger. */
+.option-list__audio.audio-button {
+  align-self: center;
+  width: 56px;
+  height: 56px;
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.option-list__audio.audio-button:hover:not(:disabled) {
+  background: var(--color-primary-light);
+}
+
 .option-list__item {
   display: flex;
   align-items: center;

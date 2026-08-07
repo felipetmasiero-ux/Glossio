@@ -1,19 +1,28 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import { ExerciseShell } from "../ExerciseShell/ExerciseShell";
 import { Icon } from "../../common/Icon/Icon";
+import { AudioButton } from "../../common/AudioButton/AudioButton";
+
+import { trackEvent, ANALYTICS_EVENTS } from "../../../utils/analytics";
 
 import "./OptionListExercise.css";
 
 const MARKERS = ["A", "B", "C", "D", "E", "F"];
 
+// Also renders multiple-choice and select-word exercises, which never set
+// payload.audio - AudioButton (and the analytics below) only activate for
+// listening exercises (generateListening.js), everything else here is
+// unchanged for them.
 export function OptionListExercise({ exercise, onComplete, language }) {
 
     const [answer, setAnswer] = useState(null);
 
     const [checked, setChecked] = useState(false);
 
-    const { options, answerIndex } = exercise.payload;
+    const playCountRef = useRef(0);
+
+    const { options, answerIndex, audio, text } = exercise.payload;
 
     const correct = answer === answerIndex;
 
@@ -25,7 +34,20 @@ export function OptionListExercise({ exercise, onComplete, language }) {
     function handleContinue() {
         setChecked(false);
         setAnswer(null);
+        playCountRef.current = 0;
         onComplete(correct);
+    }
+
+    function handleAudioPlay() {
+
+        playCountRef.current += 1;
+
+        trackEvent(ANALYTICS_EVENTS.LISTENING_AUDIO_PLAYED, {
+            language,
+            exerciseType: exercise.type,
+            replay: playCountRef.current > 1
+        });
+
     }
 
     function optionState(index) {
@@ -49,6 +71,16 @@ export function OptionListExercise({ exercise, onComplete, language }) {
             onCheck={handleCheck}
             onContinue={handleContinue}
         >
+
+            {audio && (
+                <AudioButton
+                    audio={audio}
+                    text={text}
+                    language={language}
+                    className="option-list__audio"
+                    onPlay={handleAudioPlay}
+                />
+            )}
 
             <div className="option-list">
 

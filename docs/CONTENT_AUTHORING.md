@@ -31,10 +31,11 @@ Três coisas importantes que não são óbvias olhando só um arquivo de lição
    (`/exercises/...`) geram os exercícios automaticamente a partir da
    própria lição: blocos `quiz` viram múltipla escolha, o vocabulário vira
    "escolha a palavra"/"associe a tradução", frases de `example`/`dialogue`
-   viram "complete a frase"/"ordene a frase" (veja
+   viram "complete a frase"/"ordene a frase"/**listening** (veja
    `src/utils/exercises/generateExercisesForLesson.js`). Escrever uma boa
    lição (quiz bem feito, exemplos completos, vocabulário correto) já
-   produz bons exercícios de graça.
+   produz bons exercícios de graça — inclusive de listening, sem escrever
+   nenhum áudio à mão (veja a seção **Listening** abaixo).
 3. **O id de cada lição/módulo carrega o idioma.** `"english-a1-greetings"`
    é `{language}-{level}-{topic}`, e `"english-a1"` é `{courseId}-{level}`.
    Isso não é só estética — é o que permite abrir uma lição publicamente
@@ -309,6 +310,77 @@ Um único serviço (`src/utils/audio/`) é o único lugar do app que encosta em
 O áudio só é buscado quando o usuário aperta o botão - nada é pré-carregado
 ("carregar sob demanda", ver seção Performance da sprint original).
 
+## Listening
+
+Exercício de "ouça e escolha a frase certa" — o aluno aperta play, ouve uma
+frase e escolhe entre 4 opções qual delas é a que tocou. **Não é um bloco
+de conteúdo autorado**: como todo `exercise.type` gerado
+(`generateExercisesForLesson.js`), listening nasce automaticamente a
+partir de blocos `examples([...])` que já existem na lição — nada para
+escrever, nenhum novo builder de autoria.
+
+### Como é gerado
+
+`src/utils/exercises/generators/generateListening.js` percorre todos os
+blocos `example` da lição, e para cada frase-alvo:
+
+1. Monta um banco de distractors com as outras frases da própria lição
+   (outros `examples()` + linhas de `dialogue()`) e escolhe 3 com
+   `pickDistractors` — o mesmo utilitário que `select-word`/`fill-blank`
+   já usam para não duplicar/ambiguar respostas.
+2. Se não achar 3 distractors distintos, **pula essa frase** (a lição
+   simplesmente gera menos exercícios de listening, nunca um exercício mal
+   formado).
+3. Distractors são sempre outras frases reais da lição — nunca uma
+   variação gramatical automática da frase certa (tipo "she work"/"she
+   works"/"she working"). Gerar esse tipo de variação exigiria um
+   gerador com consciência de gramática que o projeto não tem hoje, e o
+   risco de criar sem querer uma segunda resposta "também certa" (ou
+   ambígua) é alto — mais seguro usar frases já revisadas pelo autor da
+   lição.
+4. Até 4 exercícios de listening por lição (mesma ordem de grandeza dos
+   outros generators).
+
+Nenhuma lição precisa de conteúdo novo — qualquer lição com `examples()`
+suficientes já passa a ter listening automaticamente.
+
+### Como o TTS é usado
+
+Cada exercício de listening carrega `audio: example.audio ?? audio()` —
+usa o áudio gravado se a frase já tiver um (`audio("/....mp3")`), ou cai
+para TTS (`audio()`) quando não tiver, exatamente a mesma regra de
+`resolveAudioSource()` que todo o resto do app já segue (veja a seção
+Áudio acima). Isso significa: **no dia em que existirem arquivos de áudio
+reais para essas frases, `generateListening.js` não precisa de nenhuma
+mudança** — é só adicionar `audio("/caminho.mp3")` no `examples([...])` da
+lição.
+
+O botão de play é o `AudioButton` de sempre — o exercício de listening não
+tem nenhum player próprio.
+
+### Quando autorar um listening específico
+
+Nesta primeira versão (v1), listening é sempre derivado — não existe forma
+de escrever um exercício de listening específico à mão. Se um dia fizer
+sentido ter um exercício de listening desenhado especificamente para uma
+lição (não apenas derivado de uma frase de exemplo), o próximo passo
+natural é um bloco de conteúdo novo (`BLOCK_TYPES.LISTENING`, um builder
+`listening(...)`, um validator em `validateBlock.js`) que
+`generateListening.js` passaria a priorizar sobre a derivação automática —
+mas isso não existe ainda, e não é necessário para a v1.
+
+### Exemplo
+
+```js
+examples([
+    { text: "She works at a hospital.", translation: "Ela trabalha em um hospital." }
+])
+```
+
+vira, automaticamente, um exercício de listening com essa frase como
+resposta certa, 3 distractors de outras frases da lição, e a tradução
+mostrada como explicação depois de responder.
+
 ## Vocabulário e dicionário
 
 - `lesson.vocabulary` é sempre um array de strings — as mesmas palavras que
@@ -362,6 +434,11 @@ Essas mesmas funções (`validateLesson`, `validateBlock`, etc.) são
 importáveis e testadas isoladamente (`*.test.js` ao lado de cada uma) — dá
 para escrever um teste específico para uma lição nova se fizer sentido, mas
 não é obrigatório: os scripts já cobrem todo o conteúdo automaticamente.
+
+Sem linha própria na tabela: **listening**. Por ser 100% derivado de
+`example`/`dialogue` já validados (veja a seção Listening acima), não
+introduz nenhum formato de conteúdo novo para validar — a validação que já
+existe para `example`/`dialogue` já é a validação do listening.
 
 ## Boas práticas
 

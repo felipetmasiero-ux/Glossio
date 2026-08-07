@@ -8,7 +8,9 @@ export const EXERCISE_TYPES = {
 
     MATCH_TRANSLATION: "match-translation",
 
-    ORDER_SENTENCE: "order-sentence"
+    ORDER_SENTENCE: "order-sentence",
+
+    LISTENING: "listening"
 
 };
 
@@ -37,6 +39,11 @@ export const EXERCISE_TYPE_META = {
     [EXERCISE_TYPES.ORDER_SENTENCE]: {
         icon: "shuffle",
         label: "Ordene a frase"
+    },
+
+    [EXERCISE_TYPES.LISTENING]: {
+        icon: "volume",
+        label: "Compreensão auditiva"
     }
 
 };
