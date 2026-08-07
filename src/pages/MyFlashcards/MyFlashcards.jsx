@@ -1,5 +1,5 @@
 import { useContext, useEffect, useMemo, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { FlashcardContext } from "../../contexts/FlashcardContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { useDecks } from "../../hooks/useDecks";
@@ -30,6 +30,7 @@ export function MyFlashcards() {
   const { language } = useContext(LanguageContext);
   const { decks, addDeck, updateDeck, removeDeck } = useDecks();
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Universal Search links here as "open the card normally" - prefilling
   // (not permanently binding) the search box from a one-time ?search= param
@@ -37,7 +38,15 @@ export function MyFlashcards() {
   // single-flashcard route.
   const [searchParams] = useSearchParams();
   const [search, setSearch] = useState(() => searchParams.get("search") ?? "");
-  const [favoritesOnly, setFavoritesOnly] = useState(false);
+
+  // Same one-time-prefill idea as `search` above, but via navigation state
+  // instead of a query param (FavoritesSummaryCard's "Ver coleção" passes
+  // navigate("/my-flashcards", { state: { favoritesOnly: true } })) - it
+  // only seeds the initial value. The filter is fully interactive
+  // afterwards via FlashcardsFilterBar, same as if the user had toggled it
+  // by hand; direct navigation to /my-flashcards has no state, so this
+  // stays false exactly like before.
+  const [favoritesOnly, setFavoritesOnly] = useState(() => Boolean(location.state?.favoritesOnly));
   const [deckFilter, setDeckFilter] = useState(null);
   const [sortBy, setSortBy] = useState(SORT_OPTIONS.ALPHA);
   const [creatingFlashcard, setCreatingFlashcard] = useState(false);

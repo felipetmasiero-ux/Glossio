@@ -26,7 +26,10 @@ export function FavoritesSummaryCard({ favoriteCount }) {
                 </div>
             </div>
 
-            <Button variant="secondary" onClick={() => navigate("/my-flashcards")}>
+            <Button
+                variant="secondary"
+                onClick={() => navigate("/my-flashcards", { state: { favoritesOnly: true } })}
+            >
                 Ver coleção
                 <Icon name="chevron-right" size={16} />
             </Button>
