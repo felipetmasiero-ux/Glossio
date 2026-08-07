@@ -1,4 +1,5 @@
 import "./ExerciseSessionPage.css";
+import "../../data/lessons/lesson.css";
 
 import { Link, useNavigate, useParams } from "react-router-dom";
 
@@ -10,6 +11,7 @@ import { ModuleRepository } from "../../utils/courses/ModuleRepository";
 import { EXERCISE_TYPES } from "../../constants/exerciseTypes";
 
 import { ProgressIndicator } from "../../components/lessons/common/ProgressIndicator/ProgressIndicator";
+import { LessonObjectives } from "../../components/lessons/LessonObjectives/LessonObjectives";
 import { EmptyState } from "../../components/common/EmptyState/EmptyState";
 import { Button } from "../../components/common/Button/Button";
 import { Icon } from "../../components/common/Icon/Icon";
@@ -152,6 +154,8 @@ export function ExerciseSessionPage() {
                 <Icon name="chevron-left" size={15} />
                 Voltar
             </Link>
+
+            <LessonObjectives objectives={lesson.objectives} />
 
             <ProgressIndicator
                 current={completedCount}
