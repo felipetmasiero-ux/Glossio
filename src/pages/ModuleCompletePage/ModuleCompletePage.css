@@ -73,6 +73,13 @@
   padding-right: var(--space-7);
 }
 
+.module-complete-secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-4);
+}
+
 .module-complete-secondary-link {
   color: var(--color-text-secondary);
   font: var(--text-small);
