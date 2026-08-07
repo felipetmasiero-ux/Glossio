@@ -39,6 +39,7 @@ import { Footer } from './components/common/Footer/Footer'
 import { PwaUpdatePrompt } from './components/common/PwaUpdatePrompt/PwaUpdatePrompt'
 import { InstallPrompt } from './components/common/InstallPrompt/InstallPrompt'
 import { AnalyticsRouteTracker } from './components/common/AnalyticsRouteTracker/AnalyticsRouteTracker'
+import { WebVitalsReporter } from './components/common/WebVitalsReporter/WebVitalsReporter'
 import { AuthGateBanner } from './components/common/AuthGateBanner/AuthGateBanner'
 import { Skeleton } from './components/common/Skeleton/Skeleton'
 import { ProtectedRoute } from './components/auth/ProtectedRoute'
@@ -65,6 +66,7 @@ function App() {
   return (
     <>
     <AnalyticsRouteTracker />
+    <WebVitalsReporter />
     <AuthProvider>
     <AuthGateProvider>
     <EventProvider>
