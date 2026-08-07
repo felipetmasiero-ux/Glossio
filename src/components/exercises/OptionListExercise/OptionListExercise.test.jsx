@@ -174,4 +174,31 @@ describe("OptionListExercise", () => {
 
     });
 
+    it("does not move focus when the audio is played - only answering and checking affects focus (E3)", () => {
+
+        render(<OptionListExercise exercise={buildListeningExercise()} onComplete={vi.fn()} language="english" />);
+
+        const question = screen.getByRole("heading", { name: "Ouça o áudio e escolha a frase correta." });
+        expect(document.activeElement).toBe(question);
+
+        fireEvent.click(screen.getByTestId("audio-button"));
+
+        expect(document.activeElement).toBe(question);
+        expect(screen.queryByRole("status")).toBeNull();
+
+    });
+
+    it("moves focus to the announced result once the answer is checked (E3)", () => {
+
+        render(<OptionListExercise exercise={buildMultipleChoiceExercise()} onComplete={vi.fn()} language="english" />);
+
+        fireEvent.click(screen.getByText("Olá"));
+        fireEvent.click(screen.getByText("Verificar"));
+
+        const status = screen.getByRole("status");
+        expect(status.getAttribute("aria-live")).toBe("polite");
+        expect(document.activeElement).toBe(status);
+
+    });
+
 });
