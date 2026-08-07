@@ -5,7 +5,7 @@ import { Button } from "../common/Button/Button";
 import { Icon } from "../common/Icon/Icon";
 import "./StudySummary.css";
 
-export function StudySummary({ stats, totalCards, onRestart }) {
+export function StudySummary({ stats, totalCards, remainingDue = 0, onRestart }) {
 
   const totalAnswers = stats.again + stats.good + stats.easy;
 
@@ -47,6 +47,19 @@ export function StudySummary({ stats, totalCards, onRestart }) {
           <span className="summary-card-label"><Icon name="star" size={13} /> Fácil</span>
         </Card>
       </div>
+
+      {
+        // A session never covers more than MAX_SESSION_SIZE cards (see
+        // useStudySession.js) - if the backlog was bigger than that, this
+        // makes clear the remaining ones weren't lost, just not part of
+        // this session, and "Estudar de novo" (below) is exactly how to
+        // pick them up next - the existing restart flow, not a new one.
+        remainingDue > 0 && (
+          <p className="study-summary-subtitle">
+            Você ainda tem {remainingDue} {remainingDue === 1 ? "ficha pendente" : "fichas pendentes"} para revisar.
+          </p>
+        )
+      }
 
       <div className="study-summary-actions">
         <Button onClick={onRestart}>Estudar de novo</Button>
