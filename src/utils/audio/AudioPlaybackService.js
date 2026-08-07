@@ -1,5 +1,6 @@
 import { AUDIO_PROVIDERS } from "./resolveAudioSource";
 import { getTtsLanguageCode } from "./ttsLanguageCodes";
+import { selectVoice } from "./selectVoice";
 
 export const AUDIO_STATUS = {
     IDLE: "idle",
@@ -86,7 +87,21 @@ export function createAudioController({ onStatusChange } = {}) {
 
         const utterance = new SpeechSynthesisUtterance(text);
 
-        utterance.lang = getTtsLanguageCode(language);
+        const languageCode = getTtsLanguageCode(language);
+
+        utterance.lang = languageCode;
+
+        // getVoices() can return [] on the very first call in some browsers
+        // (Chrome loads the list asynchronously in the background) - when
+        // that happens, selectVoice() returns null and the utterance just
+        // keeps the browser's own default voice for `lang` (today's
+        // behavior). Every subsequent call in the same page load has the
+        // full list, so this self-corrects without any extra plumbing.
+        const voice = selectVoice(synth.getVoices(), languageCode);
+
+        if (voice) {
+            utterance.voice = voice;
+        }
 
         utterance.onstart = () => {
             if (token === activeToken) setStatus(AUDIO_STATUS.PLAYING);

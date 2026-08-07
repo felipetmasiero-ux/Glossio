@@ -54,7 +54,7 @@ describe("createAudioController", () => {
 
         createdUtterances = [];
 
-        speechSynthesis = { speak: vi.fn(), cancel: vi.fn() };
+        speechSynthesis = { speak: vi.fn(), cancel: vi.fn(), getVoices: vi.fn(() => []) };
 
         vi.stubGlobal("window", { ...window, speechSynthesis });
 
@@ -186,6 +186,34 @@ describe("createAudioController", () => {
             createdUtterances[0].onerror();
 
             expect(statuses).toEqual([AUDIO_STATUS.LOADING, AUDIO_STATUS.ERROR]);
+
+        });
+
+        it("picks a known high-quality voice for the utterance's language when one is available", () => {
+
+            const goodVoice = { name: "Samantha", lang: "en-US" };
+            speechSynthesis.getVoices = vi.fn(() => [
+                { name: "Robotic Guy", lang: "en-US" },
+                goodVoice
+            ]);
+
+            const controller = createAudioController({ onStatusChange: vi.fn() });
+
+            controller.play({ provider: AUDIO_PROVIDERS.TTS, text: "hello", language: "english" });
+
+            expect(createdUtterances[0].voice).toBe(goodVoice);
+
+        });
+
+        it("leaves the utterance's voice unset when no voices are available yet - falls back to the browser's own default for utterance.lang", () => {
+
+            speechSynthesis.getVoices = vi.fn(() => []);
+
+            const controller = createAudioController({ onStatusChange: vi.fn() });
+
+            controller.play({ provider: AUDIO_PROVIDERS.TTS, text: "hello", language: "english" });
+
+            expect(createdUtterances[0].voice).toBeUndefined();
 
         });
 

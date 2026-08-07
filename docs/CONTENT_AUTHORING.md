@@ -299,7 +299,12 @@ Um único serviço (`src/utils/audio/`) é o único lugar do app que encosta em
 - `resolveAudioSource.js` — decide arquivo vs. TTS (pura, sem tocar nada).
 - `AudioPlaybackService.js` — de fato toca (`HTMLAudioElement` ou
   `SpeechSynthesisUtterance`), reportando `idle`/`loading`/`playing`/
-  `ended`/`error`.
+  `ended`/`error`. Na hora de falar por TTS, também escolhe a melhor voz
+  disponível no navegador para o idioma (`selectVoice.js`) — sem isso, o
+  navegador usa a voz padrão dele para aquele idioma, que em alguns
+  sistemas é bem ruim mesmo com vozes melhores instaladas. Continua sendo
+  só a Web Speech API nativa do navegador — nenhum provedor de TTS pago
+  foi integrado, só uma escolha melhor entre as vozes que já existem.
 - `useAudioPlayer` (hook, `src/hooks/audio/`) — conecta os dois acima ao
   React.
 - `AudioButton` (`src/components/common/AudioButton/`) — o player visível,
