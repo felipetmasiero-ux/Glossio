@@ -25,11 +25,19 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
 
     const [mistake, setMistake] = useState(null);
 
+    // Unlike `mistake` (a transient flag for the shake animation, cleared
+    // after 500ms or on the next word selection), this never clears once
+    // set - it's the permanent record of whether any mismatch happened
+    // during this attempt, used for the final result.
+    const [hadMistake, setHadMistake] = useState(false);
+
     const mistakeTimeoutRef = useRef(null);
 
     useEffect(() => () => clearTimeout(mistakeTimeoutRef.current), []);
 
     const checked = matched.length === pairs.length;
+
+    const correct = !hadMistake;
 
     const displayedWords = checked
         ? pairs.map(pair => ({ id: pair.id, label: pair.word }))
@@ -54,6 +62,7 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
             setSelectedWord(null);
         } else {
             setMistake(id);
+            setHadMistake(true);
             setSelectedWord(null);
             clearTimeout(mistakeTimeoutRef.current);
             mistakeTimeoutRef.current = setTimeout(() => setMistake(null), 500);
@@ -64,7 +73,7 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
     function handleContinue() {
         setMatched([]);
         setSelectedWord(null);
-        onComplete(true);
+        onComplete(correct);
     }
 
     return (
@@ -76,7 +85,7 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
             feedback={exercise.feedback}
             language={language}
             checked={checked}
-            correct={true}
+            correct={correct}
             onContinue={handleContinue}
         >
 
