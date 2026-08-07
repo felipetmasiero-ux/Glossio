@@ -113,6 +113,55 @@ describe("AudioButton", () => {
 
     });
 
+    it("calls onPlay when starting playback from idle", () => {
+
+        mockPlayer({ status: AUDIO_STATUS.IDLE });
+        const onPlay = vi.fn();
+
+        render(<AudioButton audio={{ file: "/a.mp3" }} text="hello" language="english" onPlay={onPlay} />);
+
+        fireEvent.click(screen.getByRole("button"));
+
+        expect(onPlay).toHaveBeenCalledTimes(1);
+
+    });
+
+    it("calls onPlay again on replay", () => {
+
+        mockPlayer({ status: AUDIO_STATUS.ENDED });
+        const onPlay = vi.fn();
+
+        render(<AudioButton audio={{ file: "/a.mp3" }} text="hello" language="english" onPlay={onPlay} />);
+
+        fireEvent.click(screen.getByRole("button"));
+
+        expect(onPlay).toHaveBeenCalledTimes(1);
+
+    });
+
+    it("does not call onPlay when pausing", () => {
+
+        mockPlayer({ status: AUDIO_STATUS.PLAYING });
+        const onPlay = vi.fn();
+
+        render(<AudioButton audio={{ file: "/a.mp3" }} text="hello" language="english" onPlay={onPlay} />);
+
+        fireEvent.click(screen.getByRole("button"));
+
+        expect(onPlay).not.toHaveBeenCalled();
+
+    });
+
+    it("works without an onPlay prop - every existing caller omits it", () => {
+
+        mockPlayer({ status: AUDIO_STATUS.IDLE });
+
+        render(<AudioButton audio={{ file: "/a.mp3" }} text="hello" language="english" />);
+
+        expect(() => fireEvent.click(screen.getByRole("button"))).not.toThrow();
+
+    });
+
     it("does not bubble its click to a surrounding clickable card", () => {
 
         mockPlayer({ status: AUDIO_STATUS.IDLE });

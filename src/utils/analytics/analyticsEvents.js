@@ -37,6 +37,8 @@ export const ANALYTICS_EVENTS = {
     LANDING_SCROLL_DEPTH: "landing_scroll_depth",
     LANDING_FAQ_OPENED: "landing_faq_opened",
 
-    WEB_VITAL_MEASURED: "web_vital_measured"
+    WEB_VITAL_MEASURED: "web_vital_measured",
+
+    LISTENING_AUDIO_PLAYED: "listening_audio_played"
 
 };

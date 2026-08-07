@@ -20,7 +20,14 @@ const LABEL_BY_STATUS = {
 // "button". Renders nothing when the item has no audio() reference at all -
 // no empty button, no error, for every piece of content that predates this
 // feature (see AudioButton.test.jsx's compatibility case).
-export function AudioButton({ audio, text, language, className = "" }) {
+//
+// `onPlay` is optional (default no-op) - called right before a *new*
+// playback starts (first play, replay, or retry after an error - never on
+// pause). Every existing caller omits it and is completely unaffected;
+// it exists so a caller that needs to count plays/detect a replay (e.g. a
+// listening exercise's analytics) can, without reaching into
+// useAudioPlayer/AudioPlaybackService directly.
+export function AudioButton({ audio, text, language, className = "", onPlay }) {
 
     const { status, hasAudio, play, pause, replay } = useAudioPlayer({ audio, text, language });
 
@@ -45,10 +52,12 @@ export function AudioButton({ audio, text, language, className = "" }) {
         }
 
         if (status === AUDIO_STATUS.ENDED) {
+            onPlay?.();
             replay();
             return;
         }
 
+        onPlay?.();
         play();
 
     }

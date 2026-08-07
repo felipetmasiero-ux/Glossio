@@ -25,7 +25,8 @@ const EXERCISE_COMPONENTS = {
     [EXERCISE_TYPES.SELECT_WORD]: OptionListExercise,
     [EXERCISE_TYPES.FILL_BLANK]: FillBlankExercise,
     [EXERCISE_TYPES.MATCH_TRANSLATION]: MatchTranslationExercise,
-    [EXERCISE_TYPES.ORDER_SENTENCE]: OrderSentenceExercise
+    [EXERCISE_TYPES.ORDER_SENTENCE]: OrderSentenceExercise,
+    [EXERCISE_TYPES.LISTENING]: OptionListExercise
 };
 
 export function ExerciseSessionPage() {
