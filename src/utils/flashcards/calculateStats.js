@@ -1,9 +1,13 @@
+import { isDueNow } from "./dueDate";
+
 export function calculateStats(flashcards) {
 
   const total = flashcards.length;
 
+  const now = Date.now();
+
   const due = flashcards.filter(
-    card => card.nextReview <= Date.now()
+    card => isDueNow(card.nextReview, now)
   ).length;
 
   const learning = flashcards.filter(
