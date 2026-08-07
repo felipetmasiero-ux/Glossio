@@ -34,6 +34,29 @@ describe("getUpcomingReviews", () => {
 
     });
 
+    it("counts every card as today's when all of them are overdue", () => {
+
+        const flashcards = [
+            { id: "1", language: "English", nextReview: Date.now() - DAY },
+            { id: "2", language: "English", nextReview: Date.now() - 30 * DAY }
+        ];
+
+        const upcoming = getUpcomingReviews({ flashcards, language: "English" });
+
+        expect(upcoming).toEqual({ today: 2, tomorrow: 0, next7Days: 2 });
+
+    });
+
+    it("counts nothing when every card is due more than 7 days from now", () => {
+
+        const flashcards = [{ id: "1", language: "English", nextReview: Date.now() + 30 * DAY }];
+
+        const upcoming = getUpcomingReviews({ flashcards, language: "English" });
+
+        expect(upcoming).toEqual({ today: 0, tomorrow: 0, next7Days: 0 });
+
+    });
+
     it("only counts flashcards for the given language", () => {
 
         const flashcards = [

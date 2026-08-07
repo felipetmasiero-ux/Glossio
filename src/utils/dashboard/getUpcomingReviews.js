@@ -1,19 +1,10 @@
-const DAY_IN_MS = 24 * 60 * 60 * 1000;
-
-function getDayTimestamp(timestamp) {
-    const date = new Date(timestamp);
-    date.setHours(0, 0, 0, 0);
-    return date.getTime();
-}
+import { isDueToday, isDueWithinDays } from "../flashcards/dueDate";
 
 export function getUpcomingReviews({ flashcards = [], language }) {
 
     const cards = flashcards.filter(card => card.language === language);
 
-    const today = getDayTimestamp(Date.now());
-    const endOfToday = today + DAY_IN_MS;
-    const endOfTomorrow = today + 2 * DAY_IN_MS;
-    const endOfWeek = today + 7 * DAY_IN_MS;
+    const now = Date.now();
 
     let dueToday = 0;
     let dueTomorrow = 0;
@@ -23,10 +14,10 @@ export function getUpcomingReviews({ flashcards = [], language }) {
 
         const nextReview = card.nextReview ?? 0;
 
-        if (nextReview < endOfToday) dueToday++;
-        else if (nextReview < endOfTomorrow) dueTomorrow++;
+        if (isDueToday(nextReview, now)) dueToday++;
+        else if (isDueWithinDays(nextReview, 1, now)) dueTomorrow++;
 
-        if (nextReview < endOfWeek) dueNext7Days++;
+        if (isDueWithinDays(nextReview, 6, now)) dueNext7Days++;
 
     });
 
