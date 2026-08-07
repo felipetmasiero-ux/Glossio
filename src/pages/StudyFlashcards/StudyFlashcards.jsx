@@ -115,6 +115,7 @@ export function StudyFlashcards() {
       <StudySummary
         stats={stats}
         totalCards={initialSessionSize}
+        remainingDue={dashboard.due}
         onRestart={restartSession}
       />
 

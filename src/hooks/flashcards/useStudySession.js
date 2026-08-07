@@ -26,6 +26,7 @@ import {
 
 import { CARD_EXIT_ANIMATION } from "../../constants/studyTiming";
 import { MIN_QUALITY_TO_PASS } from "../../constants/scheduling";
+import { MAX_SESSION_SIZE } from "../../constants/studySession";
 
 import { StudyHistoryContext } from "../../contexts/StudyHistoryContext";
 import { useLastActivity } from "../useLastActivity";
@@ -61,11 +62,18 @@ export function useStudySession(
 
   const startSession = useCallback(() => {
 
-    const cards =
+    const dueCards =
       getDueCards(
         flashcards,
         language
       );
+
+    // getDueCards has no ordering of its own (see its own file) - this
+    // takes the first MAX_SESSION_SIZE in whatever order it already
+    // returned them, it doesn't introduce a new priority rule. Cards
+    // beyond the cap are never touched: not rescheduled, not marked
+    // studied, still fully due - they just aren't part of *this* session.
+    const cards = dueCards.slice(0, MAX_SESSION_SIZE);
 
     dispatch({
       type: START_SESSION,

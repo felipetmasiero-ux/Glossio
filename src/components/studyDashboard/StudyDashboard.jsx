@@ -9,6 +9,8 @@ import { StatsGrid } from "./StatsGrid";
 import { StartStudyButton } from "./StartStudyButton";
 import { EmptyState } from "../common/EmptyState/EmptyState";
 
+import { MAX_SESSION_SIZE } from "../../constants/studySession";
+
 export function StudyDashboard({
     dashboard,
     onStart
@@ -89,9 +91,23 @@ export function StudyDashboard({
                         Você está em dia! Nenhuma ficha pendente para revisar hoje.
                     </p>
                 ) : (
-                    <StartStudyButton
-                        onClick={onStart}
-                    />
+                    <>
+                        <StartStudyButton
+                            onClick={onStart}
+                        />
+
+                        {
+                            // A session never includes more than
+                            // MAX_SESSION_SIZE cards (see useStudySession.js)
+                            // - said here so a large backlog is disclosed
+                            // before starting, not discovered mid-session.
+                            dashboard.due > MAX_SESSION_SIZE && (
+                                <p className="study-dashboard__no-reviews">
+                                    Esta sessão cobre {MAX_SESSION_SIZE} fichas — {dashboard.due - MAX_SESSION_SIZE} continuam pendentes para uma próxima sessão.
+                                </p>
+                            )
+                        }
+                    </>
                 )
             }
 
