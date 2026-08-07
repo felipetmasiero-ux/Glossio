@@ -158,4 +158,32 @@ describe("MatchTranslationExercise", () => {
 
     });
 
+    it("does not move focus away from the question while matching pairs, including through a mismatch - only once the attempt is checked (E3)", () => {
+
+        const exercise = buildExercise();
+
+        render(<MatchTranslationExercise exercise={exercise} onComplete={vi.fn()} language="english" />);
+
+        const question = screen.getByRole("heading", { name: exercise.prompt });
+        expect(document.activeElement).toBe(question);
+
+        matchPair("cat", "gato");
+        expect(document.activeElement).toBe(question);
+
+        matchPair("dog", "peixe"); // mismatch
+        expect(document.activeElement).toBe(question);
+        expect(screen.queryByRole("status")).toBeNull();
+
+        matchPair("dog", "cachorro");
+        matchPair("bird", "pássaro");
+        expect(document.activeElement).toBe(question);
+
+        matchPair("fish", "peixe");
+
+        // Only now, with every pair matched, does a result exist to move
+        // focus and announce.
+        expect(document.activeElement).toBe(screen.getByRole("status"));
+
+    });
+
 });

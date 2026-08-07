@@ -87,3 +87,22 @@ describe("ExerciseSessionPage - lesson objectives (L2)", () => {
     });
 
 });
+
+describe("ExerciseSessionPage - accessible exercise flow (E3), real content end-to-end", () => {
+
+    it("focuses the first exercise's question as soon as the session loads", () => {
+
+        renderPage("english-a1-greetings");
+
+        // ExerciseShell's own mount effect (see its tests) does this for
+        // every exercise type - this just confirms it actually happens
+        // through the real page wiring, not only in isolation. The
+        // objectives section (L2) also renders an h2, so this scopes to
+        // the exercise's own question heading specifically.
+        const question = document.querySelector(".exercise-shell__prompt");
+        expect(question).not.toBeNull();
+        expect(document.activeElement).toBe(question);
+
+    });
+
+});
