@@ -35,6 +35,27 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
 
     useEffect(() => () => clearTimeout(mistakeTimeoutRef.current), []);
 
+    // Keyboard focus continuity: both columns are native <button>s, so Tab/
+    // Enter/Space already work with zero extra code, and a mismatch leaves
+    // focus exactly where it was (same DOM node, nothing gets disabled).
+    // A *correct* match is the one real gap - the translation button the
+    // user just activated becomes `disabled`, and disabling the currently
+    // focused element drops focus to <body> per native browser behavior.
+    // This ref map + effect sends focus to the next unmatched word instead,
+    // continuing the exercise's own "pick a word, then its translation"
+    // flow. Only reacts to `matched` (a real match), never to a mismatch.
+    const wordButtonRefs = useRef({});
+
+    useEffect(() => {
+
+        if (matched.length === 0) return;
+
+        const nextWord = words.find(item => !matched.includes(item.id));
+
+        nextWord && wordButtonRefs.current[nextWord.id]?.focus();
+
+    }, [matched, words]);
+
     const checked = matched.length === pairs.length;
 
     const correct = !hadMistake;
@@ -98,9 +119,11 @@ export function MatchTranslationExercise({ exercise, onComplete, language }) {
 
                             <button
                                 key={item.id}
+                                ref={el => { wordButtonRefs.current[item.id] = el; }}
                                 type="button"
                                 className={`match-translation__item ${matched.includes(item.id) ? "matched" : ""} ${selectedWord === item.id ? "selected" : ""}`}
                                 disabled={matched.includes(item.id)}
+                                aria-pressed={selectedWord === item.id}
                                 onClick={() => handleSelectWord(item.id)}
                             >
                                 {item.label}
