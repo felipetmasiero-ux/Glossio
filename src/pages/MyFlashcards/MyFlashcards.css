@@ -45,3 +45,12 @@
 .flashcards-dashboard__toolbar .button {
   width: auto;
 }
+
+/* Same breakpoint and values as the global .page-container (App.css) -
+   this page uses its own wrapper class instead of .page-container, but
+   should still tighten the same way on mobile as every other page does. */
+@media (max-width: 600px) {
+  .flashcards-dashboard {
+    padding: var(--space-5) var(--space-4) var(--space-7);
+  }
+}

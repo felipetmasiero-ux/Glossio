@@ -23,6 +23,7 @@
 .flashcard-form__actions {
   display: flex;
   gap: var(--space-md);
+  flex-wrap: wrap;
   margin-top: var(--space-2);
 }
 

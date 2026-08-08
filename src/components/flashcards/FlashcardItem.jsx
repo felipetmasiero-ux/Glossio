@@ -64,7 +64,7 @@ export const FlashcardItem = memo(function FlashcardItem({
 
       <div>
         <h3>{card.word}</h3>
-        <p className="text-secondary">{card.translation}</p>
+        <p className="flashcard-item-translation text-secondary">{card.translation}</p>
 
         {card.example && (
           <p className="flashcard-item-example">"{card.example}"</p>
