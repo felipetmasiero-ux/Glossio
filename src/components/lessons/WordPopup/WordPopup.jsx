@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 
 import "./WordPopup.css";
 
@@ -72,6 +72,9 @@ export function WordPopup({
 
     const onCloseRef = useRef(onClose);
 
+    const dialogRef = useRef(null);
+    const titleId = useId();
+
     useEffect(() => {
         onCloseRef.current = onClose;
     });
@@ -80,10 +83,17 @@ export function WordPopup({
         ? getAnchoredPosition(anchorElement)
         : null;
 
+    // Only the default "lesson" variant is a real modal dialog. "explore"
+    // is a transient, anchored tooltip - it deliberately lets the reader
+    // click other words on the page while it's open (see ignoreSelector
+    // below), auto-closes on its own, and has no backdrop, so trapping
+    // focus or seizing it on open would work against its whole design.
     useOverlayDismiss({
         active: true,
         onDismiss: onClose,
-        ignoreSelector: isExplore ? ".clickable-word, .word-popup" : null
+        ignoreSelector: isExplore ? ".clickable-word, .word-popup" : null,
+        trapFocus: !isExplore,
+        dialogRef
     });
 
     useEffect(() => {
@@ -190,11 +200,15 @@ export function WordPopup({
             <div
                 className="word-popup"
                 onClick={(event) => event.stopPropagation()}
+                ref={dialogRef}
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby={titleId}
             >
 
                 <p className="word-popup__label text-mono-label">Verbete</p>
 
-                <h2 className="word-popup__word">
+                <h2 className="word-popup__word" id={titleId}>
                     {word.word}
                     <AudioButton audio={word.audio} text={word.word} language={word.language} />
                 </h2>
