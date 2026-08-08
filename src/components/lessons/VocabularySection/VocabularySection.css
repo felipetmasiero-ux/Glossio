@@ -7,3 +7,19 @@
     gap:var(--space-lg);
 
 }
+
+.vocabulary-section__action {
+  margin-bottom: var(--space-lg);
+}
+
+.vocabulary-section__action .button {
+  width: auto;
+}
+
+.vocabulary-section__done {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--color-success-dark);
+  font: var(--text-small);
+}

@@ -10,7 +10,6 @@ import { LessonObjectives } from "../LessonObjectives/LessonObjectives";
 import { VocabularySection } from "../VocabularySection/VocabularySection";
 import { LessonBlock } from "../blocks/LessonBlock/LessonBlock";
 import { LessonSummary } from "../LessonSummary/LessonSummary";
-import { VocabularyFlashcardsPrompt } from "../VocabularyFlashcardsPrompt/VocabularyFlashcardsPrompt";
 
 import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator";
 import { LessonNavigation } from "../common/LessonNavigation/LessonNavigation";
@@ -269,6 +268,10 @@ export function LessonReader({ lesson }) {
 
                 vocabulary={lesson.vocabulary}
 
+                isAuthenticated={isAuthenticated}
+
+                moduleId={currentModule?.id ?? null}
+
             />
 
             {!isAuthenticated && lesson.vocabulary?.length > 0 && <InlineSignupPrompt />}
@@ -320,27 +323,6 @@ export function LessonReader({ lesson }) {
 
             }
 
-            {
-
-                // Only shown to a signed-in reader - a visitor already gets
-                // InlineSignupPrompt above for this exact same vocabulary;
-                // showing both would be two competing flashcard nudges in
-                // one lesson for someone who can't act on either yet.
-                isLast && isAuthenticated && (
-
-                    <VocabularyFlashcardsPrompt
-
-                        lesson={lesson}
-
-                        language={language}
-
-                        moduleId={currentModule?.id ?? null}
-
-                    />
-
-                )
-
-            }
 
             {
 
