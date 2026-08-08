@@ -29,12 +29,14 @@ vi.mock("../api/eventsApi", () => ({
     getEvents: vi.fn(),
     postEvents: vi.fn()
 }));
+vi.mock("../utils/cloudSync/reportSyncFailure", () => ({ reportSyncFailure: vi.fn() }));
 
 import { getProgress, saveProgress } from "../api/progressApi";
 import { getLessonProgress } from "../api/lessonProgressApi";
-import { getFlashcards } from "../api/flashcardApi";
+import { getFlashcards, saveFlashcards } from "../api/flashcardApi";
 import { getVideoProgress } from "../api/videoProgressApi";
 import { getEvents } from "../api/eventsApi";
+import { reportSyncFailure } from "../utils/cloudSync/reportSyncFailure";
 
 function progressState(language) {
     return {
@@ -50,6 +52,20 @@ function seedLocalProgress(language) {
     localStorage.setItem("exerciseProgress", JSON.stringify([]));
     localStorage.setItem("studyHistory", JSON.stringify([]));
     localStorage.setItem("lastActivity", JSON.stringify(null));
+}
+
+// Marks every resource but "progress" as already synced against an empty
+// local state, matching what seedLocalProgress + otherwise-untouched
+// localStorage actually serialize to - so only progress ends up dirty,
+// letting a test target one resource's push in isolation.
+function syncedMarkerWithOnlyProgressPending(baseLanguage) {
+    return JSON.stringify({
+        progress: serializeProgress(progressState(baseLanguage)),
+        lessonProgress: "[]",
+        flashcards: "[]",
+        videoProgress: "[]",
+        eventsCount: 0
+    });
 }
 
 describe("useCloudSync", () => {
@@ -145,6 +161,8 @@ describe("useCloudSync", () => {
         await vi.advanceTimersByTimeAsync(8000);
 
         expect(saveProgress).toHaveBeenCalledWith(progressState("french"), "fake-token");
+        expect(reportSyncFailure).not.toHaveBeenCalled();
+        expect(result.current.syncStatus).toBe("idle");
 
     });
 
@@ -205,6 +223,153 @@ describe("useCloudSync", () => {
         await waitFor(() => expect(result.current.isHydrating).toBe(false));
 
         expect(localStorage.getItem("language")).toBe("portuguese");
+
+    });
+
+});
+
+// R2 (post-sprint audit): a push failure used to be a bare `.catch(() =>
+// {})` - completely silent, both to the team (no error tracking) and to
+// product (no analytics). These tests cover the fix: the existing retry is
+// untouched, but a failure that survives it is now reported exactly once
+// through reportSyncFailure, and reflected in the hook's own syncStatus.
+describe("useCloudSync - instrumenting push failures (R2)", () => {
+
+    beforeEach(() => {
+        // vi.restoreAllMocks() (used by the describe block above) only
+        // restores vi.spyOn spies - it doesn't clear call history or
+        // implementations set via mockResolvedValue/mockRejectedValue on the
+        // vi.fn()s created by the vi.mock(...) factories above, so those
+        // would otherwise leak across every test in this file.
+        vi.resetAllMocks();
+
+        localStorage.clear();
+        sessionStorage.clear();
+
+        delete window.location;
+        window.location = { ...window.location, reload: vi.fn() };
+
+        useAuth.mockReturnValue({ isAuthenticated: true, isLoading: false, token: "fake-token" });
+
+        getProgress.mockResolvedValue(progressState("english"));
+        getLessonProgress.mockResolvedValue([]);
+        getFlashcards.mockResolvedValue([]);
+        getVideoProgress.mockResolvedValue([]);
+        getEvents.mockResolvedValue([]);
+
+        localStorage.setItem("cloudSyncSynced", syncedMarkerWithOnlyProgressPending("english"));
+        seedLocalProgress("french");
+    });
+
+    afterEach(() => {
+        vi.restoreAllMocks();
+        vi.useRealTimers();
+    });
+
+    it("does not report anything when the push succeeds outright", async () => {
+
+        saveProgress.mockResolvedValue({});
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+        await vi.advanceTimersByTimeAsync(8000);
+
+        expect(reportSyncFailure).not.toHaveBeenCalled();
+        expect(result.current.syncStatus).toBe("idle");
+
+    });
+
+    it("does not report anything when the failure is recovered by withRetry's own retry", async () => {
+
+        saveProgress.mockRejectedValueOnce(new Error("blip")).mockResolvedValueOnce({});
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+        await vi.advanceTimersByTimeAsync(8000);
+
+        expect(saveProgress).toHaveBeenCalledTimes(2);
+        expect(reportSyncFailure).not.toHaveBeenCalled();
+        expect(result.current.syncStatus).toBe("idle");
+
+    });
+
+    it("reports exactly once, and sets syncStatus to \"error\", once retries are exhausted", async () => {
+
+        const error = new Error("Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.");
+        saveProgress.mockRejectedValue(error);
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+        await vi.advanceTimersByTimeAsync(8000);
+
+        // withRetry: one initial attempt + one retry, both failing.
+        expect(saveProgress).toHaveBeenCalledTimes(2);
+        expect(reportSyncFailure).toHaveBeenCalledTimes(1);
+        expect(reportSyncFailure).toHaveBeenCalledWith("progress", "push", error);
+        await vi.waitFor(() => expect(result.current.syncStatus).toBe("error"));
+
+    });
+
+    it("recovers to \"idle\" automatically once a later tick's push succeeds", async () => {
+
+        const error = new Error("Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente.");
+        saveProgress.mockRejectedValue(error);
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+        await vi.advanceTimersByTimeAsync(8000);
+
+        await vi.waitFor(() => expect(result.current.syncStatus).toBe("error"));
+
+        saveProgress.mockResolvedValue({});
+        await vi.advanceTimersByTimeAsync(8000);
+
+        await vi.waitFor(() => expect(result.current.syncStatus).toBe("idle"));
+
+    });
+
+    it("a failure in one resource does not block the push attempt for another", async () => {
+
+        // Both progress and flashcards dirty this time.
+        localStorage.setItem("cloudSyncSynced", JSON.stringify({
+            progress: serializeProgress(progressState("english")),
+            lessonProgress: "[]",
+            flashcards: JSON.stringify([{ id: "old" }]),
+            videoProgress: "[]",
+            eventsCount: 0
+        }));
+        localStorage.setItem("flashcards", JSON.stringify([{ id: "new" }]));
+
+        saveProgress.mockRejectedValue(new Error("boom"));
+        saveFlashcards.mockResolvedValue({});
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+        await vi.advanceTimersByTimeAsync(8000);
+
+        expect(saveFlashcards).toHaveBeenCalled();
+        expect(reportSyncFailure).toHaveBeenCalledTimes(1);
+        expect(reportSyncFailure).toHaveBeenCalledWith("progress", "push", expect.any(Error));
+        await vi.waitFor(() => expect(result.current.syncStatus).toBe("error"));
+
+    });
+
+    it("keeps local data usable and does not throw when a push fails (offline-first behavior preserved)", async () => {
+
+        saveProgress.mockRejectedValue(new Error("Não foi possível conectar ao servidor."));
+
+        vi.useFakeTimers();
+        const { result } = renderHook(() => useCloudSync());
+        await vi.waitFor(() => expect(result.current.isHydrating).toBe(false));
+
+        await expect(vi.advanceTimersByTimeAsync(8000)).resolves.not.toThrow();
+
+        expect(localStorage.getItem("language")).toBe("french");
 
     });
 

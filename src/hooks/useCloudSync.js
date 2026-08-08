@@ -5,6 +5,7 @@ import { getLessonProgress, saveLessonProgress } from "../api/lessonProgressApi"
 import { getFlashcards, saveFlashcards } from "../api/flashcardApi";
 import { getVideoProgress, saveVideoProgress } from "../api/videoProgressApi";
 import { getEvents, postEvents } from "../api/eventsApi";
+import { reportSyncFailure } from "../utils/cloudSync/reportSyncFailure";
 import {
     readProgressSnapshot,
     applyProgressSnapshot,
@@ -63,9 +64,12 @@ function writeSyncedMarker(marker) {
 }
 
 // One retry on top of the initial attempt - enough to ride out a single
-// dropped request without building a real retry/backoff queue. Failures are
-// only ever logged (never surfaced to the user) and, in dev, only via
-// console.warn so a flaky local backend doesn't spam production users.
+// dropped request without building a real retry/backoff queue. A failure
+// that survives the retry is tagged with how many attempts were made (read
+// by reportSyncFailure) and, in dev, also logged via console.warn so a
+// flaky local backend doesn't spam production users; production reporting
+// happens at the call site, once retries are exhausted - never here, and
+// never per individual attempt.
 async function withRetry(fn, label) {
     try {
         return await fn();
@@ -76,6 +80,7 @@ async function withRetry(fn, label) {
             if (import.meta.env.DEV) {
                 console.warn(`[cloudSync] ${label} failed after retry:`, error);
             }
+            error.syncAttempts = 2;
             throw error;
         }
     }
@@ -86,6 +91,16 @@ export function useCloudSync() {
     const { isAuthenticated, isLoading: isAuthLoading, token } = useAuth();
 
     const [isHydrating, setIsHydrating] = useState(() => isAuthenticated);
+    // "idle": every resource's last attempted push succeeded (or nothing
+    // was dirty at all) - the steady state.
+    // "error": a resource's push failed even after its retry, this tick or
+    // a previous one, and hasn't yet been superseded by a success.
+    // Recomputed at the end of every push tick in flushIfChanged, so a
+    // later successful retry automatically clears it back to "idle" with
+    // no separate recovery logic needed. Deliberately doesn't include a
+    // "pending" state - see the comment at the end of flushIfChanged for
+    // why.
+    const [syncStatus, setSyncStatus] = useState("idle");
     const hasHydratedRef = useRef(false);
     const lastSyncedProgressRef = useRef(null);
     const lastSyncedLessonProgressRef = useRef(null);
@@ -127,6 +142,12 @@ export function useCloudSync() {
             lastSyncedEventsCountRef.current = 0;
             syncedMarkerRef.current = {};
             localStorage.removeItem(SYNCED_MARKER_KEY);
+            // Not resetting syncStatus here too (it would need a synchronous
+            // setState call directly in the effect body, which
+            // react-hooks/set-state-in-effect flags): a stale "error" from a
+            // logged-out session is superseded by the very next flush tick
+            // after a fresh login anyway, since that tick recomputes
+            // syncStatus from scratch regardless of its previous value.
             return;
         }
 
@@ -309,6 +330,8 @@ export function useCloudSync() {
                 const eventsSnapshot = readEventsSnapshot();
                 const eventsDirty = eventsSnapshot.length !== lastSyncedEventsCountRef.current;
 
+                let anyFailedThisTick = false;
+
                 // Progress, lessonProgress, flashcards, videoProgress, events -
                 // same order as hydrate.
                 //
@@ -319,13 +342,20 @@ export function useCloudSync() {
                 // marking it synced up-front would silently drop that change
                 // until some unrelated future edit happened to touch the same
                 // data again. One resource failing never stops the others.
+                //
+                // A failure is only ever reported here, once, after
+                // withRetry's retry has already been exhausted - never per
+                // individual attempt.
                 if (progressDirty) {
                     await withRetry(() => saveProgress(progressSnapshot, token), "saveProgress")
                         .then(() => {
                             lastSyncedProgressRef.current = progressSerialized;
                             markSynced("progress", progressSerialized);
                         })
-                        .catch(() => {});
+                        .catch(error => {
+                            anyFailedThisTick = true;
+                            reportSyncFailure("progress", "push", error);
+                        });
                 }
 
                 if (lessonProgressDirty) {
@@ -334,7 +364,10 @@ export function useCloudSync() {
                             lastSyncedLessonProgressRef.current = lessonProgressSerialized;
                             markSynced("lessonProgress", lessonProgressSerialized);
                         })
-                        .catch(() => {});
+                        .catch(error => {
+                            anyFailedThisTick = true;
+                            reportSyncFailure("lessonProgress", "push", error);
+                        });
                 }
 
                 if (cardsDirty) {
@@ -343,7 +376,10 @@ export function useCloudSync() {
                             lastSyncedFlashcardsRef.current = cardsSerialized;
                             markSynced("flashcards", cardsSerialized);
                         })
-                        .catch(() => {});
+                        .catch(error => {
+                            anyFailedThisTick = true;
+                            reportSyncFailure("flashcards", "push", error);
+                        });
                 }
 
                 if (videoProgressDirty) {
@@ -352,7 +388,10 @@ export function useCloudSync() {
                             lastSyncedVideoProgressRef.current = videoProgressSerialized;
                             markSynced("videoProgress", videoProgressSerialized);
                         })
-                        .catch(() => {});
+                        .catch(error => {
+                            anyFailedThisTick = true;
+                            reportSyncFailure("videoProgress", "push", error);
+                        });
                 }
 
                 if (eventsDirty) {
@@ -364,12 +403,28 @@ export function useCloudSync() {
                                 lastSyncedEventsCountRef.current = eventsSnapshot.length;
                                 markSynced("eventsCount", eventsSnapshot.length);
                             })
-                            .catch(() => {});
+                            .catch(error => {
+                                anyFailedThisTick = true;
+                                reportSyncFailure("events", "push", error);
+                            });
                     } else {
                         lastSyncedEventsCountRef.current = eventsSnapshot.length;
                         markSynced("eventsCount", eventsSnapshot.length);
                     }
                 }
+
+                // A resource only ever stays dirty past this point if its
+                // push just failed (the `if (xDirty)` block above always
+                // either clears it via `.then` or leaves it dirty via
+                // `.catch`) - so "did anything fail this tick" and "is
+                // anything still dirty" are the same condition here. There
+                // is deliberately no third "pending" status: the only real
+                // gap that word would describe - a local edit made between
+                // ticks, before the next push even attempts it - isn't
+                // observable without hooking into every provider's write
+                // path, which would be a real refactor, not the small
+                // addition this task calls for.
+                setSyncStatus(anyFailedThisTick ? "error" : "idle");
             } finally {
                 isFlushingRef.current = false;
             }
@@ -385,6 +440,6 @@ export function useCloudSync() {
         };
     }, [isAuthenticated, token]);
 
-    return { isHydrating };
+    return { isHydrating, syncStatus };
 
 }
