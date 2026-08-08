@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 
 import { VideoProgressRepository } from "../../repositories/VideoProgressRepository";
 import { useEvents } from "../useEvents";
+import { useLastActivity } from "../useLastActivity";
 import { EVENT_TYPES } from "../../constants/events";
 
 const SAVE_INTERVAL_SECONDS = 5;
@@ -9,6 +10,8 @@ const SAVE_INTERVAL_SECONDS = 5;
 export function useVideoProgress(video) {
 
     const { logEvent } = useEvents();
+
+    const { lastActivity, setActivity, clearActivity } = useLastActivity();
 
     const [initialProgress] = useState(() =>
         video ? VideoProgressRepository.getVideoProgress(video.language, video.id) : null
@@ -56,6 +59,16 @@ export function useVideoProgress(video) {
             logEvent(EVENT_TYPES.VIDEO_RESUMED, { videoId: video.id });
         }
 
+        // Real playback starting is the engagement signal here - ExploreVideoPage
+        // never renders the player at all once a video is `completed` (it shows
+        // ExploreVideoComplete instead), so this can't fire for one that's
+        // already done, and it can't fire from merely opening the page either.
+        setActivity({
+            type: "video",
+            language: video.language,
+            videoId: video.id
+        });
+
     }
 
     function handleTimeUpdate(currentTime) {
@@ -99,6 +112,13 @@ export function useVideoProgress(video) {
         logEvent(EVENT_TYPES.VIDEO_COMPLETED, { videoId: video.id });
 
         setCompleted(true);
+
+        // Same guard as LessonReader's completion handler: only clear if
+        // Last Activity is still actually about this video, so finishing
+        // it doesn't wipe out something else the user has since moved on to.
+        if (lastActivity?.type === "video" && lastActivity?.videoId === video.id) {
+            clearActivity();
+        }
 
     }
 

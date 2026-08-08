@@ -92,6 +92,23 @@ function getContinueLastActivity({ lastActivity }) {
         };
     }
 
+    if (lastActivity.type === "lesson") {
+        return {
+            type: "lesson",
+            label: "Continuar lição",
+            remaining: lastActivity.remaining,
+            href: `/lessons/${lastActivity.lessonId}`
+        };
+    }
+
+    if (lastActivity.type === "video") {
+        return {
+            type: "video",
+            label: "Continuar vídeo",
+            href: `/explore/${lastActivity.videoId}`
+        };
+    }
+
     return null;
 
 }

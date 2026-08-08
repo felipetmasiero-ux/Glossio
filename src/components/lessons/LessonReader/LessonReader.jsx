@@ -1,7 +1,7 @@
 import "./LessonReader.css";
 import"../../../data/lessons/lesson.css";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { LessonHero } from "../LessonHero/LessonHero";
@@ -26,6 +26,7 @@ import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
 import { useLessonProgress } from "../../../hooks/useLessonProgress";
 import { useRequireAuth } from "../../../hooks/useRequireAuth";
 import { useAuth } from "../../../hooks/useAuth";
+import { useLastActivity } from "../../../hooks/useLastActivity";
 import { InlineSignupPrompt } from "../InlineSignupPrompt/InlineSignupPrompt";
 
 // `lesson.language` (already on every lesson object), not LanguageContext -
@@ -45,6 +46,8 @@ export function LessonReader({ lesson }) {
     const { isAuthenticated } = useAuth();
 
     const requireAuth = useRequireAuth();
+
+    const { lastActivity, setActivity, clearActivity } = useLastActivity();
 
     const {
 
@@ -67,6 +70,19 @@ export function LessonReader({ lesson }) {
         window.scrollTo(0, 0);
     }, [lesson.id]);
 
+    // Last Activity should only reflect genuine reading, not a page that
+    // was opened and immediately left - so this only flips true from inside
+    // handleNext/handlePrevious below (a real step change), never just from
+    // mounting on step 0. Reset per lesson so arriving at a new lesson
+    // (LessonPage doesn't remount between lessons, only the :id param
+    // changes) starts this over instead of inheriting the previous
+    // lesson's engagement.
+    const hasEngagedRef = useRef(false);
+
+    useEffect(() => {
+        hasEngagedRef.current = false;
+    }, [lesson.id]);
+
     const nextLesson = ModuleRepository.getNextLesson(
         language,
         lesson.id
@@ -78,6 +94,27 @@ export function LessonReader({ lesson }) {
     );
 
     const currentModule = ModuleRepository.getByLesson(language, lesson.id);
+
+    // Fires once real engagement has happened (see hasEngagedRef above),
+    // and again on every further step change - same "keep it fresh while
+    // active" shape useExerciseSession/useStudySession already use for
+    // their own activity types. `remaining`/`total` reuse the step
+    // progress useLessonNavigator already tracks - no separate progress
+    // system for this feature.
+    useEffect(() => {
+
+        if (!hasEngagedRef.current) return;
+
+        setActivity({
+            type: "lesson",
+            language,
+            lessonId: lesson.id,
+            moduleId: currentModule?.id ?? null,
+            remaining: steps.length - (current + 1),
+            total: steps.length
+        });
+
+    }, [lesson.id, language, currentModule?.id, current, steps.length, setActivity]);
 
     const lessonIndex = currentModule?.lessons.findIndex(
         moduleLesson => moduleLesson.id === lesson.id
@@ -119,6 +156,8 @@ export function LessonReader({ lesson }) {
 
         if (!isLast) {
 
+            hasEngagedRef.current = true;
+
             next();
 
             scrollTop();
@@ -127,7 +166,19 @@ export function LessonReader({ lesson }) {
 
         }
 
-        requireAuth(() => completeLesson(lesson.id, language))();
+        requireAuth(() => {
+
+            completeLesson(lesson.id, language);
+
+            // Only clear if Last Activity is still actually about this
+            // lesson - it may since have moved on to something else (e.g. a
+            // video watched in the meantime), which must not be wiped out
+            // just because this lesson also finished.
+            if (lastActivity?.type === "lesson" && lastActivity?.lessonId === lesson.id) {
+                clearActivity();
+            }
+
+        })();
 
         // The "module complete" celebration page is itself behind
         // ProtectedRoute (it shows personalized stats that don't exist for
@@ -165,6 +216,8 @@ export function LessonReader({ lesson }) {
     function handlePrevious() {
 
         if (!isFirst) {
+
+            hasEngagedRef.current = true;
 
             previous();
 

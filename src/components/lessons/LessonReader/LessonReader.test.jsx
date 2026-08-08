@@ -5,6 +5,7 @@ import { MemoryRouter, Routes, Route, useLocation } from "react-router-dom";
 import { LessonReader } from "./LessonReader";
 import { AuthContext } from "../../../contexts/AuthContext";
 import { AuthGateContext } from "../../../contexts/AuthGateContext";
+import { LastActivityContext } from "../../../contexts/LastActivityContext";
 
 vi.mock("../../../hooks/useLessonProgress", () => ({ useLessonProgress: vi.fn() }));
 
@@ -60,12 +61,33 @@ const lesson = {
     blocks: [{ type: "step", title: "Passo 1" }, { type: "text", content: "Olá!" }]
 };
 
+// A second step means "Continuar leitura" appears instead of "Concluir
+// lição" right away - needed to exercise mid-lesson engagement (L4)
+// without touching the single-step fixture every other test above relies on.
+const multiStepLesson = {
+    ...lesson,
+    blocks: [
+        { type: "step", title: "Passo 1" },
+        { type: "text", content: "Primeiro passo" },
+        { type: "step", title: "Passo 2" },
+        { type: "text", content: "Segundo passo" }
+    ]
+};
+
 function LocationProbe() {
     const location = useLocation();
     return <div data-testid="location">{location.pathname}</div>;
 }
 
-function renderReader({ isAuthenticated, requestAuth = vi.fn(), completeLesson = vi.fn() }) {
+function renderReader({
+    isAuthenticated,
+    requestAuth = vi.fn(),
+    completeLesson = vi.fn(),
+    lessonToRender = lesson,
+    lastActivity = null,
+    setActivity = vi.fn(),
+    clearActivity = vi.fn()
+}) {
 
     useLessonProgress.mockReturnValue({ completedLessons: {}, completeLesson });
 
@@ -73,10 +95,12 @@ function renderReader({ isAuthenticated, requestAuth = vi.fn(), completeLesson =
         <MemoryRouter initialEntries={["/lessons/english-a1-greetings"]}>
             <AuthContext.Provider value={{ isAuthenticated }}>
                 <AuthGateContext.Provider value={{ requestAuth }}>
-                    <Routes>
-                        <Route path="/lessons/:id" element={<LessonReader lesson={lesson} />} />
-                        <Route path="*" element={<LocationProbe />} />
-                    </Routes>
+                    <LastActivityContext.Provider value={{ lastActivity, setActivity, clearActivity }}>
+                        <Routes>
+                            <Route path="/lessons/:id" element={<LessonReader lesson={lessonToRender} />} />
+                            <Route path="*" element={<LocationProbe />} />
+                        </Routes>
+                    </LastActivityContext.Provider>
                 </AuthGateContext.Provider>
             </AuthContext.Provider>
         </MemoryRouter>
@@ -160,6 +184,143 @@ describe("LessonReader", () => {
         fireEvent.click(screen.getByText("Concluir lição"));
 
         expect(screen.getByTestId("location").textContent).toBe("/lessons/language/english");
+
+    });
+
+    describe("Last Activity (L4)", () => {
+
+        it("does not register any activity just from opening the lesson - only genuine engagement counts", () => {
+
+            const setActivity = vi.fn();
+
+            renderReader({ isAuthenticated: true, lessonToRender: multiStepLesson, setActivity });
+
+            expect(setActivity).not.toHaveBeenCalled();
+
+        });
+
+        it("registers Last Activity with the right identifiers once the reader advances past the first step", () => {
+
+            const setActivity = vi.fn();
+
+            ModuleRepository.getByLesson.mockReturnValue({ id: "mod-1", lessons: [{ id: multiStepLesson.id }] });
+
+            renderReader({ isAuthenticated: true, lessonToRender: multiStepLesson, setActivity });
+
+            fireEvent.click(screen.getByText("Continuar leitura"));
+
+            expect(setActivity).toHaveBeenCalledWith({
+                type: "lesson",
+                language: "english",
+                lessonId: "english-a1-greetings",
+                moduleId: "mod-1",
+                remaining: 0,
+                total: 2
+            });
+
+        });
+
+        it("also registers on Anterior (previous step), not only Continuar leitura", () => {
+
+            const setActivity = vi.fn();
+
+            renderReader({ isAuthenticated: true, lessonToRender: multiStepLesson, setActivity });
+
+            fireEvent.click(screen.getByText("Continuar leitura"));
+            setActivity.mockClear();
+
+            fireEvent.click(screen.getByText("Anterior"));
+
+            expect(setActivity).toHaveBeenCalledWith(expect.objectContaining({
+                type: "lesson",
+                lessonId: "english-a1-greetings",
+                remaining: 1
+            }));
+
+        });
+
+        it("clears Last Activity on completion when it is still about this same lesson", () => {
+
+            const clearActivity = vi.fn();
+
+            ModuleRepository.getByLesson.mockReturnValue(null);
+
+            renderReader({
+                isAuthenticated: true,
+                lastActivity: { type: "lesson", lessonId: "english-a1-greetings" },
+                clearActivity
+            });
+
+            fireEvent.click(screen.getByText("Concluir lição"));
+
+            expect(clearActivity).toHaveBeenCalled();
+
+        });
+
+        it("does not clear Last Activity on completion when it belongs to a different activity - e.g. a video watched afterwards", () => {
+
+            const clearActivity = vi.fn();
+
+            ModuleRepository.getByLesson.mockReturnValue(null);
+
+            renderReader({
+                isAuthenticated: true,
+                lastActivity: { type: "video", videoId: "some-other-video" },
+                clearActivity
+            });
+
+            fireEvent.click(screen.getByText("Concluir lição"));
+
+            expect(clearActivity).not.toHaveBeenCalled();
+
+        });
+
+        it("does not clear Last Activity on completion when it belongs to a different lesson", () => {
+
+            const clearActivity = vi.fn();
+
+            ModuleRepository.getByLesson.mockReturnValue(null);
+
+            renderReader({
+                isAuthenticated: true,
+                lastActivity: { type: "lesson", lessonId: "some-other-lesson" },
+                clearActivity
+            });
+
+            fireEvent.click(screen.getByText("Concluir lição"));
+
+            expect(clearActivity).not.toHaveBeenCalled();
+
+        });
+
+        it("does not clear Last Activity when completion is gated behind the auth CTA for a visitor", () => {
+
+            const clearActivity = vi.fn();
+
+            ModuleRepository.getByLesson.mockReturnValue(null);
+
+            renderReader({
+                isAuthenticated: false,
+                lastActivity: { type: "lesson", lessonId: "english-a1-greetings" },
+                clearActivity
+            });
+
+            fireEvent.click(screen.getByText("Concluir lição"));
+
+            expect(clearActivity).not.toHaveBeenCalled();
+
+        });
+
+        it("tolerates an old/partial Last Activity object without crashing - compatibility with pre-existing data", () => {
+
+            ModuleRepository.getByLesson.mockReturnValue(null);
+
+            expect(() => renderReader({
+                isAuthenticated: true,
+                lastActivity: { type: "exercise" }
+            })).not.toThrow();
+
+        });
 
     });
 

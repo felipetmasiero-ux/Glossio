@@ -8,6 +8,7 @@ import { AuthGateContext } from "../../contexts/AuthGateContext";
 import { EventContext } from "../../contexts/EventContext";
 import { LanguageContext } from "../../contexts/LanguageContext";
 import { FlashcardContext } from "../../contexts/FlashcardContext";
+import { LastActivityContext } from "../../contexts/LastActivityContext";
 
 vi.mock("../../hooks/useLessonProgress", () => ({ useLessonProgress: vi.fn() }));
 
@@ -26,11 +27,13 @@ function renderPage(initialEntry) {
                 <EventContext.Provider value={{ logEvent: vi.fn() }}>
                     <LanguageContext.Provider value={{ language: "" }}>
                         <FlashcardContext.Provider value={{ addFlashcard: vi.fn() }}>
-                            <MemoryRouter initialEntries={[initialEntry]}>
-                                <Routes>
-                                    <Route path="/lessons/:id" element={<LessonPage />} />
-                                </Routes>
-                            </MemoryRouter>
+                            <LastActivityContext.Provider value={{ lastActivity: null, setActivity: vi.fn(), clearActivity: vi.fn() }}>
+                                <MemoryRouter initialEntries={[initialEntry]}>
+                                    <Routes>
+                                        <Route path="/lessons/:id" element={<LessonPage />} />
+                                    </Routes>
+                                </MemoryRouter>
+                            </LastActivityContext.Provider>
                         </FlashcardContext.Provider>
                     </LanguageContext.Provider>
                 </EventContext.Provider>
