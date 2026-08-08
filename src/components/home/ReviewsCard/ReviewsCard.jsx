@@ -6,6 +6,14 @@ import { Icon } from "../../common/Icon/Icon";
 
 import "./ReviewsCard.css";
 
+// R4 (post-sprint audit, H3): reviews.hasReviews is exactly the condition
+// getNextStep uses for its highest-priority branch, so whenever this card
+// shows its "due" state, PrimaryActionCard is already showing "Revisar
+// agora" for that same review queue. This card still has real informative
+// value on its own (how many cards are waiting) and still links to
+// /flashcards - only the button's label/variant changed, from an
+// action-toned duplicate of PrimaryActionCard's own CTA to a plainer,
+// secondary-styled link to the same destination.
 export function ReviewsCard({ reviews }) {
 
     const navigate = useNavigate();
@@ -37,8 +45,8 @@ export function ReviewsCard({ reviews }) {
                 </p>
             </div>
 
-            <Button onClick={() => navigate("/flashcards")}>
-                Revisar agora
+            <Button variant="secondary" onClick={() => navigate("/flashcards")}>
+                Ver revisões
                 <Icon name="chevron-right" size={16} />
             </Button>
 
