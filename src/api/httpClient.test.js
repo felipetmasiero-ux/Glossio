@@ -62,6 +62,30 @@ describe("httpClient request", () => {
 
     });
 
+    // R1: this `status` is what lets a caller (AuthProvider, for /auth/me)
+    // tell "the server actually answered, and said no" apart from a
+    // network/timeout failure, which never carries one - see the next test.
+    it("attaches the real HTTP status to the thrown error for a non-ok response", async () => {
+
+        vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse(401, { error: "nope" })));
+
+        await expect(request("/anything")).rejects.toMatchObject({ status: 401 });
+
+    });
+
+    it("does not attach a status to a network-error/timeout failure", async () => {
+
+        vi.stubGlobal("fetch", vi.fn().mockRejectedValue(new TypeError("Failed to fetch")));
+
+        try {
+            await request("/anything");
+            expect.unreachable("request() should have thrown");
+        } catch (error) {
+            expect(error.status).toBeUndefined();
+        }
+
+    });
+
     it("falls back to a generic server-error message for a 500 with no error body", async () => {
 
         vi.stubGlobal("fetch", vi.fn().mockResolvedValue(jsonResponse(500, {})));
