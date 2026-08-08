@@ -6,6 +6,13 @@ import { Icon } from "../../common/Icon/Icon";
 
 import "./ResumeActivityCard.css";
 
+const ICON_BY_TYPE = {
+    exercise: "pencil",
+    flashcards: "cards",
+    lesson: "book",
+    video: "play"
+};
+
 export function ResumeActivityCard({ activity }) {
 
     const navigate = useNavigate();
@@ -17,7 +24,7 @@ export function ResumeActivityCard({ activity }) {
         <Card className="resume-activity-card" hoverable={false}>
 
             <span className="resume-activity-card__icon">
-                <Icon name={activity.type === "exercise" ? "pencil" : "cards"} size={18} />
+                <Icon name={ICON_BY_TYPE[activity.type] ?? "cards"} size={18} />
             </span>
 
             <div className="resume-activity-card__body">

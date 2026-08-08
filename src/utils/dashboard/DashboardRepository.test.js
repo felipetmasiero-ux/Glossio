@@ -188,6 +188,58 @@ describe("DashboardRepository.getContinueLastActivity", () => {
 
     });
 
+    it("formats an in-progress flashcards session - regression", () => {
+
+        const result = DashboardRepository.getContinueLastActivity({
+            lastActivity: { type: "flashcards", remaining: 5 }
+        });
+
+        expect(result.href).toBe("/flashcards");
+        expect(result.remaining).toBe(5);
+
+    });
+
+    it("formats an in-progress lesson (L4)", () => {
+
+        const result = DashboardRepository.getContinueLastActivity({
+            lastActivity: { type: "lesson", language: "english", lessonId: firstLessonId, moduleId: "mod-1", remaining: 2, total: 5 }
+        });
+
+        expect(result).toEqual({
+            type: "lesson",
+            label: "Continuar lição",
+            remaining: 2,
+            href: `/lessons/${firstLessonId}`
+        });
+
+    });
+
+    it("formats an in-progress video (L4)", () => {
+
+        const result = DashboardRepository.getContinueLastActivity({
+            lastActivity: { type: "video", language: "english", videoId: "en-a1-cafe-order" }
+        });
+
+        expect(result).toEqual({
+            type: "video",
+            label: "Continuar vídeo",
+            href: "/explore/en-a1-cafe-order"
+        });
+
+    });
+
+    it("does not crash on an unrecognized or corrupted activity type - compatibility with old/partial data", () => {
+
+        expect(() => DashboardRepository.getContinueLastActivity({
+            lastActivity: { type: "something-old-and-unknown" }
+        })).not.toThrow();
+
+        expect(DashboardRepository.getContinueLastActivity({
+            lastActivity: { type: "something-old-and-unknown" }
+        })).toBeNull();
+
+    });
+
 });
 
 describe("DashboardRepository.getDashboardData", () => {
