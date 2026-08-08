@@ -10,7 +10,6 @@ import { DashboardSection } from "../../components/home/DashboardSection/Dashboa
 import { PrimaryActionCard } from "../../components/home/PrimaryActionCard/PrimaryActionCard";
 import { HeroCard } from "../../components/home/HeroCard/HeroCard";
 import { ContinueLearningCard } from "../../components/home/ContinueLearningCard/ContinueLearningCard";
-import { DailyGoalCard } from "../../components/home/DailyGoalCard/DailyGoalCard";
 import { ReviewsCard } from "../../components/home/ReviewsCard/ReviewsCard";
 import { CourseCard } from "../../components/home/CourseCard/CourseCard";
 import { QuickStatsCard } from "../../components/home/QuickStatsCard/QuickStatsCard";
@@ -41,6 +40,30 @@ export function Home() {
     const latestPlacementResult = PlacementTestStorage.getLatestResult();
     const goalsSummary = useGoalsSummary();
 
+    // R4 (post-sprint audit, H3): getNextStep already picks a single winning
+    // "next action" (priority 1 = reviews, 2 = lastActivity, 3 = continueLearning
+    // in-progress, 4 = relatedContent, 5 = continueLearning finished - see
+    // utils/dashboard/getNextStep.js, not modified here). PrimaryActionCard
+    // always presents that winner. The two cards below used to render from
+    // their own raw source regardless of which one actually won, so the Home
+    // could show up to three disagreeing "what to do next" CTAs at once.
+    const isNextStepFromReviews = dashboard.nextStep?.priority === 1;
+    const isNextStepFromLastActivity = dashboard.nextStep?.priority === 2;
+
+    // ContinueLearningCard is legitimate information on its own (the next
+    // lesson in curriculum order) - only hidden when something else already
+    // won the priority race (reviews or lastActivity). It keeps appearing
+    // when it agrees with nextStep (priority 3 or 5) or when there's no
+    // nextStep at all, exactly as before.
+    const showContinueLearningCard = !isNextStepFromReviews && !isNextStepFromLastActivity;
+
+    // lastActivity already *is* PrimaryActionCard's action once it wins the
+    // priority race - showing ResumeActivityCard too would repeat the exact
+    // same action a second time. When lastActivity exists but lost (e.g. to
+    // reviews), it's kept as de-emphasized contextual fallback instead of
+    // being hidden silently - see ResumeActivityCard's own secondary CTA.
+    const showResumeActivityCard = Boolean(dashboard.lastActivity) && !isNextStepFromLastActivity;
+
     return (
 
         <div className="page-container home-dashboard">
@@ -50,7 +73,9 @@ export function Home() {
             <section className="home-dashboard__hero animate-fade-in">
                 <HeroCard greeting={dashboard.greeting} language={dashboard.language} />
                 <PrimaryActionCard nextStep={dashboard.nextStep} />
-                <ContinueLearningCard continueLearning={dashboard.continueLearning} />
+                {showContinueLearningCard && (
+                    <ContinueLearningCard continueLearning={dashboard.continueLearning} />
+                )}
             </section>
 
             {dashboard.recommendations.length > 0 && (
@@ -59,8 +84,7 @@ export function Home() {
                 </DashboardSection>
             )}
 
-            <div className="home-dashboard__row animate-slide-up">
-                <DailyGoalCard dailyGoal={dashboard.dailyGoal} />
+            <div className="animate-slide-up">
                 <ReviewsCard reviews={dashboard.reviews} />
             </div>
 
@@ -118,7 +142,7 @@ export function Home() {
                 <PlacementTestCard latestResult={latestPlacementResult} />
             </DashboardSection>
 
-            {dashboard.lastActivity && (
+            {showResumeActivityCard && (
                 <DashboardSection title="Continuar de onde parou" icon="clock">
                     <ResumeActivityCard activity={dashboard.lastActivity} />
                 </DashboardSection>

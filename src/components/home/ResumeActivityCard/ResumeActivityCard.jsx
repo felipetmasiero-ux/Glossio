@@ -9,6 +9,15 @@ const ICON_BY_TYPE = {
     video: "play"
 };
 
+// R4 (post-sprint audit, H3): Home only ever renders this card now when
+// lastActivity exists but *lost* getNextStep's priority race to something
+// else (see Home.jsx's showResumeActivityCard) - PrimaryActionCard already
+// owns the "next action" CTA in that case. This is no longer a competing
+// action, just contextual "you can also resume this" information, so the
+// CTA uses SummaryCard's default secondary styling instead of the primary
+// one it used to override - the smallest change that stops it from reading
+// as a second main call to action, without touching activity.label/href
+// (data layer, untouched) or inventing a new component.
 export function ResumeActivityCard({ activity }) {
 
     const navigate = useNavigate();
@@ -29,7 +38,6 @@ export function ResumeActivityCard({ activity }) {
                     : null
             }
             ctaLabel="Continuar"
-            ctaVariant="primary"
             ctaIcon={null}
             onCtaClick={() => navigate(activity.href)}
         />
