@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { Card } from "../../common/Card/Card";
-import { Button } from "../../common/Button/Button";
-import { Icon } from "../../common/Icon/Icon";
+import { SummaryCard } from "../SummaryCard/SummaryCard";
 
 import "./FavoritesSummaryCard.css";
 
@@ -12,29 +10,15 @@ export function FavoritesSummaryCard({ favoriteCount }) {
 
     return (
 
-        <Card className="favorites-summary-card" hoverable={false}>
-
-            <div className="favorites-summary-card__body">
-                <span className="favorites-summary-card__icon">
-                    <Icon name="star" size={20} fill="currentColor" />
-                </span>
-                <div>
-                    <p className="favorites-summary-card__title text-mono-label">Favoritas</p>
-                    <p className="favorites-summary-card__value text-mono-number">
-                        {favoriteCount} {favoriteCount === 1 ? "palavra" : "palavras"}
-                    </p>
-                </div>
-            </div>
-
-            <Button
-                variant="secondary"
-                onClick={() => navigate("/my-flashcards", { state: { favoritesOnly: true } })}
-            >
-                Ver coleção
-                <Icon name="chevron-right" size={16} />
-            </Button>
-
-        </Card>
+        <SummaryCard
+            className="favorites-summary-card"
+            icon="star"
+            iconFill="currentColor"
+            title="Favoritas"
+            value={`${favoriteCount} ${favoriteCount === 1 ? "palavra" : "palavras"}`}
+            ctaLabel="Ver coleção"
+            onCtaClick={() => navigate("/my-flashcards", { state: { favoritesOnly: true } })}
+        />
 
     );
 
