@@ -10,12 +10,22 @@ import "./LanguageSelection.css";
 export function LanguageSelection() {
   const navigate = useNavigate();
 
-  const { setLanguage } = useContext(LanguageContext);
+  const { language: currentLanguage, setLanguage } = useContext(LanguageContext);
 
   function handleLanguage(language) {
+
+    // A language already existed before this pick - this is an existing
+    // user switching their study language (e.g. via Profile's "trocar
+    // idioma" link, or a resumed session), not someone picking one for the
+    // very first time. Same signal Register.jsx/Login.jsx already use to
+    // decide whether this screen is even reachable in the first place.
+    const isFirstLanguagePick = !currentLanguage;
+
     setLanguage(language);
     trackEvent(ANALYTICS_EVENTS.LANGUAGE_SELECTED, { language });
-    navigate("/home");
+
+    navigate(isFirstLanguagePick ? "/onboarding" : "/home");
+
   }
 
   const languages = [

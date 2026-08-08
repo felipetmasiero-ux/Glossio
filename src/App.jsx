@@ -11,6 +11,7 @@ const Login = lazyPage(() => import("./pages/Login/Login"), "Login");
 const Register = lazyPage(() => import("./pages/Register/Register"), "Register");
 const Home = lazyPage(() => import("./pages/Home/Home"), "Home");
 const LanguageSelection = lazyPage(() => import("./pages/LanguageSelection/LanguageSelection"), "LanguageSelection");
+const Onboarding = lazyPage(() => import("./pages/Onboarding/Onboarding"), "Onboarding");
 const Exercises = lazyPage(() => import("./pages/Exercises/Exercises"), "Exercises");
 const ExploreHub = lazyPage(() => import("./pages/ExploreHub/ExploreHub"), "ExploreHub");
 const ExploreVideoPage = lazyPage(() => import("./pages/ExploreVideoPage/ExploreVideoPage"), "ExploreVideoPage");
@@ -146,6 +147,11 @@ function App() {
                           setLanguage={setLanguage}
                         />
                       }
+                    />
+
+                    <Route
+                      path="/onboarding"
+                      element={<Onboarding />}
                     />
 
                     <Route

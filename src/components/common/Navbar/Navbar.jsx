@@ -7,7 +7,7 @@ import { Avatar } from "../Avatar/Avatar";
 
 import "./Navbar.css";
 
-const HIDDEN_PATHS = ["/", "/choose-language", "/login", "/register"];
+const HIDDEN_PATHS = ["/", "/choose-language", "/onboarding", "/login", "/register"];
 
 // Unlike every other route that ever shows the Navbar, /placement-test is
 // reachable while logged out (from the Landing page) - so it only earns the
