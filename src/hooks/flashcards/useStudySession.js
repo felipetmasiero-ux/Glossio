@@ -60,6 +60,17 @@ export function useStudySession(
   const sessionStartedAtRef = useRef(null);
   const sessionFinishedRef = useRef(true);
 
+  // Guards the ~350ms window between a card being answered and
+  // FINISH_LEAVING actually swapping in the next one. `currentCard` (and
+  // `revealed`) don't change until then, so a second click/Enter/Space
+  // during the exit animation would otherwise re-enter handleAnswer for
+  // the *same* card - scheduling it twice, double-counting stats, and
+  // double-firing the analytics/history side effects in the setTimeout
+  // below. A plain ref (not state) because flipping it must never itself
+  // cause a render, and it needs to be readable synchronously at the very
+  // top of handleAnswer, before any dispatch.
+  const isAnsweringRef = useRef(false);
+
   const startSession = useCallback(() => {
 
     const dueCards =
@@ -82,6 +93,7 @@ export function useStudySession(
 
     sessionStartedAtRef.current = Date.now();
     sessionFinishedRef.current = false;
+    isAnsweringRef.current = false;
 
     trackEvent(ANALYTICS_EVENTS.STUDY_SESSION_STARTED, {
       language,
@@ -100,7 +112,13 @@ export function useStudySession(
 
   const handleAnswer = useCallback((quality) => {
 
-    if (!currentCard) return;
+    // Second activation (double click, repeated Enter/Space/1-2-3, or a
+    // mix of both) for the same card during the exit animation - see
+    // isAnsweringRef above. Checked and set synchronously, before any
+    // dispatch, so no interleaving of two calls can both pass the check.
+    if (!currentCard || isAnsweringRef.current) return;
+
+    isAnsweringRef.current = true;
 
     const card = currentCard;
 
@@ -127,6 +145,10 @@ export function useStudySession(
       });
 
       dispatch({ type: FINISH_LEAVING });
+
+      // The next card (if any) is now current and revealable again -
+      // re-open the guard for it.
+      isAnsweringRef.current = false;
 
     }, CARD_EXIT_ANIMATION);
 

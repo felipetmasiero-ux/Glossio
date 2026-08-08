@@ -41,10 +41,16 @@ export async function request(path, { token: explicitToken, ...options } = {}) {
     const data = await response.json().catch(() => ({}));
 
     if (!response.ok) {
-        if (response.status >= 500) {
-            throw new Error(data.error || "Erro no servidor. Tente novamente em instantes.");
-        }
-        throw new Error(data.error || "Algo deu errado. Tente novamente.");
+        // `status` is what lets a caller (see AuthProvider's use of this
+        // for /auth/me) tell "the server actually answered, and said no"
+        // apart from the network/timeout case above, which never reaches
+        // here and never gets a `status` at all.
+        const message = response.status >= 500
+            ? (data.error || "Erro no servidor. Tente novamente em instantes.")
+            : (data.error || "Algo deu errado. Tente novamente.");
+        const error = new Error(message);
+        error.status = response.status;
+        throw error;
     }
 
     return data;

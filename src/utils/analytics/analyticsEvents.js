@@ -39,6 +39,14 @@ export const ANALYTICS_EVENTS = {
 
     WEB_VITAL_MEASURED: "web_vital_measured",
 
-    LISTENING_AUDIO_PLAYED: "listening_audio_played"
+    LISTENING_AUDIO_PLAYED: "listening_audio_played",
+
+    // One parameterized event for every cloud-sync resource (progress,
+    // lessonProgress, flashcards, videoProgress, events) rather than a
+    // separate event per resource - see useCloudSync.js's withRetry/
+    // reportSyncFailure. Fires at most once per resource per sync attempt,
+    // only after the retry has already been exhausted - never per
+    // individual retry.
+    CLOUD_SYNC_FAILED: "cloud_sync_failed"
 
 };

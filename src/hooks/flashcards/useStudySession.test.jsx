@@ -17,7 +17,9 @@ import { LastActivityContext } from "../../contexts/LastActivityContext";
 import { useStudySession } from "./useStudySession";
 
 import {
-    GOOD
+    AGAIN,
+    GOOD,
+    EASY
 } from "../../constants/studyQuality";
 
 import { MAX_SESSION_SIZE } from "../../constants/studySession";
@@ -347,6 +349,282 @@ describe("useStudySession", () => {
         });
 
         expect(result.current.currentCard.id).toBe(2);
+
+    });
+
+});
+
+// R3 (post-sprint audit): during the ~350ms exit animation, currentCard
+// (and revealed) don't change yet - a second click, a repeated Enter/Space/
+// number shortcut, or a mix of both used to re-enter handleAnswer for the
+// *same* card, calling answerFlashcard (and therefore scheduleCard),
+// addStudyRecord, and the review-completed analytics event a second time
+// for one single answer. AnswerButtons and useKeyboardShortcuts both call
+// this exact same handleAnswer reference with nothing in between, so
+// calling it more than once in a row here reproduces every real trigger
+// combination (double click, double Enter, double Space/number shortcut,
+// click+keyboard, keyboard+click) - see StudyFlashcards.test.jsx for the
+// real-DOM-event version of the same guarantee.
+describe("useStudySession - duplicate-answer protection (R3)", () => {
+
+    beforeEach(() => {
+
+        vi.clearAllMocks();
+        vi.useFakeTimers();
+
+        getDueCards.mockReturnValue(flashcards);
+
+    });
+
+    afterEach(() => {
+
+        vi.runOnlyPendingTimers();
+        vi.useRealTimers();
+
+    });
+
+    it("a single answer calls answerFlashcard exactly once, with the exact card id and quality", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+        act(() => { result.current.handleAnswer(GOOD); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(1);
+        expect(answerFlashcard).toHaveBeenCalledWith(1, GOOD);
+
+    });
+
+    it("two activations back to back (double click / double Enter / double Space, indistinguishable at this level) only answer once", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(1);
+
+    });
+
+    it("a second activation with a *different* quality (e.g. click then a keyboard shortcut) is still ignored - the first answer wins, not the last", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(EASY);
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(1);
+        expect(answerFlashcard).toHaveBeenCalledWith(1, GOOD);
+
+    });
+
+    it("a third, fourth, fifth... activation within the exit window is still ignored (not just a second one)", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            for (let i = 0; i < 5; i++) {
+                result.current.handleAnswer(GOOD);
+            }
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(1);
+
+    });
+
+    it("a duplicate activation arriving after the exit animation has already resolved the first answer is a normal new answer for the next card, not a rejected duplicate", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+
+        act(() => { result.current.handleAnswer(GOOD); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(result.current.currentCard.id).toBe(2);
+
+        // Late arrival for card 1 would have been ignored while leaving;
+        // this call is for card 2 and must be accepted normally.
+        act(() => { result.current.handleAnswer(EASY); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(2);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(2, 2, EASY);
+
+    });
+
+    it("addStudyRecord (history) runs exactly once per card despite a duplicate activation", () => {
+
+        const addStudyRecord = vi.fn();
+        const { result } = renderStudySession({ addStudyRecord });
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(addStudyRecord).toHaveBeenCalledTimes(1);
+        expect(addStudyRecord).toHaveBeenCalledWith(1, GOOD);
+
+    });
+
+    it("the review_completed analytics event fires exactly once per card despite a duplicate activation", () => {
+
+        const { result } = renderStudySession();
+
+        act(() => { result.current.startSession(); });
+        vi.clearAllMocks();
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        const reviewCompletedCalls = trackEvent.mock.calls.filter(([name]) => name === "review_completed");
+        expect(reviewCompletedCalls).toHaveLength(1);
+        expect(reviewCompletedCalls[0][1]).toEqual({ cardId: 1, quality: GOOD, correct: true });
+
+    });
+
+    it("stats only advance once per card despite a duplicate activation (proves the SRS-facing state isn't double-applied, not just the callback)", () => {
+
+        const { result } = renderStudySession();
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+
+        expect(result.current.stats.good).toBe(1);
+        expect(result.current.completedCards).toBe(1);
+
+        act(() => { vi.runAllTimers(); });
+
+    });
+
+    it("the guard is not stuck after the first card - the next card can be answered normally, once, including via a repeated activation of its own", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+        act(() => { result.current.handleAnswer(GOOD); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(result.current.currentCard.id).toBe(2);
+
+        act(() => {
+            result.current.handleAnswer(EASY);
+            result.current.handleAnswer(EASY);
+        });
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(2);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(2, 2, EASY);
+
+    });
+
+    it("restarting the session resets the guard, so the very first card of a new session isn't permanently blocked by a stale flag", () => {
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+        act(() => { vi.runAllTimers(); });
+        act(() => { result.current.handleAnswer(GOOD); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(result.current.sessionCards).toHaveLength(0);
+
+        act(() => { result.current.restartSession(); });
+
+        expect(result.current.currentCard.id).toBe(1);
+
+        act(() => { result.current.handleAnswer(AGAIN); });
+        act(() => { vi.runAllTimers(); });
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(3);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(3, 1, AGAIN);
+
+    });
+
+    it("each answer quality (Again/Good/Easy) is independently accepted exactly once when tried on its own card", () => {
+
+        const threeCards = [
+            { id: 1, language: "english" },
+            { id: 2, language: "english" },
+            { id: 3, language: "english" }
+        ];
+        getDueCards.mockReturnValue(threeCards);
+
+        const answerFlashcard = vi.fn();
+        const { result } = renderStudySession({ cards: threeCards, answerFlashcard });
+
+        act(() => { result.current.startSession(); });
+
+        for (const quality of [AGAIN, GOOD, EASY]) {
+            act(() => { result.current.handleAnswer(quality); });
+            act(() => { vi.runAllTimers(); });
+        }
+
+        expect(answerFlashcard).toHaveBeenCalledTimes(3);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(1, 1, AGAIN);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(2, 2, GOOD);
+        expect(answerFlashcard).toHaveBeenNthCalledWith(3, 3, EASY);
+
+    });
+
+    it("the exit animation state (leaving) still runs its normal course despite a duplicate activation", () => {
+
+        const { result } = renderStudySession();
+
+        act(() => { result.current.startSession(); });
+
+        act(() => {
+            result.current.handleAnswer(GOOD);
+            result.current.handleAnswer(GOOD);
+        });
+
+        expect(result.current.leaving).toBe(true);
+
+        act(() => { vi.runAllTimers(); });
+
+        expect(result.current.leaving).toBe(false);
 
     });
 
