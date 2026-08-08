@@ -33,19 +33,17 @@ vi.mock("../../../utils/recommendations", () => ({ getRelatedContent: vi.fn(() =
 // Real VocabularySection resolves each vocabulary entry through
 // DictionaryRepository, which needs real dictionary data this test's
 // fixture lesson doesn't have - WordPopup.test.jsx already covers the
-// add-to-flashcards gating in isolation, so here a lightweight stub is
-// enough to assert the InlineSignupPrompt placement.
+// add-to-flashcards gating in isolation, and VocabularySection.test.jsx
+// covers the bulk add-to-flashcards action in isolation. Here a
+// lightweight stub is enough to assert the InlineSignupPrompt placement
+// and that LessonReader passes the right props down (isAuthenticated,
+// moduleId - see the "bulk add to flashcards" describe block below).
 vi.mock("../VocabularySection/VocabularySection", () => ({
-    VocabularySection: ({ vocabulary }) => <div data-testid="vocabulary-section">{vocabulary.length} words</div>
-}));
-
-// Same rationale as VocabularySection above: the real component resolves
-// lesson.vocabulary through DictionaryRepository, which this test's
-// fixture isn't shaped for. VocabularyFlashcardsPrompt.test.jsx already
-// covers its own logic in isolation - here we only need to know LessonReader
-// renders it at the right time (isLast + authenticated).
-vi.mock("../VocabularyFlashcardsPrompt/VocabularyFlashcardsPrompt", () => ({
-    VocabularyFlashcardsPrompt: () => <div data-testid="vocabulary-flashcards-prompt" />
+    VocabularySection: ({ vocabulary, isAuthenticated, moduleId }) => (
+        <div data-testid="vocabulary-section" data-authenticated={String(isAuthenticated)} data-module-id={String(moduleId)}>
+            {vocabulary.length} words
+        </div>
+    )
 }));
 
 import { useLessonProgress } from "../../../hooks/useLessonProgress";
@@ -130,19 +128,29 @@ describe("LessonReader", () => {
 
     });
 
-    it("shows the vocabulary-to-flashcards prompt on the last step, only for an authenticated reader", () => {
+    it("passes isAuthenticated through to VocabularySection, so its bulk add-to-flashcards action can gate on it", () => {
 
         renderReader({ isAuthenticated: true });
 
-        expect(screen.getByTestId("vocabulary-flashcards-prompt")).not.toBeNull();
+        expect(screen.getByTestId("vocabulary-section").dataset.authenticated).toBe("true");
 
     });
 
-    it("does not show the vocabulary-to-flashcards prompt to an anonymous visitor", () => {
+    it("passes isAuthenticated=false through to VocabularySection for an anonymous visitor", () => {
 
         renderReader({ isAuthenticated: false });
 
-        expect(screen.queryByTestId("vocabulary-flashcards-prompt")).toBeNull();
+        expect(screen.getByTestId("vocabulary-section").dataset.authenticated).toBe("false");
+
+    });
+
+    it("passes the current module's id through to VocabularySection, so bulk-added cards carry it", () => {
+
+        ModuleRepository.getByLesson.mockReturnValue({ id: "mod-1", lessons: [{ id: lesson.id }] });
+
+        renderReader({ isAuthenticated: true });
+
+        expect(screen.getByTestId("vocabulary-section").dataset.moduleId).toBe("mod-1");
 
     });
 
