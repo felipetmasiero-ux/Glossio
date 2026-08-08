@@ -15,11 +15,14 @@ import { ProgressIndicator } from "../common/ProgressIndicator/ProgressIndicator
 import { LessonNavigation } from "../common/LessonNavigation/LessonNavigation";
 import { RecommendationSection } from "../../common/RecommendationSection/RecommendationSection";
 import { ExploreRecommendationCard } from "../../common/ExploreRecommendationCard/ExploreRecommendationCard";
+import { Button } from "../../common/Button/Button";
+import { Icon } from "../../common/Icon/Icon";
 
 import { ModuleRepository } from "../../../utils/courses/ModuleRepository";
 import { VideoRepository } from "../../../repositories/VideoRepository";
 import { VideoProgressRepository } from "../../../repositories/VideoProgressRepository";
 import { getRelatedContent } from "../../../utils/recommendations";
+import { generateExercisesForLesson } from "../../../utils/exercises";
 
 import { useLessonNavigator } from "../../../hooks/useLessonNavigator";
 import { useLessonProgress } from "../../../hooks/useLessonProgress";
@@ -139,6 +142,15 @@ export function LessonReader({ lesson }) {
         })
         : [];
 
+    // Same source of truth ExerciseSessionPage itself uses to decide
+    // whether there's anything to practice (its own "Sem exercícios
+    // disponíveis" empty state checks this exact same call's length) - so
+    // the CTA below can never point at a session that turns out to be
+    // empty. Only computed on the last step, same as relatedVideos above.
+    const hasExercises = isLast
+        ? generateExercisesForLesson(lesson).length > 0
+        : false;
+
     function scrollTop() {
 
         window.scrollTo({
@@ -148,6 +160,40 @@ export function LessonReader({ lesson }) {
             behavior: "smooth"
 
         });
+
+    }
+
+    // Shared by handleNext (isLast branch) and handlePractice below - both
+    // mark the same lesson complete the same way, only the destination
+    // after that differs.
+    function markLessonComplete() {
+
+        completeLesson(lesson.id, language);
+
+        // Only clear if Last Activity is still actually about this
+        // lesson - it may since have moved on to something else (e.g. a
+        // video watched in the meantime), which must not be wiped out
+        // just because this lesson also finished.
+        if (lastActivity?.type === "lesson" && lastActivity?.lessonId === lesson.id) {
+            clearActivity();
+        }
+
+    }
+
+    // Completes the lesson exactly like "Concluir lição" does, but instead
+    // of moving on to the next lesson/module, sends the reader straight
+    // into practicing this same lesson's own exercises - reusing the
+    // existing, generic /exercises/:lessonId route (ExerciseSessionPage
+    // already resolves the lesson, generates its exercises via
+    // generateExercisesForLesson, and handles its own "no exercises"/
+    // finished states) rather than a new one. Progression is untouched:
+    // this doesn't replace "Concluir lição" or change what the next lesson
+    // is - it's an additional path out of the same completion moment.
+    function handlePractice() {
+
+        requireAuth(markLessonComplete)();
+
+        navigate(`/exercises/${lesson.id}`);
 
     }
 
@@ -165,19 +211,7 @@ export function LessonReader({ lesson }) {
 
         }
 
-        requireAuth(() => {
-
-            completeLesson(lesson.id, language);
-
-            // Only clear if Last Activity is still actually about this
-            // lesson - it may since have moved on to something else (e.g. a
-            // video watched in the meantime), which must not be wiped out
-            // just because this lesson also finished.
-            if (lastActivity?.type === "lesson" && lastActivity?.lessonId === lesson.id) {
-                clearActivity();
-            }
-
-        })();
+        requireAuth(markLessonComplete)();
 
         // The "module complete" celebration page is itself behind
         // ProtectedRoute (it shows personalized stats that don't exist for
@@ -323,6 +357,22 @@ export function LessonReader({ lesson }) {
 
             }
 
+            {
+
+                isLast && hasExercises && (
+
+                    <div className="lesson-reader__practice-cta">
+
+                        <Button variant="secondary" onClick={handlePractice}>
+                            <Icon name="pencil" size={16} />
+                            Praticar exercícios desta lição
+                        </Button>
+
+                    </div>
+
+                )
+
+            }
 
             {
 

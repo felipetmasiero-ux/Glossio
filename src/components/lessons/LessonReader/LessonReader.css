@@ -18,3 +18,11 @@
   padding: var(--space-6) var(--space-5) var(--space-6) 56px;
   border-radius: var(--radius-lg);
 }
+
+.lesson-reader__practice-cta {
+  margin-top: var(--space-7);
+}
+
+.lesson-reader__practice-cta .button {
+  width: auto;
+}
