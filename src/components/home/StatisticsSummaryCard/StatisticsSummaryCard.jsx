@@ -1,8 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-import { Card } from "../../common/Card/Card";
-import { Button } from "../../common/Button/Button";
-import { Icon } from "../../common/Icon/Icon";
+import { SummaryCard } from "../SummaryCard/SummaryCard";
 
 import "./StatisticsSummaryCard.css";
 
@@ -12,7 +10,11 @@ export function StatisticsSummaryCard({ statistics }) {
 
     return (
 
-        <Card className="statistics-summary-card" hoverable={false}>
+        <SummaryCard
+            className="statistics-summary-card"
+            ctaLabel="Ver detalhes"
+            onCtaClick={() => navigate("/statistics")}
+        >
 
             <div className="statistics-summary-card__stats">
 
@@ -33,12 +35,7 @@ export function StatisticsSummaryCard({ statistics }) {
 
             </div>
 
-            <Button variant="secondary" onClick={() => navigate("/statistics")}>
-                Ver detalhes
-                <Icon name="chevron-right" size={16} />
-            </Button>
-
-        </Card>
+        </SummaryCard>
 
     );
 
