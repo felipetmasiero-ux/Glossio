@@ -56,7 +56,8 @@ button.decks-bar__chip {
   background: none;
   color: var(--color-text-muted);
   cursor: pointer;
-  padding: var(--space-1);
+  padding: var(--space-2);
+  margin: calc(-1 * var(--space-1));
   border-radius: var(--radius-sm);
 }
 
