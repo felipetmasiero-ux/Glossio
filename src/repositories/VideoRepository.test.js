@@ -25,3 +25,34 @@ describe("VideoRepository caching", () => {
     });
 
 });
+
+// English videos had their `transcript` cleared to `[]` (unverified
+// YouTube license, same reasoning as French - see
+// docs/explore-french-data-request.md). This guards that the cleanup only
+// touched `transcript`: every video is still there, still has real
+// metadata, and nothing else was clipped by the bracket-matching script
+// that stripped the transcript arrays.
+describe("VideoRepository - English transcript removal", () => {
+
+    it("still has all 31 English videos", () => {
+        expect(VideoRepository.getAll("english")).toHaveLength(31);
+    });
+
+    it("has an empty transcript, but everything else intact, on every English video", () => {
+
+        VideoRepository.getAll("english").forEach(video => {
+
+            expect(video.transcript).toEqual([]);
+
+            expect(video.id).toBeTruthy();
+            expect(video.title).toBeTruthy();
+            expect(video.language).toBe("english");
+            expect(video.level).toBeTruthy();
+            expect(video.duration).toBeGreaterThan(0);
+            expect(video.source?.videoId).toBeTruthy();
+
+        });
+
+    });
+
+});
