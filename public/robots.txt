@@ -72,6 +72,19 @@ Allow: /lessons/portuguese-a1-travel
 Allow: /lessons/portuguese-a1-weather
 Allow: /lessons/portuguese-a1-shopping
 Allow: /lessons/portuguese-a1-hobbies
+Allow: /lessons/module/portuguese-a2
+Allow: /lessons/portuguese-a2-past-weekend
+Allow: /lessons/portuguese-a2-comparisons
+Allow: /lessons/portuguese-a2-health
+Allow: /lessons/portuguese-a2-weather-forecast
+Allow: /lessons/portuguese-a2-directions
+Allow: /lessons/portuguese-a2-past-habits
+Allow: /lessons/portuguese-a2-free-time
+Allow: /lessons/portuguese-a2-feelings
+Allow: /lessons/portuguese-a2-restaurant
+Allow: /lessons/portuguese-a2-hotel
+Allow: /lessons/portuguese-a2-making-plans
+Allow: /lessons/portuguese-a2-life-journey
 Disallow: /
 
 Sitemap: https://www.glossio.pro/sitemap.xml
