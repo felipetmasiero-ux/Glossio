@@ -7,7 +7,7 @@ describe("PlacementTestRepository", () => {
     it("returns the available levels for a language, in ascending order", () => {
 
         expect(PlacementTestRepository.getAvailableLevels("english")).toEqual(["A1", "A2"]);
-        expect(PlacementTestRepository.getAvailableLevels("portuguese")).toEqual(["A1"]);
+        expect(PlacementTestRepository.getAvailableLevels("portuguese")).toEqual(["A1", "A2"]);
 
     });
 

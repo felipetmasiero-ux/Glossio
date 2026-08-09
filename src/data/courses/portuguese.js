@@ -1,4 +1,5 @@
 import { portugueseA1Module } from "../lessons/portuguese/a1/module";
+import { portugueseA2Module } from "../lessons/portuguese/a2/module";
 
 export const portugueseCourse = {
 
@@ -15,7 +16,9 @@ export const portugueseCourse = {
 
     modules: [
 
-        portugueseA1Module
+        portugueseA1Module,
+
+        portugueseA2Module
 
     ]
 

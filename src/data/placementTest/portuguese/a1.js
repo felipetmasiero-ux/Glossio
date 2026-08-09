@@ -2,8 +2,7 @@ import { question } from "../question";
 
 // Content reused from the existing Portuguese dictionary and A1 lessons
 // (Greetings/Family/Travel dialogues, Ter + Plural, Gostar de + Substantivo,
-// Masculino e Feminino nas Profissões). Portuguese only has an A1 module so
-// far, so this bank alone covers the full 15-20 question range on its own.
+// Masculino e Feminino nas Profissões).
 export const portugueseA1PlacementQuestions = [
 
     question("portuguese-a1-vocab-1", "A1", "vocabulary",

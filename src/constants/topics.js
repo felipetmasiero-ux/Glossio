@@ -44,7 +44,9 @@ export const TOPIC_LABELS = {
 
     plans: "Planos",
 
-    "life-experiences": "Experiências de Vida"
+    "life-experiences": "Experiências de Vida",
+
+    "past-habits": "Hábitos do Passado"
 
 };
 
