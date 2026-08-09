@@ -1,3 +1,4 @@
+import { makingPlansBlocks } from "../../../grammar/shared/portuguese/a2/makingPlans";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const makingPlansLesson = {
             { speaker: "Marco", text: "Perfeito, então ficou combinado. Se algo mudar, eu confirmo com você antes." }
         ]),
 
-        grammar(
-            "Pretender / Estar Pensando Em",
-            "'Pretender' + infinitivo expressa uma intenção mais firme: 'Pretendo viajar em julho.' 'Estar pensando em' + infinitivo expressa uma ideia ainda não decidida: 'Estou pensando em viajar, mas ainda não decidi.' As duas são mais formais do que simplesmente usar o futuro."
-        ),
+        grammar(makingPlansBlocks[0].title, makingPlansBlocks[0].text),
 
         list([
 

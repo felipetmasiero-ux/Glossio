@@ -1,3 +1,4 @@
+import { pastHabitsBlocks } from "../../../grammar/shared/portuguese/a2/pastHabits";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const pastHabitsLesson = {
             { speaker: "Marco", text: "Não, tudo mudou. Hoje tem muito mais carros, e as crianças não brincam tanto na rua." }
         ]),
 
-        grammar(
-            "Pretérito Imperfeito",
-            "Use o imperfeito para hábitos e situações repetidas no passado, sem um momento exato. Verbos -ar: -ava, -ava, -ávamos, -avam ('morava, morava, morávamos, moravam'). Verbos -er/-ir: -ia, -ia, -íamos, -iam ('comia, comia, comíamos, comiam'). Irregulares: 'ser' → era, era, éramos, eram; 'ter' → tinha, tinha, tínhamos, tinham."
-        ),
+        grammar(pastHabitsBlocks[0].title, pastHabitsBlocks[0].text),
 
         list([
 

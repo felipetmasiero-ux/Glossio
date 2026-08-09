@@ -1,3 +1,4 @@
+import { weatherForecastBlocks } from "../../../grammar/shared/portuguese/a2/weatherForecast";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const weatherForecastLesson = {
             { speaker: "Marco", text: "Não muito - uns 18 graus. Provavelmente dará para sair sem casaco." }
         ]),
 
-        grammar(
-            "Futuro do Presente Simples",
-            "Verbos regulares formam o futuro adicionando -ei, -á, -emos, -ão ao infinitivo: 'chover' → choverá; 'estar' → estarei, estará, estaremos, estarão; 'ser' → serei, será, seremos, serão. É a forma mais comum para previsões: 'Amanhã choverá.' / 'A semana será quente.'"
-        ),
+        grammar(weatherForecastBlocks[0].title, weatherForecastBlocks[0].text),
 
         list([
 
