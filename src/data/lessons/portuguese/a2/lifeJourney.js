@@ -1,3 +1,4 @@
+import { lifeJourneyBlocks } from "../../../grammar/shared/portuguese/a2/lifeJourney";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const lifeJourneyLesson = {
             { speaker: "Marco", text: "O pretérito imperfeito, sem dúvida. Mas continuo praticando todos os dias." }
         ]),
 
-        grammar(
-            "Pretérito Perfeito Composto",
-            "Use 'ter' no presente + particípio para falar de uma ação que começou no passado e continua (ou se repete) até agora: 'Tenho estudado' (e continuo estudando), diferente de 'Estudei' (uma ação já terminada). Compare: 'Ontem eu estudei três horas' (evento pontual, perfeito simples) vs. 'Tenho estudado bastante ultimamente' (ação contínua/repetida, perfeito composto)."
-        ),
+        grammar(lifeJourneyBlocks[0].title, lifeJourneyBlocks[0].text),
 
         list([
 

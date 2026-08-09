@@ -1,3 +1,4 @@
+import { healthBlocks } from "../../../grammar/shared/portuguese/a2/health";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const healthLesson = {
             { speaker: "Marco", text: "Boa ideia. E se não melhorar amanhã, você deve marcar uma consulta." }
         ]),
 
-        grammar(
-            "Dever + Infinitivo",
-            "Use 'dever' + verbo no infinitivo para dar conselhos ou falar de obrigação: 'Você deve descansar.' / 'Você não deve trabalhar hoje.' É mais forte que uma sugestão, mas mais suave que uma ordem."
-        ),
+        grammar(healthBlocks[0].title, healthBlocks[0].text),
 
         list([
 

@@ -1,3 +1,4 @@
+import { comparisonsBlocks } from "../../../grammar/shared/portuguese/a2/comparisons";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const comparisonsLesson = {
             { speaker: "Marco", text: "Boa ideia. Se não servir, dá para trocar depois." }
         ]),
 
-        grammar(
-            "Comparativos",
-            "Para comparar, use 'mais + adjetivo + que' (superioridade), 'menos + adjetivo + que' (inferioridade) ou 'tão + adjetivo + quanto' (igualdade): 'mais caro que', 'menos caro que', 'tão caro quanto'. Alguns adjetivos têm forma irregular e não usam 'mais': 'bom' → melhor (não 'mais bom'), 'ruim' → pior, 'grande' → maior, 'pequeno' → menor."
-        ),
+        grammar(comparisonsBlocks[0].title, comparisonsBlocks[0].text),
 
         list([
 

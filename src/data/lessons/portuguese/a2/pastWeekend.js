@@ -1,3 +1,4 @@
+import { pastWeekendBlocks } from "../../../grammar/shared/portuguese/a2/pastWeekend";
 import {
     heading,
     paragraph,
@@ -108,10 +109,7 @@ export const pastWeekendLesson = {
             { speaker: "Anna", text: "Só saí no domingo à noite para jantar. Foi ótimo!" }
         ]),
 
-        grammar(
-            "Pretérito Perfeito",
-            "Verbos regulares: -ar → -ei, -ou, -amos, -aram ('falei, falou, falamos, falaram'); -er → -i, -eu, -emos, -eram ('comi, comeu, comemos, comeram'); -ir → -i, -iu, -imos, -iram ('parti, partiu, partimos, partiram'). Verbos irregulares importantes: 'ir'/'ser' → fui, foi, fomos, foram; 'ter' → tive, teve, tivemos, tiveram; 'fazer' → fiz, fez, fizemos, fizeram."
-        ),
+        grammar(pastWeekendBlocks[0].title, pastWeekendBlocks[0].text),
 
         list([
 

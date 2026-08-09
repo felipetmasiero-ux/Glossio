@@ -1,3 +1,4 @@
+import { freeTimeBlocks } from "../../../grammar/shared/portuguese/a2/freeTime";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const freeTimeLesson = {
             { speaker: "Marco", text: "Combinado! Assim a gente se diverte sem se cansar demais." }
         ]),
 
-        grammar(
-            "Ter Vontade De / Estar a Fim De / Preferir",
-            "'Ter vontade de' + infinitivo expressa desejo: 'Tenho vontade de viajar.' 'Estar a fim de' + infinitivo é mais informal, comum na fala: 'Estou a fim de sair.' 'Preferir' + infinitivo ou substantivo compara opções: 'Prefiro relaxar em casa.' / 'Prefiro chá a café.'"
-        ),
+        grammar(freeTimeBlocks[0].title, freeTimeBlocks[0].text),
 
         list([
 

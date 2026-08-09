@@ -1,3 +1,4 @@
+import { hotelBlocks } from "../../../grammar/shared/portuguese/a2/hotel";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const hotelLesson = {
             { speaker: "Recepcionista", text: "Se precisarem de qualquer coisa, é só ligar para a recepção." }
         ]),
 
-        grammar(
-            "Se + Presente, + Futuro",
-            "Para falar de uma condição real e o resultado dela, use 'se' + presente do indicativo na primeira parte, e futuro (ou 'ir + infinitivo') na segunda: 'Se tiver barulho, vou reclamar.' / 'Se não houver vaga, procuraremos outro hotel.' A ordem das partes pode ser invertida sem mudar o sentido."
-        ),
+        grammar(hotelBlocks[0].title, hotelBlocks[0].text),
 
         list([
 

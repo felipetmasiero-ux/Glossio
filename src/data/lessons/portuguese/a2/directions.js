@@ -1,3 +1,4 @@
+import { directionsBlocks } from "../../../grammar/shared/portuguese/a2/directions";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const directionsLesson = {
             { speaker: "Marco", text: "Atravesse a rua - a entrada do metrô fica bem ali, do lado do ponto de ônibus." }
         ]),
 
-        grammar(
-            "Imperativo (Você)",
-            "Para dar instruções ou comandos com 'você', use a forma do imperativo: vá (ir), siga (seguir), vire (virar), atravesse (atravessar), pegue (pegar), desça (descer). Essas formas terminam em -e (verbos -ar) ou -a (verbos -er/-ir)."
-        ),
+        grammar(directionsBlocks[0].title, directionsBlocks[0].text),
 
         list([
 

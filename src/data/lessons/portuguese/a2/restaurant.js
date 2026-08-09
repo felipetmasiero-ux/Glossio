@@ -1,3 +1,4 @@
+import { restaurantBlocks } from "../../../grammar/shared/portuguese/a2/restaurant";
 import {
     heading,
     paragraph,
@@ -107,10 +108,7 @@ export const restaurantLesson = {
             { speaker: "Marco", text: "Duas águas, uma delas sem gelo, por favor. E poderia trazer a conta com a sobremesa?" }
         ]),
 
-        grammar(
-            "Poderia + Infinitivo",
-            "'Poderia' (do verbo 'poder' no condicional) torna um pedido mais educado do que 'pode': 'Poderia me trazer o cardápio?' é mais formal e cortês do que 'Pode me trazer o cardápio?'. Use com infinitivo: poderia trazer, poderia recomendar, poderia esperar."
-        ),
+        grammar(restaurantBlocks[0].title, restaurantBlocks[0].text),
 
         list([
 
