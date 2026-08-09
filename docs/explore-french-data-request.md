@@ -8,7 +8,13 @@ O usuário checou manualmente a descrição ("Mostrar mais") de cada um dos 7 v�
 
 Decisão tomada em conjunto: **remover os 7 vídeos** (`src/data/videos/french/index.js` voltou a `[]]`) e **não investir mais esforço no Explore por enquanto** - não só pelo risco jurídico, mas porque o produto está em estágio de validação (poucos usuários reais) e não há evidência ainda de que o Explore gera retenção o suficiente para justificar o esforço de curadoria + verificação de licença por vídeo.
 
-Nota importante registrada durante essa decisão: a mesma pergunta de licença (transcript armazenado = reprodução, não coberta por embed) se aplica, em teoria, aos 31 vídeos de English já existentes no catálogo antes desta sessão - eles nunca foram auditados quanto a isso. Não foi uma ação tomada aqui, só uma observação para referência futura caso o Explore volte a ser prioridade.
+Nota registrada durante essa decisão: a mesma pergunta de licença (transcript armazenado = reprodução, não coberta por embed) se aplicava, em teoria, aos 31 vídeos de English já existentes no catálogo antes desta sessão - eles nunca tinham sido auditados quanto a isso.
+
+## Atualização (2026-08-10): English resolvido também
+
+Em vez de deixar essa nota como pendência em aberto, o campo `transcript` dos 31 vídeos de English foi zerado (`transcript: []` em `src/data/videos/english/index.js`), mesma solução aplicada ao francês antes de removê-lo: mantém o vídeo, o embed, a curadoria (título/nível/tópico/descrição) e a contagem pra streak/dashboard, só sem a reprodução do texto do transcript. `InteractiveTranscript` já tratava `transcript: []` como estado válido antes dessa mudança (mostra "Transcrição indisponível"), então nenhum componente foi alterado - só o dado. Nenhum outro trecho do app lê `video.transcript` além de `InteractiveTranscript`/`normalizeVideo.js` (confirmado por busca global), então a mudança é isolada por construção.
+
+Com isso, o problema de transcript/licenciamento está **encerrado** para os dois idiomas - não é mais uma pendência em aberto.
 
 ## Vídeos removidos (7)
 
