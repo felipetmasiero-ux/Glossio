@@ -26,13 +26,13 @@ export const hotelLesson = {
 
     order: 10,
 
-    title: "At the Hotel",
+    title: "No Hotel",
 
     subtitle:
-        "Check in, ask about hotel services, and talk about conditions with the first conditional.",
+        "Faça o check-in, pergunte sobre serviços do hotel e fale sobre condições com o first conditional em inglês.",
 
     description:
-        "Learn hotel vocabulary and how to make simple predictions and conditions using the first conditional (if + present, will + verb).",
+        "Aprenda vocabulário de hotel e como fazer previsões e condições simples usando o first conditional (if + presente, will + verbo).",
 
     cover: "/covers/hotel.webp",
 

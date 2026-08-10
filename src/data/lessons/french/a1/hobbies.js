@@ -28,10 +28,10 @@ export const hobbiesLesson = {
     title: "Hobbies",
 
     subtitle:
-        "Talk about free time and what you like to do.",
+        "Fale sobre tempo livre e o que você gosta de fazer em francês.",
 
     description:
-        "Learn how to talk about hobbies and free-time activities using 'aimer' and 'jouer' in French.",
+        "Aprenda a falar sobre hobbies e atividades de tempo livre usando 'aimer' e 'jouer' em francês.",
 
     cover: "/covers/hobbies.webp",
 

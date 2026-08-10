@@ -29,10 +29,10 @@ export const hobbiesLesson = {
     title: "Hobbies",
 
     subtitle:
-        "Talk about your free time activities using gerunds after 'like', 'love' and 'be interested in'.",
+        "Fale sobre suas atividades de tempo livre usando gerúndio depois de 'like', 'love' e 'be interested in' em inglês.",
 
     description:
-        "Learn hobby vocabulary and how to use the -ing form after verbs like 'enjoy' and expressions like 'be interested in'.",
+        "Aprenda vocabulário de hobbies e como usar a forma -ing depois de verbos como 'enjoy' e expressões como 'be interested in'.",
 
     cover: "/covers/hobbies.webp",
 

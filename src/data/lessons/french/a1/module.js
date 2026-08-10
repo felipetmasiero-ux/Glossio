@@ -23,10 +23,10 @@ export const frenchA1Module = {
 
     order: 1,
 
-    title: "French A1",
+    title: "Francês A1",
 
     description:
-        "Learn the foundations of French through practical lessons.",
+        "Aprenda os fundamentos do francês com lições práticas.",
 
     lessons: [
 

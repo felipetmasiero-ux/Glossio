@@ -26,13 +26,13 @@ export const weatherLesson = {
 
     order: 10,
 
-    title: "Weather",
+    title: "Clima",
 
     subtitle:
-        "Describe the weather and talk about the seasons.",
+        "Descreva o tempo e fale sobre as estações do ano em francês.",
 
     description:
-        "Learn how to describe the weather in French using the impersonal 'il' and common weather expressions.",
+        "Aprenda a descrever o clima em francês usando o 'il' impessoal e expressões comuns sobre o tempo.",
 
     cover: "/covers/weather.webp",
 

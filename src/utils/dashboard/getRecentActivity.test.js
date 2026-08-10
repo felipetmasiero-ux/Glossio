@@ -37,7 +37,7 @@ describe("getRecentActivity", () => {
         expect(days[0].dateLabel).toBe("Hoje");
         expect(days[0].items).toEqual(
             expect.arrayContaining([
-                { icon: "book", label: 'Concluiu "Family"' },
+                { icon: "book", label: 'Concluiu "Família"' },
                 { icon: "cards", label: "Revisou 2 palavras" }
             ])
         );

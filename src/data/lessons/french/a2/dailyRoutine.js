@@ -25,13 +25,13 @@ export const dailyRoutineA2Lesson = {
 
     order: 1,
 
-    title: "Daily Routine",
+    title: "Rotina Diária",
 
     subtitle:
-        "Talk about how often you do things, and describe your habits in more detail.",
+        "Fale sobre a frequência com que você faz as coisas e descreva seus hábitos com mais detalhe em francês.",
 
     description:
-        "Go beyond simple daily routine phrases and learn to describe how often you do things using adverbs of frequency.",
+        "Vá além das frases básicas de rotina e aprenda a descrever a frequência de uma ação usando advérbios de frequência.",
 
     cover: "/covers/daily-routine-a2.webp",
 

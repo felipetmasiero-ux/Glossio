@@ -26,13 +26,13 @@ export const makingPlansLesson = {
 
     order: 11,
 
-    title: "Making Plans",
+    title: "Fazendo Planos",
 
     subtitle:
-        "Arrange to meet friends and talk about future plans using the futur proche.",
+        "Combine encontros com amigos e fale sobre planos futuros usando o futur proche em francês.",
 
     description:
-        "Learn how to make, confirm and cancel plans, and use the futur proche to talk about arranged future events.",
+        "Aprenda a fazer, confirmar e cancelar planos, e use o futur proche para falar de eventos futuros já combinados.",
 
     cover: "/covers/making-plans.webp",
 

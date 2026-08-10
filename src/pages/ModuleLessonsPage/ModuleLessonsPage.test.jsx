@@ -32,7 +32,7 @@ describe("ModuleLessonsPage", () => {
 
         renderPage("/lessons/module/english-a1");
 
-        expect(screen.getByText("English A1")).not.toBeNull();
+        expect(screen.getByText("Inglês A1")).not.toBeNull();
 
     });
 

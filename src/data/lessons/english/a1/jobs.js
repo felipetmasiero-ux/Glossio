@@ -26,13 +26,13 @@ export const jobsLesson = {
 
     order: 7,
 
-    title: "Jobs",
+    title: "Profissões",
 
     subtitle:
-        "Talk about occupations and what people do for a living.",
+        "Fale sobre ocupações e o que as pessoas fazem profissionalmente em inglês.",
 
     description:
-        "Learn common job titles in English and how to ask and answer 'What do you do?'",
+        "Aprenda os nomes de profissões mais comuns em inglês e como perguntar e responder 'What do you do?'",
 
     cover: "/covers/jobs.webp",
 

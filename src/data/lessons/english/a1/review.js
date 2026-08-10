@@ -22,13 +22,13 @@ export const reviewLesson = {
 
     order: 12,
 
-    title: "A1 Module Review",
+    title: "Revisão do Módulo A1",
 
     subtitle:
-        "Review everything you've learned in the A1 module.",
+        "Revise tudo o que você aprendeu no módulo A1 de inglês.",
 
     description:
-        "A final review of greetings, introductions, countries, numbers, family, jobs, present simple, routines, food and restaurants.",
+        "Uma revisão final de cumprimentos, apresentações, países, números, família, profissões, presente simples, rotinas, comida e restaurante.",
 
     cover: "/covers/review.webp",
 

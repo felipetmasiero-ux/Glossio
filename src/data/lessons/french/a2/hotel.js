@@ -26,13 +26,13 @@ export const hotelLesson = {
 
     order: 10,
 
-    title: "At the Hotel",
+    title: "No Hotel",
 
     subtitle:
-        "Check in, ask about hotel services, and talk about conditions with the first conditional.",
+        "Faça o check-in, pergunte sobre serviços do hotel e fale sobre condições com o condicional em francês.",
 
     description:
-        "Learn hotel vocabulary and how to make simple predictions and conditions using 'si + présent, futur simple'.",
+        "Aprenda vocabulário de hotel e como fazer previsões e condições simples usando 'si + présent, futur simple'.",
 
     cover: "/covers/hotel.webp",
 

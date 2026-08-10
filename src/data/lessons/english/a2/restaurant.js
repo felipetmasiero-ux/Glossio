@@ -25,13 +25,13 @@ export const restaurantA2Lesson = {
 
     order: 9,
 
-    title: "At the Restaurant",
+    title: "No Restaurante",
 
     subtitle:
-        "Make polite requests, order a full meal, and handle a restaurant reservation.",
+        "Faça pedidos educados, peça uma refeição completa e lide com uma reserva de restaurante em inglês.",
 
     description:
-        "Go beyond basic ordering and learn to make polite requests with 'could' and 'would', and order a starter, main course and dessert.",
+        "Vá além do pedido básico e aprenda a fazer pedidos educados com 'could' e 'would', pedindo entrada, prato principal e sobremesa.",
 
     cover: "/covers/restaurant-a2.webp",
 

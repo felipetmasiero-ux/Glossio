@@ -20,10 +20,10 @@ export const greetingsLesson = {
   topic: "greetings",
   order: 1,
 
-  title: "Greetings",
-  subtitle: "Learn how to greet people and start simple conversations.",
+  title: "Cumprimentos",
+  subtitle: "Aprenda a cumprimentar pessoas e iniciar conversas simples em inglês.",
   description:
-    "Learn how English speakers greet each other, formally and informally, and how to say goodbye politely.",
+    "Aprenda como os falantes de inglês se cumprimentam, formal e informalmente, e como se despedir educadamente.",
 
   cover: "/covers/greetings.webp",
 

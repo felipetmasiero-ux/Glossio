@@ -25,13 +25,13 @@ export const healthLesson = {
 
     order: 3,
 
-    title: "Health",
+    title: "Saúde",
 
     subtitle:
-        "Describe symptoms, ask for advice, and talk about visits to the doctor.",
+        "Descreva sintomas, peça conselhos e fale sobre ir ao médico em francês.",
 
     description:
-        "Learn how to describe how you feel, common symptoms and illnesses, and how to give and ask for advice using 'devoir'.",
+        "Aprenda a descrever como você se sente, sintomas e doenças comuns, e como dar e pedir conselhos usando 'devoir'.",
 
     cover: "/covers/health.webp",
 
