@@ -23,10 +23,10 @@ export const englishA2Module = {
 
     order: 2,
 
-    title: "English A2",
+    title: "Inglês A2",
 
     description:
-        "Build on the basics with everyday situations: routines, shopping, health, weather, transportation, technology, hobbies, feelings, restaurants, hotels, plans and life experiences.",
+        "Avance com situações do dia a dia: rotina, compras, saúde, clima, transporte, tecnologia, hobbies, sentimentos, restaurante, hotel, planos e experiências de vida.",
 
     lessons: [
 

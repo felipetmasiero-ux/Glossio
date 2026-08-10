@@ -26,13 +26,13 @@ export const familyLesson = {
 
     order: 6,
 
-    title: "Family",
+    title: "Família",
 
     subtitle:
-        "Talk about your family members.",
+        "Fale sobre os membros da sua família em inglês.",
 
     description:
-        "Learn the words for family members and how to talk about your parents, siblings and relatives.",
+        "Aprenda as palavras para os membros da família e como falar sobre pais, irmãos e parentes.",
 
     cover: "/covers/family.webp",
 

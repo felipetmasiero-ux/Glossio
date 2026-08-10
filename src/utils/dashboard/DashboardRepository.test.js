@@ -165,7 +165,7 @@ describe("DashboardRepository.getRecentAchievement", () => {
         });
 
         expect(achievement).not.toBeNull();
-        expect(achievement.title).toContain("English A1");
+        expect(achievement.title).toContain("Inglês A1");
 
     });
 

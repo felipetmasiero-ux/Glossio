@@ -23,10 +23,10 @@ export const frenchA2Module = {
 
     order: 2,
 
-    title: "French A2",
+    title: "Francês A2",
 
     description:
-        "Build on the basics with everyday situations: routines, shopping, health, weather, transportation, technology, hobbies, feelings, restaurants, hotels, plans and life experiences.",
+        "Avance com situações do dia a dia: rotina, compras, saúde, clima, transporte, tecnologia, hobbies, sentimentos, restaurante, hotel, planos e experiências de vida.",
 
     lessons: [
 

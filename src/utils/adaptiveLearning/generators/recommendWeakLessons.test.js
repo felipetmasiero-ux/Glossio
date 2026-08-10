@@ -24,7 +24,7 @@ describe("recommendWeakLessons", () => {
             href: "/lessons/english-a1-greetings",
             reason: "Você acertou apenas 33% nesta lição."
         });
-        expect(result[0].title).toContain("Greetings");
+        expect(result[0].title).toContain("Cumprimentos");
 
     });
 

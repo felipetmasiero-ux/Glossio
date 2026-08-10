@@ -20,10 +20,10 @@ export const introductionsLesson = {
   topic: "introductions",
   order: 2,
 
-  title: "Introductions",
-  subtitle: "Introduce yourself and ask about other people.",
+  title: "Apresentações",
+  subtitle: "Apresente-se e pergunte sobre outras pessoas em francês.",
   description:
-    "Learn how to introduce yourself, ask someone's name and where they are from, and react politely when you meet someone new.",
+    "Aprenda a se apresentar, perguntar o nome e de onde alguém é, e reagir educadamente ao conhecer alguém novo.",
 
   cover: "/covers/introductions.webp",
 

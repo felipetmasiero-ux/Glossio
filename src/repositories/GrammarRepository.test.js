@@ -115,7 +115,7 @@ describe("GrammarRepository", () => {
 
             expect(lesson).not.toBeNull();
             expect(lesson.id).toBe("english-a1-present-simple");
-            expect(lesson.title).toBe("Present Simple");
+            expect(lesson.title).toBe("Presente Simples");
 
         });
 

@@ -26,13 +26,13 @@ export const shoppingLesson = {
 
     order: 2,
 
-    title: "Shopping",
+    title: "Compras",
 
     subtitle:
-        "Shop for clothes, compare prices, and handle a store checkout in English.",
+        "Compre roupas, compare preços e finalize uma compra em inglês.",
 
     description:
-        "Learn shopping vocabulary and how to compare prices and sizes using comparative adjectives.",
+        "Aprenda vocabulário de compras e como comparar preços e tamanhos usando adjetivos comparativos.",
 
     cover: "/covers/shopping.webp",
 

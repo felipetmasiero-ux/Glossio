@@ -25,13 +25,13 @@ export const feelingsLesson = {
 
     order: 8,
 
-    title: "Feelings & Emotions",
+    title: "Sentimentos e Emoções",
 
     subtitle:
-        "Describe how you feel and what causes that feeling, using -ed and -ing adjectives.",
+        "Descreva como você se sente e o que causa esse sentimento, usando adjetivos -ed e -ing em inglês.",
 
     description:
-        "Learn to describe emotions and the difference between -ed adjectives (how you feel) and -ing adjectives (what causes the feeling).",
+        "Aprenda a descrever emoções e a diferença entre adjetivos -ed (como você se sente) e -ing (o que causa o sentimento).",
 
     cover: "/covers/feelings.webp",
 

@@ -20,10 +20,10 @@ export const countriesLesson = {
   topic: "countries",
   order: 3,
 
-  title: "Countries & Nationalities",
-  subtitle: "Learn how to talk about countries and where people come from.",
+  title: "Países e Nacionalidades",
+  subtitle: "Aprenda a falar sobre países e de onde as pessoas vêm.",
   description:
-    "Build your vocabulary with common countries and nationalities used in everyday French conversations.",
+    "Amplie seu vocabulário com países e nacionalidades comuns usados em conversas do dia a dia em francês.",
 
   cover: "/covers/countries.webp",
 

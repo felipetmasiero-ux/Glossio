@@ -26,13 +26,13 @@ export const technologyLesson = {
 
     order: 6,
 
-    title: "Technology",
+    title: "Tecnologia",
 
     subtitle:
-        "Talk about devices and apps, and describe how technology has changed with the imparfait.",
+        "Fale sobre aparelhos e aplicativos, e descreva como a tecnologia mudou usando o imparfait em francês.",
 
     description:
-        "Learn technology vocabulary and how to contrast past habits with the present using the imparfait.",
+        "Aprenda vocabulário de tecnologia e como contrastar hábitos do passado com o presente usando o imparfait.",
 
     cover: "/covers/technology.webp",
 

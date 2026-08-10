@@ -26,13 +26,13 @@ export const travelLesson = {
 
     order: 9,
 
-    title: "Travel",
+    title: "Viagem",
 
     subtitle:
-        "Talk about trips, tickets and getting around.",
+        "Fale sobre viagens, passagens e como se deslocar em francês.",
 
     description:
-        "Learn essential travel vocabulary in French, from booking a ticket to checking into a hotel room.",
+        "Aprenda vocabulário essencial de viagem em francês, desde comprar uma passagem até fazer check-in em um hotel.",
 
     cover: "/covers/travel.webp",
 

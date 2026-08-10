@@ -25,13 +25,13 @@ export const shoppingLesson = {
 
     order: 11,
 
-    title: "Shopping",
+    title: "Compras",
 
     subtitle:
-        "Ask about prices and shop with confidence.",
+        "Pergunte sobre preços e faça compras com confiança em francês.",
 
     description:
-        "Learn how to ask for things, ask about prices and pay in a store using common French shopping expressions.",
+        "Aprenda a pedir coisas, perguntar preços e pagar em uma loja usando expressões comuns de compras em francês.",
 
     cover: "/covers/shopping.webp",
 

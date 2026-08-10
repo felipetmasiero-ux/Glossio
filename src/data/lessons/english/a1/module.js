@@ -23,10 +23,10 @@ export const englishA1Module = {
 
     order: 1,
 
-    title: "English A1",
+    title: "Inglês A1",
 
     description:
-        "Learn the foundations of English through practical lessons.",
+        "Aprenda os fundamentos do inglês com lições práticas.",
 
     lessons: [
 

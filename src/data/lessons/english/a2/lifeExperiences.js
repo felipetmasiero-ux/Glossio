@@ -26,13 +26,13 @@ export const lifeExperiencesLesson = {
 
     order: 12,
 
-    title: "Life Experiences",
+    title: "Experiências de Vida",
 
     subtitle:
-        "Talk about things you have and haven't done in your life using the present perfect.",
+        "Fale sobre o que você já fez e ainda não fez na vida usando o present perfect em inglês.",
 
     description:
-        "Learn how to talk about life experiences using the present perfect with 'ever', 'never', 'already' and 'yet'.",
+        "Aprenda a falar sobre experiências de vida usando o present perfect com 'ever', 'never', 'already' e 'yet'.",
 
     cover: "/covers/life-experiences.webp",
 

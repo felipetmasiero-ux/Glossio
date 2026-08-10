@@ -28,10 +28,10 @@ export const hobbiesLesson = {
     title: "Hobbies",
 
     subtitle:
-        "Talk about your free time activities using the infinitive after 'aimer', 'adorer' and 'détester'.",
+        "Fale sobre suas atividades de tempo livre usando o infinitivo depois de 'aimer', 'adorer' e 'détester' em francês.",
 
     description:
-        "Learn hobby vocabulary and how to use the infinitive after verbs like 'aimer' and expressions like 's'intéresser à'.",
+        "Aprenda vocabulário de hobbies e como usar o infinitivo depois de verbos como 'aimer' e expressões como 's'intéresser à'.",
 
     cover: "/covers/hobbies.webp",
 

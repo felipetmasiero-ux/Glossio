@@ -26,13 +26,13 @@ export const lifeExperiencesLesson = {
 
     order: 12,
 
-    title: "Life Experiences",
+    title: "Experiências de Vida",
 
     subtitle:
-        "Talk about things you have and haven't done in your life using the passé composé.",
+        "Fale sobre o que você já fez e ainda não fez na vida usando o passé composé em francês.",
 
     description:
-        "Learn how to talk about life experiences using the passé composé with 'déjà', 'jamais' and 'ne... pas encore'.",
+        "Aprenda a falar sobre experiências de vida usando o passé composé com 'déjà', 'jamais' e 'ne... pas encore'.",
 
     cover: "/covers/life-experiences.webp",
 

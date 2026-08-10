@@ -25,13 +25,13 @@ export const presentSimpleLesson = {
 
     order: 8,
 
-    title: "Present Simple",
+    title: "Presente Simples",
 
     subtitle:
-        "Talk about habits, routines and facts.",
+        "Fale sobre hábitos, rotinas e fatos em inglês.",
 
     description:
-        "Learn how to form the present simple tense in English and use it to talk about habits, routines and general facts.",
+        "Aprenda a formar o presente simples em inglês e usá-lo para falar de hábitos, rotinas e fatos gerais.",
 
     cover: "/covers/present-simple.webp",
 

@@ -25,13 +25,13 @@ export const countriesLesson = {
 
     order: 3,
 
-    title: "Countries & Nationalities",
+    title: "Países e Nacionalidades",
 
     subtitle:
-        "Learn how to talk about countries and where people come from.",
+        "Aprenda a falar sobre países e de onde as pessoas vêm.",
 
     description:
-        "Build your vocabulary with common countries and nationalities used in everyday conversations.",
+        "Amplie seu vocabulário com países e nacionalidades comuns usados em conversas do dia a dia em inglês.",
 
     cover: "/covers/countries.webp",
 

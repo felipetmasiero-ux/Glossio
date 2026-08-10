@@ -25,13 +25,13 @@ export const weatherLesson = {
 
     order: 4,
 
-    title: "Weather",
+    title: "Clima",
 
     subtitle:
-        "Talk about the weather and make simple predictions with the futur simple.",
+        "Fale sobre o tempo e faça previsões simples com o futur simple em francês.",
 
     description:
-        "Learn weather vocabulary and how to make predictions about the future using the futur simple.",
+        "Aprenda vocabulário de clima e como fazer previsões sobre o futuro usando o futur simple.",
 
     cover: "/covers/weather.webp",
 

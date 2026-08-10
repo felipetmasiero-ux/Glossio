@@ -25,13 +25,13 @@ export const introductionsLesson = {
 
     order: 2,
 
-    title: "Introductions",
+    title: "Apresentações",
 
     subtitle:
-        "Introduce yourself and meet new people.",
+        "Apresente-se e conheça novas pessoas em inglês.",
 
     description:
-        "Learn how to say your name, ask someone else's name and tell where you are from.",
+        "Aprenda a dizer seu nome, perguntar o nome de alguém e dizer de onde você é.",
 
     cover: "/covers/introductions.webp",
 

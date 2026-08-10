@@ -25,13 +25,13 @@ export const dailyRoutineLesson = {
 
     order: 9,
 
-    title: "Daily Routine",
+    title: "Rotina Diária",
 
     subtitle:
-        "Describe your typical day from morning to night.",
+        "Descreva seu dia típico do início ao fim em inglês.",
 
     description:
-        "Learn the vocabulary and time expressions you need to describe a typical day, from waking up to going to bed.",
+        "Aprenda o vocabulário e as expressões de tempo necessárias para descrever um dia típico, do acordar ao dormir.",
 
     cover: "/covers/daily-routine.webp",
 

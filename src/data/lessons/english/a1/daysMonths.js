@@ -26,13 +26,13 @@ export const daysMonthsLesson = {
 
     order: 5,
 
-    title: "Days & Months",
+    title: "Dias e Meses",
 
     subtitle:
-        "Talk about the days of the week, the months and dates.",
+        "Fale sobre os dias da semana, os meses e datas em inglês.",
 
     description:
-        "Learn the days of the week, the months of the year, and how to talk about dates and plans.",
+        "Aprenda os dias da semana, os meses do ano e como falar sobre datas e planos em inglês.",
 
     cover: "/covers/days-months.webp",
 

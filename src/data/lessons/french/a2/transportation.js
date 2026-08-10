@@ -25,13 +25,13 @@ export const transportationLesson = {
 
     order: 5,
 
-    title: "Transportation",
+    title: "Transporte",
 
     subtitle:
-        "Talk about how you get around, and ask for directions and information about transport.",
+        "Fale sobre como você se desloca, e peça direções e informações sobre transporte em francês.",
 
     description:
-        "Learn transportation vocabulary and how to talk about how you travel using 'en' and 'à pied'.",
+        "Aprenda vocabulário de transporte e como falar sobre como você se desloca usando 'en' e 'à pied'.",
 
     cover: "/covers/transportation.webp",
 

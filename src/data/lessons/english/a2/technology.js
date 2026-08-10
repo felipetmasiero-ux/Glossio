@@ -25,13 +25,13 @@ export const technologyLesson = {
 
     order: 6,
 
-    title: "Technology",
+    title: "Tecnologia",
 
     subtitle:
-        "Talk about devices and apps, and describe how technology has changed with 'used to'.",
+        "Fale sobre aparelhos e aplicativos, e descreva como a tecnologia mudou usando 'used to' em inglês.",
 
     description:
-        "Learn technology vocabulary and how to contrast past habits with the present using 'used to'.",
+        "Aprenda vocabulário de tecnologia e como contrastar hábitos do passado com o presente usando 'used to'.",
 
     cover: "/covers/technology.webp",
 

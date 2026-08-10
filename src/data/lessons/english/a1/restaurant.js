@@ -25,13 +25,13 @@ export const restaurantLesson = {
 
     order: 11,
 
-    title: "At the Restaurant",
+    title: "No Restaurante",
 
     subtitle:
-        "Order food politely and ask for the bill.",
+        "Peça comida educadamente e peça a conta em inglês.",
 
     description:
-        "Learn the key phrases you need to order food, ask questions about the menu and pay the bill at a restaurant.",
+        "Aprenda as frases essenciais para pedir comida, tirar dúvidas sobre o cardápio e pagar a conta em um restaurante.",
 
     cover: "/covers/restaurant.webp",
 

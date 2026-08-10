@@ -15,7 +15,7 @@ describe("recommendContinueModule", () => {
             priority: 5,
             href: "/lessons/english-a1-greetings"
         });
-        expect(result[0].title).toContain("Greetings");
+        expect(result[0].title).toContain("Cumprimentos");
 
     });
 

@@ -25,13 +25,13 @@ export const feelingsLesson = {
 
     order: 8,
 
-    title: "Feelings & Emotions",
+    title: "Sentimentos e Emoções",
 
     subtitle:
-        "Describe how you feel and what causes that feeling, using participle and '-ant' adjectives.",
+        "Descreva como você se sente e o que causa esse sentimento, usando particípio e adjetivos em '-ant' em francês.",
 
     description:
-        "Learn to describe emotions and the difference between past-participle adjectives (how you feel) and '-ant' adjectives (what causes the feeling).",
+        "Aprenda a descrever emoções e a diferença entre adjetivos de particípio (como você se sente) e adjetivos em '-ant' (o que causa o sentimento).",
 
     cover: "/covers/feelings.webp",
 

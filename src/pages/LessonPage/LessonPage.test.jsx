@@ -55,7 +55,7 @@ describe("LessonPage", () => {
 
         renderPage("/lessons/english-a1-greetings");
 
-        expect(screen.getByRole("heading", { name: /Greetings/i })).not.toBeNull();
+        expect(screen.getByRole("heading", { name: /Cumprimentos/i })).not.toBeNull();
 
     });
 

@@ -26,13 +26,13 @@ export const foodLesson = {
 
     order: 10,
 
-    title: "Food",
+    title: "Comida",
 
     subtitle:
-        "Talk about meals, drinks and food preferences.",
+        "Fale sobre refeições, bebidas e preferências alimentares em inglês.",
 
     description:
-        "Learn common food and drink vocabulary and how to talk about what you like, want and eat every day.",
+        "Aprenda vocabulário comum de comida e bebida e como falar sobre o que você gosta, quer e come todos os dias.",
 
     cover: "/covers/food.webp",
 

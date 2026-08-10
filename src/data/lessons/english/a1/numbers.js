@@ -25,13 +25,13 @@ export const numbersLesson = {
 
     order: 4,
 
-    title: "Numbers",
+    title: "Números",
 
     subtitle:
-        "Count from zero to one hundred and talk about age.",
+        "Conte de zero a cem e fale sobre idade em inglês.",
 
     description:
-        "Learn the cardinal numbers in English and how to use them to count, share phone numbers and talk about age.",
+        "Aprenda os números cardinais em inglês e como usá-los para contar, informar telefone e falar de idade.",
 
     cover: "/covers/numbers.webp",
 

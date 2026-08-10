@@ -26,13 +26,13 @@ export const jobsLesson = {
 
     order: 8,
 
-    title: "Jobs",
+    title: "Profissões",
 
     subtitle:
-        "Talk about occupations and what people do for a living.",
+        "Fale sobre ocupações e o que as pessoas fazem profissionalmente em francês.",
 
     description:
-        "Learn common job titles in French and how to ask and answer 'Qu'est-ce que tu fais dans la vie ?'",
+        "Aprenda os nomes de profissões mais comuns em francês e como perguntar e responder 'Qu'est-ce que tu fais dans la vie ?'",
 
     cover: "/covers/jobs.webp",
 
