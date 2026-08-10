@@ -35,7 +35,7 @@ describe("ModulesPage", () => {
 
         renderPage("/lessons/language/english");
 
-        expect(screen.getByText("English")).not.toBeNull();
+        expect(screen.getByText("Inglês")).not.toBeNull();
         expect(screen.queryByText("Nenhum módulo ainda")).toBeNull();
 
     });
@@ -44,7 +44,7 @@ describe("ModulesPage", () => {
 
         renderPage("/lessons/language/french");
 
-        expect(screen.getByText("French")).not.toBeNull();
+        expect(screen.getByText("Francês")).not.toBeNull();
 
     });
 
