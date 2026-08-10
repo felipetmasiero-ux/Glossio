@@ -7,10 +7,10 @@ export const portugueseCourse = {
 
     language: "portuguese",
 
-    title: "Portuguese",
+    title: "Português",
 
     description:
-        "Learn Portuguese from the ground up, one module at a time.",
+        "Aprenda português do zero com lições gratuitas organizadas por nível (CEFR), vocabulário prático e revisão espaçada.",
 
     cover: "/covers/portuguese.webp",
 

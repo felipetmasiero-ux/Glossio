@@ -7,10 +7,10 @@ export const frenchCourse = {
 
     language: "french",
 
-    title: "French",
+    title: "Francês",
 
     description:
-        "Learn French from the ground up, one module at a time.",
+        "Aprenda francês do zero com lições gratuitas organizadas por nível (CEFR), vocabulário prático e revisão espaçada.",
 
     cover: "/covers/french.webp",
 

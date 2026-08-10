@@ -1,0 +1,21 @@
+# Glossio
+
+> Aplicativo gratuito para aprender inglês, francês ou português com lições estruturadas por nível (CEFR), vocabulário com tradução instantânea, flashcards com revisão espaçada e exercícios gerados a partir do conteúdo de cada lição.
+
+Glossio é indicado para quem quer aprender um novo idioma do zero, ou retomar estudos que abandonou, com conteúdo estruturado por nível (A1 e A2 disponíveis hoje, mais níveis a caminho) e prática real de vocabulário, gramática e compreensão. Não é necessário criar conta para conhecer o conteúdo - é possível navegar as lições publicamente antes de se cadastrar.
+
+## Idiomas disponíveis
+
+- [Aprender inglês](https://www.glossio.pro/lessons/language/english): lições A1 e A2, do zero ao intermediário básico.
+- [Aprender francês](https://www.glossio.pro/lessons/language/french): lições A1 e A2, do zero ao intermediário básico.
+- [Aprender português](https://www.glossio.pro/lessons/language/portuguese): lições A1 e A2, do zero ao intermediário básico.
+
+## Como começar
+
+- [Escolher idioma](https://www.glossio.pro/languages): navegar as lições gratuitamente, sem precisar criar conta.
+- [Teste de nivelamento](https://www.glossio.pro/placement-test): descobre em poucos minutos qual nível é o ponto de partida ideal para quem já sabe algo do idioma.
+- [Criar conta gratuita](https://www.glossio.pro/register): salva progresso, flashcards pessoais e sequência (streak) de estudo.
+
+## Metodologia
+
+Cada lição combina exemplos e diálogos reais no idioma-alvo, explicação da estrutura gramatical do momento, vocabulário com tradução clicável, e exercícios gerados automaticamente (múltipla escolha, completar lacuna, ordenar frase, compreensão auditiva) a partir do próprio conteúdo da lição. Palavras podem ser salvas em flashcards pessoais com repetição espaçada (SRS).
