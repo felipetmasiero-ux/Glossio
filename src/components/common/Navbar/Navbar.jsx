@@ -45,7 +45,7 @@ export function Navbar() {
         <div className="navbar__inner">
           <Link to="/home" className="navbar__logo">
             <span className="navbar__logo-icon">
-              <Icon name="book" size={16} />
+              <img src="/logo.png" alt="" className="navbar__logo-image" />
             </span>
             <span className="navbar__logo-name">Glossio</span>
           </Link>
@@ -69,7 +69,7 @@ export function Navbar() {
       <div className="navbar__inner">
         <Link to="/home" className="navbar__logo">
           <span className="navbar__logo-icon">
-            <Icon name="book" size={16} />
+            <img src="/logo.png" alt="" className="navbar__logo-image" />
           </span>
           <span className="navbar__logo-name">Glossio</span>
         </Link>
