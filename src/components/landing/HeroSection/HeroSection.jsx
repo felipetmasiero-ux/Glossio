@@ -29,7 +29,7 @@ export function HeroSection({ onPrimaryCta }) {
             <div className="landing-hero__illustration" aria-hidden="true">
                 <div className="landing-hero__card landing-hero__card--back card card--notch" />
                 <div className="landing-hero__card landing-hero__card--front card card--notch">
-                    <Icon name="book" size={30} />
+                    <img src="/logo.png" alt="" className="landing-hero__logo-image" />
                 </div>
             </div>
 
