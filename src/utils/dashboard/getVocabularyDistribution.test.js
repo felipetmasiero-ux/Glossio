@@ -9,7 +9,7 @@ describe("getVocabularyDistribution", () => {
 
         const distribution = getVocabularyDistribution({ flashcards: [], language: "English" });
 
-        expect(distribution.map(entry => entry.level)).toEqual(["A1", "A2"]);
+        expect(distribution.map(entry => entry.level)).toEqual(["A1", "A2", "B1"]);
         expect(distribution.every(entry => entry.known === 0)).toBe(true);
         expect(distribution.every(entry => entry.percentage === 0)).toBe(true);
         expect(distribution.find(entry => entry.level === "A1").total).toBe(

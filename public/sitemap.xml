@@ -161,6 +161,71 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.glossio.pro/lessons/module/english-b1</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-experiences</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-goals</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-relationships</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-work</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-travel-problems</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-health-lifestyle</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-technology-habits</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-opinions</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-environment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-media</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-news-stories</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/english-b1-review</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.glossio.pro/lessons/language/french</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
