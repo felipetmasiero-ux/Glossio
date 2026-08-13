@@ -46,7 +46,29 @@ export const TOPIC_LABELS = {
 
     "life-experiences": "Experiências de Vida",
 
-    "past-habits": "Hábitos do Passado"
+    "past-habits": "Hábitos do Passado",
+
+    experiences: "Experiências",
+
+    goals: "Planos e Metas",
+
+    relationships: "Relacionamentos",
+
+    work: "Vida Profissional",
+
+    "travel-problems": "Viagem e Imprevistos",
+
+    "health-lifestyle": "Saúde e Estilo de Vida",
+
+    "technology-habits": "Tecnologia e Comunicação",
+
+    opinions: "Opiniões e Sociedade",
+
+    environment: "Meio Ambiente",
+
+    media: "Mídia e Cultura",
+
+    "news-stories": "Notícias e Histórias"
 
 };
 
