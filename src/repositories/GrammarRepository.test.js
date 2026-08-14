@@ -48,9 +48,10 @@ describe("GrammarRepository", () => {
             const a1 = GrammarRepository.getByLevel("english", "A1");
             const a2 = GrammarRepository.getByLevel("english", "A2");
             const b1 = GrammarRepository.getByLevel("english", "B1");
+            const b2 = GrammarRepository.getByLevel("english", "B2");
             const all = GrammarRepository.getAll("english");
 
-            expect(all.length).toBe(a1.length + a2.length + b1.length);
+            expect(all.length).toBe(a1.length + a2.length + b1.length + b2.length);
 
         });
 

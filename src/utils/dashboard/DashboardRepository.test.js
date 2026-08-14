@@ -277,7 +277,7 @@ describe("DashboardRepository.getDashboardData", () => {
         expect(data.streakSummary).toEqual({ current: 0, longest: 0, daysThisMonth: 0 });
         expect(data.upcomingReviews).toEqual({ today: 0, tomorrow: 0, next7Days: 0 });
         expect(data.recentActivity).toEqual([]);
-        expect(data.vocabularyDistribution.map(entry => entry.level)).toEqual(["A1", "A2", "B1"]);
+        expect(data.vocabularyDistribution.map(entry => entry.level)).toEqual(["A1", "A2", "B1", "B2"]);
         expect(data.weeklyActivity).toHaveLength(8);
 
     });

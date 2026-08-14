@@ -68,7 +68,27 @@ export const TOPIC_LABELS = {
 
     media: "Mídia e Cultura",
 
-    "news-stories": "Notícias e Histórias"
+    "news-stories": "Notícias e Histórias",
+
+    "personal-development": "Desenvolvimento Pessoal",
+
+    education: "Educação",
+
+    "work-careers": "Carreira Profissional",
+
+    society: "Sociedade",
+
+    "science-technology": "Ciência e Tecnologia",
+
+    "media-news": "Mídia e Notícias",
+
+    "culture-arts": "Cultura e Artes",
+
+    "relationships-conflict": "Relacionamentos e Conflitos",
+
+    economics: "Economia",
+
+    debate: "Debate e Pensamento Crítico"
 
 };
 
