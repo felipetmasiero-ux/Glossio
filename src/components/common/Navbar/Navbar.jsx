@@ -16,7 +16,7 @@ const PUBLIC_PATHS_HIDDEN_WHEN_LOGGED_OUT = ["/placement-test"];
 
 export function Navbar() {
 
-  const { language } = useContext(LanguageContext);
+  const { language, setLanguage } = useContext(LanguageContext);
   const { user, isAuthenticated, logout } = useAuth();
 
   const location = useLocation();
@@ -61,6 +61,10 @@ export function Navbar() {
 
   function handleLogout() {
     logout();
+    // Reset the shared language state on logout, otherwise it survives in
+    // localStorage and leaks into whichever account is registered or logs
+    // in next on this same browser (see Register.jsx).
+    setLanguage("");
     navigate("/login", { replace: true });
   }
 
