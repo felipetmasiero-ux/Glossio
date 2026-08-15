@@ -26,7 +26,13 @@ export function Register() {
 
         try {
             await register({ name, email, password });
-            navigate(localStorage.getItem("language") ? "/home" : "/choose-language", { replace: true });
+            // A brand-new account never has a language chosen yet - unlike
+            // Login, this must never fall back to "/home" based on
+            // localStorage, which reflects the browser's last session, not
+            // this new account (see Navbar's handleLogout, which clears it
+            // precisely so it can't leak into the next account created on
+            // the same browser).
+            navigate("/choose-language", { replace: true });
         } catch (err) {
             setError(err.message);
         } finally {
