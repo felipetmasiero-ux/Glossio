@@ -491,6 +491,71 @@
     <priority>0.5</priority>
   </url>
   <url>
+    <loc>https://www.glossio.pro/lessons/module/french-b2</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-personal-development</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-education</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-work-careers</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-society</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-science-technology</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-environment</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-media-news</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-culture-arts</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-relationships-conflict</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-economics</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-debate</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
+    <loc>https://www.glossio.pro/lessons/french-b2-review</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  <url>
     <loc>https://www.glossio.pro/lessons/language/portuguese</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
