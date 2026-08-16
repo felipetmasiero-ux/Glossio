@@ -150,6 +150,19 @@ Allow: /lessons/portuguese-b1-environment
 Allow: /lessons/portuguese-b1-media
 Allow: /lessons/portuguese-b1-news-stories
 Allow: /lessons/portuguese-b1-review
+Allow: /lessons/module/portuguese-b2
+Allow: /lessons/portuguese-b2-personal-development
+Allow: /lessons/portuguese-b2-education
+Allow: /lessons/portuguese-b2-work-careers
+Allow: /lessons/portuguese-b2-society
+Allow: /lessons/portuguese-b2-science-technology
+Allow: /lessons/portuguese-b2-environment
+Allow: /lessons/portuguese-b2-media-news
+Allow: /lessons/portuguese-b2-culture-arts
+Allow: /lessons/portuguese-b2-relationships-conflict
+Allow: /lessons/portuguese-b2-economics
+Allow: /lessons/portuguese-b2-debate
+Allow: /lessons/portuguese-b2-review
 Disallow: /
 
 Sitemap: https://www.glossio.pro/sitemap.xml
