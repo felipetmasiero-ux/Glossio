@@ -88,7 +88,9 @@ export const TOPIC_LABELS = {
 
     economics: "Economia",
 
-    debate: "Debate e Pensamento Crítico"
+    debate: "Debate e Pensamento Crítico",
+
+    psychology: "Psicologia e Comportamento"
 
 };
 
