@@ -43,7 +43,7 @@ describe("English B1 module", () => {
         const course = CourseRepository.getByLanguage("english");
         const moduleIds = course.modules.map(module => module.id);
 
-        expect(moduleIds).toEqual(["english-a1", "english-a2", "english-b1", "english-b2"]);
+        expect(moduleIds).toEqual(["english-a1", "english-a2", "english-b1", "english-b2", "english-c1"]);
         expect(englishA1Module.lessons).toHaveLength(12);
         expect(englishA2Module.lessons).toHaveLength(12);
 
