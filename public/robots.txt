@@ -137,6 +137,19 @@ Allow: /lessons/portuguese-a2-restaurant
 Allow: /lessons/portuguese-a2-hotel
 Allow: /lessons/portuguese-a2-making-plans
 Allow: /lessons/portuguese-a2-life-journey
+Allow: /lessons/module/portuguese-b1
+Allow: /lessons/portuguese-b1-experiences
+Allow: /lessons/portuguese-b1-goals
+Allow: /lessons/portuguese-b1-relationships
+Allow: /lessons/portuguese-b1-work
+Allow: /lessons/portuguese-b1-travel-problems
+Allow: /lessons/portuguese-b1-health-lifestyle
+Allow: /lessons/portuguese-b1-technology-habits
+Allow: /lessons/portuguese-b1-opinions
+Allow: /lessons/portuguese-b1-environment
+Allow: /lessons/portuguese-b1-media
+Allow: /lessons/portuguese-b1-news-stories
+Allow: /lessons/portuguese-b1-review
 Disallow: /
 
 Sitemap: https://www.glossio.pro/sitemap.xml
