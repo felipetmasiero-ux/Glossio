@@ -43,7 +43,7 @@ const rawEntries = [
     { word: "de longo alcance", translation: "far-reaching", topic: "education" },
     { word: "decoreba", translation: "rote learning", partOfSpeech: "noun", topic: "education" },
     { word: "dar credibilidade a", translation: "to give credence to", topic: "education" },
-    { word: "uma regra geral", translation: "a rule of thumb", topic: "education" },
+    { word: "uma lacuna de conhecimento", translation: "a knowledge gap", topic: "education" },
     { word: "colocar em xeque", translation: "to call into question", topic: "education" },
 
     // Trabalho, carreira e comunicação profissional
@@ -148,7 +148,7 @@ const rawEntries = [
     { word: "sob os holofotes", translation: "under the spotlight", topic: "media-news" },
     { word: "espalhar um boato", translation: "to spread a rumor", topic: "media-news" },
     { word: "desconfiar de algo", translation: "to take something with a grain of salt", topic: "media-news" },
-    { word: "veículo de mídia", translation: "media outlet", topic: "media-news" },
+    { word: "um enquadramento tendencioso", translation: "a biased framing / slant", topic: "media-news" },
     { word: "influência midiática", translation: "media influence / clout", topic: "media-news" },
     { word: "objetividade", translation: "objectivity", partOfSpeech: "noun", topic: "media-news" },
     { word: "amplificar", translation: "to amplify", partOfSpeech: "verb", topic: "media-news" },

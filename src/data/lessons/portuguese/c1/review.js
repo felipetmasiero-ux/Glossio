@@ -69,7 +69,7 @@ export const c1ReviewLesson = {
         "numa encruzilhada",
         "em retrospecto",
         "colocar em xeque",
-        "uma regra geral",
+        "uma lacuna de conhecimento",
         "estar alinhado com",
         "parte interessada",
         "a ordem estabelecida",

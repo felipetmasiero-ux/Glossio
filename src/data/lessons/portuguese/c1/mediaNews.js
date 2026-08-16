@@ -81,7 +81,7 @@ export const mediaNewsLesson = {
         "sob os holofotes",
         "espalhar um boato",
         "desconfiar de algo",
-        "veículo de mídia",
+        "um enquadramento tendencioso",
         "influência midiática",
         "objetividade",
         "amplificar",
@@ -104,7 +104,7 @@ export const mediaNewsLesson = {
             { text: "Foi dito que o governo teria conhecimento do caso, segundo fontes não identificadas." },
             { text: "Especula-se que a decisão já estivesse tomada antes mesmo da reunião oficial." },
             { text: "Não aceite pelo valor aparente — claramente existe uma intenção oculta amplificando essa história." },
-            { text: "Esse veículo de mídia é acusado de ter interesse oculto, o que vale a pena desconfiar." },
+            { text: "Esse enquadramento tendencioso é apontado como resultado de um interesse oculto, o que vale a pena desconfiar." },
             { text: "Há um fundo de verdade aqui, mas a história claramente foi sensacionalizada em busca de repercussão." }
         ]),
 

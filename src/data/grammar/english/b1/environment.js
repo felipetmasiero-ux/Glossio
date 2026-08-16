@@ -12,9 +12,9 @@ export const environmentTopic = {
 
     lessonId: "english-b1-environment",
 
-    title: "First Conditional",
+    title: "First Conditional Review and 'Unless'",
 
-    summary: "Use if + present simple, ... will + verb for real, likely future situations and their results.",
+    summary: "Review if + present simple, ... will + verb for real, likely future situations, and add 'unless' for a negative condition.",
 
     explanation: environmentBlocks,
 

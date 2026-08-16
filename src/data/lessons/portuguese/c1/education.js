@@ -86,7 +86,7 @@ export const educationLesson = {
         "de longo alcance",
         "decoreba",
         "dar credibilidade a",
-        "uma regra geral",
+        "uma lacuna de conhecimento",
         "colocar em xeque"
     ]),
 
@@ -130,7 +130,7 @@ export const educationLesson = {
 
             "condicionado a, em desacordo com, propício a",
 
-            "uma regra geral, um exemplo revelador"
+            "uma lacuna de conhecimento, um exemplo revelador"
 
         ]),
 
