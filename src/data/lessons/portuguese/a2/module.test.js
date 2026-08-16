@@ -16,11 +16,12 @@ describe("Portuguese A2 module", () => {
 
     it("is registered on portugueseCourse, after A1", () => {
 
-        expect(portugueseCourse.modules).toHaveLength(4);
+        expect(portugueseCourse.modules).toHaveLength(5);
         expect(portugueseCourse.modules[0].id).toBe("portuguese-a1");
         expect(portugueseCourse.modules[1].id).toBe("portuguese-a2");
         expect(portugueseCourse.modules[2].id).toBe("portuguese-b1");
         expect(portugueseCourse.modules[3].id).toBe("portuguese-b2");
+        expect(portugueseCourse.modules[4].id).toBe("portuguese-c1");
 
     });
 
@@ -80,15 +81,16 @@ describe("Portuguese A2 module", () => {
 
     });
 
-    it("recognizes C1 as Portuguese's next level, correctly reported as not yet available", () => {
+    it("recognizes C2 as Portuguese's next level, correctly reported as not yet available", () => {
 
         // getNextLevelInfo looks at the *last* registered module - now that
-        // B1 and B2 are also registered, this proves it (not A1/A2) drives
-        // the next-level calculation, and that C1 (out of scope for this
-        // sprint, no data exists yet) is correctly reported as unavailable
-        // rather than crashing or silently defaulting to something else.
+        // B1, B2 and C1 are also registered, this proves it (not A1/A2)
+        // drives the next-level calculation, and that C2 (out of scope for
+        // this sprint, no data exists yet) is correctly reported as
+        // unavailable rather than crashing or silently defaulting to
+        // something else.
         expect(DashboardRepository.getNextLevelInfo({ language: "portuguese" })).toEqual({
-            level: "C1",
+            level: "C2",
             available: false
         });
 
