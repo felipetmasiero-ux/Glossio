@@ -10,6 +10,11 @@ export const ANALYTICS_EVENTS = {
 
     LANGUAGE_SELECTED: "language_selected",
 
+    // GA4's own recommended event name for account creation - naming it
+    // exactly "sign_up" (rather than a custom name) is what lets it be
+    // marked as a Key Event in the GA4 UI without extra configuration.
+    SIGN_UP: "sign_up",
+
     LESSON_STARTED: "lesson_started",
     LESSON_COMPLETED: "lesson_completed",
 

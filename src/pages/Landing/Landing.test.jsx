@@ -61,7 +61,10 @@ describe("Landing", () => {
         fireEvent.click(screen.getByRole("button", { name: "Começar agora" }));
 
         expect(trackEvent).toHaveBeenCalledWith("landing_cta_clicked", { cta: "comecar_agora", location: "hero" });
-        expect(screen.getByText("Escolha um idioma")).not.toBeNull();
+        // An anonymous visitor has no session, so this must land on
+        // /register, not the session-gated /choose-language (which would
+        // silently bounce them to /login instead - see Landing.jsx).
+        expect(screen.getByText("Página de registro")).not.toBeNull();
 
     });
 

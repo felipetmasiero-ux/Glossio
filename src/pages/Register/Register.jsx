@@ -5,6 +5,7 @@ import { useAuth } from "../../hooks/useAuth";
 import { Input } from "../../components/common/Input/Input";
 import { Button } from "../../components/common/Button/Button";
 import { Seo } from "../../components/common/Seo/Seo";
+import { trackEvent, ANALYTICS_EVENTS } from "../../utils/analytics";
 
 import "../Login/Login.css";
 
@@ -26,6 +27,11 @@ export function Register() {
 
         try {
             await register({ name, email, password });
+            // Fired only after register() resolves - a real account now
+            // exists in the backend, not just a submitted form (an error
+            // caught below never reaches this line). "method: email" keeps
+            // this comparable if a social-login option is ever added later.
+            trackEvent(ANALYTICS_EVENTS.SIGN_UP, { method: "email" });
             // A brand-new account never has a language chosen yet - unlike
             // Login, this must never fall back to "/home" based on
             // localStorage, which reflects the browser's last session, not

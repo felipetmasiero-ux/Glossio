@@ -81,7 +81,13 @@ export function Landing() {
                 jsonLd={LANDING_JSON_LD}
             />
 
-            <HeroSection onPrimaryCta={() => handleCtaClick("comecar_agora", "hero", "/choose-language")} />
+            {/* An anonymous visitor has no session yet, so this must go to
+            /register, not /choose-language - the latter sits behind
+            ProtectedRoute and silently bounces a logged-out visitor to
+            /login instead, asking for credentials to an account that
+            doesn't exist yet (see App.jsx's ProtectedRoute wrapping and
+            FinalCtaSection below, which already points here correctly). */}
+            <HeroSection onPrimaryCta={() => handleCtaClick("comecar_agora", "hero", "/register")} />
 
             <LandingSection
                 eyebrow="Benefícios"
