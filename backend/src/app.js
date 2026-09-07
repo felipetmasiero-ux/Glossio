@@ -11,6 +11,28 @@ import { HttpError } from "./utils/HttpError.js";
 
 export const app = express();
 
+// Render (like every managed host) terminates TLS at its own load balancer
+// and proxies to this process, so the socket's peer address is ALWAYS that
+// balancer - identical for every visitor on Earth. Express defaults
+// `trust proxy` to false, which means req.ip returns that shared balancer
+// address, and express-rate-limit's default key generator (req.ip) then
+// buckets the entire planet into a single counter: 3 registrations per hour
+// and 5 failed logins per 15 minutes for ALL users combined, not per user.
+// A brand-new visitor gets "Muitos registros a partir deste endereço" on
+// their very first attempt because three strangers already spent the global
+// budget that hour. This also made every ip in the request logs useless.
+//
+// The value is deliberately 1 - "trust exactly one hop" - and NOT `true`.
+// With `true`, Express trusts the whole X-Forwarded-For chain and takes its
+// leftmost entry, which is fully attacker-controlled: a brute-forcer sends
+// a different X-Forwarded-For per request and every limiter in
+// rateLimiters.js becomes a no-op. With 1, req.ip is the rightmost entry -
+// the address Render's balancer itself observed - so spoofed values
+// prepended by a client are ignored. Raise this only if a second trusted
+// proxy is ever put in front of Render (e.g. Cloudflare), since the number
+// must match the real hop count exactly.
+app.set("trust proxy", 1);
+
 // Ahead of everything else: every request gets a correlation id and an
 // automatic method/route/status/duration log line, health/ready/metrics
 // included. Health/ready/metrics themselves are mounted here too, before
