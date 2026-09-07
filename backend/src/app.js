@@ -22,16 +22,26 @@ export const app = express();
 // their very first attempt because three strangers already spent the global
 // budget that hour. This also made every ip in the request logs useless.
 //
-// The value is deliberately 1 - "trust exactly one hop" - and NOT `true`.
-// With `true`, Express trusts the whole X-Forwarded-For chain and takes its
-// leftmost entry, which is fully attacker-controlled: a brute-forcer sends
-// a different X-Forwarded-For per request and every limiter in
-// rateLimiters.js becomes a no-op. With 1, req.ip is the rightmost entry -
-// the address Render's balancer itself observed - so spoofed values
-// prepended by a client are ignored. Raise this only if a second trusted
-// proxy is ever put in front of Render (e.g. Cloudflare), since the number
-// must match the real hop count exactly.
-app.set("trust proxy", 1);
+// The value is a hop count and NOT `true`: with `true`, Express trusts the
+// whole X-Forwarded-For chain and takes its leftmost entry, which is fully
+// attacker-controlled, so a brute-forcer sending a different
+// X-Forwarded-For per request would turn every limiter in rateLimiters.js
+// into a no-op. A count only trusts that many proxies nearest this process,
+// so values a client prepended are ignored.
+//
+// It is 2 because there are two of them: Render fronts every *.onrender.com
+// host with Cloudflare (visible as the `server: cloudflare` and `cf-ray`
+// response headers), which forwards to Render's own router, which forwards
+// here. With 1, req.ip would resolve to the Cloudflare edge address instead
+// of the visitor's - better than a single global counter, but still lumping
+// everyone leaving through the same Cloudflare PoP into one bucket.
+//
+// Because that count is a property of the hosting chain rather than of this
+// code, the rate limiters do not depend on it: rateLimiters.js keys on
+// CF-Connecting-IP (which Cloudflare sets and a client cannot forge) and
+// only falls back to req.ip. This setting still governs req.ip everywhere
+// else, most visibly the `ip` field in every request log line.
+app.set("trust proxy", 2);
 
 // Ahead of everything else: every request gets a correlation id and an
 // automatic method/route/status/duration log line, health/ready/metrics

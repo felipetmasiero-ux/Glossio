@@ -1,6 +1,28 @@
-import { rateLimit, MINUTE, HOUR } from "express-rate-limit";
+import { rateLimit, ipKeyGenerator, MINUTE, HOUR } from "express-rate-limit";
 import { logRequestEvent } from "../utils/logger.js";
 import { env } from "../config/env.js";
+
+// Which client a request is charged to. Getting this wrong doesn't fail
+// loudly - it silently merges unrelated users into one counter, which is
+// exactly how "3 registrations per hour" once became a site-wide limit.
+//
+// Render serves every *.onrender.com host from behind Cloudflare, so a
+// request crosses two proxies (Cloudflare edge, then Render's own router)
+// before reaching this process, and req.ip alone depends on app.js's
+// `trust proxy` hop count matching that chain exactly. CF-Connecting-IP is
+// not sensitive to the count: Cloudflare sets it to the connecting client's
+// address and overwrites any value the client tried to send, and the origin
+// here is only reachable through Cloudflare, so it cannot be forged. req.ip
+// stays as the fallback for anything not fronted by Cloudflare (local dev,
+// the test suite, or a future move off Render).
+//
+// ipKeyGenerator is express-rate-limit's own helper: it collapses an IPv6
+// address to its /56 block, so one visitor cannot walk through a limit by
+// rotating through the addresses their provider hands them.
+export function clientKey(req) {
+    const cloudflareClientIp = req.headers["cf-connecting-ip"];
+    return ipKeyGenerator(cloudflareClientIp || req.ip);
+}
 
 // The limits below are the real production numbers from the security-
 // hardening spec (5 logins/15min, 3 registers/hour, etc.) - exactly what
@@ -25,6 +47,7 @@ function createLimiter({ windowMs, max, message, skipSuccessfulRequests = false 
     return rateLimit({
         windowMs,
         max: scaledMax,
+        keyGenerator: clientKey,
         standardHeaders: true,
         legacyHeaders: false,
         skipSuccessfulRequests,
