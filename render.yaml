@@ -1,9 +1,15 @@
-databases:
-  - name: glossio-db
-    plan: free
-    region: oregon
-    postgresMajorVersion: "16"
-
+# Postgres is deliberately NOT declared here any more. Render's free
+# Postgres expires 30 days after it is created, and when it does, it takes
+# the whole service down with it in a way that reads as an unrelated
+# problem: the startCommand below runs `prisma migrate deploy` before
+# `npm start`, so an unreachable database fails the deploy, Render keeps
+# serving the last process that booted, and every later push silently
+# never ships. That is exactly what happened in September 2026 - account
+# creation was dead for days while the running container looked healthy.
+#
+# The database now lives on Neon, whose free tier has no expiry date, and
+# DATABASE_URL is set on the service by hand (see below). Re-adding a
+# `databases:` block here would recreate the same 30-day time bomb.
 services:
   - type: web
     name: glossio-backend
@@ -17,10 +23,19 @@ services:
     envVars:
       - key: NODE_ENV
         value: production
+      # The Neon connection string, set in the Render dashboard rather than
+      # here (it is a credential, and `sync: false` is how a blueprint says
+      # "this one is entered by hand and must not be overwritten").
+      #
+      # Use Neon's DIRECT connection string, not the pooled one whose host
+      # contains "-pooler": this service is a single long-lived Node
+      # process, so it has no need for the pooler, and `prisma migrate
+      # deploy` in the startCommand cannot run migrations through it.
+      # Create the Neon project in a US West region to sit next to this
+      # service in Oregon - a database on the other side of the country
+      # adds latency to every single query.
       - key: DATABASE_URL
-        fromDatabase:
-          name: glossio-db
-          property: connectionString
+        sync: false
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
