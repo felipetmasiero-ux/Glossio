@@ -189,6 +189,19 @@ Allow: /lessons/portuguese-b2-relationships-conflict
 Allow: /lessons/portuguese-b2-economics
 Allow: /lessons/portuguese-b2-debate
 Allow: /lessons/portuguese-b2-review
+Allow: /lessons/module/portuguese-c1
+Allow: /lessons/portuguese-c1-personal-development
+Allow: /lessons/portuguese-c1-education
+Allow: /lessons/portuguese-c1-work-careers
+Allow: /lessons/portuguese-c1-society
+Allow: /lessons/portuguese-c1-science-technology
+Allow: /lessons/portuguese-c1-environment
+Allow: /lessons/portuguese-c1-media-news
+Allow: /lessons/portuguese-c1-culture-arts
+Allow: /lessons/portuguese-c1-psychology
+Allow: /lessons/portuguese-c1-economics
+Allow: /lessons/portuguese-c1-debate
+Allow: /lessons/portuguese-c1-review
 Disallow: /
 
 Sitemap: https://www.glossio.pro/sitemap.xml

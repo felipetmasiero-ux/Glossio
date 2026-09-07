@@ -83,7 +83,7 @@ export const mediaNewsLesson = {
         "prendre avec des pincettes",
         "un média",
         "l'influence (médiatique)",
-        "l'objectivité",
+        "un parti pris",
         "amplifier",
         "un agenda caché",
         "corroborer",

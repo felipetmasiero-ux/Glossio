@@ -150,7 +150,7 @@ const rawEntries = [
     { word: "prendre avec des pincettes", translation: "não levar totalmente a sério / desconfiar", topic: "media-news" },
     { word: "un média", translation: "um veículo de mídia", partOfSpeech: "noun", topic: "media-news" },
     { word: "l'influence (médiatique)", translation: "influência / prestígio", topic: "media-news" },
-    { word: "l'objectivité", translation: "objetividade", partOfSpeech: "noun", topic: "media-news" },
+    { word: "un parti pris", translation: "um viés / uma tomada de posição", topic: "media-news" },
     { word: "amplifier", translation: "amplificar (uma mensagem, voz)", partOfSpeech: "verb", topic: "media-news" },
     { word: "un agenda caché", translation: "uma intenção oculta", topic: "media-news" },
     { word: "corroborer", translation: "corroborar / confirmar", partOfSpeech: "verb", topic: "media-news" },

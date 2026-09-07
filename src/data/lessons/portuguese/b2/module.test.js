@@ -43,7 +43,7 @@ describe("Portuguese B2 module", () => {
 
         const moduleIds = portugueseCourse.modules.map(module => module.id);
 
-        expect(moduleIds).toEqual(["portuguese-a1", "portuguese-a2", "portuguese-b1", "portuguese-b2"]);
+        expect(moduleIds).toEqual(["portuguese-a1", "portuguese-a2", "portuguese-b1", "portuguese-b2", "portuguese-c1"]);
         expect(portugueseA1Module.lessons).toHaveLength(12);
         expect(portugueseA2Module.lessons).toHaveLength(12);
         expect(portugueseB1Module.lessons).toHaveLength(12);
